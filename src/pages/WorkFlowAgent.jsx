@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
-import demoVideo from '../assets/0330.mp4';
+// Demo video hosted on Google Drive
 import SectionDotNav from '../components/SectionDotNav';
 
 const fadeInUp = {
@@ -190,16 +190,13 @@ export default function WorkFlowAgent() {
                 {/* Demo Video */}
                 <motion.div className="mb-20" initial="hidden" animate="visible" variants={fadeInUp}>
                     <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Demo</h2>
-                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black">
-                        <video
-                            className="w-full"
-                            controls
-                            preload="metadata"
-                            poster=""
-                        >
-                            <source src={demoVideo} type="video/mp4" />
-                            브라우저가 영상 재생을 지원하지 않습니다.
-                        </video>
+                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
+                        <iframe
+                            src="https://drive.google.com/file/d/1n2zznBdBTmiGNfgR_Ny88n_0AKZxUYrA/preview"
+                            className="w-full h-full"
+                            allow="autoplay"
+                            allowFullScreen
+                        />
                     </div>
                 </motion.div>
 
