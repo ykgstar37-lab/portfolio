@@ -1,0 +1,200 @@
+/* ═══════════════════════════════════════════════
+   Projects Section
+   ═══════════════════════════════════════════════ */
+
+.projects {
+    background: transparent;
+    position: relative;
+}
+
+.projects::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: transparent;
+    pointer-events: none;
+}
+
+/* Tabs */
+.projects__tabs {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: rgba(0, 0, 0, 0.05);
+    padding: 4px;
+    border-radius: var(--radius-full);
+    width: fit-content;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.projects__tab {
+    padding: 10px 28px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+    letter-spacing: 0.5px;
+}
+
+.projects__tab:hover {
+    color: var(--color-text);
+}
+
+.projects__tab.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+}
+
+/* Grid */
+.projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+/* Card */
+.projects__card {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.projects__card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.projects__card-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.projects__card:hover .projects__card-image {
+    transform: scale(1.05);
+}
+
+.projects__card-image-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.projects__card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.projects__card-badge--personal {
+    background: var(--color-accent-warm);
+    color: var(--color-white);
+}
+
+.projects__card-badge--team {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.projects__card-body {
+    padding: var(--spacing-lg);
+}
+
+.projects__card-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.projects__card-description {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-md);
+}
+
+.projects__card-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--spacing-md);
+}
+
+.projects__card-tech {
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    background: var(--color-overlay);
+    color: var(--color-primary);
+}
+
+.projects__card-links {
+    display: flex;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.projects__card-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-secondary);
+    transition: color var(--transition-fast);
+}
+
+.projects__card-link:hover {
+    color: var(--color-accent-warm);
+}
+
+/* Placeholder image */
+.projects__card-placeholder {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    color: var(--color-white);
+}
+
+.projects__card-placeholder--1 {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+}
+
+.projects__card-placeholder--2 {
+    background: linear-gradient(135deg, var(--color-accent-warm), var(--color-secondary));
+}
+
+.projects__card-placeholder--3 {
+    background: linear-gradient(135deg, var(--color-secondary), var(--color-primary-light));
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .projects__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .projects__tabs {
+        width: 100%;
+        justify-content: center;
+    }
+}
