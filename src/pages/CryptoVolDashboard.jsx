@@ -231,7 +231,7 @@ export default function CryptoVolDashboard() {
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
                         실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 대시보드
                     </p>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6">
+                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         P학기 팀 프로젝트(GARCH 변동성 분석)를 개인 프로젝트로 확장하여 실서비스 배포. Python 분석 스크립트를 FastAPI + React 풀스택 웹 서비스로 발전시키고, CoinGecko API + Binance WebSocket 실시간 데이터 연동, 5개 GARCH 모형 자동 서빙, Monte Carlo 포트폴리오 시뮬레이터, GPT-4o-mini AI 시장 브리핑, 매매 시그널 적중률 추적 등 인터랙티브 대시보드를 구현.
                     </p>
                     <div className="flex gap-3">

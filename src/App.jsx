@@ -9,6 +9,7 @@ import thumbSeoul from './assets/thumb_seoul.png';
 import thumbCryptoVol from './assets/cryptovol.gif';
 import thumbSeoulCulture from './assets/seoulculture.gif';
 import thumbPymate from './assets/pymate.gif';
+import thumbWorkflow from './assets/workflow.gif';
 
 import CryptoVolatility from './pages/CryptoVolatility';
 import SeoulCulture from './pages/SeoulCulture';
@@ -134,8 +135,8 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 const ALL_PROJECTS = [
     { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'P학기 GARCH 팀 프로젝트를 확장한 실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 풀스택 대시보드. 5개 GARCH 모형, Monte Carlo 포트폴리오 시뮬레이터, AI 시장 브리핑, 매매 시그널 적중률 추적, 인터랙티브 백테스트 포함.', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal' },
     { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '학술제 팀 프로젝트(서울시 문화시설 분석)를 확장한 인터랙티브 문화시설 탐색 맵. Leaflet 지도 위 2,500+ 시설 탐색, K-means 군집분석, 관광 목적별 AI 코스 추천 포함.', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal' },
-    { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'LangGraph 기반 멀티 Agent 시스템으로, 사내 규정 판단·문서 처리·일정 관리를 자연어로 통합 자동화하는 프라이빗 AI 어시스턴트', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', badge: 'Team' },
-    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2025.12 — 2026.02', description: '부트캠프 강의 자료와 Python 공식 문서 기반 RAG AI 학습 튜터. Flask MVP에서 Django 프로덕션까지 확장하고 AWS에 배포했습니다.', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
+    { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'LangGraph 기반 멀티 Agent 시스템으로, 사내 규정 판단·문서 처리·일정 관리를 자연어로 통합 자동화하는 프라이빗 AI 어시스턴트', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
+    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: '부트캠프 강의 자료와 Python 공식 문서 기반 RAG AI 학습 튜터. Flask MVP에서 Django 프로덕션까지 확장하고 AWS에 배포했습니다.', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
     { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'GARCH, TGARCH, HAR-GARCH, HAR-TGARCH, HAR-TGARCH-X 5개 모형을 비교하여 비트코인 변동성 최적 예측 모형을 탐색했습니다.', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team' },
     { id: '06', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '서울특별시 25개 자치구의 관광 시설 현황을 조사·분석하고 군집분석을 통해 관광 목적에 맞는 지역구를 제안했습니다.', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team' },
 ];
@@ -274,7 +275,7 @@ function ProblemSolvingSection() {
                     <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         Problem <span className="text-gray-300">Solving</span>
                     </h2>
-                    <p className="text-gray-400 mt-3 sm:mt-4 text-sm sm:text-base max-w-2xl mx-auto">
+                    <p className="text-gray-400 mt-3 sm:mt-4 text-sm sm:text-base max-w-2xl mx-auto" style={{ wordBreak: 'keep-all' }}>
                         프로젝트에서 마주한 기술적 문제를 어떻게 분석하고 해결했는지, 그 과정의 사고와 판단을 정리했습니다.
                     </p>
                 </motion.div>
@@ -445,7 +446,7 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium">
-                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, a Full Stack Developer
+                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, a Server Developer
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -479,11 +480,11 @@ function HomePage() {
                                 {/* Hover overlay - hidden on mobile (no hover) */}
                                 <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
                                     <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">Full Stack Developer</span>
+                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">Server Developer</span>
                                         <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Building stable & scalable web applications with modern technologies</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Building reliable server systems with statistical thinking</p>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {['React', 'Node.js', 'Python', 'AWS'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                            {['Python', 'FastAPI', 'PostgreSQL', 'Redis'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                         </div>
                                     </div>
                                 </div>
@@ -502,16 +503,16 @@ function HomePage() {
                             <div>
                                 <p className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">About Me</p>
                                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                                    Building<br /><span className="text-gray-400">Digital</span> Products
+                                    Building<br /><span className="text-gray-400">Reliable</span> Servers
                                 </h2>
                             </div>
-                            <p className="text-gray-500 leading-relaxed">
-                                응용통계학과에서 데이터 분석의 기초를 다지고, SK네트웍스 Family AI Camp에서 LLM·RAG 기반 실전 프로젝트를 경험하며 풀스택 개발자로 성장했습니다. 통계적 사고와 AI 기술을 바탕으로, 분석에 그치지 않고 실제 사용자에게 가치를 전달하는 서비스를 설계하고 배포하는 것을 목표로 합니다.
+                            <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                응용통계학과에서 가설 검정, 회귀분석, 시계열 분석 등 데이터 기반 의사결정의 기초를 다지고, AI Camp에서 현직자분들과 LLM·RAG 기반 실전 프로젝트를 경험하며 서버 개발자로 성장했습니다. 통계 모형(GARCH, K-means)을 직접 API로 서빙한 경험이 있어, 모형의 불확실성을 이해하고 이를 서버 설계(캐싱, 에러 격리, 검증 시스템)로 보완할 수 있습니다.
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                {['React', 'Node.js', 'Python', 'Django', 'AWS', 'Docker', 'PostgreSQL', 'TypeScript'].map(tech => (
+                                {['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker', 'AWS', 'SQLAlchemy', 'React'].map(tech => (
                                     <motion.span key={tech} whileHover={{ scale: 1.08, y: -2 }}
-                                        className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition ${['AWS', 'Docker'].includes(tech) ? 'bg-[#e27500] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                                        className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition ${['Python', 'FastAPI', 'PostgreSQL', 'Redis'].includes(tech) ? 'bg-[#e27500] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                                     >{tech}</motion.span>
                                 ))}
                             </div>
@@ -559,7 +560,7 @@ function HomePage() {
                                 {/* Right column (or full width on desktop) */}
                                 <div className="flex-1">
                                     <h3 className="text-sm font-bold text-gray-900 mb-4 tracking-wider uppercase">Core Strength</h3>
-                                    {['Problem Solving', 'Full Stack Architecture', 'Clean & Scalable Code', 'User-Centered Design'].map((item, i) => (
+                                    {['Problem Solving', 'API & Server Design', 'Data Pipeline', 'Statistical Thinking'].map((item, i) => (
                                         <motion.div key={i} whileHover={{ x: 4 }} className="flex items-center gap-3 py-2.5 cursor-default">
                                             <div className="w-6 h-6 rounded-full bg-[#e27500] text-white flex items-center justify-center flex-shrink-0 shadow-sm shadow-[#e27500]/30">
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>

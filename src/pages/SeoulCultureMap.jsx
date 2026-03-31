@@ -248,7 +248,7 @@ export default function SeoulCultureMap() {
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
                         서울시 문화시설 인터랙티브 탐색 맵
                     </p>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6">
+                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         학술제 팀 프로젝트(서울시 25개 자치구 문화·여가시설 분석)를 개인 프로젝트로 확장하여 인터랙티브 웹 서비스로 구현. R 분석 스크립트를 FastAPI + React 풀스택 웹 서비스로 발전시키고, 서울 열린데이터광장 + 한국관광공사 API 실시간 데이터 연동, Leaflet 인터랙티브 맵, K-means 군집분석, AI 코스 추천 등 2,500+ 시설 탐색 대시보드를 구현.
                     </p>
                     <div className="flex gap-3">
