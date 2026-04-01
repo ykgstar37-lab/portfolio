@@ -152,7 +152,7 @@ const SECTIONS = [
 
 export default function WorkFlowAgent() {
     const navigate = useNavigate();
-    useEffect(() => { window.scrollTo(0, 0); }, []);
+    useEffect(() => { const hash = window.location.hash; if (hash) { setTimeout(() => { const el = document.querySelector(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 500); } else { window.scrollTo(0, 0); } }, []);
 
     return (
         <div className="bg-gradient-to-b from-white to-[#f9f9f9] min-h-screen text-gray-900" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -678,7 +678,7 @@ export default function WorkFlowAgent() {
                 </motion.div>
 
                 {/* Demo Video */}
-                <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                <motion.div id="demo" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Demo</h2>
                     <p className="text-gray-500 mb-6">시연 영상</p>
                     <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>

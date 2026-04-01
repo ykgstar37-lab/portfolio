@@ -5,18 +5,6 @@ import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import SectionDotNav from '../components/SectionDotNav';
 
-// Screenshots
-import gifLogin from '../assets/pymate/로그인.gif';
-import gifCode from '../assets/pymate/코딩할래용.gif';
-import gifMemory from '../assets/pymate/이전답변기억.gif';
-import imgCode from '../assets/pymate/코드답변예시.png';
-
-const SCREENSHOTS = [
-    { src: gifLogin, title: '로그인', desc: 'OAuth 기반 소셜 로그인 및 회원가입 플로우' },
-    { src: gifCode, title: '코딩할래용', desc: 'RAG 기반 코딩 질문 답변 + SSE 스트리밍. 코드 블록 하이라이팅 지원' },
-    { src: imgCode, title: '코드 답변 예시', desc: '코드 답변의 상세 출력 — 설명 + 코드 블록 + 실행 결과', isImage: true },
-    { src: gifMemory, title: '이전 답변 기억', desc: '대화 컨텍스트를 유지하여 이전 답변을 참조한 후속 질문 가능' },
-];
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
@@ -135,12 +123,11 @@ const SECTIONS = [
     { id: 'challenges', label: 'Technical Challenges' },
     { id: 'tech', label: 'Tech Stack' },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
-    { id: 'screenshots', label: 'Screenshots', highlight: true },
 ];
 
 export default function PyMate() {
     const navigate = useNavigate();
-    useEffect(() => { window.scrollTo(0, 0); }, []);
+    useEffect(() => { const hash = window.location.hash; if (hash) { setTimeout(() => { const el = document.querySelector(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 500); } else { window.scrollTo(0, 0); } }, []);
 
     return (
         <div className="bg-gradient-to-b from-white to-[#f9f9f9] min-h-screen text-gray-900" style={{ fontFamily: "'Inter', sans-serif" }}>
@@ -626,7 +613,7 @@ export default function PyMate() {
                 </motion.div>
 
                 {/* Demo Video */}
-                <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                <motion.div id="demo" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Demo</h2>
                     <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
                         <iframe
@@ -660,24 +647,6 @@ export default function PyMate() {
                     </div>
                 </motion.div>
 
-                {/* Screenshots */}
-                <motion.div id="screenshots" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Screenshots</h2>
-                    <p className="text-gray-500 mb-8">주요 기능 시연 GIF</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {SCREENSHOTS.map((shot, idx) => (
-                            <motion.div key={idx} variants={fadeInUp} className="group">
-                                <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-white">
-                                    <img src={shot.src} alt={shot.title} className="w-full" loading="lazy" />
-                                </div>
-                                <div className="mt-3 px-1">
-                                    <p className="text-sm font-bold text-gray-900">{shot.title}</p>
-                                    <p className="text-xs text-gray-500 mt-0.5">{shot.desc}</p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
 
             </div>
             <ScrollToTop />

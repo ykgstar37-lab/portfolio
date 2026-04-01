@@ -56,7 +56,7 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
     return (
         <div
             className={`group relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-500 ${project.link ? 'cursor-pointer' : ''}`}
-            onClick={project.link ? () => navigate(project.link) : undefined}
+            onClick={project.link ? () => navigate(project.link + '#demo') : undefined}
         >
             {/* Thumbnail area */}
             <div className="relative aspect-[8/5] overflow-hidden flex items-center justify-center bg-gradient-to-br from-[#eaeaea] to-[#ddd]">
@@ -122,7 +122,7 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
                         {!project.demo && project.link && (
                             <span className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white transition-all">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
-                                <span className="text-[10px] font-bold">Detail</span>
+                                <span className="text-[10px] font-bold">Demo</span>
                             </span>
                         )}
                     </div>

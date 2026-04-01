@@ -207,7 +207,7 @@ function ScreenshotGallery() {
 
 export default function CryptoVolDashboard() {
     const navigate = useNavigate();
-    useEffect(() => { window.scrollTo(0, 0); }, []);
+    useEffect(() => { const hash = window.location.hash; if (hash) { setTimeout(() => { const el = document.querySelector(hash); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 500); } else { window.scrollTo(0, 0); } }, []);
 
     return (
         <div className="bg-gradient-to-b from-white to-[#f9f9f9] min-h-screen text-gray-900" style={{ fontFamily: "'Inter', sans-serif" }}>
