@@ -120,10 +120,10 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
                             </a>
                         )}
                         {!project.demo && project.link && (
-                            <span onClick={(e) => { e.stopPropagation(); navigate(project.link + '#demo'); }}
+                            <span onClick={(e) => { e.stopPropagation(); navigate(project.link + '#' + (project.demoHash || 'demo')); }}
                                 className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all cursor-pointer">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
-                                <span className="text-[10px] font-bold">Demo</span>
+                                <span className="text-[10px] font-bold">{project.demoHash === 'screenshots' ? 'Screenshots' : 'Demo'}</span>
                             </span>
                         )}
                     </div>
@@ -135,8 +135,8 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 
 /* ── Shared project data (single source of truth) ── */
 const ALL_PROJECTS = [
-    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'P학기 GARCH 팀 프로젝트를 확장한 실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 풀스택 대시보드. 5개 GARCH 모형, Monte Carlo 포트폴리오 시뮬레이터, AI 시장 브리핑, 매매 시그널 적중률 추적, 인터랙티브 백테스트 포함.', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal' },
-    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '학술제 팀 프로젝트(서울시 문화시설 분석)를 확장한 인터랙티브 문화시설 탐색 맵. Leaflet 지도 위 2,500+ 시설 탐색, K-means 군집분석, 관광 목적별 AI 코스 추천 포함.', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal' },
+    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'P학기 GARCH 팀 프로젝트를 확장한 실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 풀스택 대시보드. 5개 GARCH 모형, Monte Carlo 포트폴리오 시뮬레이터, AI 시장 브리핑, 매매 시그널 적중률 추적, 인터랙티브 백테스트 포함.', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '학술제 팀 프로젝트(서울시 문화시설 분석)를 확장한 인터랙티브 문화시설 탐색 맵. Leaflet 지도 위 2,500+ 시설 탐색, K-means 군집분석, 관광 목적별 AI 코스 추천 포함.', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
     { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'LangGraph 기반 멀티 Agent 시스템으로, 사내 규정 판단·문서 처리·일정 관리를 자연어로 통합 자동화하는 프라이빗 AI 어시스턴트', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
     { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: '부트캠프 강의 자료와 Python 공식 문서 기반 RAG AI 학습 튜터. Flask MVP에서 Django 프로덕션까지 확장하고 AWS에 배포했습니다.', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
     { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'GARCH, TGARCH, HAR-GARCH, HAR-TGARCH, HAR-TGARCH-X 5개 모형을 비교하여 비트코인 변동성 최적 예측 모형을 탐색했습니다.', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team' },

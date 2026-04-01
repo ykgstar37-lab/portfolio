@@ -132,7 +132,7 @@ li strong { color: #1a1a1a; }
     <li><strong>Solution:</strong> 5분 TTL 인메모리 캐싱 + 120일 윈도우 제한. 개별 모형 실패 시 0.0 반환으로 에러 격리. FastAPI WebSocket 릴레이 서버로 API 키 보호.</li>
     <li><strong>Result:</strong> 14 REST + 1 WS 엔드포인트 · BTC/ETH/SOL 3코인 · Render + Vercel 배포.</li>
   </ul>
-  <div class="retro">"분석할 수 있다"와 "API로 서빙할 수 있다"는 완전히 다른 설계 관점. 연산 캐싱, 에러 격리, 외부 API 중계 패턴을 실전에서 체득.</div>
+  <div class="retro">"분석할 수 있다"와 "API로 서빙할 수 있다"는 완전히 다른 설계 관점이 필요하다는 것을 배웠습니다. 연산 캐싱, 에러 격리, 외부 API 중계 패턴을 실전에서 체득할 수 있었습니다.</div>
   <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">WebSocket</span><span class="tag">SQLite</span><span class="tag">arch(GARCH)</span><span class="tag">APScheduler</span><span class="tag">Binance API</span></div>
 </div>
 
@@ -148,7 +148,7 @@ li strong { color: #1a1a1a; }
     <li><strong>Solution:</strong> 공통 LLM 모듈(provider만 교체하면 GPT/Claude/vLLM 전환). 4중 Guardrail로 환각 서버 차단. 프롬프트 최적화 + fallback으로 JSON 안정성 확보. LoRA v3 약점 19건 정밀 타겟팅.</li>
     <li><strong>Result:</strong> 판단 정확도 37%→85% · JSON 유효율 70%→97% · RAG MRR 0.63→0.95 · LoRA 4개 어댑터 핫스왑 관리.</li>
   </ul>
-  <div class="retro">외부 시스템(LLM) 출력을 서버가 검증·보정하는 설계 원칙 체득. "데이터 양 &lt; 데이터 질" — 98건 무작위보다 19건 정밀 타겟팅이 효과적.</div>
+  <div class="retro">외부 시스템(LLM)의 출력을 서버가 검증·보정하는 설계 원칙을 배웠습니다. "데이터 양보다 데이터 질" — 98건 무작위 추가보다 19건 정밀 타겟팅이 더 효과적이라는 것을 체감했습니다.</div>
   <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">LangGraph</span><span class="tag">Qdrant</span><span class="tag">vLLM</span><span class="tag">LoRA</span><span class="tag">Docker</span><span class="tag">AWS</span></div>
 </div>
 
@@ -164,7 +164,7 @@ li strong { color: #1a1a1a; }
     <li><strong>Solution:</strong> 정규화 파이프라인으로 스키마 통합. OpenAI 실패 시 규칙 기반 fallback 추천이 동작하는 방어적 설계.</li>
     <li><strong>Result:</strong> 11 API 엔드포인트 · 2,500+ 시설 + 1,177장 사진 통합 · Render + Vercel 배포.</li>
   </ul>
-  <div class="retro">외부 데이터 소스의 스키마 불일치를 서버에서 해결하는 패턴 + 외부 API 장애가 서비스로 전파되지 않는 fallback 설계의 중요성.</div>
+  <div class="retro">외부 데이터 소스의 스키마 불일치를 서버에서 해결하는 패턴을 익혔고, 외부 API 장애가 서비스 전체로 전파되지 않도록 하는 fallback 설계의 중요성을 배웠습니다.</div>
   <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">SQLAlchemy</span><span class="tag">SQLite</span><span class="tag">scikit-learn</span><span class="tag">OpenAI API</span></div>
 </div>
 

@@ -133,7 +133,7 @@ li strong { color: #1a1a1a; }
     <li><strong>Solution:</strong> 공통 LLM 모듈 설계로 provider만 교체하면 GPT/Claude/vLLM 전환 가능. 프롬프트 최적화 + 출력 포맷 단순화 + fallback으로 JSON 안정성 확보. 4중 Guardrail + 5-factor Confidence 보정으로 서빙 신뢰성 확보.</li>
     <li><strong>Result:</strong> JSON 유효율 70%→97% · 판단 정확도 37%→85% · RAG MRR 0.63→0.95 · LoRA 4개 어댑터 관리(판단/문서/Planner/Intent).</li>
   </ul>
-  <div class="retro">sLLM 서빙의 핵심은 모형 성능 자체보다 서빙 안정성(JSON 파싱, 에러 핸들링, fallback)에 있다는 것을 체감. 공통 모듈 설계로 LLM provider 전환 비용을 최소화.</div>
+  <div class="retro">이 경험을 통해 sLLM 서빙에서는 모형 성능 자체보다 서빙 안정성(JSON 파싱, 에러 핸들링, fallback)이 더 중요하다는 것을 배웠습니다. 또한 공통 LLM 모듈을 설계하여 provider 전환 비용을 최소화할 수 있었습니다.</div>
   <div class="project-tags"><span class="tag hl">vLLM</span><span class="tag hl">LoRA</span><span class="tag">LangGraph</span><span class="tag">Qdrant</span><span class="tag">KoELECTRA</span><span class="tag">FastAPI</span><span class="tag">SSE</span><span class="tag">RunPod A100</span><span class="tag">Docker</span></div>
 </div>
 
@@ -150,7 +150,7 @@ li strong { color: #1a1a1a; }
     <li><strong>Solution:</strong> text-embedding-3-large(3,072D)로 교체 → Qdrant 벡터 DB 재설계. Reranker를 cross-encoder/ms-marco-MiniLM-L6-v2로 경량화하여 레이턴시 -1초. 한국어 벡터 검색 정확도 향상을 위해 이중 쿼리(KO+EN) 전략 도입.</li>
     <li><strong>Result:</strong> Context Precision 0.83→0.97(+14.4%) · Context Recall 0.70→0.79(+12.7%) · Reranker 레이턴시 -1초 · SSE 스트리밍으로 실시간 응답.</li>
   </ul>
-  <div class="retro">RAG 품질의 핵심은 LLM이 아니라 embedding 모형과 검색 품질에 있다. 차원 교체(768D→3072D)만으로 Precision이 14%p 향상 — 서빙할 모형 선택이 곧 성능.</div>
+  <div class="retro">RAG 품질의 핵심은 LLM이 아니라 embedding 모형과 검색 품질에 있다는 것을 체감했습니다. 차원 교체(768D→3072D)만으로 Precision이 14%p 향상되었고, 서빙할 모형의 선택이 곧 전체 성능을 좌우한다는 것을 배웠습니다.</div>
   <div class="project-tags"><span class="tag hl">Qdrant</span><span class="tag hl">text-embedding-3-large</span><span class="tag">LangChain</span><span class="tag">cross-encoder Reranker</span><span class="tag">RAGAS</span><span class="tag">Django</span><span class="tag">SSE</span><span class="tag">Docker</span><span class="tag">AWS EC2</span></div>
 </div>
 
@@ -167,7 +167,7 @@ li strong { color: #1a1a1a; }
     <li><strong>Solution:</strong> 5분 TTL 인메모리 캐싱 + 120일 윈도우 제한. 개별 모형 실패 시 0.0 반환으로 에러 격리. APScheduler 자동 수집으로 rate limit 우회.</li>
     <li><strong>Result:</strong> 14 REST + 1 WS 엔드포인트 · 5개 모형 동시 서빙 · BTC/ETH/SOL 3코인 실시간.</li>
   </ul>
-  <div class="retro">모형 서빙에서 "하나의 모형 실패가 전체를 깨뜨리지 않는" 에러 격리가 핵심. LLM 서빙에서도 동일한 원칙이 적용됨.</div>
+  <div class="retro">모형 서빙에서 "하나의 모형 실패가 전체를 깨뜨리지 않는" 에러 격리의 중요성을 실감했습니다. 이 원칙은 LLM 서빙에서도 동일하게 적용될 수 있다고 생각합니다.</div>
   <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">WebSocket</span><span class="tag">APScheduler</span><span class="tag">arch(GARCH)</span><span class="tag">SQLite</span></div>
 </div>
 
