@@ -9,7 +9,6 @@ import SectionDotNav from '../components/SectionDotNav';
 import gifLogin from '../assets/pymate/로그인.gif';
 import gifCode from '../assets/pymate/코딩할래용.gif';
 import gifMemory from '../assets/pymate/이전답변기억.gif';
-import gifMobile from '../assets/pymate/모바일.gif';
 import imgCode from '../assets/pymate/코드답변예시.png';
 
 const SCREENSHOTS = [
@@ -17,7 +16,6 @@ const SCREENSHOTS = [
     { src: gifCode, title: '코딩할래용', desc: 'RAG 기반 코딩 질문 답변 + SSE 스트리밍. 코드 블록 하이라이팅 지원' },
     { src: imgCode, title: '코드 답변 예시', desc: '코드 답변의 상세 출력 — 설명 + 코드 블록 + 실행 결과', isImage: true },
     { src: gifMemory, title: '이전 답변 기억', desc: '대화 컨텍스트를 유지하여 이전 답변을 참조한 후속 질문 가능' },
-    { src: gifMobile, title: '모바일 반응형', desc: '모바일 환경에서도 최적화된 레이아웃과 사용성' },
 ];
 
 const fadeInUp = {

@@ -189,19 +189,6 @@ export default function WorkFlowAgent() {
                     </div>
                 </motion.div>
 
-                {/* Demo Video */}
-                <motion.div className="mb-20" initial="hidden" animate="visible" variants={fadeInUp}>
-                    <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Demo</h2>
-                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
-                        <iframe
-                            src="https://drive.google.com/file/d/1n2zznBdBTmiGNfgR_Ny88n_0AKZxUYrA/preview"
-                            className="w-full h-full"
-                            allow="autoplay"
-                            allowFullScreen
-                        />
-                    </div>
-                </motion.div>
-
                 {/* Core Values */}
                 <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-20" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
                     {[
@@ -687,6 +674,20 @@ export default function WorkFlowAgent() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </motion.div>
+
+                {/* Demo Video */}
+                <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Demo</h2>
+                    <p className="text-gray-500 mb-6">시연 영상</p>
+                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
+                        <iframe
+                            src="https://drive.google.com/file/d/1n2zznBdBTmiGNfgR_Ny88n_0AKZxUYrA/preview"
+                            className="w-full h-full"
+                            allow="autoplay"
+                            allowFullScreen
+                        />
                     </div>
                 </motion.div>
 
