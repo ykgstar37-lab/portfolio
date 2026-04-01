@@ -113,9 +113,9 @@ function CryptoSlideViewer() {
     const next = () => setCurrent(c => Math.min(CRYPTO_TOTAL_SLIDES, c + 1));
 
     return (
-        <motion.div id="slides" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Presentation Slides</h2>
-            <p className="text-gray-500 mb-8">최종 발표 자료 — 화살표로 슬라이드를 넘겨보세요</p>
+        <div>
+            <h3 className="text-xl font-bold mb-2">Slides</h3>
+            <p className="text-gray-500 text-sm mb-4">발표 자료 ({CRYPTO_TOTAL_SLIDES}장)</p>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 <div className="relative">
                     <img
@@ -140,7 +140,7 @@ function CryptoSlideViewer() {
                     <span className="text-sm text-gray-400">{CRYPTO_TOTAL_SLIDES}</span>
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 }
 
@@ -154,8 +154,8 @@ function PaperViewer() {
         <div id="paper">
             <h3 className="text-xl font-bold mb-3">Paper</h3>
             <p className="text-gray-500 text-sm mb-4">완성된 논문 미리보기 — 화살표로 페이지를 넘겨보세요</p>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden max-w-2xl mx-auto">
-                <div className="relative" style={{ maxHeight: '500px', overflow: 'hidden' }}>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div className="relative">
                     <img
                         src={`/paper-pages/page-${String(current).padStart(2, '0')}.png`}
                         alt={`Page ${current}`}
@@ -631,8 +631,10 @@ export default function CryptoVolatility() {
 
                 {/* ═══ RESEARCH: Slides + Paper ═══ */}
                 <CollapsibleSection id="presentation" title="Research" subtitle="발표 자료 + 연구 논문">
-                    <CryptoSlideViewer />
-                    <div className="mt-8"><PaperViewer /></div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div><CryptoSlideViewer /></div>
+                        <div><PaperViewer /></div>
+                    </div>
                 </CollapsibleSection>
 
                 {/* Retrospective */}
