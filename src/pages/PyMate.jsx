@@ -110,6 +110,7 @@ const SECTIONS = [
     { id: 'phase1', label: 'Phase 1 — MVP' },
     { id: 'phase2', label: 'Phase 2 — 프로덕션' },
     { id: 'comparison', label: '3차 vs 4차 개선' },
+    { id: 'embedding-serving', label: 'Embedding Serving' },
     { id: 'rag-eval', label: 'RAG 성능 평가' },
     { id: 'architecture', label: 'Architecture' },
     { id: 'search', label: 'Search Strategy' },
@@ -278,6 +279,35 @@ export default function PyMate() {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </motion.div>
+
+                {/* Embedding Serving Optimization */}
+                <motion.div id="embedding-serving" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Embedding Serving Optimization</h2>
+                    <p className="text-gray-500 mb-8">embedding 모형 선택과 Reranker 교체가 서빙 품질에 미친 영향</p>
+
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">문제를 어떻게 정의했는가</p>
+                        <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                            처음에는 RAG 품질이 낮은 원인을 "LLM의 답변 생성 능력"이라고 생각했습니다. 하지만 RAGAS 프레임워크로 검색 단계(Context Precision/Recall)와 생성 단계를 분리 측정한 결과,
+                            <strong> 병목은 LLM이 아니라 embedding 검색 품질</strong>에 있다는 것을 발견했습니다. 이후 문제를 "embedding 모형 서빙 최적화"로 재정의하고, 차원 교체와 Reranker 경량화에 집중했습니다.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {[
+                            { label: 'Embedding 차원 교체', title: '768D → 3,072D', desc: 'text-embedding-3-large로 교체. Qdrant 벡터 DB 전체 재설계 필요했지만, 이것만으로 Context Precision이 0.83→0.97 (+14.4%) 향상. 서빙할 모형 선택이 곧 성능.', color: 'border-[#e8609c]' },
+                            { label: 'Reranker 경량화', title: 'BAAI → cross-encoder (-1초)', desc: 'bge-reranker-v2-m3에서 cross-encoder/ms-marco-MiniLM-L6-v2로 교체. 정확도를 유지하면서 레이턴시 1초 감소. 서빙 성능 트레이드오프 판단.', color: 'border-[#d4578e]' },
+                            { label: '이중 쿼리 전략', title: 'KO + EN 동시 검색', desc: '한국어 embedding의 검색 정확도 한계를 영어 번역 쿼리로 보완. 동일 질문을 한국어+영어로 동시에 검색하여 recall 향상.', color: 'border-[#c74b82]' },
+                            { label: 'Relevance 3단계 라우팅', title: '환각 방지 서빙 설계', desc: 'score >0.5 → 직접 답변, 0.3~0.5 → 웹 검색 보강, <0.3 → "데이터 없음" 응답. LLM이 부정확한 컨텍스트로 답변하는 것을 서버에서 차단.', color: 'border-[#b84178]' },
+                        ].map((item, idx) => (
+                            <motion.div key={idx} whileHover={{ y: -4 }} className={`bg-white p-5 rounded-2xl border-l-4 ${item.color} shadow-sm cursor-default`}>
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{item.label}</p>
+                                <h3 className="text-base font-bold mb-2">{item.title}</h3>
+                                <p className="text-sm text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>{item.desc}</p>
+                            </motion.div>
+                        ))}
                     </div>
                 </motion.div>
 

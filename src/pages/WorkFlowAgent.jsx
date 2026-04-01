@@ -133,6 +133,7 @@ const TECH_STACK = {
 const SECTIONS = [
     { id: 'architecture', label: 'System Architecture' },
     { id: 'strategy', label: 'Development Strategy' },
+    { id: 'vllm-serving', label: 'vLLM Serving' },
     { id: 'agents', label: 'Multi-Agent System' },
     { id: 'agent-detail', label: 'Agent Detail' },
     { id: 'guardrail', label: '4중 보조장치' },
@@ -316,6 +317,36 @@ export default function WorkFlowAgent() {
                                 <h3 className="text-base font-bold mb-1 relative z-10">{item.title}</h3>
                                 <p className="text-[11px] text-white/70 relative z-10 leading-relaxed">{item.desc}</p>
                             </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+
+                {/* vLLM Serving */}
+                <motion.div id="vllm-serving" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>vLLM Serving</h2>
+                    <p className="text-gray-500 mb-8">GPT/Claude API → 프라이빗 sLLM 전환 과정과 서빙 안정성 확보</p>
+
+                    <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">문제를 어떻게 정의했는가</p>
+                        <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                            처음에는 단순히 "GPT API를 sLLM으로 교체하면 된다"고 생각했습니다. 하지만 실제 전환 과정에서 <strong>세 가지 구조적 문제</strong>를 발견했습니다:
+                            sLLM은 JSON 출력을 일관되게 생성하지 못하고(유효율 70%), confidence가 높아도 환각이 발생하며, LoRA 어댑터 4개를 동시에 관리해야 했습니다.
+                            이 문제들은 "모델 성능"이 아니라 <strong>"서빙 안정성"</strong>의 문제라고 재정의한 것이 전환점이었습니다.
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        {[
+                            { label: '공통 LLM 모듈 설계', title: 'Provider 전환 비용 최소화', desc: 'GPT, Claude, vLLM 간 전환이 provider 설정만 바꾸면 되도록 공통 인터페이스를 설계. 개발 초기에는 GPT API로 기능 검증, I/O 확정 후 vLLM으로 교체하는 전략으로 전환 리스크를 최소화.' },
+                            { label: 'LoRA 핫스왑', title: '4개 어댑터 동적 관리', desc: '판단 / 문서(요약·생성) / Planner / Intent 4개 LoRA 어댑터를 Kanana-1.5-8B 베이스 위에서 태스크별 핫스왑. RunPod A100(80GB)에서 학습과 서빙을 병행.' },
+                            { label: '서빙 안정성', title: 'JSON 유효율 70% → 97%', desc: 'sLLM이 구조화된 JSON을 일관되게 생성하지 못하는 문제를 프롬프트 최적화 + 출력 포맷 단순화 + fallback 파싱 로직으로 해결. 모델 성능이 아닌 서빙 레이어에서 안정성을 확보.' },
+                            { label: 'SSE 스트리밍', title: '토큰 단위 실시간 응답', desc: 'sLLM 추론 시간이 수 초 걸리는 문제를 SSE(Server-Sent Events) 스트리밍으로 해결. 토큰 생성 즉시 클라이언트에 전송하여 체감 응답 속도 개선.' },
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                                <p className="text-xs font-bold text-[#5f7f95] uppercase tracking-wider mb-2">{item.label}</p>
+                                <h3 className="text-base font-bold mb-2">{item.title}</h3>
+                                <p className="text-sm text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>{item.desc}</p>
+                            </div>
                         ))}
                     </div>
                 </motion.div>
