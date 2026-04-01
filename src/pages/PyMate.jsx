@@ -639,6 +639,28 @@ export default function PyMate() {
                     </div>
                 </motion.div>
 
+                {/* Feature Details — 시연영상에서 확인 가능한 기능 상세 설명 */}
+                <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Feature Details</h2>
+                    <p className="text-gray-500 mb-8">시연영상에서 확인할 수 있는 주요 기능 상세</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {[
+                            { num: '01', title: '학습할래용 — RAG 대화형 학습', desc: '강의 자료(.ipynb)와 Python 공식 문서에서 RAG 검색 후 답변 생성. SSE 스트리밍으로 토큰 단위 실시간 응답. 이중 쿼리(KO+EN) 전략으로 한국어 검색 정확도 향상. Relevance score 3단계 라우팅으로 환각 방지.' },
+                            { num: '02', title: '퀴즈풀래용 — AI 퀴즈 생성 + 학습 검증', desc: 'AI가 강의 내용 기반으로 OX 퀴즈를 자동 생성. 즉각 피드백과 개념 보충 설명 제공. 틀린 문제 북마크 → 마이페이지에서 재학습. 정답률 통계와 학습 진행도 대시보드.' },
+                            { num: '03', title: '스튜디오 — 7가지 학습 도구', desc: '개념 요약 · 단계별 설명 · 플래시카드 · 퀴즈 · 비교표 · 다른 예시 · 메모장 — 7가지 도구로 하나의 강의 내용을 다각도로 학습. AI가 강의 내용 기반으로 각 도구의 콘텐츠를 자동 생성.' },
+                            { num: '04', title: '코드풀래용 — AI 코드 리뷰', desc: 'Python 코드를 입력하면 문법/실행 오류 분석, 수정 코드 예시 제안, 실행 결과 예측 및 출력 예시까지 원스톱 제공. 코드 블록 하이라이팅 + 복사 기능.' },
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                                <div className="flex items-baseline gap-2 mb-2">
+                                    <span className="text-2xl font-bold text-gray-200" style={{ fontFamily: "'Syne', sans-serif" }}>{item.num}</span>
+                                    <h3 className="text-base font-bold">{item.title}</h3>
+                                </div>
+                                <p className="text-sm text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </motion.div>
+
                 {/* Screenshots */}
                 <motion.div id="screenshots" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Screenshots</h2>
