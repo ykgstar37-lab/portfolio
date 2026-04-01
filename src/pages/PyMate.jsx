@@ -148,16 +148,9 @@ export default function PyMate() {
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Team — 4Team (5명)</span>
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">3차 → 4차 연속 진행</span>
                     </div>
-                    <div className="flex items-center justify-between gap-4 mb-4 sm:mb-6">
-                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                            <span className="text-[#e8609c]">PyMate</span> — Bootcamp AI RAG Tutor
-                        </h1>
-                        <button onClick={() => { const el = document.getElementById('demo'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
-                            className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#e27500] text-white text-sm font-bold rounded-full hover:bg-[#c96600] transition shadow-lg">
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            Demo
-                        </button>
-                    </div>
+                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                        <span className="text-[#e8609c]">PyMate</span> — Bootcamp AI RAG Tutor
+                    </h1>
                     <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         부트캠프 강의 자료와 Python 공식 문서 기반 RAG AI 학습 튜터를 Flask MVP로 시작해 Django로 마이그레이션, 퀴즈·코드리뷰·스튜디오 기능 확장, AWS EC2 배포
                     </p>
@@ -170,6 +163,11 @@ export default function PyMate() {
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
                             4차 GitHub
                         </a>
+                        <button onClick={() => { const el = document.getElementById('demo'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#e27500] text-white text-sm font-medium rounded-full hover:bg-[#c96600] transition">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Demo
+                        </button>
                     </div>
                 </motion.div>
 
@@ -579,48 +577,6 @@ export default function PyMate() {
                     </div>
                 </motion.div>
 
-                {/* Retrospective */}
-                <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Retrospective</h2>
-                    <p className="text-gray-500 mb-6">프로젝트를 마치며</p>
-                    <div className="space-y-4">
-                        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
-                            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">핵심 인사이트</p>
-                            <ul className="space-y-3 text-sm text-gray-600">
-                                <li className="flex gap-3">
-                                    <span className="font-bold text-gray-900 shrink-0">01</span>
-                                    <span><strong className="text-gray-900">프레임워크 전환의 판단 기준</strong> — Flask MVP에서 Django로 전환한 건 "기능이 부족해서"가 아니라, ORM 마이그레이션, 관리자 페이지, 정적 파일 서빙 등 프로덕션에 필요한 인프라가 Flask에서는 모두 수동 구성이었기 때문. 프로토타입과 프로덕션의 요구사항 차이를 체감</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="font-bold text-gray-900 shrink-0">02</span>
-                                    <span><strong className="text-gray-900">RAG 품질은 임베딩 차원이 결정</strong> — 768D에서 3072D로 교체한 것만으로 Context Precision이 0.8333 → 0.9758로 향상. 모델 자체보다 검색 품질이 답변 품질을 좌우한다는 걸 RAGAS 지표로 확인</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="font-bold text-gray-900 shrink-0">03</span>
-                                    <span><strong className="text-gray-900">Nginx → Gunicorn → Django 서버 흐름</strong> — 로컬에서 잘 동작하던 코드가 AWS에서 502를 반환하는 경험을 통해, 요청이 처리되는 전체 흐름을 이해하는 것이 배포의 핵심이라는 걸 배움</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
-                            <p className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-3">아쉬운 점 & 다음에 하고 싶은 것</p>
-                            <ul className="space-y-2 text-sm text-gray-600">
-                                <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>Reranker 도입 후 응답 속도 -1초 증가 — 정확도와의 트레이드오프를 사용자 관점에서 더 검토 필요</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>사용자 피드백 수집 미구현 — "이 답변이 도움이 되었나요?" 같은 RLHF 파이프라인이 있었으면 RAG 품질을 지속 개선할 수 있었을 것</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>모니터링/로깅 부족 — 프로덕션에서 어떤 질문이 실패하는지 추적하는 체계가 없어 개선 방향을 잡기 어려웠음</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </motion.div>
-
                 {/* Demo Video */}
                 <CollapsibleSection id="demo" title="Demo" subtitle="시연 영상">
                     <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
@@ -631,12 +587,9 @@ export default function PyMate() {
                             allowFullScreen
                         />
                     </div>
-                </CollapsibleSection>
 
-                {/* Feature Details — 시연영상에서 확인 가능한 기능 상세 설명 */}
-                <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Feature Details</h2>
-                    <p className="text-gray-500 mb-8">시연영상에서 확인할 수 있는 주요 기능 상세</p>
+                    <h3 className="text-xl font-bold mt-8 mb-4">Feature Details</h3>
+                    <p className="text-gray-500 mb-6 text-sm">시연영상에서 확인할 수 있는 주요 기능 상세</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {[
                             { num: '01', title: '학습할래용 — RAG 대화형 학습', desc: '강의 자료(.ipynb)와 Python 공식 문서에서 RAG 검색 후 답변 생성. SSE 스트리밍으로 토큰 단위 실시간 응답. 이중 쿼리(KO+EN) 전략으로 한국어 검색 정확도 향상. Relevance score 3단계 라우팅으로 환각 방지.' },
@@ -653,8 +606,31 @@ export default function PyMate() {
                             </div>
                         ))}
                     </div>
-                </motion.div>
+                </CollapsibleSection>
 
+                {/* Retrospective */}
+                <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Retrospective</h2>
+                    <p className="text-gray-500 mb-6">프로젝트를 마치며</p>
+                    <div className="space-y-4">
+                        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+                            <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">핵심 인사이트</p>
+                            <ul className="space-y-3 text-sm text-gray-600">
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">01</span><span><strong className="text-gray-900">프레임워크 전환의 판단 기준</strong> — Flask MVP에서 Django로 전환한 건 "기능이 부족해서"가 아니라, ORM 마이그레이션, 관리자 페이지, 정적 파일 서빙 등 프로덕션에 필요한 인프라가 Flask에서는 모두 수동 구성이었기 때문.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">RAG 품질은 임베딩 차원이 결정</strong> — 768D에서 3072D로 교체한 것만으로 Context Precision이 0.8333 → 0.9758로 향상. 모델 자체보다 검색 품질이 답변 품질을 좌우.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">03</span><span><strong className="text-gray-900">Nginx → Gunicorn → Django 서버 흐름</strong> — 로컬에서 잘 동작하던 코드가 AWS에서 502를 반환하는 경험을 통해, 요청이 처리되는 전체 흐름을 이해하는 것이 배포의 핵심.</span></li>
+                            </ul>
+                        </div>
+                        <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+                            <p className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-3">아쉬운 점 & 다음에 하고 싶은 것</p>
+                            <ul className="space-y-2 text-sm text-gray-600">
+                                <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">-</span><span>Reranker 도입 후 응답 속도 -1초 증가 — 정확도와의 트레이드오프를 사용자 관점에서 더 검토 필요</span></li>
+                                <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">-</span><span>사용자 피드백 수집 미구현 — RLHF 파이프라인이 있었으면 RAG 품질을 지속 개선할 수 있었을 것</span></li>
+                                <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">-</span><span>모니터링/로깅 부족 — 프로덕션에서 어떤 질문이 실패하는지 추적하는 체계가 없어 개선 방향을 잡기 어려웠음</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </motion.div>
 
             </div>
             <ScrollToTop />

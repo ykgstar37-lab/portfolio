@@ -173,16 +173,9 @@ export default function WorkFlowAgent() {
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Team — 3팀 (4명)</span>
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.02 — 2026.03</span>
                     </div>
-                    <div className="flex items-center justify-between gap-4 mb-3">
-                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                            WorkFlow Agent <span className="text-[#5f7f95]">(듀듀)</span>
-                        </h1>
-                        <button onClick={() => { const el = document.getElementById('demo'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
-                            className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#e27500] text-white text-sm font-bold rounded-full hover:bg-[#c96600] transition shadow-lg">
-                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            Demo
-                        </button>
-                    </div>
+                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                        WorkFlow Agent <span className="text-[#5f7f95]">(듀듀)</span>
+                    </h1>
                     <p className="text-xl text-[#5f7f95] font-semibold mb-6 tracking-tight">
                         "하나의 채팅으로 업무의 모든 것을"
                     </p>
@@ -195,6 +188,11 @@ export default function WorkFlowAgent() {
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                             GitHub
                         </a>
+                        <button onClick={() => { const el = document.getElementById('demo'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#e27500] text-white text-sm font-medium rounded-full hover:bg-[#c96600] transition">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Demo
+                        </button>
                     </div>
                 </motion.div>
 
@@ -428,22 +426,22 @@ export default function WorkFlowAgent() {
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>5-factor Confidence</h2>
                     <p className="text-gray-500 mb-8">Judgment Agent의 다차원 신뢰도 산출 공식</p>
                     <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm">
-                        <div className="bg-gray-900 rounded-xl p-5 text-white text-center">
+                        <div className="bg-gray-50 rounded-xl p-5 text-gray-900 text-center border border-gray-200">
                             <p className="text-sm font-bold mb-3">Confidence Score</p>
                             <div className="flex flex-wrap items-center justify-center gap-2 text-xs">
-                                <span className="px-3 py-1.5 bg-[#5f7f95] rounded-lg font-bold">LLM raw × 0.60</span>
-                                <span className="text-white/40">+</span>
-                                <span className="px-3 py-1.5 bg-[#5f7f95] rounded-lg font-bold">RAG avg × 0.25</span>
-                                <span className="text-white/40">+</span>
-                                <span className="px-3 py-1.5 bg-[#5f7f95] rounded-lg font-bold">규정 커버리지 × 0.15</span>
+                                <span className="px-3 py-1.5 bg-[#5f7f95] text-white rounded-lg font-bold">LLM raw × 0.60</span>
+                                <span className="text-gray-400">+</span>
+                                <span className="px-3 py-1.5 bg-[#5f7f95] text-white rounded-lg font-bold">RAG avg × 0.25</span>
+                                <span className="text-gray-400">+</span>
+                                <span className="px-3 py-1.5 bg-[#5f7f95] text-white rounded-lg font-bold">규정 커버리지 × 0.15</span>
                             </div>
                             <div className="flex flex-wrap items-center justify-center gap-2 text-xs mt-2">
+                                <span className="text-gray-400">−</span>
+                                <span className="px-3 py-1.5 bg-red-100 text-red-600 rounded-lg font-bold">충돌 감점</span>
                                 <span className="text-white/40">−</span>
-                                <span className="px-3 py-1.5 bg-red-500/30 rounded-lg">충돌 감점</span>
+                                <span className="px-3 py-1.5 bg-red-100 text-red-600 rounded-lg font-bold">환각 감점</span>
                                 <span className="text-white/40">−</span>
-                                <span className="px-3 py-1.5 bg-red-500/30 rounded-lg">환각 감점</span>
-                                <span className="text-white/40">−</span>
-                                <span className="px-3 py-1.5 bg-red-500/30 rounded-lg">미존재 감점</span>
+                                <span className="px-3 py-1.5 bg-red-100 text-red-600 rounded-lg font-bold">미존재 감점</span>
                             </div>
                         </div>
                     </div>
