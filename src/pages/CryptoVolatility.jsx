@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
+import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 
@@ -88,8 +89,6 @@ const CRYPTO_CONTRIBUTIONS = [
 ];
 
 const SECTIONS = [
-    { id: 'slides', label: 'Presentation Slides', highlight: true },
-    { id: 'paper', label: 'Research Paper', highlight: true },
     { id: 'background', label: 'Research Background' },
     { id: 'price-trend', label: 'Bitcoin Price Trend' },
     { id: 'log-returns', label: 'Daily Log Returns' },
@@ -103,6 +102,7 @@ const SECTIONS = [
     { id: 'conclusion', label: 'Conclusion' },
     { id: 'contributions', label: 'My Contributions' },
     { id: 'tech', label: 'Tech Stack' },
+    { id: 'presentation', label: 'Research', highlight: true },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 
@@ -213,9 +213,21 @@ export default function CryptoVolatility() {
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         Comparison and Analysis of Cryptocurrency Volatility Forecast Based on the <span className="text-[#2b4fcb]">GARCH</span> Model
                     </h1>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed">
+                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         5개 GARCH 계열 모형을 비교하여 비트코인 변동성 최적 예측 모형을 탐색하고, 외생변수(Volume+FNG)의 예측력 향상 기여도를 실증 분석
                     </p>
+                    <div className="flex gap-3">
+                        <a href="https://www.notion.so/p-2024-27fbec2d3d51803bada9dcfdb30f8d50" target="_blank" rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-700 transition">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.58 2.36c-.42-.326-.98-.7-2.055-.607L3.48 2.86c-.466.046-.56.28-.374.466zm.793 3.08v13.908c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.167V6.354c0-.606-.233-.933-.746-.886l-15.177.886c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.607.327-1.167.514-1.634.514-.747 0-.933-.234-1.494-.934l-4.577-7.186v6.952l1.447.327s0 .84-1.167.84l-3.22.187c-.093-.187 0-.653.327-.727l.84-.233V9.854L7.46 9.667c-.094-.42.14-1.027.747-1.074l3.453-.233 4.763 7.28V9.107l-1.213-.14c-.094-.514.28-.887.747-.933zM2.4 1.86L15.867.88c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.933.653.933 1.213v16.378c0 1.026-.373 1.634-1.68 1.726L6.933 24.64c-.98.047-1.447-.093-1.96-.747L1.313 19.3c-.56-.747-.793-1.307-.793-1.96V3.54c0-.84.373-1.54 1.88-1.68z"/></svg>
+                            Notion
+                        </a>
+                        <button onClick={() => { const el = document.getElementById('presentation'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-[#e27500] text-white text-sm font-medium rounded-full hover:bg-[#c96600] transition">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            Research
+                        </button>
+                    </div>
                 </motion.div>
 
                 {/* Overview */}
@@ -580,8 +592,6 @@ export default function CryptoVolatility() {
                     </div>
                 </motion.div>
 
-                {/* ═══ PAPER VIEWER ═══ */}
-                <PaperViewer />
 
                 {/* My Contributions */}
                 <motion.div id="contributions" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
@@ -619,6 +629,12 @@ export default function CryptoVolatility() {
                     </div>
                 </motion.div>
 
+                {/* ═══ RESEARCH: Slides + Paper ═══ */}
+                <CollapsibleSection id="presentation" title="Research" subtitle="발표 자료 + 연구 논문">
+                    <CryptoSlideViewer />
+                    <div className="mt-8"><PaperViewer /></div>
+                </CollapsibleSection>
+
                 {/* Retrospective */}
                 <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Retrospective</h2>
@@ -627,38 +643,21 @@ export default function CryptoVolatility() {
                         <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
                             <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-3">핵심 인사이트</p>
                             <ul className="space-y-3 text-sm text-gray-600">
-                                <li className="flex gap-3">
-                                    <span className="font-bold text-gray-900 shrink-0">01</span>
-                                    <span><strong className="text-gray-900">모형 복잡도 ≠ 예측력</strong> — HAR-TGARCH-X(가장 복잡한 모형)가 항상 최적은 아니었음. 시장 구간에 따라 단순한 GARCH(1,1)이 더 나은 경우도 있어, 모형 선택은 데이터 특성에 따라 달라져야 한다는 것을 실험으로 확인</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="font-bold text-gray-900 shrink-0">02</span>
-                                    <span><strong className="text-gray-900">FNG 지수의 유의미한 상관</strong> — BTC와 FNG의 상관계수 0.72(p &lt; 2.2e-16)를 확인하며, 감성 지표가 실제 변동성 예측에 활용 가능하다는 통계적 근거를 확보. 반면 KOSPI, NASDAQ과는 무상관(-0.03, -0.05)</span>
-                                </li>
-                                <li className="flex gap-3">
-                                    <span className="font-bold text-gray-900 shrink-0">03</span>
-                                    <span><strong className="text-gray-900">레버리지 효과 실증</strong> — TGARCH의 비대칭 파라미터 &gamma; = 0.099로, 하락 시 변동성이 상승 시보다 약 10% 더 크다는 것을 정량적으로 확인. 이 발견이 이후 개인 프로젝트(CryptoVol Dashboard)의 모형 선택 근거가 됨</span>
-                                </li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">01</span><span><strong className="text-gray-900">모형 복잡도 ≠ 예측력</strong> — HAR-TGARCH-X가 항상 최적은 아니었음. 시장 구간에 따라 GARCH(1,1)이 더 나은 경우도 존재.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">FNG 지수의 유의미한 상관</strong> — BTC-FNG 상관 0.72(p &lt; 2.2e-16). 감성 지표의 예측력 통계적 근거 확보.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">03</span><span><strong className="text-gray-900">레버리지 효과 실증</strong> — TGARCH γ=0.099, 하락 시 변동성이 상승보다 약 10% 더 큼. CryptoVol Dashboard 모형 선택 근거.</span></li>
                             </ul>
                         </div>
                         <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
                             <p className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-3">아쉬운 점 & 다음에 하고 싶은 것</p>
                             <ul className="space-y-2 text-sm text-gray-600">
-                                <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>BTC 단일 코인 분석 — ETH, SOL 등 멀티코인으로 확장하면 상관 구조와 분산 효과를 분석할 수 있었을 것 (이후 개인 프로젝트에서 실현)</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>Out-of-sample 검증 미흡 — 특정 시장 구간(2021 강세장, 2022 약세장)에서의 모형 강건성 비교를 더 체계적으로 수행했다면 설득력이 높아졌을 것</span>
-                                </li>
+                                <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">-</span><span>BTC 단일 코인 → 멀티코인 확장 (이후 개인 프로젝트에서 실현)</span></li>
+                                <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">-</span><span>Out-of-sample 검증 미흡 — 강세장/약세장 구간별 강건성 비교 필요</span></li>
                             </ul>
                         </div>
                     </div>
                 </motion.div>
 
-                {/* ═══ PRESENTATION SLIDES ═══ */}
-                <CryptoSlideViewer />
             </div>
             <ScrollToTop />
             <SectionDotNav sections={SECTIONS} />
