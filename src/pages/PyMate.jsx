@@ -122,6 +122,7 @@ const SECTIONS = [
     { id: 'contributions', label: 'My Contributions' },
     { id: 'challenges', label: 'Technical Challenges' },
     { id: 'tech', label: 'Tech Stack' },
+    { id: 'demo', label: 'Demo', highlight: true },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 

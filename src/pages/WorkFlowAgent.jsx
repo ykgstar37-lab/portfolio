@@ -147,6 +147,7 @@ const SECTIONS = [
     { id: 'challenges', label: 'Technical Challenges' },
     { id: 'team', label: 'Team' },
     { id: 'tech', label: 'Tech Stack' },
+    { id: 'demo', label: 'Demo', highlight: true },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 
