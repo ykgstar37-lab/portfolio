@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
+import CollapsibleSection from '../components/CollapsibleSection';
 // Demo video hosted on Google Drive
 import SectionDotNav from '../components/SectionDotNav';
 
@@ -679,9 +680,7 @@ export default function WorkFlowAgent() {
                 </motion.div>
 
                 {/* Demo Video */}
-                <motion.div id="demo" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Demo</h2>
-                    <p className="text-gray-500 mb-6">시연 영상</p>
+                <CollapsibleSection id="demo" title="Demo" subtitle="시연 영상">
                     <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
                         <iframe
                             src="https://drive.google.com/file/d/1n2zznBdBTmiGNfgR_Ny88n_0AKZxUYrA/preview"
@@ -690,7 +689,7 @@ export default function WorkFlowAgent() {
                             allowFullScreen
                         />
                     </div>
-                </motion.div>
+                </CollapsibleSection>
 
                 {/* Retrospective */}
                 <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

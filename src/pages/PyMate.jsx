@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
+import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
 
 
@@ -625,6 +626,18 @@ export default function PyMate() {
                         />
                     </div>
                 </motion.div>
+
+                {/* Demo Video */}
+                <CollapsibleSection id="demo" title="Demo" subtitle="시연 영상">
+                    <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-sm bg-black" style={{ aspectRatio: '16/9' }}>
+                        <iframe
+                            src="https://drive.google.com/file/d/19KFOQ6v96QwSp7D-P9iMM6ebjXQHxQpn/preview"
+                            className="w-full h-full"
+                            allow="autoplay"
+                            allowFullScreen
+                        />
+                    </div>
+                </CollapsibleSection>
 
                 {/* Feature Details — 시연영상에서 확인 가능한 기능 상세 설명 */}
                 <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

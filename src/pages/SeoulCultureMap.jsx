@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
+import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
 
 import cmMain from '../assets/culturemap/culturemap-main.png';
@@ -150,17 +151,15 @@ const SECTIONS = [
     { id: 'clustering', label: 'K-means Clustering' },
     { id: 'data', label: 'Data Sources' },
     { id: 'tech', label: 'Tech Stack' },
-    { id: 'retrospective', label: 'Retrospective', highlight: true },
     { id: 'screenshots', label: 'Screenshots', highlight: true },
+    { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 
 function ScreenshotGallery() {
     const [selected, setSelected] = useState(null);
 
     return (
-        <motion.div id="screenshots" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Screenshots</h2>
-            <p className="text-gray-500 mb-8">서비스 주요 화면 미리보기</p>
+        <CollapsibleSection id="screenshots" title="Screenshots" subtitle="서비스 주요 화면 미리보기">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {SCREENSHOTS.map((shot, idx) => (
                     <motion.div
@@ -218,7 +217,7 @@ function ScreenshotGallery() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.div>
+        </CollapsibleSection>
     );
 }
 
