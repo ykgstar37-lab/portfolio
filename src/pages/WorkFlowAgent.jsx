@@ -173,9 +173,16 @@ export default function WorkFlowAgent() {
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Team — 3팀 (4명)</span>
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.02 — 2026.03</span>
                     </div>
-                    <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                        WorkFlow Agent <span className="text-[#5f7f95]">(듀듀)</span>
-                    </h1>
+                    <div className="flex items-center justify-between gap-4 mb-3">
+                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
+                            WorkFlow Agent <span className="text-[#5f7f95]">(듀듀)</span>
+                        </h1>
+                        <button onClick={() => { const el = document.getElementById('demo'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-2.5 bg-[#e27500] text-white text-sm font-bold rounded-full hover:bg-[#c96600] transition shadow-lg">
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            Demo
+                        </button>
+                    </div>
                     <p className="text-xl text-[#5f7f95] font-semibold mb-6 tracking-tight">
                         "하나의 채팅으로 업무의 모든 것을"
                     </p>
