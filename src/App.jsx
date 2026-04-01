@@ -4,6 +4,7 @@ import { SiNotion } from 'react-icons/si';
 import { HiAcademicCap, HiDesktopComputer } from 'react-icons/hi';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import profileImg from './assets/profile.jpg';
+import ScrollToTop from './components/ScrollToTop';
 import thumbCrypto from './assets/thumb_crypto.png';
 import thumbSeoul from './assets/thumb_seoul.png';
 import thumbCryptoVol from './assets/cryptovol.gif';
@@ -725,6 +726,7 @@ function HomePage() {
                     </div>
                 </div>
             </footer>
+            <ScrollToTop />
         </div>
     );
 }

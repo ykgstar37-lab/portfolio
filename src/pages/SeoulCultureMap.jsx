@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
+import ScrollToTop from '../components/ScrollToTop';
 import SectionDotNav from '../components/SectionDotNav';
 
 import cmMain from '../assets/culturemap/culturemap-main.png';
@@ -621,6 +622,7 @@ export default function SeoulCultureMap() {
                 <ScreenshotGallery />
 
             </div>
+            <ScrollToTop />
             <SectionDotNav sections={SECTIONS} />
             <FloatingNav />
         </div>

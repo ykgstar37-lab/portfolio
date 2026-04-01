@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
+import ScrollToTop from '../components/ScrollToTop';
 import SectionDotNav from '../components/SectionDotNav';
 
 import cvMain from '../assets/cryptovol/cryptovol-main.png';
@@ -544,6 +545,7 @@ export default function CryptoVolDashboard() {
                 <ScreenshotGallery />
 
             </div>
+            <ScrollToTop />
             <SectionDotNav sections={SECTIONS} />
             <FloatingNav />
         </div>

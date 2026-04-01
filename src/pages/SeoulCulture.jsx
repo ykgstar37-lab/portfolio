@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
+import ScrollToTop from '../components/ScrollToTop';
 import SectionDotNav from '../components/SectionDotNav';
 import { MapContainer, TileLayer, CircleMarker, Tooltip as LeafletTooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -839,6 +840,7 @@ export default function SeoulCulture() {
                 <div id="slides"><SlideViewer /></div>
 
             </div>
+            <ScrollToTop />
             <SectionDotNav sections={SECTIONS} />
             <FloatingNav />
         </div>

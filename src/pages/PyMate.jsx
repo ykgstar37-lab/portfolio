@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
+import ScrollToTop from '../components/ScrollToTop';
 import SectionDotNav from '../components/SectionDotNav';
 
 // Screenshots
@@ -681,6 +682,7 @@ export default function PyMate() {
                 </motion.div>
 
             </div>
+            <ScrollToTop />
             <SectionDotNav sections={SECTIONS} />
             <FloatingNav />
         </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
+import ScrollToTop from '../components/ScrollToTop';
 import SectionDotNav from '../components/SectionDotNav';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 
@@ -659,6 +660,7 @@ export default function CryptoVolatility() {
                 {/* ═══ PRESENTATION SLIDES ═══ */}
                 <CryptoSlideViewer />
             </div>
+            <ScrollToTop />
             <SectionDotNav sections={SECTIONS} />
             <FloatingNav />
         </div>
