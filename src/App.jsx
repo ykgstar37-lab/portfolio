@@ -135,12 +135,12 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 
 /* ── Shared project data (single source of truth) ── */
 const ALL_PROJECTS = [
-    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'P학기 GARCH 팀 프로젝트를 확장한 실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 풀스택 대시보드. 5개 GARCH 모형, Monte Carlo 포트폴리오 시뮬레이터, AI 시장 브리핑, 매매 시그널 적중률 추적, 인터랙티브 백테스트 포함.', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
-    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '학술제 팀 프로젝트(서울시 문화시설 분석)를 확장한 인터랙티브 문화시설 탐색 맵. Leaflet 지도 위 2,500+ 시설 탐색, K-means 군집분석, 관광 목적별 AI 코스 추천 포함.', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
-    { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'LangGraph 기반 멀티 Agent 시스템으로, 사내 규정 판단·문서 처리·일정 관리를 자연어로 통합 자동화하는 프라이빗 AI 어시스턴트', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
-    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: '부트캠프 강의 자료와 Python 공식 문서 기반 RAG AI 학습 튜터. Flask MVP에서 Django 프로덕션까지 확장하고 AWS에 배포했습니다.', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
-    { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'GARCH, TGARCH, HAR-GARCH, HAR-TGARCH, HAR-TGARCH-X 5개 모형을 비교하여 비트코인 변동성 최적 예측 모형을 탐색했습니다.', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
-    { id: '06', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '서울특별시 25개 자치구의 관광 시설 현황을 조사·분석하고 군집분석을 통해 관광 목적에 맞는 지역구를 제안했습니다.', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
+    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'GARCH 적합 연산(수백ms) 지연 → 5분 TTL 캐싱 + 에러 격리로 5개 모형 안정 서빙(14 REST + 1 WS). WebSocket 릴레이로 API 키 노출 차단, 1개 모형 실패가 전체 장애로 번지지 않는 설계.', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, AI 코스 추천까지 연결한 풀스택 서비스.', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70%→97%, 판단 정확도 37%→85%. 공통 LLM 모듈로 provider 전환 설정 1줄.', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
+    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. 768D→3,072D 교체로 Precision 0.83→0.97(+14.4%), Reranker 경량화로 레이턴시 -1초. Flask→Django 프로덕션 표준화.', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
+    { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
+    { id: '06', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
 ];
 const DEV_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Dev');
 const STAT_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Data');
@@ -209,8 +209,8 @@ const PROBLEM_SOLVING_CASES = [
         num: '01',
         tag: 'CryptoVol Dashboard',
         tagColor: '#2b4fcb',
-        title: '분석 코드를 실시간 API로 전환하며 서비스 관점의 설계를 체득',
-        problem: 'Jupyter에서 수동 실행하던 GARCH 변동성 예측 모형을 API로 서빙하려니, 적합(fit) 연산이 수백ms — 동시 요청 시 응답 지연 발생. 프론트엔드에서 Binance WebSocket 직접 연결 시 CORS 차단과 API 키 노출 문제.',
+        title: '분석 모형을 실시간 서빙 API로 전환하며 모델 서빙 설계를 체득',
+        problem: 'GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 모델 재계산 비용이 높아 서빙 안정성 확보가 핵심 과제.',
         solutions: [
             '5분 TTL 인메모리 캐싱 + 120일 윈도우 제한으로 GARCH 재계산 방지. 개별 모형 실패 시 0.0 반환으로 에러 격리',
             'FastAPI WebSocket 릴레이 서버 구현 — Set 기반 클라이언트 추적으로 Binance 스트림을 브라우저에 브로드캐스트',
@@ -218,11 +218,11 @@ const PROBLEM_SOLVING_CASES = [
         ],
         results: [
             { label: 'Endpoints', value: '14 REST + 1 WS' },
-            { label: 'Coins', value: 'BTC / ETH / SOL' },
-            { label: 'Deploy', value: 'Render + Vercel' },
+            { label: '에러 격리', value: '1개 실패 ≠ 전체 장애' },
+            { label: '보안', value: 'API 키 노출 차단' },
         ],
-        insight: '"분석할 수 있다"와 "API로 서빙할 수 있다"는 완전히 다른 설계 관점이 필요하다는 것을 체감',
-        keywords: ['#캐싱전략', '#WebSocket', '#실시간시스템', '#에러격리'],
+        insight: '"모델을 만드는 것"과 "모델을 안정적으로 서빙하는 것"은 완전히 다른 설계 관점 — 캐싱, 에러 격리, 보안 아키텍처가 서빙 안정성의 핵심',
+        keywords: ['#모델서빙', '#캐싱전략', '#추론최적화', '#에러격리'],
     },
     {
         id: 'migration',
@@ -239,9 +239,9 @@ const PROBLEM_SOLVING_CASES = [
         results: [
             { label: 'Context Precision', value: '0.83 → 0.97' },
             { label: 'Context Recall', value: '0.70 → 0.79' },
-            { label: 'Infra', value: 'AWS 배포 안정화' },
+            { label: '병목 재정의', value: 'LLM이 아닌 embedding' },
         ],
-        insight: '"기능을 더 만드는 것"보다 "구조를 바꾸는 것"이 서비스 품질에 더 큰 영향을 준다는 판단 기준을 획득',
+        insight: 'RAGAS로 검색·생성을 분리 측정하여 병목이 "LLM 답변 능력"이 아닌 "embedding 검색 품질"임을 특정 — 구조를 바꾸는 것이 기능 추가보다 서비스 품질에 큰 영향',
         keywords: ['#프레임워크마이그레이션', '#인프라설계', '#RAG품질', '#배포안정화'],
     },
     {
@@ -249,20 +249,20 @@ const PROBLEM_SOLVING_CASES = [
         num: '03',
         tag: 'WorkFlow Agent',
         tagColor: '#e27500',
-        title: 'LLM 출력을 맹신하지 않는 서버 검증 시스템 설계',
-        problem: 'sLLM(Kanana-1.5-8B)이 confidence 0.95를 출력해도 존재하지 않는 조항을 인용(환각)하거나 오답을 반환. 기본 판단 정확도 37.2%. LoRA v2에서 98건 추가 보강 시 오히려 -3.2%p 하락 — 라벨 오염.',
+        title: 'vLLM 기반 sLLM 서빙과 출력 검증 시스템 설계',
+        problem: 'Base 모델에 "인턴에게 AWS 접근 권한을 줘도 되나요?" 질의 시, "yes"(오답) + confidence 0.92(과신) + "제12조"(미존재 조항 환각) 반환. 기본 정확도 37.2%. LoRA v2에서 98건 추가 시 오히려 -3.2%p 하락 — 라벨 오염.',
         solutions: [
             '4중 Guardrail — 키워드 매칭(0~1.0), 조항 존재 검증(환각 플래그), 카테고리 제한, 일관성 모니터링(500건 FIFO 캐싱)',
-            '5-factor Confidence 보정 공식으로 LLM 과신 보정 (Hard Cap: RAG 품질 < 0.2 → max 0.4)',
+            '5-factor Confidence 보정으로 과신 차단 (Hard Cap: RAG 품질 < 0.2 → max 0.4). 동일 쿼리에서 "conditional"(정답) + confidence 0.78(적절) + 실존 조항 2건 + 조건/대안 제시로 개선',
             'LoRA v3 — 19건만 약점(재량 표현 14 + 경계 케이스 5)을 정밀 타겟팅하여 회복',
         ],
         results: [
             { label: '판단 정확도', value: '37% → 85%' },
-            { label: 'JSON 유효율', value: '70% → 97%' },
-            { label: 'RAG MRR', value: '0.63 → 0.95' },
+            { label: '환각 → 실존 근거', value: '미존재 조항 → 실존 2건' },
+            { label: '외부 의존 제거', value: 'GPT → 프라이빗 sLLM' },
         ],
-        insight: '"데이터 양 < 데이터 질" — 98건 무작위 추가보다 19건 정밀 타겟팅이 효과적. LLM 서비스에서 서버 단 검증이 핵심',
-        keywords: ['#LLM신뢰성', '#Guardrail', '#데이터품질', '#파인튜닝'],
+        insight: '같은 쿼리에서 Base는 오답+환각+과신, LoRA+Guardrail은 정답+실존근거+적절한 confidence. GPT 의존을 vLLM 프라이빗 서빙으로 전환하여 비용 제거 + 데이터 보안 확보',
+        keywords: ['#vLLM서빙', '#LLM신뢰성', '#Guardrail', '#LoRA파인튜닝'],
     },
 ];
 
@@ -448,7 +448,7 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium">
-                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, a Server Developer
+                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an AI Engineer
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -482,11 +482,11 @@ function HomePage() {
                                 {/* Hover overlay - hidden on mobile (no hover) */}
                                 <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
                                     <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">Server Developer</span>
+                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">AI Engineer</span>
                                         <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Building reliable server systems with statistical thinking</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Building reliable AI serving systems with ML infrastructure</p>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {['Python', 'FastAPI', 'PostgreSQL', 'Redis'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                            {['Python', 'vLLM', 'FastAPI', 'Docker'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                         </div>
                                     </div>
                                 </div>
@@ -505,16 +505,16 @@ function HomePage() {
                             <div>
                                 <p className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">About Me</p>
                                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                                    Building<br /><span className="text-gray-400">Reliable</span> Servers
+                                    Building<br /><span className="text-gray-400">Reliable</span> AI Systems
                                 </h2>
                             </div>
                             <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                응용통계학과에서 가설 검정, 회귀분석, 시계열 분석 등 데이터 기반 의사결정의 기초를 다지고, AI Camp에서 현직자분들과 LLM·RAG 기반 실전 프로젝트를 경험하며 서버 개발자로 성장했습니다. 통계 모형(GARCH, K-means)을 직접 API로 서빙한 경험이 있어, 모형의 불확실성을 이해하고 이를 서버 설계(캐싱, 에러 격리, 검증 시스템)로 보완할 수 있습니다.
+                                응용통계학과에서 데이터 기반 의사결정의 기초를 다지고, AI Camp에서 LLM·RAG 기반 실전 프로젝트를 경험하며 AI 엔지니어로 성장했습니다. vLLM으로 sLLM(Kanana-1.5-8B)을 서빙하고, GARCH 모형을 실시간 API로 전환한 경험이 있어, 모델 서빙의 성능 최적화와 안정적 운영에 대한 실전 감각을 갖추고 있습니다.
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                {['Python', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker', 'AWS', 'SQLAlchemy', 'React'].map(tech => (
+                                {['Python', 'vLLM', 'FastAPI', 'Docker', 'AWS', 'LangGraph', 'PostgreSQL', 'React'].map(tech => (
                                     <motion.span key={tech} whileHover={{ scale: 1.08, y: -2 }}
-                                        className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition ${['Python', 'FastAPI', 'PostgreSQL', 'Redis'].includes(tech) ? 'bg-[#e27500] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                                        className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition ${['Python', 'vLLM', 'FastAPI', 'Docker'].includes(tech) ? 'bg-[#e27500] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
                                     >{tech}</motion.span>
                                 ))}
                             </div>
@@ -524,7 +524,7 @@ function HomePage() {
                         <motion.div variants={fadeUp} custom={1} className="lg:col-span-4 space-y-4">
                             <TiltCard className="bg-gradient-to-br from-[#1a1a1a] to-[#333333] p-8 rounded-3xl text-white">
                                 <p className="text-5xl font-light mb-2">100%</p>
-                                <p className="text-gray-400 text-sm font-semibold tracking-wider uppercase">Dedication to<br />Stable Systems</p>
+                                <p className="text-gray-400 text-sm font-semibold tracking-wider uppercase">Dedication to<br />Reliable AI Serving</p>
                             </TiltCard>
 
                             <TiltCard className="bg-white p-7 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
@@ -562,7 +562,7 @@ function HomePage() {
                                 {/* Right column (or full width on desktop) */}
                                 <div className="flex-1">
                                     <h3 className="text-sm font-bold text-gray-900 mb-4 tracking-wider uppercase">Core Strength</h3>
-                                    {['Problem Solving', 'API & Server Design', 'Data Pipeline', 'Statistical Thinking'].map((item, i) => (
+                                    {['Model Serving & Optimization', 'LLM/RAG System Design', 'Problem Solving', 'Statistical Thinking'].map((item, i) => (
                                         <motion.div key={i} whileHover={{ x: 4 }} className="flex items-center gap-3 py-2.5 cursor-default">
                                             <div className="w-6 h-6 rounded-full bg-[#e27500] text-white flex items-center justify-center flex-shrink-0 shadow-sm shadow-[#e27500]/30">
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>

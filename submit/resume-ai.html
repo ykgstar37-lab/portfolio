@@ -129,11 +129,11 @@ li strong { color: #1a1a1a; }
   <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM</a></div>
   <div class="project-desc">LangGraph 기반 멀티 Agent 시스템. GPT/Claude API → vLLM + LoRA 핫스왑으로 프라이빗 sLLM 전환. 담당: Judgment Agent 서빙 안정성, 9단계 RAG, LoRA 4개 어댑터 파인튜닝.</div>
   <ul>
-    <li><strong>문제 정의:</strong> 처음엔 "GPT를 sLLM으로 교체하면 된다"고 생각했으나, JSON 유효율 70%, 환각, LoRA 4개 동시 관리라는 구조적 문제 발견 → "모델 성능"이 아닌 <strong>"서빙 안정성"</strong> 문제로 재정의.</li>
-    <li><strong>Solution:</strong> 공통 LLM 모듈 설계로 provider만 교체하면 GPT/Claude/vLLM 전환 가능. 프롬프트 최적화 + 출력 포맷 단순화 + fallback으로 JSON 안정성 확보. 4중 Guardrail + 5-factor Confidence 보정으로 서빙 신뢰성 확보.</li>
-    <li><strong>Result:</strong> JSON 유효율 70%→97% · 판단 정확도 37%→85% · RAG MRR 0.63→0.95 · LoRA 4개 어댑터 관리(판단/문서/Planner/Intent).</li>
+    <li><strong>문제 정의:</strong> Base 모델에 "인턴에게 AWS 접근 권한을 줘도 되나요?" 질의 시 "yes"(오답) + confidence 0.92(과신) + "제12조"(미존재 조항 환각). JSON 유효율 70%. → "모델 성능"이 아닌 <strong>"서빙 안정성"</strong> 문제로 재정의.</li>
+    <li><strong>Solution:</strong> 4중 Guardrail + 5-factor Confidence 보정. 동일 쿼리에서 "conditional"(정답) + confidence 0.78(적절) + 실존 조항 2건 + 조건·대안 제시로 개선. 공통 LLM 모듈로 GPT/Claude/vLLM 전환 1줄.</li>
+    <li><strong>Result:</strong> 판단 정확도 37%→85% · 환각(미존재 조항) → 실존 근거 인용 · JSON 유효율 70%→97% · GPT 의존 제거 → vLLM 프라이빗 서빙(비용 절감 + 데이터 보안).</li>
   </ul>
-  <div class="retro">이 경험을 통해 sLLM 서빙에서는 모형 성능 자체보다 서빙 안정성(JSON 파싱, 에러 핸들링, fallback)이 더 중요하다는 것을 배웠습니다. 또한 공통 LLM 모듈을 설계하여 provider 전환 비용을 최소화할 수 있었습니다.</div>
+  <div class="retro">sLLM 서빙에서는 모형 성능 자체보다 서빙 안정성(JSON 파싱, 에러 핸들링, fallback)이 더 중요. 공통 LLM 모듈 설계로 GPT→vLLM 전환 비용을 최소화하고, 외부 LLM 출력을 서버가 검증하는 설계 원칙을 확립했습니다.</div>
   <div class="project-tags"><span class="tag hl">vLLM</span><span class="tag hl">LoRA</span><span class="tag">LangGraph</span><span class="tag">Qdrant</span><span class="tag">KoELECTRA</span><span class="tag">FastAPI</span><span class="tag">SSE</span><span class="tag">RunPod A100</span><span class="tag">Docker</span></div>
 </div>
 
@@ -148,9 +148,9 @@ li strong { color: #1a1a1a; }
   <ul>
     <li><strong>문제 정의:</strong> RAG 품질이 낮은 원인을 처음엔 "LLM 답변 능력"으로 추정 → RAGAS로 검색/생성 분리 측정한 결과, 병목은 <strong>embedding 검색 품질</strong>이라고 재정의.</li>
     <li><strong>Solution:</strong> text-embedding-3-large(3,072D)로 교체 → Qdrant 벡터 DB 재설계. Reranker를 cross-encoder/ms-marco-MiniLM-L6-v2로 경량화하여 레이턴시 -1초. 한국어 벡터 검색 정확도 향상을 위해 이중 쿼리(KO+EN) 전략 도입.</li>
-    <li><strong>Result:</strong> Context Precision 0.83→0.97(+14.4%) · Context Recall 0.70→0.79(+12.7%) · Reranker 레이턴시 -1초 · SSE 스트리밍으로 실시간 응답.</li>
+    <li><strong>Result:</strong> Context Precision 0.83→0.97(+14.4%) · Context Recall 0.70→0.79(+12.7%) · Reranker 레이턴시 -1초 · RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의.</li>
   </ul>
-  <div class="retro">RAG 품질의 핵심은 LLM이 아니라 embedding 모형과 검색 품질에 있다는 것을 체감했습니다. 차원 교체(768D→3072D)만으로 Precision이 14%p 향상되었고, 서빙할 모형의 선택이 곧 전체 성능을 좌우한다는 것을 배웠습니다.</div>
+  <div class="retro">RAGAS로 검색·생성을 분리 측정하여 병목이 "LLM 답변 능력"이 아닌 "embedding 검색 품질"임을 특정. 서빙할 모형 선택이 곧 전체 성능 — 구조를 바꾸는 것이 기능 추가보다 서비스 품질에 큰 영향을 준다는 판단 기준을 획득.</div>
   <div class="project-tags"><span class="tag hl">Qdrant</span><span class="tag hl">text-embedding-3-large</span><span class="tag">LangChain</span><span class="tag">cross-encoder Reranker</span><span class="tag">RAGAS</span><span class="tag">Django</span><span class="tag">SSE</span><span class="tag">Docker</span><span class="tag">AWS EC2</span></div>
 </div>
 
@@ -165,9 +165,9 @@ li strong { color: #1a1a1a; }
   <ul>
     <li><strong>Problem:</strong> GARCH 적합 연산 수백ms — 동시 요청 시 응답 지연. 5개 모형 중 일부 실패 시 전체 응답 깨짐.</li>
     <li><strong>Solution:</strong> 5분 TTL 인메모리 캐싱 + 120일 윈도우 제한. 개별 모형 실패 시 0.0 반환으로 에러 격리. APScheduler 자동 수집으로 rate limit 우회.</li>
-    <li><strong>Result:</strong> 14 REST + 1 WS 엔드포인트 · 5개 모형 동시 서빙 · BTC/ETH/SOL 3코인 실시간.</li>
+    <li><strong>Result:</strong> 14 REST + 1 WS 엔드포인트 · 1개 모형 실패 ≠ 전체 장애(에러 격리) · WebSocket 릴레이로 API 키 노출 차단.</li>
   </ul>
-  <div class="retro">모형 서빙에서 "하나의 모형 실패가 전체를 깨뜨리지 않는" 에러 격리의 중요성을 실감했습니다. 이 원칙은 LLM 서빙에서도 동일하게 적용될 수 있다고 생각합니다.</div>
+  <div class="retro">"하나의 모형 실패가 전체를 깨뜨리지 않는" 에러 격리 원칙을 확립. 외부 스트림을 서버가 중계하여 보안을 확보하는 릴레이 패턴을 체득. 이 원칙들은 LLM 서빙에서도 동일하게 적용 가능.</div>
   <div class="project-tags"><span class="tag">FastAPI</span><span class="tag">WebSocket</span><span class="tag">APScheduler</span><span class="tag">arch(GARCH)</span><span class="tag">SQLite</span></div>
 </div>
 

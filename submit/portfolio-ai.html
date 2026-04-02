@@ -393,10 +393,10 @@ section { padding: 5rem 0; }
     <div class="subsection">
       <div class="subsection-title">My Contributions</div>
       <div class="cards-grid-2">
-        <div class="card"><h4>Judgment Agent 서버 검증 시스템</h4><p>4중 Guardrail + 5-factor Confidence 보정으로 LLM 환각을 서버에서 차단</p></div>
-        <div class="card"><h4>RAG 파이프라인 전체 설계</h4><p>Qdrant + BM25 + HyDE + RRF + Reranker 9단계 하이브리드 검색</p></div>
-        <div class="card"><h4>LoRA 파인튜닝 + 데이터 구축</h4><p>3,468건 학습 데이터 구축. v2 실패→v3 정밀 타겟팅 회복 경험</p></div>
-        <div class="card"><h4>쿼리 정제 모듈</h4><p>동의어 확장, 구어→문어 변환, 형태소 기반 전처리</p></div>
+        <div class="card"><h4>Judgment Agent 서빙 검증 시스템</h4><p>환각으로 정확도 37% → 4중 Guardrail + 5-factor Confidence 보정 적용 → 정확도 85%로 개선</p></div>
+        <div class="card"><h4>RAG 파이프라인 설계</h4><p>MRR 0.63 정체 → Qdrant + BM25 + HyDE + RRF + Reranker 9단계 하이브리드 검색 → MRR 0.95 달성</p></div>
+        <div class="card"><h4>LoRA 파인튜닝 데이터 품질 실험</h4><p>v2에서 98건 무작위 추가 시 -3.2%p 하락 → v3에서 19건 정밀 타겟팅으로 회복. "데이터 양 < 질" 검증</p></div>
+        <div class="card"><h4>JSON 유효율 안정화</h4><p>sLLM 출력 JSON 유효율 70% → 프롬프트 최적화 + 출력 포맷 단순화 + fallback 로직 → 97% 달성</p></div>
       </div>
     </div>
 
@@ -631,10 +631,10 @@ section { padding: 5rem 0; }
     <div class="subsection">
       <div class="subsection-title">Key Features</div>
       <div class="cards-grid-2">
-        <div class="card"><h4>실시간 멀티코인 변동성 예측</h4><p>BTC/ETH/SOL 3코인. 5개 GARCH 모형 자동 서빙.</p></div>
-        <div class="card"><h4>매매 시그널 + 적중률 추적</h4><p>FNG + GARCH + 모멘텀 결합. 60일 적중률 히스토리.</p></div>
-        <div class="card"><h4>Monte Carlo 포트폴리오</h4><p>1,000 시나리오 시뮬레이션. VaR, Sharpe Ratio 제공.</p></div>
-        <div class="card"><h4>인터랙티브 백테스트</h4><p>MSE, RMSE, MAE, MAPE, R² 모형별 비교.</p></div>
+        <div class="card"><h4>5개 모형 동시 서빙</h4><p>개별 모형 실패 시 0.0 반환으로 에러 격리 — 하나의 실패가 전체 응답을 깨뜨리지 않는 구조.</p></div>
+        <div class="card"><h4>매매 시그널 적중률 추적</h4><p>FNG + GARCH + 모멘텀 3요소 결합. 60일 롤링 적중률로 시그널 신뢰도를 정량 검증.</p></div>
+        <div class="card"><h4>모형 고정 대신 롤링 리더보드</h4><p>시장 구간마다 최적 모형이 달라지는 문제 → 60일 롤링 RMSE 기반 실시간 순위로 해결.</p></div>
+        <div class="card"><h4>rate limit 우회 자동 수집</h4><p>CoinGecko 30 req/min 제한 → APScheduler 주기적 수집 + DB 적재로 외부 API 의존도 제거.</p></div>
       </div>
     </div>
 
@@ -780,12 +780,12 @@ section { padding: 5rem 0; }
     <div class="exp-card">
       <div class="exp-num">01</div>
       <span class="exp-tag" style="background:#e8ecfa; color:#2b4fcb;">CryptoVol Dashboard</span>
-      <h3>분석 코드를 실시간 API로 전환하며 서비스 관점의 설계를 체득</h3>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label problem">Problem</div><p>Jupyter에서 수동 실행하던 GARCH 모형을 API로 서빙하려니, 적합 연산이 수백ms — 동시 요청 시 응답 지연 발생. Binance WebSocket 직접 연결 시 CORS 차단과 API 키 노출.</p></div>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label solution">Solution</div><p>5분 TTL 인메모리 캐싱 + 120일 윈도우 제한. FastAPI WebSocket 릴레이 서버 구현. Promise.all로 API 호출 병렬화.</p></div>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label result">Result</div><p>14 REST + 1 WS 엔드포인트 / BTC·ETH·SOL 3코인 / Render + Vercel 배포 완료</p></div>
-      <div class="ps-block"><div class="ps-label insight">Insight</div><p>"분석할 수 있다"와 "API로 서빙할 수 있다"는 완전히 다른 설계 관점이 필요하다는 것을 체감.</p></div>
-      <div class="exp-keywords"><span>#캐싱전략</span><span>#WebSocket</span><span>#실시간시스템</span><span>#에러격리</span></div>
+      <h3>분석 모형을 실시간 서빙 API로 전환하며 모델 서빙 설계를 체득</h3>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label problem">Problem</div><p>GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 모델 재계산 비용이 높아 서빙 안정성 확보가 핵심 과제.</p></div>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label solution">Solution</div><p>5분 TTL 인메모리 캐싱 + 120일 윈도우 제한으로 재계산 방지. FastAPI WebSocket 릴레이 서버 구현. Promise.all로 API 호출 병렬화.</p></div>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label result">Result</div><p>14 REST + 1 WS 엔드포인트 / 1개 모형 실패 ≠ 전체 장애(에러 격리) / WebSocket 릴레이로 API 키 노출 차단</p></div>
+      <div class="ps-block"><div class="ps-label insight">Insight</div><p>"모델을 만드는 것"과 "모델을 안정적으로 서빙하는 것"은 완전히 다른 설계 관점 — 캐싱, 에러 격리, 보안 아키텍처가 서빙 안정성의 핵심.</p></div>
+      <div class="exp-keywords"><span>#모델서빙</span><span>#캐싱전략</span><span>#추론최적화</span><span>#에러격리</span></div>
     </div>
 
     <!-- Case 2 -->
@@ -795,8 +795,8 @@ section { padding: 5rem 0; }
       <h3>Embedding 모형 차원 교체와 Reranker 경량화로 RAG 서빙 품질 최적화</h3>
       <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label problem">Problem</div><p>Embedding 768D에서 Context Precision 0.83 정체. Reranker(BAAI/bge-reranker-v2-m3) 레이턴시가 응답 속도를 저하. Flask MVP의 프로덕션 한계.</p></div>
       <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label solution">Solution</div><p>text-embedding-3-large(3,072D)로 교체 + Qdrant 재설계. Reranker를 cross-encoder/ms-marco-MiniLM-L6-v2로 경량화하여 레이턴시 -1초. 이중 쿼리(KO+EN) 전략으로 recall 개선.</p></div>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label result">Result</div><p>Context Precision 0.83→0.97(+14.4%) / Context Recall 0.70→0.79(+12.7%) / Reranker 레이턴시 -1초 / AWS 배포 안정화</p></div>
-      <div class="ps-block"><div class="ps-label insight">Insight</div><p>RAG 품질의 핵심은 LLM이 아니라 embedding 모형과 검색 품질. 서빙할 모형 선택이 곱 성능 — 차원 교체만으로 Precision 14%p 향상.</p></div>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label result">Result</div><p>Context Precision 0.83→0.97(+14.4%) / Context Recall 0.70→0.79(+12.7%) / Reranker 레이턴시 -1초 / 병목 원인을 "LLM"→"embedding 품질"로 재정의</p></div>
+      <div class="ps-block"><div class="ps-label insight">Insight</div><p>RAGAS로 검색·생성을 분리 측정하여 병목이 "LLM 답변 능력"이 아닌 "embedding 검색 품질"임을 특정. 서빙할 모형 선택이 곧 전체 성능 — 구조를 바꾸는 것이 기능 추가보다 서비스 품질에 큰 영향.</p></div>
       <div class="exp-keywords"><span>#Embedding최적화</span><span>#Reranker경량화</span><span>#RAG품질</span><span>#서빙성능튜닝</span></div>
     </div>
 
@@ -804,12 +804,12 @@ section { padding: 5rem 0; }
     <div class="exp-card">
       <div class="exp-num">03</div>
       <span class="exp-tag" style="background:#fff3e6; color:#e27500;">WorkFlow Agent</span>
-      <h3>LLM 출력을 맹신하지 않는 서버 검증 시스템 설계</h3>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label problem">Problem</div><p>sLLM이 confidence 0.95를 출력해도 환각 발생. 기본 판단 정확도 37.2%. LoRA v2에서 98건 추가 보강 시 오히려 -3.2%p 하락 — 라벨 오염.</p></div>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label solution">Solution</div><p>4중 Guardrail + 5-factor Confidence 보정 공식. LoRA v3 — 19건만 약점(재량 표현 14 + 경계 케이스 5)을 정밀 타겟팅하여 회복.</p></div>
-      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label result">Result</div><p>판단 정확도 37% → 85% / JSON 유효율 70% → 97% / RAG MRR 0.63 → 0.95</p></div>
-      <div class="ps-block"><div class="ps-label insight">Insight</div><p>"데이터 양 < 데이터 질" — 98건 무작위 추가보다 19건 정밀 타겟팅이 효과적. LLM 서비스에서 서버 단 검증이 핵심.</p></div>
-      <div class="exp-keywords"><span>#LLM신뢰성</span><span>#Guardrail</span><span>#데이터품질</span><span>#파인튜닝</span></div>
+      <h3>vLLM 기반 sLLM 서빙과 출력 검증 시스템 설계</h3>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label problem">Problem</div><p>Base 모델에 "인턴에게 AWS 접근 권한을 줘도 되나요?" 질의 시, "yes"(오답) + confidence 0.92(과신) + "제12조"(미존재 조항 환각) 반환. 기본 정확도 37.2%. LoRA v2에서 98건 추가 시 -3.2%p 하락 — 라벨 오염.</p></div>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label solution">Solution</div><p>4중 Guardrail + 5-factor Confidence 보정. 동일 쿼리에서 "conditional"(정답) + confidence 0.78(적절) + 실존 조항 2건 + 조건·대안 제시로 개선. LoRA v3는 19건만 약점 정밀 타겟팅.</p></div>
+      <div class="ps-block" style="margin-bottom:0.8rem;"><div class="ps-label result">Result</div><p>판단 정확도 37%→85% / 환각(미존재 조항) → 실존 근거 2건 인용 / GPT API 의존 제거 → vLLM 프라이빗 서빙(비용 절감 + 데이터 보안)</p></div>
+      <div class="ps-block"><div class="ps-label insight">Insight</div><p>같은 쿼리에서 Base는 오답+환각+과신, LoRA+Guardrail은 정답+실존근거+적절한 confidence. 공통 LLM 모듈로 provider 전환 1줄. 외부 LLM 출력을 서버가 검증하는 설계 원칙 확립.</p></div>
+      <div class="exp-keywords"><span>#vLLM서빙</span><span>#LLM신뢰성</span><span>#Guardrail</span><span>#LoRA파인튜닝</span></div>
     </div>
 
   </div>
