@@ -95,6 +95,45 @@ src/
 - **직무 역량 키워드 연결**: 경험을 #문제해결 #데이터분석 #시스템설계 등 역량 키워드와 연결
 - **팀 프로젝트는 기여도 명시**: "팀에서 무엇을 했다"가 아니라 "내가 이 부분을 맡아서 이렇게 해결했다"
 
+### "했다"를 "해결했다"로 바꾸는 규칙 (최우선 적용)
+
+> 모든 텍스트에서 "~개발", "~구현", "~구축", "~설계", "~적용" 문장을 찾아
+> **[상황/문제] → [내가 한 행동] → [결과, 숫자로]** 구조로 변환해야 한다.
+
+**BAD (했다 톤):**
+- "Django REST Framework 기반 퀴즈 API 설계 및 CRUD 구현"
+- "RAG 파이프라인 구축"
+- "Nginx 리버스 프록시 구성"
+
+**GOOD (해결했다 톤):**
+- "단일 퀴즈 형식만 지원하여 학습 다양성 부족 → DRF 기반 3종 퀴즈 API 설계 → 퀴즈 유형 1→3개 확장"
+- "초기 벡터 검색만으로 규정 문서 커버 불가 → HyDE+BM25+RRF+Reranker 파이프라인 → 정밀도 확보"
+- "로컬 코드가 AWS에서 502 에러 → Nginx+Gunicorn 설정 디버깅 → 안정 배포 완료"
+
+**적용 대상 (우선순위):**
+1. CONTRIBUTIONS 배열 desc — 가장 중요. 반드시 [문제→행동→결과] 구조
+2. Hero 설명문 — 한 문장 요약도 [문제→해결→결과 수치] 포함
+3. CHALLENGES 배열 — 이미 Problem/Solution 구조이므로 result 숫자만 보강
+4. 기능 설명 — collapsed 영역이라 우선순위 낮음
+
+### 페이지 구조 — 보이는 것 vs 숨기는 것
+
+**항상 보이게 (visible):**
+- Hero, Problem/Motivation, Technical Decisions (문제→판단 과정)
+- Evaluation & Verification (정량 검증 결과)
+- My Contributions (상황→행동→결과 구조)
+- Technical Challenges (문제→해결)
+- Demo(시연) 또는 Screenshots(스크린샷) — Demo가 없으면 Screenshots
+- Retrospective (핵심 인사이트)
+
+**접어서 숨기기 (CollapsibleSection):**
+- Overview Stats (숫자만 나열)
+- Architecture (시스템 구조도)
+- Tech Stack (기술 뱃지)
+- Key Features (기능 나열)
+- API Endpoints, DB Schema, Data Sources 등 기술 스펙
+- Phase 비교표, 비교 테이블 등 부가 정보
+
 ### 프로젝트 유형별 주의사항
 
 **개인 프로젝트 (CryptoVol Dashboard, Seoul Culture Map)**:

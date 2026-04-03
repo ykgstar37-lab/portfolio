@@ -14,3 +14,8 @@ body {
     background-color: #333;
     color: #fff;
 }
+
+/* README 드로어 내부 카드 모서리 통일 */
+.drawer-content [class*="rounded-2xl"] {
+    border-radius: 1.25rem; /* 20px — 2xl(16px)보다 약간 더 둥글게 */
+}

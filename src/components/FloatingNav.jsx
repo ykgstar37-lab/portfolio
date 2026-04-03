@@ -7,17 +7,17 @@ export default function FloatingNav() {
 
     return (
         <div
-            className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-3 sm:pb-5"
+            className="fixed bottom-0 left-1/2 -translate-x-1/2 z-50 flex justify-center pb-3 sm:pb-5 pointer-events-none"
             onMouseEnter={() => setVisible(true)}
             onMouseLeave={() => setVisible(false)}
             onTouchStart={() => setVisible(v => !v)}
         >
-            {/* Hover trigger zone */}
-            <div className="absolute bottom-0 left-0 right-0 h-12" />
+            {/* Hover trigger zone — 가운데 400px만 */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[400px] h-12 pointer-events-auto" />
 
             {/* Nav bar */}
             <div
-                className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-2 sm:py-2.5 bg-[#1a1a1a] rounded-full shadow-2xl shadow-black/30 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+                className="flex items-center gap-0.5 sm:gap-1 px-2 sm:px-3 py-2 sm:py-2.5 bg-[#1a1a1a] rounded-full shadow-2xl shadow-black/30 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] pointer-events-auto"
                 style={{
                     opacity: visible ? 1 : 0,
                     transform: visible ? 'translateY(0)' : 'translateY(20px)',

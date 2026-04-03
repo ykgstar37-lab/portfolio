@@ -851,6 +851,11 @@ export default function SeoulCulture() {
                                 </li>
                             </ul>
                         </div>
+                        <div className="mt-6 p-6 bg-gray-50 rounded-2xl">
+                            <p className="text-sm text-gray-600 leading-relaxed italic" style={{ wordBreak: 'keep-all' }}>
+                                통계 분석 결과를 시각화하여 발표한 경험이, 이후 Seoul Culture Map 웹 서비스 확장의 출발점이 되었습니다. 데이터는 분석에서 끝나는 것이 아니라 전달될 때 가치가 생긴다는 것을 처음 느낀 프로젝트였습니다.
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
 

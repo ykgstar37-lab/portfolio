@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
-import CollapsibleSection from '../components/CollapsibleSection';
+import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
 
 import cmMain from '../assets/culturemap/culturemap-main.png';
@@ -27,33 +27,38 @@ const PRIMARY = '#0ea5e9';
 const FEATURES = [
     {
         title: 'Culture Map — 인터랙티브 시설 탐색',
-        desc: 'Leaflet 기반 서울시 25개 자치구 지도. 7개 카테고리 시설 마커, 사진+상세 정보 팝업, 즐겨찾기, 밀집도 히트맵, K-means 군집분석 토글.',
+        desc: 'R 분석 결과가 PDF 보고서에 갇혀 상호작용이 불가능한 문제 → Leaflet 기반 25개 자치구 지도에 2,500+ 시설을 7개 카테고리별 마커로 시각화. 밀집도 히트맵 + K-means 군집 토글로 분포 패턴 즉시 파악 가능.',
         icon: '01',
     },
     {
         title: 'Analytics — 지도 위 데이터 분석',
-        desc: '군집분석, 권역별, 카테고리 밀도, 지하철 접근성 4가지 분석 모드를 지도 위에 직접 시각화. 레이더 차트 + 파이 차트 사이드바.',
+        desc: '단순 시설 목록으로는 권역별 분포 불균형을 파악하기 어려운 문제 → 군집분석·권역별·카테고리 밀도·지하철 접근성 4가지 분석 모드를 지도 위에 직접 시각화하여 지역별 문화 접근성 격차를 정량적으로 확인.',
         icon: '02',
     },
     {
-        title: 'Course — 관광 목적별 코스 추천',
-        desc: '공연 중심 / 자연 힐링 / 역사 탐방 / 액티비티 / 문화 예술 5가지 목적 선택 → 맞춤 자치구 Top 5 + AI 코스 추천 (OpenAI 연동).',
+        title: 'AI Chatbot — LangGraph Agent + RAG',
+        desc: '키워드 검색만으로는 "종로 근처 조용한 박물관" 같은 자연어 질문을 처리할 수 없는 문제 → LangGraph 3-node Agent(Intent→Retrieve→Generate) + ChromaDB RAG + SSE 스트리밍 → 요청당 ~$0.003(85% 비용 절감).',
         icon: '03',
     },
     {
         title: 'Favorites — 즐겨찾기 관리',
-        desc: 'Culture Map에서 저장한 시설이 하트 마커로 지도 표시. 클릭 시 해당 위치로 flyTo. localStorage 영구 저장.',
+        desc: '탐색 중 관심 시설을 다시 찾기 어려운 문제 → 하트 마커로 지도 표시 + 클릭 시 해당 위치로 flyTo. localStorage로 영구 저장하여 재방문 시 유지.',
         icon: '04',
     },
     {
         title: '지하철 노선 필터',
-        desc: '19개 노선 필터 + 역 핀 표시. 자치구별 반경 1.5km 내 지하철역 수 시각화 + 접근성 Top 10 랭킹.',
+        desc: '문화시설 접근성이 대중교통 의존도가 높은데 기존 분석에 교통 데이터가 없었던 문제 → 19개 노선 필터 + 반경 1.5km 내 역 수 시각화 + 접근성 Top 10 랭킹으로 교통 편의성 판단 지원.',
         icon: '05',
     },
     {
         title: '자치구 경계선 + 권역 필터',
-        desc: 'GeoJSON 오버레이로 자치구 경계 표시. 서울 5대 권역(도심/동북/서북/서남/동남) 필터링.',
+        desc: 'GeoJSON 오버레이로 행정 경계를 시각화. 서울 5대 권역(도심/동북/서북/서남/동남) 필터링으로 권역 단위 비교 분석 가능.',
         icon: '06',
+    },
+    {
+        title: 'Course — 관광 목적별 코스 추천',
+        desc: '시설 2,500+개가 나열만 되면 선택이 어려운 문제 → 공연·자연·역사·액티비티·문화예술 5가지 목적 선택 시 K-means 결과 + 시설 밀집도 가중치로 자치구 Top 5 자동 추천.',
+        icon: '07',
     },
 ];
 
@@ -63,6 +68,7 @@ const ORIGIN_COMPARISON = [
     { category: '시각화', team: 'ggplot2 정적 차트', personal: 'Leaflet 인터랙티브 맵' },
     { category: '분석', team: 'R 스크립트', personal: '지도 위 실시간 분석 시각화' },
     { category: '결과물', team: 'PDF 보고서', personal: 'React 대시보드 (4개 페이지)' },
+    { category: 'AI', team: '없음', personal: 'LangGraph Agent + ChromaDB RAG + SSE 스트리밍' },
     { category: '배포', team: '로컬 실행', personal: 'Render + Vercel 클라우드' },
 ];
 
@@ -77,7 +83,11 @@ const API_ENDPOINTS = [
     { method: 'GET', path: '/api/subway/stations', desc: '노선별 역 위치 좌표' },
     { method: 'GET', path: '/api/subway/accessibility', desc: '자치구별 지하철 접근성 랭킹' },
     { method: 'GET', path: '/api/analytics/region', desc: '5대 권역별 시설 분포 통계' },
-    { method: 'POST', path: '/api/recommend', desc: 'OpenAI 기반 AI 코스 추천' },
+    { method: 'POST', path: '/api/chat', desc: 'LangGraph AI 챗봇 (JSON 응답)' },
+    { method: 'POST', path: '/api/chat/stream', desc: 'SSE 스트리밍 AI 챗봇 (토큰 단위)' },
+    { method: 'GET', path: '/api/chat/sessions', desc: '채팅 세션 목록 + 메시지 수' },
+    { method: 'GET', path: '/api/chat/history/{id}', desc: '세션별 대화 히스토리' },
+    { method: 'DELETE', path: '/api/chat/sessions/{id}', desc: '채팅 세션 삭제' },
 ];
 
 const CLUSTER_INFO = [
@@ -114,8 +124,8 @@ const CLUSTER_INFO = [
 ];
 
 const TECH_STACK = {
-    'Backend': ['FastAPI', 'SQLAlchemy', 'SQLite', 'scikit-learn', 'OpenAI API', 'httpx'],
-    'Frontend': ['React 19', 'Vite', 'Tailwind CSS v4', 'Leaflet / React-Leaflet', 'Recharts', 'Axios'],
+    'Backend': ['FastAPI', 'SQLAlchemy', 'SQLite', 'LangGraph', 'ChromaDB', 'scikit-learn', 'OpenAI API', 'httpx', 'sse-starlette'],
+    'Frontend': ['React 19', 'Vite', 'Tailwind CSS v4', 'Leaflet / React-Leaflet', 'Recharts', 'Axios', 'react-markdown'],
     'Data': ['서울 열린데이터광장', '한국관광공사 Tour API'],
     'Infra': ['Render', 'Vercel'],
 };
@@ -142,15 +152,12 @@ const SCREENSHOTS = [
 ];
 
 const SECTIONS = [
+    { id: 'goal', label: 'Goal' },
     { id: 'problem', label: 'Problem' },
     { id: 'origin', label: 'Origin Story' },
     { id: 'decisions', label: 'Technical Decisions' },
-    { id: 'architecture', label: 'Architecture' },
-    { id: 'features', label: 'Key Features' },
-    { id: 'api', label: 'API Endpoints' },
-    { id: 'clustering', label: 'K-means Clustering' },
-    { id: 'data', label: 'Data Sources' },
-    { id: 'tech', label: 'Tech Stack' },
+    { id: 'evaluation', label: 'Evaluation' },
+    { id: 'challenges', label: 'Challenges' },
     { id: 'screenshots', label: 'Screenshots', highlight: true },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
@@ -159,7 +166,9 @@ function ScreenshotGallery() {
     const [selected, setSelected] = useState(null);
 
     return (
-        <CollapsibleSection id="screenshots" title="Screenshots" subtitle="서비스 주요 화면 미리보기">
+        <motion.div id="screenshots" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Screenshots</h2>
+            <p className="text-gray-500 mb-8">서비스 주요 화면 미리보기</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {SCREENSHOTS.map((shot, idx) => (
                     <motion.div
@@ -217,7 +226,7 @@ function ScreenshotGallery() {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </CollapsibleSection>
+        </motion.div>
     );
 }
 
@@ -246,14 +255,14 @@ export default function SeoulCultureMap() {
                         <span style={{ color: PRIMARY }}>Seoul</span> Culture Map
                     </h1>
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
-                        서울시 문화시설 인터랙티브 탐색 맵
+                        서울시 2,500+ 문화시설 탐색 + LangGraph AI 챗봇
                     </p>
                     <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        학술제 팀 프로젝트(서울시 25개 자치구 문화·여가시설 분석)를 개인 프로젝트로 확장하여 인터랙티브 웹 서비스로 구현. R 분석 스크립트를 FastAPI + React 풀스택 웹 서비스로 발전시키고, 서울 열린데이터광장 + 한국관광공사 API 실시간 데이터 연동, Leaflet 인터랙티브 맵, K-means 군집분석, AI 코스 추천 등 2,500+ 시설 탐색 대시보드를 구현.
+                        학술제 팀 분석이 PDF 보고서로만 공유되어 일반인이 활용할 수 없는 문제를 해결. 2개 공공API의 좌표 필드·카테고리 코드가 달라 통합이 어려웠지만, 데이터 정규화 파이프라인으로 2,500+ 시설 · 1,177장 이미지를 확보. LangGraph 3-node Agent로 AI 추천 비용을 요청당 ~$0.003(85% 절감)으로 최적화하고, 로컬 임베딩으로 월 API 비용 $0을 달성.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/ykgstar37-lab/seoul-culture-map" target="_blank" rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-full transition" style={{ backgroundColor: PRIMARY }}>
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
                             GitHub
                         </a>
@@ -262,6 +271,20 @@ export default function SeoulCultureMap() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                             Screenshots
                         </button>
+                    </div>
+                </motion.div>
+
+                {/* Goal */}
+                <motion.div id="goal" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Goal</h2>
+                    <p className="text-gray-500 mb-6">이 프로젝트가 해결하려는 문제와 목표</p>
+                    <div className="bg-white p-6 sm:p-8 rounded-2xl border-l-4 shadow-sm space-y-4" style={{ borderColor: PRIMARY }}>
+                        <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                            <strong className="text-gray-900">문제:</strong> 학술제 R 분석 결과가 PDF 보고서로만 공유되어 일반인/관광객이 활용 불가. 2023년 기준 데이터도 노후화.
+                        </p>
+                        <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                            <strong className="text-gray-900">목표:</strong> 2,500+ 시설을 인터랙티브 지도에서 탐색·분석하고, AI 챗봇으로 자연어 추천까지 제공하는 웹 서비스. 비용은 요청당 $0.003 이하.
+                        </p>
                     </div>
                 </motion.div>
 
@@ -279,7 +302,7 @@ export default function SeoulCultureMap() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {[
                                 { label: 'AS-IS', title: '정적 보고서', desc: 'R 스크립트 + ggplot2 차트 → PDF 제출. 2023년 CSV 데이터, 업데이트 불가. 수상 후 아무도 사용하지 않음', color: 'bg-red-50 text-red-700 border-red-200' },
-                                { label: 'Gap', title: '데이터 노후화 + 접근성', desc: '2~3년 지난 정적 데이터, 공공 API 연동 필요. R 스크립트를 웹으로 전환하려면 완전히 다른 아키텍처 설계 필요', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+                                { label: 'Gap', title: '분석 코드 ≠ 서비스', desc: 'R 스크립트 → 웹 전환에는 완전히 다른 아키텍처 필요. 2개 공공API 스키마 통합, 실시간 데이터 연동, AI 추천 비용 최적화 과제', color: 'bg-amber-50 text-amber-700 border-amber-200' },
                                 { label: 'TO-BE', title: '인터랙티브 서비스', desc: '최신 공공 API 데이터로 2,500+ 시설을 지도에서 탐색, 분석, AI 코스 추천까지 — 분석 결과가 실제 사용 가능한 서비스로', color: 'bg-green-50 text-green-700 border-green-200' },
                             ].map((item, idx) => (
                                 <div key={idx} className={`p-5 rounded-xl border ${item.color}`}>
@@ -340,9 +363,14 @@ export default function SeoulCultureMap() {
                                 tag: 'DX + 안정성'
                             },
                             {
-                                question: 'OpenAI API가 없어도 동작하도록 설계한 이유는?',
-                                answer: 'AI 코스 추천은 부가 기능이지, 핵심 기능이 아닙니다. API 키가 없거나 호출 실패 시에도 규칙 기반 fallback 추천(카테고리 가중합 Top 5)이 동작하도록 설계하여, 외부 API 의존성이 서비스 가용성을 해치지 않도록 했습니다.',
-                                tag: '방어적 설계'
+                                question: 'AI 추천을 단일 LLM 호출 대신 LangGraph 3-node 파이프라인으로 설계한 이유는?',
+                                answer: '단일 LLM 호출은 의도 분류·데이터 검색·응답 생성을 한 번에 처리하여 비용이 높고 제어가 어렵습니다. Intent → Retrieve → Generate 3단계로 분리하면, 일상 대화(chitchat)는 검색을 건너뛰어 비용을 절감하고, 검색 단계는 LLM 없이 SQL + ChromaDB만 사용합니다. 요청당 ~$0.003으로 엔터프라이즈 대비 85% 비용 절감.',
+                                tag: 'Agentic RAG'
+                            },
+                            {
+                                question: 'ChromaDB 로컬 임베딩을 선택한 이유는?',
+                                answer: 'all-MiniLM-L6-v2 (384차원, ~33MB)로 2,500+ 시설을 로컬에서 임베딩하면 API 비용이 $0입니다. OpenAI embedding 대비 월 ~$0.30 절감. 200건 단위 배치 처리로 메모리 부담을 줄이고, DB 대비 10% 이내 차이면 재임베딩을 건너뛰어 서버 재시작 시 30-60초 절약.',
+                                tag: '비용 최적화'
                             },
                         ].map((item, idx) => (
                             <motion.div key={idx} variants={fadeInUp} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
@@ -361,221 +389,390 @@ export default function SeoulCultureMap() {
                     </div>
                 </motion.div>
 
-                {/* Overview Stats */}
-                <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-20" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
-                    {[
-                        { label: 'Facilities', value: '2,500+', sub: '7개 카테고리 문화시설' },
-                        { label: 'API Endpoints', value: '11', sub: '10 GET + 1 POST (AI 추천)' },
-                        { label: 'Pages', value: '4', sub: 'Map / Analytics / Course / Favorites' },
-                        { label: 'Districts', value: '25', sub: '서울특별시 전 자치구' },
-                        { label: 'Photos', value: '1,177', sub: '한국관광공사 이미지 포함' },
-                        { label: 'Subway Lines', value: '19', sub: '노선별 역 위치 + 접근성 분석' },
-                        { label: 'Clusters', value: '5', sub: 'K-means 군집분석 (5대 권역)' },
-                        { label: 'Categories', value: '7', sub: '관광지·공연·미술관·박물관·공원·레포츠·도서관' },
-                    ].map((item, idx) => (
-                        <motion.div key={idx} variants={fadeInUp} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{item.label}</p>
-                            <p className="text-2xl font-bold text-gray-900 mb-1">{item.value}</p>
-                            <p className="text-xs font-medium text-gray-500">{item.sub}</p>
-                        </motion.div>
-                    ))}
-                </motion.div>
+                {/* Evaluation & Verification */}
+                <motion.div id="evaluation" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Evaluation & Verification</h2>
+                    <p className="text-gray-500 mb-8">데이터 통합 결과 및 비용 최적화 검증</p>
 
-                {/* Architecture */}
-                <motion.div id="architecture" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Architecture</h2>
-                    <p className="text-gray-500 mb-8">공공데이터 API 기반 실시간 문화시설 탐색 파이프라인</p>
-                    <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm space-y-3">
-                        {/* Data Sources */}
-                        <div className="flex justify-center gap-3 flex-wrap">
-                            {[
-                                { name: '서울 열린데이터광장', desc: '문화공간/공원/지하철' },
-                                { name: '한국관광공사 Tour API', desc: '관광지/이미지' },
-                                { name: 'OpenAI API', desc: 'GPT 코스추천' },
-                            ].map((s, i) => (
-                                <div key={i} className="flex-1 min-w-[120px] max-w-[180px] px-4 py-3 bg-gray-100 rounded-xl text-center">
-                                    <p className="text-xs font-bold text-gray-700">{s.name}</p>
-                                    <p className="text-[10px] text-gray-400 mt-0.5">{s.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-
-                        {/* FastAPI Backend */}
-                        <div className="flex justify-center">
-                            <div className="px-6 py-4 bg-[#0ea5e9] rounded-xl text-white text-center max-w-lg w-full">
-                                <p className="text-sm font-bold">FastAPI Backend</p>
-                                <p className="text-xs text-white/70 mt-1">11 RESTful Endpoints + sync</p>
-                            </div>
-                        </div>
-
-                        {/* Backend Modules */}
-                        <div className="flex justify-center gap-3 flex-wrap">
-                            {[
-                                { name: 'Data Loader', desc: 'CSV + API' },
-                                { name: 'scikit-learn', desc: 'K-means 군집' },
-                                { name: 'OpenAI Client', desc: '코스 추천' },
-                            ].map((m, i) => (
-                                <div key={i} className="flex-1 min-w-[120px] max-w-[170px] px-4 py-3 bg-[#0ea5e9]/10 border border-[#0ea5e9]/30 rounded-xl text-center">
-                                    <p className="text-xs font-bold text-[#0284c7]">{m.name}</p>
-                                    <p className="text-[10px] text-gray-400 mt-0.5">{m.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Storage */}
-                        <div className="flex justify-center gap-3 flex-wrap">
-                            {[
-                                { name: 'SQLite', desc: '시설 DB' },
-                                { name: 'Cluster API', desc: '군집 결과' },
-                                { name: 'Recommend API', desc: 'AI 추천 결과' },
-                            ].map((m, i) => (
-                                <div key={i} className="flex-1 min-w-[120px] max-w-[170px] px-4 py-3 bg-sky-50 border border-sky-200 rounded-xl text-center">
-                                    <p className="text-xs font-bold text-sky-700">{m.name}</p>
-                                    <p className="text-[10px] text-gray-400 mt-0.5">{m.desc}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-
-                        {/* React Dashboard */}
-                        <div className="flex justify-center">
-                            <div className="px-6 py-5 bg-gray-900 rounded-xl text-white text-center max-w-lg w-full">
-                                <p className="text-sm font-bold mb-2">React Dashboard (Vite + Tailwind + Leaflet)</p>
-                                <div className="flex justify-center gap-2 text-[10px]">
-                                    {['Culture Map', 'Analytics', 'Course', 'Favorites'].map((f, i) => (
-                                        <span key={i} className="px-3 py-1 bg-white/10 rounded">{f}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex justify-center"><div className="w-0.5 h-4 bg-gray-300"></div></div>
-
-                        {/* Infra */}
-                        <div className="flex justify-center gap-3">
-                            <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Render (Backend)</div>
-                            <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Vercel (Frontend)</div>
-                        </div>
-                    </div>
-                </motion.div>
-
-                {/* Key Features */}
-                <motion.div id="features" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Key Features</h2>
-                    <p className="text-gray-500 mb-8">6가지 핵심 기능</p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {FEATURES.map((feature, idx) => (
-                            <motion.div key={idx} variants={fadeInUp} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: `linear-gradient(135deg, ${PRIMARY}, #0369a1)` }}>
-                                        {feature.icon}
-                                    </div>
-                                    <p className="text-base font-bold text-gray-900">{feature.title}</p>
-                                </div>
-                                <p className="text-sm text-gray-500 leading-relaxed">{feature.desc}</p>
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
-
-                {/* API Endpoints */}
-                <motion.div id="api" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>API Endpoints</h2>
-                    <p className="text-gray-500 mb-8">FastAPI 기반 RESTful API 11개 엔드포인트</p>
-                    <div className="overflow-x-auto">
+                    {/* Key Metrics — Before→After 도표 */}
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
                         <table className="w-full text-sm">
                             <thead>
-                                <tr className="border-b border-gray-200">
-                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Method</th>
-                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Endpoint</th>
-                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Description</th>
+                                <tr className="bg-gray-50/50 border-b border-gray-100">
+                                    <th className="text-left px-5 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">지표</th>
+                                    <th className="text-center px-4 py-3 text-xs font-bold text-red-400 uppercase tracking-wider">팀 분석 (Before)</th>
+                                    <th className="text-center px-4 py-3 text-xs font-bold text-emerald-500 uppercase tracking-wider">개인 서비스 (After)</th>
+                                    <th className="text-center px-4 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">개선</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {API_ENDPOINTS.map((ep, idx) => (
-                                    <tr key={idx} className="border-b border-gray-100">
-                                        <td className="py-3 px-4">
-                                            <span className={`text-xs font-bold px-2 py-0.5 rounded ${ep.method === 'POST' ? 'bg-amber-100 text-amber-700' : 'bg-sky-100 text-sky-700'}`}>
-                                                {ep.method}
-                                            </span>
-                                        </td>
-                                        <td className="py-3 px-4 font-mono text-sm" style={{ color: PRIMARY }}>{ep.path}</td>
-                                        <td className="py-3 px-4 text-gray-500">{ep.desc}</td>
+                                {[
+                                    { metric: '데이터 소스', before: 'CSV 정적', after: '공공API 2개 실시간', improvement: '2,500+ 시설' },
+                                    { metric: '이미지', before: '없음', after: '1,177장', improvement: 'Tour API 연동' },
+                                    { metric: '시설 탐색', before: 'PDF 보고서', after: 'Leaflet 인터랙티브 맵', improvement: '즉시 탐색' },
+                                    { metric: 'AI 추천', before: '없음', after: 'LangGraph 3-node Agent', improvement: '~$0.003/req' },
+                                    { metric: 'AI 비용', before: '—', after: '엔터프라이즈 대비 85%↓', improvement: '85% 절감' },
+                                    { metric: '임베딩 비용', before: '—', after: '로컬 MiniLM-L6-v2', improvement: '$0/월' },
+                                ].map((row, idx) => (
+                                    <tr key={idx} className="border-b border-gray-50 last:border-0">
+                                        <td className="px-5 py-3 font-semibold text-gray-900">{row.metric}</td>
+                                        <td className="px-4 py-3 text-center text-red-400 font-mono">{row.before}</td>
+                                        <td className="px-4 py-3 text-center text-emerald-600 font-bold font-mono">{row.after}</td>
+                                        <td className="px-4 py-3 text-center"><span className="text-xs font-bold px-2 py-1 bg-emerald-50 text-emerald-700 rounded-lg">{row.improvement}</span></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
+
+                    {/* Data Integration + Agentic RAG */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <p className="text-xs font-bold" style={{ color: PRIMARY }}>공공 API 통합 — 2개 소스 데이터 정규화</p>
+                            <div className="space-y-3 mt-4">
+                                {[
+                                    { source: '서울 열린데이터광장', data: '문화공간 · 공원 · 지하철', issue: '이미지 없음, 좌표 필드 상이' },
+                                    { source: '한국관광공사 Tour API', data: '관광지 · 레포츠 · 이미지', issue: '카테고리 코드 매핑 필요' },
+                                ].map((item, idx) => (
+                                    <div key={idx} className="p-3 bg-gray-50 rounded-xl">
+                                        <p className="text-sm font-bold text-gray-900">{item.source}</p>
+                                        <p className="text-xs text-gray-500 mt-0.5">{item.data}</p>
+                                        <p className="text-[10px] text-amber-600 mt-1">{item.issue}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <p className="text-xs text-gray-400 mt-3">→ 좌표 필드 통합, 카테고리 매핑, 중복 제거 후 6개 카테고리 · 25개 자치구 데이터 확보</p>
+                        </div>
+                        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                            <p className="text-xs font-bold" style={{ color: PRIMARY }}>Agentic RAG — 3-node 비용 최적화</p>
+                            <div className="space-y-3 mt-4">
+                                {[
+                                    { node: 'Intent', desc: 'chitchat은 검색 건너뜀', cost: 'LLM 1회', color: 'bg-sky-50' },
+                                    { node: 'Retrieve', desc: 'SQL + ChromaDB만 사용', cost: 'LLM 0회', color: 'bg-emerald-50' },
+                                    { node: 'Generate', desc: '검색 결과 기반 응답', cost: 'LLM 1회', color: 'bg-sky-50' },
+                                ].map((item, idx) => (
+                                    <div key={idx} className={`p-3 ${item.color} rounded-xl flex items-center justify-between`}>
+                                        <div>
+                                            <p className="text-sm font-bold text-gray-900">{item.node}</p>
+                                            <p className="text-xs text-gray-500">{item.desc}</p>
+                                        </div>
+                                        <span className="text-[10px] font-bold text-gray-500 bg-white px-2 py-1 rounded-lg">{item.cost}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <p className="text-xs text-gray-400 mt-3">단일 LLM 호출 대비 <strong className="text-gray-700">85% 비용 절감</strong> (요청당 ~$0.003)</p>
+                        </div>
+                    </div>
+
+                    {/* 키워드 검색 vs LangGraph Agent 비교 */}
+                    <div className="mt-6">
+                        <p className="text-xs font-bold uppercase tracking-wider mb-2" style={{ color: PRIMARY }}>키워드 검색 vs LangGraph Agent 응답 비교</p>
+                        <p className="text-sm text-gray-500 mb-4" style={{ wordBreak: 'keep-all' }}>질문: <span className="font-medium text-gray-700">"종로 근처 조용한 박물관 추천해줘"</span></p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="bg-red-50/50 border border-red-100 rounded-2xl p-5">
+                                <p className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">키워드 검색 (Before)</p>
+                                <div className="space-y-1.5 text-sm text-gray-600">
+                                    <p>"종로"+"박물관" 필터 → <strong>42건 일괄 나열</strong></p>
+                                    <p className="text-red-400 text-xs">"조용한" 의도 반영 불가</p>
+                                </div>
+                            </div>
+                            <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-5">
+                                <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-3">LangGraph Agent (After) — ~$0.003/req</p>
+                                <div className="space-y-1.5 text-sm text-gray-600">
+                                    <p>Intent→Retrieve→Generate → <strong>"국립민속박물관은 평일 오전이 한적합니다"</strong></p>
+                                    <p className="text-emerald-500 text-xs">의도("조용한") 반영 + 맥락 설명</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
-                {/* K-means Clustering */}
-                <motion.div id="clustering" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>K-means Clustering</h2>
-                    <p className="text-gray-500 mb-8">서울시 25개 자치구를 문화시설 분포 패턴 기반으로 5개 군집으로 분류</p>
+                {/* Technical Challenges */}
+                <motion.div id="challenges" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Technical Challenges</h2>
+                    <p className="text-gray-500 mb-8">개인 프로젝트에서 직면한 문제와 해결 과정</p>
                     <div className="space-y-4">
-                        {CLUSTER_INFO.map((cluster, idx) => (
-                            <motion.div key={idx} variants={fadeInUp} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                                <div className="flex flex-col md:flex-row md:items-start gap-4">
-                                    <div className="flex items-center gap-3 md:w-56 shrink-0">
-                                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: cluster.color }}>
-                                            {idx + 1}
-                                        </div>
-                                        <p className="text-base font-bold text-gray-900">{cluster.name}</p>
-                                    </div>
+                        {[
+                            { title: '공공API 데이터 통합', problem: '서울 열린데이터광장과 한국관광공사 API의 좌표 필드명·카테고리 코드가 완전히 다름', solution: '좌표 필드 정규화 + 카테고리 코드 매핑 테이블 설계 + 중복 제거 파이프라인', result: '2,500+ 시설 통합' },
+                            { title: 'Leaflet + React 충돌', problem: 'Leaflet은 DOM 직접 조작, React는 Virtual DOM — 마커/팝업 렌더링에서 반복 오류', solution: 'react-leaflet 선언적 API로 제어 일원화 + useEffect cleanup에서 레이어 명시적 제거', result: '렌더링 안정화' },
+                            { title: 'AI 추천 비용', problem: '단일 LLM 호출로 의도 분류·검색·응답을 한 번에 처리하면 비용이 높고 제어 어려움', solution: 'LangGraph 3-node(Intent→Retrieve→Generate) 분리, chitchat은 검색 스킵, 검색은 LLM 없이 SQL만', result: '85% 비용 절감' },
+                            { title: '임베딩 API 비용', problem: '2,500+ 시설을 OpenAI embedding으로 처리하면 월 비용 발생', solution: 'all-MiniLM-L6-v2(384D, 33MB) 로컬 임베딩 + 200건 배치 + 10% 이내 차이 시 재임베딩 스킵', result: '$0/월' },
+                            { title: '연산 위치 판단', problem: 'K-means 군집분석과 Haversine 거리 계산을 어디서 처리할지 결정 필요', solution: 'K-means는 scikit-learn 필요하므로 서버, 거리 계산은 뷰포트 내 데이터만 필요하므로 프론트', result: 'API 호출 최소화' },
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                <div className="flex items-start gap-5">
+                                    <div className="w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center flex-shrink-0 text-sm font-bold">{idx + 1}</div>
                                     <div className="flex-1">
-                                        <div className="bg-gray-50 rounded-lg px-4 py-2 mb-3 inline-block">
-                                            <span className="text-sm font-medium text-gray-600">{cluster.districts}</span>
+                                        <h3 className="text-base font-bold text-gray-900 mb-3">{item.title}</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                            <div className="p-3 bg-red-50 rounded-xl">
+                                                <p className="text-[10px] font-bold text-red-400 uppercase tracking-wider mb-1">Problem</p>
+                                                <p className="text-xs text-gray-700 leading-relaxed">{item.problem}</p>
+                                            </div>
+                                            <div className="p-3 bg-slate-50 rounded-xl">
+                                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-1">Solution</p>
+                                                <p className="text-xs text-gray-700 leading-relaxed">{item.solution}</p>
+                                            </div>
+                                            <div className="p-3 bg-emerald-50 rounded-xl flex flex-col items-center justify-center">
+                                                <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-wider mb-1">Result</p>
+                                                <p className="text-sm font-bold text-emerald-700 text-center">{item.result}</p>
+                                            </div>
                                         </div>
-                                        <p className="text-sm text-gray-500 leading-relaxed">{cluster.traits}</p>
                                     </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </motion.div>
-
-                {/* Data Sources */}
-                <motion.div id="data" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Data Sources</h2>
-                    <p className="text-gray-500 mb-8">총 2,500+ 개별 시설, 1,177개 시설에 사진 포함</p>
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                            <thead>
-                                <tr className="border-b border-gray-200">
-                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Source</th>
-                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Data</th>
-                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Count</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {DATA_SOURCES.map((row, idx) => (
-                                    <tr key={idx} className="border-b border-gray-100">
-                                        <td className="py-3 px-4 font-semibold text-gray-700">{row.source}</td>
-                                        <td className="py-3 px-4 text-gray-500">{row.data}</td>
-                                        <td className="py-3 px-4 font-semibold" style={{ color: PRIMARY }}>{row.count}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </motion.div>
-
-                {/* Tech Stack */}
-                <motion.div id="tech" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-8 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Tech Stack</h2>
-                    <div className="space-y-6">
-                        {Object.entries(TECH_STACK).map(([category, items]) => (
-                            <div key={category}>
-                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{category}</p>
-                                <div className="flex flex-wrap gap-3">
-                                    {items.map(item => (
-                                        <span key={item} className="px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-sm">{item}</span>
-                                    ))}
                                 </div>
                             </div>
                         ))}
                     </div>
                 </motion.div>
+
+                {/* Technical Drawer */}
+                <TechnicalDrawer accentColor="#0ea5e9" tabs={[
+                    { label: 'About', content: (
+                        <div className="space-y-6">
+                            <div className="bg-[#0ea5e9] rounded-2xl p-6 text-white">
+                                <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Seoul Culture Map</h3>
+                                <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
+                                    학술제 R 분석 결과가 PDF 보고서에 갇혀있던 문제를 해결. 2개 공공API를 통합하여 2,500+ 시설을 인터랙티브 지도로 시각화하고,
+                                    LangGraph 3-node AI Agent로 자연어 문화시설 추천을 요청당 $0.003(85% 절감)에 제공.
+                                </p>
+                                <div className="flex flex-wrap gap-2">
+                                    {['FastAPI', 'React', 'Leaflet', 'LangGraph', 'ChromaDB', 'K-means', 'SSE'].map(t => (
+                                        <span key={t} className="text-[10px] font-bold px-2 py-1 bg-white/15 rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
+                                {[
+                                    { label: '시설', value: '2,500+', sub: '6개 카테고리' },
+                                    { label: '이미지', value: '1,177장', sub: 'Tour API' },
+                                    { label: '자치구', value: '25개', sub: '서울 전역' },
+                                    { label: 'Endpoints', value: '15', sub: 'REST+SSE' },
+                                    { label: 'AI 비용', value: '$0.003', sub: '85% 절감' },
+                                    { label: '임베딩', value: '$0/월', sub: '로컬 임베딩' },
+                                ].map((item, idx) => (
+                                    <div key={idx} className="bg-gray-50 p-3 rounded-xl text-center">
+                                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">{item.label}</p>
+                                        <p className="text-lg font-bold text-[#0ea5e9]">{item.value}</p>
+                                        <p className="text-[10px] text-gray-500">{item.sub}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div>
+                                <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">What Makes This Special</p>
+                                <div className="space-y-2">
+                                    {[
+                                        'LangGraph 3-node Agent로 AI 추천 비용 85% 절감 — 요청당 $0.003, chitchat은 검색 스킵',
+                                        '로컬 임베딩(MiniLM-L6-v2)으로 월 API 비용 $0 달성 — 200건 배치, 변화 10% 이내 시 재임베딩 스킵',
+                                        'R 정적 분석 → React+Leaflet 인터랙티브 맵 + SSE AI 챗봇으로 완전 전환',
+                                        '2개 공공API 통합 — 좌표 필드·카테고리 코드 정규화로 2,500+ 시설 + 1,177장 이미지 확보',
+                                        'K-means 5대 권역 분류 — 방탈출 64개(강남), 박물관 42개(중구) 등 분포 불균형을 데이터로 증명',
+                                        '6개 카테고리 + 116개 법정동 단위 다층 공간 분석',
+                                        'Leaflet + React 충돌을 react-leaflet + useEffect cleanup으로 해결',
+                                    ].map((text, idx) => (
+                                        <div key={idx} className="flex items-start gap-2 text-sm text-gray-600">
+                                            <span className="text-[#0ea5e9] mt-0.5 flex-shrink-0">*</span>
+                                            <span style={{ wordBreak: 'keep-all' }}>{text}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )},
+                    { label: 'Overview', content: (
+                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                            {[
+                                { label: 'Facilities', value: '2,500+', sub: '7개 카테고리 문화시설' },
+                                { label: 'API Endpoints', value: '15', sub: '10 GET + 3 POST + 1 DELETE + SSE' },
+                                { label: 'Pages', value: '5', sub: 'Map / Chatbot / Analytics / Course / Favorites' },
+                                { label: 'Districts', value: '25', sub: '서울특별시 전 자치구' },
+                                { label: 'Photos', value: '1,177', sub: '한국관광공사 이미지 포함' },
+                                { label: 'Subway Lines', value: '19', sub: '노선별 역 위치 + 접근성 분석' },
+                                { label: 'Clusters', value: '5', sub: 'K-means 군집분석 (5대 권역)' },
+                                { label: 'Categories', value: '7', sub: '관광지·공연·미술관·박물관·공원·레포츠·도서관' },
+                            ].map((item, idx) => (
+                                <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{item.label}</p>
+                                    <p className="text-2xl font-bold text-gray-900 mb-1">{item.value}</p>
+                                    <p className="text-xs font-medium text-gray-500">{item.sub}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )},
+                    { label: 'Architecture', content: (
+                        <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm space-y-3">
+                            {/* Data Sources */}
+                            <div className="flex justify-center gap-3 flex-wrap">
+                                {[
+                                    { name: '서울 열린데이터광장', desc: '문화공간/공원/지하철' },
+                                    { name: '한국관광공사 Tour API', desc: '관광지/이미지' },
+                                    { name: 'OpenAI API', desc: 'GPT-4o-mini Agent' },
+                                ].map((s, i) => (
+                                    <div key={i} className="flex-1 min-w-[120px] max-w-[180px] px-4 py-3 bg-gray-100 rounded-xl text-center">
+                                        <p className="text-xs font-bold text-gray-700">{s.name}</p>
+                                        <p className="text-[10px] text-gray-400 mt-0.5">{s.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+
+                            {/* FastAPI Backend */}
+                            <div className="flex justify-center">
+                                <div className="px-6 py-4 bg-[#0ea5e9] rounded-xl text-white text-center max-w-lg w-full">
+                                    <p className="text-sm font-bold">FastAPI Backend</p>
+                                    <p className="text-xs text-white/70 mt-1">15 Endpoints (REST + SSE + sync)</p>
+                                </div>
+                            </div>
+
+                            {/* Backend Modules */}
+                            <div className="flex justify-center gap-3 flex-wrap">
+                                {[
+                                    { name: 'LangGraph Agent', desc: '3-node Pipeline' },
+                                    { name: 'ChromaDB', desc: 'RAG 벡터 검색' },
+                                    { name: 'scikit-learn', desc: 'K-means 군집' },
+                                    { name: 'Data Loader', desc: 'CSV + API' },
+                                ].map((m, i) => (
+                                    <div key={i} className="flex-1 min-w-[120px] max-w-[170px] px-4 py-3 bg-[#0ea5e9]/10 border border-[#0ea5e9]/30 rounded-xl text-center">
+                                        <p className="text-xs font-bold text-[#0284c7]">{m.name}</p>
+                                        <p className="text-[10px] text-gray-400 mt-0.5">{m.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Storage */}
+                            <div className="flex justify-center gap-3 flex-wrap">
+                                {[
+                                    { name: 'SQLite', desc: '시설 + 채팅 DB' },
+                                    { name: 'ChromaDB', desc: '벡터 임베딩' },
+                                    { name: 'Cluster Cache', desc: '1시간 TTL' },
+                                ].map((m, i) => (
+                                    <div key={i} className="flex-1 min-w-[120px] max-w-[170px] px-4 py-3 bg-sky-50 border border-sky-200 rounded-xl text-center">
+                                        <p className="text-xs font-bold text-sky-700">{m.name}</p>
+                                        <p className="text-[10px] text-gray-400 mt-0.5">{m.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+
+                            {/* React Dashboard */}
+                            <div className="flex justify-center">
+                                <div className="px-6 py-5 bg-gray-900 rounded-xl text-white text-center max-w-lg w-full">
+                                    <p className="text-sm font-bold mb-2">React Dashboard (Vite + Tailwind + Leaflet)</p>
+                                    <div className="flex justify-center gap-2 text-[10px]">
+                                        {['Culture Map', 'AI Chatbot', 'Analytics', 'Course', 'Favorites'].map((f, i) => (
+                                            <span key={i} className="px-3 py-1 bg-white/10 rounded">{f}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-4 bg-gray-300"></div></div>
+
+                            {/* Infra */}
+                            <div className="flex justify-center gap-3">
+                                <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Render (Backend)</div>
+                                <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Vercel (Frontend)</div>
+                            </div>
+                        </div>
+                    )},
+                    { label: 'Key Features', content: (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {FEATURES.map((feature, idx) => (
+                                <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                                    <div className="flex items-start gap-3 mb-3">
+                                        <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0" style={{ backgroundColor: PRIMARY }}>
+                                            {feature.icon}
+                                        </div>
+                                        <p className="text-sm font-bold text-gray-900 leading-snug">{feature.title}</p>
+                                    </div>
+                                    <p className="text-xs text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>{feature.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    )},
+                    { label: 'API Endpoints', content: (
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Method</th>
+                                        <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Endpoint</th>
+                                        <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {API_ENDPOINTS.map((ep, idx) => (
+                                        <tr key={idx} className="border-b border-gray-100">
+                                            <td className="py-3 px-4">
+                                                <span className={`text-xs font-bold px-2 py-0.5 rounded ${ep.method === 'POST' ? 'bg-amber-100 text-amber-700' : ep.method === 'DELETE' ? 'bg-red-100 text-red-700' : 'bg-sky-100 text-sky-700'}`}>
+                                                    {ep.method}
+                                                </span>
+                                            </td>
+                                            <td className="py-3 px-4 font-mono text-sm" style={{ color: PRIMARY }}>{ep.path}</td>
+                                            <td className="py-3 px-4 text-gray-500">{ep.desc}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )},
+                    { label: 'K-means Clustering', content: (
+                        <div className="space-y-4">
+                            {CLUSTER_INFO.map((cluster, idx) => (
+                                <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+                                    <div className="flex flex-col md:flex-row md:items-start gap-4">
+                                        <div className="flex items-center gap-3 md:w-56 shrink-0">
+                                            <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white" style={{ backgroundColor: cluster.color }}>
+                                                {idx + 1}
+                                            </div>
+                                            <p className="text-base font-bold text-gray-900">{cluster.name}</p>
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="bg-gray-50 rounded-lg px-4 py-2 mb-3 inline-block">
+                                                <span className="text-sm font-medium text-gray-600">{cluster.districts}</span>
+                                            </div>
+                                            <p className="text-sm text-gray-500 leading-relaxed">{cluster.traits}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )},
+                    { label: 'Data Sources', content: (
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Source</th>
+                                        <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Data</th>
+                                        <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Count</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {DATA_SOURCES.map((row, idx) => (
+                                        <tr key={idx} className="border-b border-gray-100">
+                                            <td className="py-3 px-4 font-semibold text-gray-700">{row.source}</td>
+                                            <td className="py-3 px-4 text-gray-500">{row.data}</td>
+                                            <td className="py-3 px-4 font-semibold" style={{ color: PRIMARY }}>{row.count}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )},
+                    { label: 'Tech Stack', content: (
+                        <div className="space-y-6">
+                            {Object.entries(TECH_STACK).map(([category, items]) => (
+                                <div key={category}>
+                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">{category}</p>
+                                    <div className="flex flex-wrap gap-3">
+                                        {items.map(item => (
+                                            <span key={item} className="px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-sm">{item}</span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )},
+                ]} />
 
                 {/* Screenshots Gallery */}
                 <ScreenshotGallery />
@@ -593,15 +790,15 @@ export default function SeoulCultureMap() {
                             <ul className="space-y-3 text-sm text-gray-600">
                                 <li className="flex gap-3">
                                     <span className="font-bold text-gray-900 shrink-0">01</span>
-                                    <span><strong className="text-gray-900">공공 API 데이터 정규화의 어려움</strong> — 두 API의 응답 형식과 좌표 필드명(lat/lng vs latitude/longitude)이 달라 전체 마커가 미표시되는 버그 발생. API-first 설계의 중요성을 체감</span>
+                                    <span><strong className="text-gray-900">데이터 분석의 가치 = 전달 방식</strong> — 같은 군집분석이라도 PDF 표와 지도 위 색상 마커는 완전히 다른 경험. 공공 API 좌표 필드명(lat/lng vs latitude/longitude) 불일치로 전체 마커 미표시 버그도 경험</span>
                                 </li>
                                 <li className="flex gap-3">
                                     <span className="font-bold text-gray-900 shrink-0">02</span>
-                                    <span><strong className="text-gray-900">지도 시각화의 핵심은 정보 밀도 조절</strong> — 2,500+ 마커를 한 번에 렌더링하면 성능과 가독성이 모두 떨어짐. 카테고리 필터, 클러스터링, 히트맵으로 사용자가 원하는 수준으로 정보를 조절하는 UX 패턴 습득</span>
+                                    <span><strong className="text-gray-900">정보 밀도 조절이 UX의 핵심</strong> — 2,500+ 마커 동시 렌더링은 성능/가독성 모두 저하. 카테고리 필터 + 클러스터링 + 히트맵으로 사용자가 스스로 정보량을 조절하는 패턴 설계</span>
                                 </li>
                                 <li className="flex gap-3">
                                     <span className="font-bold text-gray-900 shrink-0">03</span>
-                                    <span><strong className="text-gray-900">외부 API 의존성에는 fallback 필수</strong> — OpenAI API, 공공데이터 API 모두 언제든 실패할 수 있음. mock 데이터와 규칙 기반 fallback을 준비하는 방어적 프로그래밍 실전 적용</span>
+                                    <span><strong className="text-gray-900">Agentic RAG 비용 최적화</strong> — Intent→Retrieve→Generate 분리로 chitchat은 검색 스킵, 검색은 LLM 없이 SQL+ChromaDB만 사용 → 요청당 $0.003(85% 절감). API 실패 시 SQL만으로 fallback</span>
                                 </li>
                             </ul>
                         </div>
@@ -609,18 +806,31 @@ export default function SeoulCultureMap() {
                             <p className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-3">아쉬운 점 & 다음에 하고 싶은 것</p>
                             <ul className="space-y-2 text-sm text-gray-600">
                                 <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>TypeScript 미도입 — 좌표 필드명 불일치 같은 런타임 버그를 컴파일 타임에 잡을 수 있었을 것</span>
+                                    <span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span>
+                                    <span className="line-through text-gray-400">AI 기능 없음 → <strong className="text-gray-600 no-underline">LangGraph 3-node Agent + ChromaDB RAG + SSE 스트리밍 챗봇 구현 완료</strong></span>
                                 </li>
                                 <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>CSS overflow 충돌 — overflow-y: auto가 overflow-x도 강제하여 드롭다운이 잘리는 문제, position: fixed로 우회했지만 근본적 해결은 아님</span>
+                                    <span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span>
+                                    <span className="line-through text-gray-400">테스트 없음 → <strong className="text-gray-600 no-underline">pytest 15개 + 코드 중복 제거 리팩토링 완료</strong></span>
                                 </li>
                                 <li className="flex items-start gap-2">
-                                    <span className="text-amber-500 mt-0.5">-</span>
-                                    <span>다국어(i18n) 미지원 — 외국인 관광객 대상 서비스이므로 영어/일본어 지원이 필요했으나 한국어만 구현</span>
+                                    <span className="text-red-400 text-xs font-bold mt-0.5 w-14 shrink-0">높음</span>
+                                    <span>다국어(i18n) 미지원 — 외국인 관광객 대상인데 한국어만 구현</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">중간</span>
+                                    <span>TypeScript 미도입 — 좌표 필드명 불일치 같은 런타임 버그 컴파일 타임 방지 가능</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="text-gray-400 text-xs font-bold mt-0.5 w-12 shrink-0">낮음</span>
+                                    <span>CSS overflow 충돌 — position: fixed로 우회했지만 근본적 해결은 아님</span>
                                 </li>
                             </ul>
+                        </div>
+                        <div className="mt-6 p-6 bg-gray-50 rounded-2xl">
+                            <p className="text-sm text-gray-600 leading-relaxed italic" style={{ wordBreak: 'keep-all' }}>
+                                같은 데이터라도 PDF 보고서와 인터랙티브 지도는 완전히 다른 가치를 만듭니다. 데이터 분석의 가치는 분석 자체가 아니라, 그것을 필요한 사람에게 전달하는 방식에서 결정된다는 것을 배운 프로젝트였습니다.
+                            </p>
                         </div>
                     </div>
                 </motion.div>

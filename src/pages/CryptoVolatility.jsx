@@ -657,6 +657,11 @@ export default function CryptoVolatility() {
                                 <li className="flex items-start gap-2"><span className="text-amber-500 mt-0.5">-</span><span>Out-of-sample 검증 미흡 — 강세장/약세장 구간별 강건성 비교 필요</span></li>
                             </ul>
                         </div>
+                        <div className="mt-6 p-6 bg-gray-50 rounded-2xl">
+                            <p className="text-sm text-gray-600 leading-relaxed italic" style={{ wordBreak: 'keep-all' }}>
+                                변동성 예측은 단일 모형의 정확도가 아니라, 다양한 모형의 특성을 이해하고 시장 상황에 맞게 선택하는 판단력이 핵심이라는 것을 배운 프로젝트였습니다.
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
 

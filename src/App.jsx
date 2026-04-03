@@ -264,6 +264,26 @@ const PROBLEM_SOLVING_CASES = [
         insight: '같은 쿼리에서 Base는 오답+환각+과신, LoRA+Guardrail은 정답+실존근거+적절한 confidence. GPT 의존을 vLLM 프라이빗 서빙으로 전환하여 비용 제거 + 데이터 보안 확보',
         keywords: ['#vLLM서빙', '#LLM신뢰성', '#Guardrail', '#LoRA파인튜닝'],
     },
+    {
+        id: 'agentic-rag',
+        num: '04',
+        tag: 'Seoul Culture Map',
+        tagColor: '#0ea5e9',
+        title: 'LangGraph 기반 Agentic RAG 파이프라인으로 비용 85% 절감',
+        problem: '2,500+ 시설 데이터에 대해 단일 LLM 호출로 추천·검색·일상대화를 모두 처리하면, 매 요청마다 전체 컨텍스트를 주입해야 하여 토큰 비용이 높고 응답 품질 제어가 어려움.',
+        solutions: [
+            'LangGraph 3-node 파이프라인 설계 — Intent Classification → Data Retrieval → Response Generation. 일상대화(chitchat)는 검색을 건너뛰어 불필요한 DB/벡터 검색 비용 제거',
+            'ChromaDB + all-MiniLM-L6-v2 로컬 임베딩으로 시맨틱 검색 구현. API 비용 $0, 200건 단위 배치 처리로 메모리 최적화. DB 대비 10% 이내 차이면 재임베딩 스킵',
+            'SSE 스트리밍으로 토큰 단위 실시간 응답 전달. 3-5초 대기 → 첫 토큰 ~500ms로 체감 응답 속도 개선',
+        ],
+        results: [
+            { label: '요청당 비용', value: '~$0.003 (85%↓)' },
+            { label: '임베딩 비용', value: '$0 (로컬)' },
+            { label: '체감 응답', value: 'SSE 첫 토큰 ~500ms' },
+        ],
+        insight: 'LLM 파이프라인의 핵심은 "언제 LLM을 호출하지 않을지" 결정하는 것 — 의도 분류로 불필요한 검색을 건너뛰고, 검색 단계에서 LLM 없이 SQL+벡터만 사용하면 비용과 레이턴시를 동시에 절감',
+        keywords: ['#AgenticRAG', '#LangGraph', '#벡터검색', '#비용최적화'],
+    },
 ];
 
 function ProblemSolvingSection() {
