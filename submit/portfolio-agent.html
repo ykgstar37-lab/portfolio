@@ -427,8 +427,8 @@ section { padding: 4rem 0 3rem; }
       <!-- 개요 + 역할 -->
       <div class="overview">
         <h4>개요</h4>
-        <p><strong>동기:</strong> AI Camp 최종 프로젝트에서 사내 업무 자동화 에이전트를 개발하면서, GPT API에 사내 데이터를 보낼 수 없는 보안 제약과 LLM이 "확신하면서 틀리는" 문제를 동시에 해결해야 했습니다.</p>
-        <p><strong>서비스:</strong> 사내 규정 판단·문서 처리·일정 관리·복합 요청 분해를 4개 전문 Agent가 처리하는 업무 자동화 시스템. vLLM 기반 프라이빗 sLLM(Kanana-1.5-8B)으로 GPT 의존을 제거하고, 4중 Guardrail + Confidence 보정으로 Agent의 오답·환각·과신을 시스템적으로 차단합니다.</p>
+        <p><strong>동기:</strong> AI Camp 최종 프로젝트에서 사내 업무 자동화 에이전트를 개발하면서, GPT API에 사내 데이터를 보낼 수 없는 보안 제약(온프레미스 서빙 필요)과 LLM이 "확신하면서 틀리는" 문제를 동시에 해결해야 했습니다.</p>
+        <p><strong>서비스:</strong> 사내 규정 판단·문서 처리·일정 관리·복합 요청 분해를 4개 전문 Agent가 처리하는 업무 자동화 시스템. vLLM 기반 온프레미스 sLLM(Kanana-1.5-8B) 서빙으로 GPT 의존을 제거하고, 4중 Guardrail + Confidence 보정으로 Agent의 오답·환각·과신을 시스템적으로 차단합니다.</p>
         <p class="role-desc">역할: Judgment Agent 품질 보장 — 4중 Guardrail 설계, 5-factor Confidence 보정, LoRA 파인튜닝 3회 반복 실험, 9단계 RAG 파이프라인</p>
       </div>
 
