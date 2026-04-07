@@ -331,7 +331,8 @@ section { padding: 4rem 0 3rem; }
       <!-- 개요 + 역할 -->
       <div class="overview">
         <h4>개요</h4>
-        <p>2023년 학술제에서 서울시 25개 자치구 관광시설 데이터를 R로 군집분석하여 2등상을 수상했지만, 결과물이 PDF 보고서로만 남아 실제 사용자가 활용할 수 없었습니다. "분석 결과를 누구나 탐색하고 질문할 수 있는 서비스로 만들 수 있을까?"라는 문제의식에서 출발하여, 2,500+ 문화시설 데이터에 Agentic RAG 파이프라인을 결합한 대화형 AI 안내 서비스로 확장한 개인 프로젝트입니다.</p>
+        <p><strong>동기:</strong> 2023년 학술제에서 서울시 25개 자치구 관광시설 데이터를 R로 군집분석하여 2등상을 수상했지만, 결과물이 PDF 보고서로만 남아 실제 사용자가 활용할 수 없었습니다. "분석 결과를 누구나 탐색하고 질문할 수 있는 서비스로 만들 수 있을까?"라는 문제의식에서 출발했습니다.</p>
+        <p><strong>서비스:</strong> 서울시 2,500+ 문화시설을 인터랙티브 지도에서 탐색하고, LangGraph 기반 Agentic RAG 챗봇으로 자연어 질의(검색·추천·일상대화)를 처리하는 대화형 AI 안내 서비스. 의도 분류로 불필요한 LLM 호출을 제거하고, SSE 스트리밍으로 실시간 응답을 전달합니다.</p>
         <p class="role-desc">역할: 전체 설계 및 개발 (개인) — Agent 파이프라인 설계, RAG 검색, API 설계(15개 엔드포인트), 프론트엔드</p>
       </div>
 
@@ -426,7 +427,8 @@ section { padding: 4rem 0 3rem; }
       <!-- 개요 + 역할 -->
       <div class="overview">
         <h4>개요</h4>
-        <p>팀(4명)으로 개발한 사내 규정 판단 Agent. 외부 API(GPT) 없이 vLLM 기반 프라이빗 sLLM으로 규정 질의를 자동 판단하되, LLM의 오답·환각·과신을 시스템적으로 차단하는 품질 검증 체계를 설계.</p>
+        <p><strong>동기:</strong> AI Camp 최종 프로젝트에서 사내 업무 자동화 에이전트를 개발하면서, GPT API에 사내 데이터를 보낼 수 없는 보안 제약과 LLM이 "확신하면서 틀리는" 문제를 동시에 해결해야 했습니다.</p>
+        <p><strong>서비스:</strong> 사내 규정 판단·문서 처리·일정 관리·복합 요청 분해를 4개 전문 Agent가 처리하는 업무 자동화 시스템. vLLM 기반 프라이빗 sLLM(Kanana-1.5-8B)으로 GPT 의존을 제거하고, 4중 Guardrail + Confidence 보정으로 Agent의 오답·환각·과신을 시스템적으로 차단합니다.</p>
         <p class="role-desc">역할: Judgment Agent 품질 보장 — 4중 Guardrail 설계, 5-factor Confidence 보정, LoRA 파인튜닝 3회 반복 실험, 9단계 RAG 파이프라인</p>
       </div>
 
@@ -553,7 +555,8 @@ section { padding: 4rem 0 3rem; }
       <!-- 개요 + 역할 -->
       <div class="overview">
         <h4>개요</h4>
-        <p>팀(4명)으로 개발한 Python 학습 도우미 RAG 챗봇. "답변이 부정확하다"는 피드백의 원인을 RAGAS 지표로 정량 진단하여 진짜 병목을 특정하고, Flask → Django 프로덕션 전환.</p>
+        <p><strong>동기:</strong> AI Camp에서 부트캠프 학생들이 강의 내용을 스스로 검증할 도구가 없었습니다. 기존 RAG 챗봇을 만들었지만 "답변이 부정확하다"는 피드백이 반복되었고, 원인이 LLM인지 검색인지 구분할 수 없는 상태였습니다.</p>
+        <p><strong>서비스:</strong> Python 공식 문서 + 강의 자료 기반 RAG 학습 튜터 챗봇. RAGAS 4개 지표로 검색·생성을 분리 측정하여 진짜 병목(embedding 품질)을 특정하고, Flask → Django 프로덕션 전환 + AWS 배포까지 수행했습니다.</p>
         <p class="role-desc">역할: Qdrant 벡터 DB 설계, 임베딩 차원 최적화(768D→3,072D), Django + AWS EC2 프로덕션 배포</p>
       </div>
 
