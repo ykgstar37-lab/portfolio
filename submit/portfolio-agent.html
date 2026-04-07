@@ -272,7 +272,7 @@ section { padding: 4rem 0 3rem; }
         <span class="core-num">01</span>
         <div class="core-text">
           <h3>Agent 파이프라인 설계</h3>
-          <p>LangGraph 기반 3-node 파이프라인(Intent → Retrieve → Generate)을 설계하고, 조건분기로 불필요한 LLM 호출을 제거하여 요청당 비용 85% 절감. 15개 API 엔드포인트 설계, 2,500+ 시설 데이터 대상 3종 의도(검색·추천·일상대화) 분기 처리를 구현했습니다.</p>
+          <p>3개 프로젝트(6개월)에서 LangGraph 기반 3-node 파이프라인(Intent → Retrieve → Generate)을 설계하고, 조건분기로 불필요한 LLM 호출을 제거하여 요청당 비용 85% 절감(~$0.018 → ~$0.003). 총 40개 API 엔드포인트 설계, 2,500+ 시설 데이터 대상 3종 의도 분기 처리를 구현했습니다.</p>
         </div>
       </div>
 
@@ -280,7 +280,7 @@ section { padding: 4rem 0 3rem; }
         <span class="core-num">02</span>
         <div class="core-text">
           <h3>Agent 품질 검증 체계</h3>
-          <p>4중 Guardrail(키워드·조항검증·카테고리·일관성) + 5-factor Confidence 보정으로 LLM 오답·환각·과신을 시스템적으로 차단. 500건 FIFO 캐시 기반 일관성 모니터링, LoRA 3회 반복 실험(v1→v2→v3)을 거쳐 정확도 37%→85%로 개선했습니다.</p>
+          <p>4중 Guardrail(키워드·조항검증·카테고리·일관성) + 5-factor Confidence 보정으로 LLM 오답·환각·과신을 시스템적으로 차단. 500건 FIFO 캐시 기반 일관성 모니터링 설계. LoRA 파인튜닝 3회 반복 실험(v1: 3,468건 → v2: +98건 추가 시 -3.2%p 하락 → v3: 19건 약점 타겟팅으로 회복)을 거쳐 정확도 37%→85%(+48%p)로 개선했습니다.</p>
         </div>
       </div>
 
@@ -288,7 +288,7 @@ section { padding: 4rem 0 3rem; }
         <span class="core-num">03</span>
         <div class="core-text">
           <h3>정량 평가 기반 병목 진단</h3>
-          <p>RAGAS 4개 지표(Precision·Recall·Faithfulness·Relevancy)로 RAG 파이프라인의 검색·생성을 분리 측정하여, "LLM이 문제"라는 가정을 반증. 임베딩 768D→3,072D 교체로 Context Precision 0.83→0.97(+14.4%) 달성, 진짜 병목을 구조적으로 해결했습니다.</p>
+          <p>RAGAS 4개 지표(Precision·Recall·Faithfulness·Relevancy)로 RAG 파이프라인 9단계의 검색·생성을 분리 측정하여, "LLM이 문제"라는 가정을 반증. 임베딩 768D→3,072D 교체(4배 차원 확장)로 Context Precision 0.83→0.97(+14.4%), Context Recall 0.70→0.79(+12.7%) 달성. 2개 프로젝트에서 동일한 진단 프레임워크를 적용했습니다.</p>
         </div>
       </div>
     </div>
@@ -333,7 +333,7 @@ section { padding: 4rem 0 3rem; }
         <h4>개요</h4>
         <p><strong>동기:</strong> 2023년 학술제에서 서울시 25개 자치구 관광시설 데이터를 R로 군집분석하여 2등상을 수상했지만, 결과물이 PDF 보고서로만 남아 실제 사용자가 활용할 수 없었습니다. "분석 결과를 누구나 탐색하고 질문할 수 있는 서비스로 만들 수 있을까?"라는 문제의식에서 출발했습니다.</p>
         <p><strong>서비스:</strong> 서울시 2,500+ 문화시설을 인터랙티브 지도에서 탐색하고, LangGraph 기반 Agentic RAG 챗봇으로 자연어 질의(검색·추천·일상대화)를 처리하는 대화형 AI 안내 서비스. 의도 분류로 불필요한 LLM 호출을 제거하고, SSE 스트리밍으로 실시간 응답을 전달합니다.</p>
-        <p class="role-desc">역할: 전체 설계 및 개발 (개인) — Agent 파이프라인 설계, RAG 검색, API 설계(15개 엔드포인트), 프론트엔드</p>
+        <p class="role-desc">역할: 전체 설계 및 개발 (개인, 4주) — LangGraph 3-node Agent 파이프라인, ChromaDB RAG 검색(2,500+ 시설), 15개 REST/SSE API 설계, React 19 프론트엔드</p>
       </div>
 
       <!-- 기능별 AS-IS → TO-BE -->
@@ -429,7 +429,7 @@ section { padding: 4rem 0 3rem; }
         <h4>개요</h4>
         <p><strong>동기:</strong> AI Camp 최종 프로젝트에서 사내 업무 자동화 에이전트를 개발하면서, GPT API에 사내 데이터를 보낼 수 없는 보안 제약(온프레미스 서빙 필요)과 LLM이 "확신하면서 틀리는" 문제를 동시에 해결해야 했습니다.</p>
         <p><strong>서비스:</strong> 사내 규정 판단·문서 처리·일정 관리·복합 요청 분해를 4개 전문 Agent가 처리하는 업무 자동화 시스템. vLLM 기반 온프레미스 sLLM(Kanana-1.5-8B) 서빙으로 GPT 의존을 제거하고, 4중 Guardrail + Confidence 보정으로 Agent의 오답·환각·과신을 시스템적으로 차단합니다.</p>
-        <p class="role-desc">역할: Judgment Agent 품질 보장 — 4중 Guardrail 설계, 5-factor Confidence 보정, LoRA 파인튜닝 3회 반복 실험, 9단계 RAG 파이프라인</p>
+        <p class="role-desc">역할 (팀 4명, 4주): Judgment Agent 품질 보장 — 4중 Guardrail 설계, 5-factor Confidence 보정, LoRA 파인튜닝 3회 반복(학습 데이터 3,468건 + 평가 328건), 9단계 하이브리드 RAG 파이프라인(HyDE+BM25+RRF+Reranker)</p>
       </div>
 
       <!-- 기능별 AS-IS → TO-BE -->
@@ -557,7 +557,7 @@ section { padding: 4rem 0 3rem; }
         <h4>개요</h4>
         <p><strong>동기:</strong> AI Camp에서 부트캠프 학생들이 강의 내용을 스스로 검증할 도구가 없었습니다. 기존 RAG 챗봇을 만들었지만 "답변이 부정확하다"는 피드백이 반복되었고, 원인이 LLM인지 검색인지 구분할 수 없는 상태였습니다.</p>
         <p><strong>서비스:</strong> Python 공식 문서 + 강의 자료 기반 RAG 학습 튜터 챗봇. RAGAS 4개 지표로 검색·생성을 분리 측정하여 진짜 병목(embedding 품질)을 특정하고, Flask → Django 프로덕션 전환 + AWS 배포까지 수행했습니다.</p>
-        <p class="role-desc">역할: Qdrant 벡터 DB 설계, 임베딩 차원 최적화(768D→3,072D), Django + AWS EC2 프로덕션 배포</p>
+        <p class="role-desc">역할 (팀 4명, 6주): Qdrant 벡터 DB 설계(문서 500+건 임베딩), 임베딩 차원 최적화(768D→3,072D, 4배 확장), Flask→Django 마이그레이션, AWS EC2(Nginx+Gunicorn) 프로덕션 배포</p>
       </div>
 
       <!-- 기능별 AS-IS → TO-BE -->
@@ -625,17 +625,17 @@ section { padding: 4rem 0 3rem; }
 
     <div class="cta-item">
       <h4 style="color:#e27500;">01 &ensp;업무 병목을 발굴하고 Agent 스펙으로 번역</h4>
-      <p>"이 업무 자동화해주세요"라는 비구조화된 요청을 Intent 분류 → 도구 호출 → 응답 생성의 기술 스펙으로 변환했습니다. Seoul Culture Map에서 2,500+ 시설 데이터를 3종 의도로 분기하는 3-node 파이프라인을 설계하고, WorkFlow Agent에서 공통 LLM 모듈로 provider 전환을 1줄로 단순화하여 개별 팀이 자신의 도메인에 맞는 Agent를 빠르게 만들 수 있는 플랫폼 사고를 실천했습니다.</p>
+      <p>3개 프로젝트(6개월)에서 "이 업무 자동화해주세요"라는 비구조화된 요청을 Intent 분류 → 도구 호출 → 응답 생성의 기술 스펙으로 변환하고, 총 40개 API 엔드포인트를 설계했습니다. Seoul Culture Map에서 2,500+ 시설 데이터를 3종 의도로 분기하는 3-node 파이프라인을 설계하고, WorkFlow Agent에서 공통 LLM 모듈로 provider 전환을 1줄로 단순화하여 개별 팀이 자신의 도메인에 맞는 Agent를 빠르게 만들 수 있는 플랫폼 사고를 실천했습니다.</p>
     </div>
 
     <div class="cta-item">
       <h4 style="color:#e27500;">02 &ensp;Agent 품질 평가 체계 + 컨텍스트 엔지니어링</h4>
-      <p>금융 서비스에서 Agent의 잘못된 판단은 직접적인 리스크입니다. 4중 Guardrail + Confidence Hard Cap으로 과신을 보정하고(0.92→0.78), LoRA 3회 반복 실험으로 정확도 37%→85%를 달성한 검증 체계를 구축했습니다. 세션 메모리(SQLite 10턴), HyDE 가설 문서, 쿼리 정제·태그 부스팅 등 Agent에 정보를 "언제, 어떤 형태로" 제공할지 시스템 수준에서 설계한 경험이 있습니다.</p>
+      <p>금융 서비스에서 Agent의 잘못된 판단은 직접적인 리스크입니다. 4중 Guardrail + Confidence Hard Cap으로 과신을 보정하고(0.92→0.78), LoRA 3회 반복 실험(학습 3,468건, 평가 328건)으로 정확도 37%→85%(+48%p)를 달성한 검증 체계를 구축했습니다. 세션 메모리(SQLite 10턴), HyDE 가설 문서, 9단계 RAG 파이프라인의 쿼리 정제·태그 부스팅 등 Agent에 정보를 "언제, 어떤 형태로" 제공할지 시스템 수준에서 설계한 경험이 있습니다.</p>
     </div>
 
     <div class="cta-item">
       <h4 style="color:#e27500;">03 &ensp;정량 평가로 병목을 특정하고 PoC → 플랫폼 기여</h4>
-      <p>"Agent가 이상한 답을 해요"라는 피드백을 RAGAS 4개 지표로 검색·생성 분리 측정하여 임베딩 교체(768D→3,072D)로 Precision +14.4% 달성. 현장에서 발견한 요구사항을 빠르게 PoC로 검증하고, 구조적 개선점을 플랫폼 기능으로 연결하는 접근을 지향합니다.</p>
+      <p>"Agent가 이상한 답을 해요"라는 피드백을 RAGAS 4개 지표로 검색·생성 분리 측정하여 임베딩 교체(768D→3,072D, 4배 차원 확장)로 Precision 0.83→0.97(+14.4%), Recall 0.70→0.79(+12.7%) 달성. 2개 프로젝트에서 동일한 진단 프레임워크를 적용하여 현장 요구사항을 빠르게 PoC로 검증하고, 구조적 개선점을 플랫폼 기능으로 연결하는 접근을 지향합니다.</p>
     </div>
 
     <div class="cta-contact">
