@@ -213,7 +213,7 @@ export default function CryptoVolatility() {
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         Comparison and Analysis of Cryptocurrency Volatility Forecast Based on the <span className="text-[#2b4fcb]">GARCH</span> Model
                     </h1>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
+                    <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         5개 GARCH 계열 모형을 비교하여 비트코인 변동성 최적 예측 모형을 탐색하고, 외생변수(Volume+FNG)의 예측력 향상 기여도를 실증 분석
                     </p>
                     <div className="flex gap-3">
@@ -244,6 +244,34 @@ export default function CryptoVolatility() {
                             <p className="text-xs font-medium text-gray-500">{item.sub}</p>
                         </motion.div>
                     ))}
+                </motion.div>
+
+                {/* PDF-style Overview / Role / Skills */}
+                <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-6 sm:p-8 space-y-6">
+                            <div>
+                                <p className="text-[10px] font-bold text-[#2b4fcb] uppercase tracking-widest mb-2">Overview</p>
+                                <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    암호화폐 시장의 변동성을 GARCH 계열 5개 모형(GARCH, TGARCH, HAR-GARCH, HAR-TGARCH, HAR-TGARCH-X)으로 비교 분석한 팀 연구 프로젝트. ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, AIC/BIC/R² 기준으로 최적 모형을 선정.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정 수행, HAR-TGARCH-X 최적 모형 선정, 외생변수(FNG) 효과 검증, 발표 자료 작성.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['Python', 'GARCH', 'HAR', 'ADF Test', 'ARCH-LM', 'statsmodels', 'pandas'].map(t => (
+                                        <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
                 {/* ═══ RESEARCH BACKGROUND ═══ */}

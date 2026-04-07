@@ -173,7 +173,7 @@ export default function WorkFlowAgent() {
                     <p className="text-xl text-[#5f7f95] font-semibold mb-6 tracking-tight">
                         "하나의 채팅으로 업무의 모든 것을"
                     </p>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
+                    <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         수동 규정 검색에 10~15분 소요되고, GPT API로는 사내 데이터 외부 유출이 불가피한 문제를 해결. 4개 전문 Agent + sLLM 파인튜닝으로 프라이빗 환경 구축, Intent F1 97.88% 달성, JSON 유효율 70%→97%로 서빙 안정성 확보. 과신뢰 오분류 69% 감소하는 4중 Guardrail 설계.
                     </p>
                     <div className="flex gap-3">
@@ -187,6 +187,34 @@ export default function WorkFlowAgent() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             Demo
                         </button>
+                    </div>
+                </motion.div>
+
+                {/* PDF-style Overview / Role / Skills */}
+                <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-6 sm:p-8 space-y-6">
+                            <div>
+                                <p className="text-[10px] font-bold text-[#5f7f95] uppercase tracking-widest mb-2">Overview</p>
+                                <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    사내 업무 자동화를 위한 LLM 에이전트 시스템. 규정 판단, 문서 처리, 일정 관리, 복합 요청 분해를 4개 전문 에이전트가 처리합니다. GPT API 의존을 제거하고 vLLM 기반 프라이빗 sLLM 서빙으로 전환하여 비용 제거 + 데이터 보안을 확보했습니다.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 5-factor Confidence 보정 시스템, LoRA 파인튜닝 데이터 품질 실험(v1→v3 반복), 공통 LLM 모듈 설계로 provider 전환 1줄 단순화.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['LangGraph', 'Kanana-1.5-8B', 'vLLM', 'LoRA', 'FastAPI', 'React', 'Qdrant', 'HyDE'].map(t => (
+                                        <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
 

@@ -173,7 +173,7 @@ export default function SeoulCulture() {
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         외국인에게 관광목적에 맞는 <span className="text-[#d4a03c]">지역구 제안</span>
                     </h1>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed">
+                    <p className="text-lg text-gray-500 font-medium leading-relaxed">
                         위드 코로나 시대, 급증하는 외국인 관광객을 위해 서울특별시 25개 자치구의 관광 시설 현황을 조사·분석하고 군집분석을 통해 관광 목적에 맞는 지역구를 제안했습니다.
                     </p>
                     <div className="flex gap-3 mt-6">
@@ -204,6 +204,34 @@ export default function SeoulCulture() {
                             <p className="text-xs font-medium text-gray-500">{item.sub}</p>
                         </motion.div>
                     ))}
+                </motion.div>
+
+                {/* PDF-style Overview / Role / Skills */}
+                <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-6 sm:p-8 space-y-6">
+                            <div>
+                                <p className="text-[10px] font-bold text-[#16a34a] uppercase tracking-widest mb-2">Overview</p>
+                                <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    서울시 25개 자치구 관광시설 데이터를 군집분석하여, 외국인 관광객에게 목적(자연/역사, 문화/예술, 쇼핑/도시)에 맞는 지역구를 추천하는 팀 연구 프로젝트. NbClust+Silhouette로 최적 k=3을 결정하고, PCA 설명력 91.3%를 달성하여 학술제 2등상 수상.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    공공데이터 수집·전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 인터랙티브 시각화, 발표 자료 작성.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['R', 'dplyr', 'ggplot2', 'NbClust', 'PCA', 'K-means', '공공데이터'].map(t => (
+                                        <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
                 {/* ═══ RESEARCH BACKGROUND ═══ */}

@@ -232,7 +232,7 @@ export default function CryptoVolDashboard() {
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
                         실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 대시보드
                     </p>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
+                    <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         P학기 팀 분석이 Jupyter 안에 갇혀 실시간 의사결정에 활용 불가능한 문제를 해결하기 위해, Python 분석 코드를 FastAPI + React 풀스택 서비스로 전환. Binance WebSocket 릴레이로 실시간 시세를 연동하고, 5개 GARCH 모형의 캐싱 전략(5분 TTL)으로 수백ms 적합 비용을 해결. BTC-FNG 상관계수 r=0.72를 근거로 외생변수를 주입한 HAR-TGARCH-X 모형까지 서빙.
                     </p>
                     <div className="flex gap-3">
@@ -246,6 +246,34 @@ export default function CryptoVolDashboard() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                             Screenshots
                         </button>
+                    </div>
+                </motion.div>
+
+                {/* PDF-style Overview / Role / Skills */}
+                <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-6 sm:p-8 space-y-6">
+                            <div>
+                                <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: PRIMARY }}>Overview</p>
+                                <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 풀스택 프로젝트. Binance WebSocket으로 실시간 시세를 수신하고, 5개 변동성 예측 모형의 적합 결과를 캐싱하여 안정적으로 서빙합니다. 매매 시그널, 포트폴리오 시뮬레이터, AI 브리핑을 포함한 종합 대시보드.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    개인 프로젝트로서 API 서빙 아키텍처 설계, WebSocket 릴레이 구현, 5분 TTL 캐싱 전략, 에러 격리 패턴, 프론트엔드 대시보드까지 전 과정을 담당.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['FastAPI', 'React', 'GARCH', 'Binance WebSocket', 'OpenAI API', 'Recharts', 'Monte Carlo'].map(t => (
+                                        <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
 

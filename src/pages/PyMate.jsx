@@ -497,7 +497,7 @@ export default function PyMate() {
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4 sm:mb-6 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         <span className="text-[#e8609c]">PyMate</span> — Bootcamp AI RAG Tutor
                     </h1>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
+                    <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         부트캠프 학생들의 강의 이해도 검증 도구가 없는 문제를 해결하기 위해 RAG 기반 AI 학습 튜터를 개발. Flask MVP에서 검색 품질 병목을 발견하고 Django로 전환, 임베딩 3072D 교체로 Context Precision 0.83→0.97 달성. 3단계 관련도 라우팅으로 LLM 환각 응답을 원천 차단.
                     </p>
                     <div className="flex items-center gap-3 flex-wrap">
@@ -514,6 +514,34 @@ export default function PyMate() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                             Demo
                         </button>
+                    </div>
+                </motion.div>
+
+                {/* PDF-style Overview / Role / Skills */}
+                <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-6 sm:p-8 space-y-6">
+                            <div>
+                                <p className="text-[10px] font-bold text-[#e8609c] uppercase tracking-widest mb-2">Overview</p>
+                                <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    AI Camp 교육과정에 특화된 RAG 기반 AI 튜터. 교육 규정과 학습 자료(Python 공식 문서, 강의 자료)를 하이브리드 검색하여 학생 질문에 즉시 답변을 제공합니다. RAGAS로 검색 품질을 정량 평가하고, embedding 교체로 Precision 0.83→0.97 달성.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    RAG 파이프라인 설계(HyDE + BM25 + Reranker), Flask→Django 프로덕션 마이그레이션, RAGAS 기반 정량 평가 체계 구축, 임베딩 모델 교체(768D→3072D), AWS(Nginx+Gunicorn) 배포.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['Django', 'LangChain', 'Qdrant', 'AWS', 'Nginx', 'RAGAS', 'HyDE', 'bge-reranker'].map(t => (
+                                        <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
 

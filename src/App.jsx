@@ -83,7 +83,16 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
                     )}
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1 leading-snug">{project.title}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">{project.description}</p>
+                {project.overview ? (
+                    <div className="space-y-1.5">
+                        <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">{project.overview}</p>
+                        {project.role && (
+                            <p className="text-[10px] text-gray-400 line-clamp-1"><span className="font-bold text-[#e27500]">Role</span> {project.role}</p>
+                        )}
+                    </div>
+                ) : (
+                    <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">{project.description}</p>
+                )}
             </div>
 
             {/* Desktop hover overlay */}
@@ -100,7 +109,22 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
                         )}
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2 leading-snug">{project.title}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">{project.description}</p>
+                    {project.overview ? (
+                        <div className="mb-3 space-y-2">
+                            <div>
+                                <span className="text-[9px] font-bold text-[#e27500] uppercase tracking-widest">Overview</span>
+                                <p className="text-gray-600 text-xs leading-relaxed mt-0.5 line-clamp-2">{project.overview}</p>
+                            </div>
+                            {project.role && (
+                                <div>
+                                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Role</span>
+                                    <p className="text-gray-500 text-xs leading-relaxed mt-0.5 line-clamp-1">{project.role}</p>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">{project.description}</p>
+                    )}
                     <div className="flex flex-wrap gap-1.5 mb-4">
                         {project.tech.map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                     </div>
@@ -135,12 +159,12 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 
 /* ── Shared project data (single source of truth) ── */
 const ALL_PROJECTS = [
-    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'GARCH 적합 연산(수백ms) 지연 → 5분 TTL 캐싱 + 에러 격리로 5개 모형 안정 서빙(14 REST + 1 WS). WebSocket 릴레이로 API 키 노출 차단, 1개 모형 실패가 전체 장애로 번지지 않는 설계.', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
-    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, AI 코스 추천까지 연결한 풀스택 서비스.', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
-    { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70%→97%, 판단 정확도 37%→85%. 공통 LLM 모듈로 provider 전환 설정 1줄.', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
-    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. 768D→3,072D 교체로 Precision 0.83→0.97(+14.4%), Reranker 경량화로 레이턴시 -1초. Flask→Django 프로덕션 표준화.', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
-    { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
-    { id: '06', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
+    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'GARCH 적합 연산(수백ms) 지연 → 5분 TTL 캐싱 + 에러 격리로 5개 모형 안정 서빙(14 REST + 1 WS). WebSocket 릴레이로 API 키 노출 차단, 1개 모형 실패가 전체 장애로 번지지 않는 설계.', overview: '팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 풀스택 프로젝트. 5개 변동성 예측 모형, 매매 시그널, 포트폴리오 시뮬레이터, AI 브리핑을 제공하는 대시보드.', role: 'API 서빙 아키텍처 설계, WebSocket 릴레이 구현, 캐싱 전략, 에러 격리 설계', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, AI 코스 추천까지 연결한 풀스택 서비스.', overview: '서울시 2,500+ 문화시설 데이터를 군집분석하고, Agentic RAG 기반 AI 추천과 인터랙티브 지도를 결합한 풀스택 서비스.', role: 'RESTful API 설계(11개 엔드포인트), LangGraph Agentic RAG 파이프라인, K-means 군집분석, SSE 스트리밍', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '03', title: 'WorkFlow Agent (듀듀)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70%→97%, 판단 정확도 37%→85%. 공통 LLM 모듈로 provider 전환 설정 1줄.', overview: '사내 업무 자동화를 위한 LLM 에이전트 시스템. 규정 판단, 문서 처리, 일정 관리, 복합 요청 분해를 4개 전문 에이전트가 처리.', role: 'vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 5-factor Confidence 보정, LoRA 파인튜닝 데이터 품질 실험', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
+    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. 768D→3,072D 교체로 Precision 0.83→0.97(+14.4%), Reranker 경량화로 레이턴시 -1초. Flask→Django 프로덕션 표준화.', overview: 'AI Camp 교육과정에 특화된 RAG 기반 AI 튜터. 교육 규정과 학습 자료를 검색하여 즉시 답변을 제공하는 챗봇 서비스.', role: 'RAG 파이프라인 설계(HyDE+BM25+Reranker), Flask→Django 마이그레이션, RAGAS 기반 정량 평가, AWS 배포', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
+    { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', overview: '암호화폐 시장의 변동성을 GARCH 계열 5개 모형으로 비교 분석한 팀 연구 프로젝트.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, HAR-TGARCH-X 최적 모형 선정, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
+    { id: '06', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', overview: '서울시 25개 자치구 관광시설 데이터를 군집분석하여 외국인 관광객에게 목적에 맞는 지역구를 추천하는 연구 프로젝트.', role: '공공데이터 전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 시각화 및 발표', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
 ];
 const DEV_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Dev');
 const STAT_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Data');
@@ -521,49 +545,72 @@ function HomePage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-8">
                     <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={stagger} className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                         {/* Left */}
-                        <motion.div variants={fadeUp} className="lg:col-span-5 space-y-8">
+                        <motion.div variants={fadeUp} className="lg:col-span-6 space-y-8">
                             <div>
                                 <p className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">About Me</p>
                                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                                     Building<br /><span className="text-gray-400">Reliable</span> AI Systems
                                 </h2>
                             </div>
-                            <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                응용통계학과에서 데이터 기반 의사결정의 기초를 다지고, AI Camp에서 LLM·RAG 기반 실전 프로젝트를 경험하며 AI 엔지니어로 성장했습니다. vLLM으로 sLLM(Kanana-1.5-8B)을 서빙하고, GARCH 모형을 실시간 API로 전환한 경험이 있어, 모델 서빙의 성능 최적화와 안정적 운영에 대한 실전 감각을 갖추고 있습니다.
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                                {['Python', 'vLLM', 'FastAPI', 'Docker', 'AWS', 'LangGraph', 'PostgreSQL', 'React'].map(tech => (
-                                    <motion.span key={tech} whileHover={{ scale: 1.08, y: -2 }}
-                                        className={`px-4 py-2 rounded-full text-xs font-bold tracking-wide transition ${['Python', 'vLLM', 'FastAPI', 'Docker'].includes(tech) ? 'bg-[#e27500] text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
-                                    >{tech}</motion.span>
+
+                            {/* PDF Page 1 스타일: 2단락 자기소개 */}
+                            <div className="space-y-4">
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    <span className="font-bold text-gray-900">신뢰할 수 있는 AI 시스템을 설계하고 서빙하는 엔지니어입니다.</span>{' '}
+                                    3개 프로젝트에서 모델 서빙 아키텍처를 설계하여 GARCH 모형의 수백ms 연산을 5분 TTL 캐싱으로 해결하고, vLLM 기반 sLLM 프라이빗 서빙으로 GPT API 의존을 제거했으며, 4중 Guardrail 설계로 판단 정확도를 37%→85%로 개선한 경험이 있습니다.
+                                </p>
+                                <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    <span className="font-bold text-gray-800">데이터로 판단하고, 구조로 해결합니다.</span>{' '}
+                                    RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의하여 Precision을 0.83→0.97로 개선하고, 공통 LLM 모듈 설계로 provider 전환을 1줄로 단순화했습니다. 팀 프로젝트에서 기술 문서화와 코드 리뷰를 주도하며, 함께 성장하는 개발 문화를 만들어갑니다.
+                                </p>
+                            </div>
+
+                            {/* PDF Page 1 스타일: 카테고리별 Skills */}
+                            <div className="space-y-3">
+                                <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">Skills</h3>
+                                {[
+                                    { category: 'AI / ML', techs: ['Python', 'vLLM', 'LangGraph', 'LangChain', 'GARCH'], primary: true },
+                                    { category: 'Backend', techs: ['FastAPI', 'Django', 'PostgreSQL', 'Qdrant'], primary: true },
+                                    { category: 'Infra / DevOps', techs: ['Docker', 'AWS', 'Nginx', 'React'], primary: false },
+                                ].map((group) => (
+                                    <div key={group.category} className="flex items-start gap-3">
+                                        <span className="text-[10px] font-bold text-[#e27500] w-24 shrink-0 pt-1.5 tracking-wide">{group.category}</span>
+                                        <div className="flex flex-wrap gap-1.5">
+                                            {group.techs.map(tech => (
+                                                <motion.span key={tech} whileHover={{ scale: 1.08, y: -2 }}
+                                                    className={`px-3 py-1.5 rounded-full text-[11px] font-bold tracking-wide transition ${group.primary ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                                                >{tech}</motion.span>
+                                            ))}
+                                        </div>
+                                    </div>
                                 ))}
                             </div>
                         </motion.div>
 
                         {/* Center */}
-                        <motion.div variants={fadeUp} custom={1} className="lg:col-span-4 space-y-4">
-                            <TiltCard className="bg-gradient-to-br from-[#1a1a1a] to-[#333333] p-8 rounded-3xl text-white">
-                                <p className="text-5xl font-light mb-2">100%</p>
-                                <p className="text-gray-400 text-sm font-semibold tracking-wider uppercase">Dedication to<br />Reliable AI Serving</p>
+                        <motion.div variants={fadeUp} custom={1} className="lg:col-span-3 space-y-3">
+                            <TiltCard className="bg-gradient-to-br from-[#1a1a1a] to-[#333333] p-6 rounded-2xl text-white">
+                                <p className="text-4xl font-light mb-1">100%</p>
+                                <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase">Dedication to<br />Reliable AI Serving</p>
                             </TiltCard>
 
-                            <TiltCard className="bg-white p-7 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <HiAcademicCap className="w-6 h-6 text-gray-400" />
-                                    <h3 className="text-lg font-bold">가천대학교</h3>
+                            <TiltCard className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+                                <div className="flex items-center gap-2.5 mb-3">
+                                    <HiAcademicCap className="w-5 h-5 text-gray-400" />
+                                    <h3 className="text-base font-bold">가천대학교</h3>
                                 </div>
-                                <p className="text-gray-700 font-medium">응용통계학과</p>
-                                <p className="text-gray-400 font-medium">경영학과(복수전공)</p>
-                                <p className="text-xs text-gray-400 mt-4 font-semibold">2020. 03 ~ 2026. 08</p>
+                                <p className="text-sm text-gray-700 font-medium">응용통계학과</p>
+                                <p className="text-sm text-gray-400 font-medium">경영학과(복수전공)</p>
+                                <p className="text-[11px] text-gray-400 mt-3 font-semibold">2020. 03 ~ 2026. 08</p>
                             </TiltCard>
 
-                            <TiltCard className="bg-white p-7 rounded-3xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <HiDesktopComputer className="w-6 h-6 text-gray-400" />
-                                    <h3 className="text-lg font-bold">SK네트웍스 Family AI Camp</h3>
+                            <TiltCard className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
+                                <div className="flex items-center gap-2.5 mb-3">
+                                    <HiDesktopComputer className="w-5 h-5 text-gray-400" />
+                                    <h3 className="text-sm font-bold">SK네트웍스 Family AI Camp</h3>
                                 </div>
-                                <p className="text-gray-700 font-medium">SKN 21기</p>
-                                <p className="text-xs text-gray-400 mt-4 font-semibold">2025. 09 ~ 2026. 03</p>
+                                <p className="text-sm text-gray-700 font-medium">SKN 21기</p>
+                                <p className="text-[11px] text-gray-400 mt-3 font-semibold">2025. 09 ~ 2026. 03</p>
                             </TiltCard>
                         </motion.div>
 

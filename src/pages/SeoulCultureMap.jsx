@@ -257,7 +257,7 @@ export default function SeoulCultureMap() {
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
                         서울시 2,500+ 문화시설 탐색 + LangGraph AI 챗봇
                     </p>
-                    <p className="text-lg text-gray-500 font-medium max-w-3xl leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
+                    <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         학술제 팀 분석이 PDF 보고서로만 공유되어 일반인이 활용할 수 없는 문제를 해결. 2개 공공API의 좌표 필드·카테고리 코드가 달라 통합이 어려웠지만, 데이터 정규화 파이프라인으로 2,500+ 시설 · 1,177장 이미지를 확보. LangGraph 3-node Agent로 AI 추천 비용을 요청당 ~$0.003(85% 절감)으로 최적화하고, 로컬 임베딩으로 월 API 비용 $0을 달성.
                     </p>
                     <div className="flex gap-3">
@@ -271,6 +271,34 @@ export default function SeoulCultureMap() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                             Screenshots
                         </button>
+                    </div>
+                </motion.div>
+
+                {/* PDF-style Overview / Role / Skills */}
+                <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                        <div className="p-6 sm:p-8 space-y-6">
+                            <div>
+                                <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: PRIMARY }}>Overview</p>
+                                <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    서울시 2,500+ 문화시설 데이터를 K-means 군집분석하고, Agentic RAG 기반 AI 추천과 인터랙티브 Leaflet 지도를 결합한 풀스택 서비스. 팀 학술제 R 분석 결과를 웹 서비스로 확장하여, 일반 사용자도 서울 문화시설을 쉽게 탐색·추천받을 수 있도록 구현.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+                                <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                    개인 프로젝트로서 RESTful API 설계(11개 엔드포인트), LangGraph 기반 Agentic RAG 파이프라인, K-means 군집분석, SSE 스트리밍, 프론트엔드 인터랙티브 지도까지 전 과정 담당.
+                                </p>
+                            </div>
+                            <div>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'LangGraph', 'ChromaDB', 'OpenAI API', 'SSE Streaming'].map(t => (
+                                        <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
 
