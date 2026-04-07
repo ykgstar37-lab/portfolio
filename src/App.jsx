@@ -492,7 +492,7 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium">
-                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an AI Engineer
+                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an AI Engineer (Agent)
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -526,11 +526,11 @@ function HomePage() {
                                 {/* Hover overlay - hidden on mobile (no hover) */}
                                 <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
                                     <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">AI Engineer</span>
+                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">AI Engineer (Agent)</span>
                                         <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Building reliable AI serving systems with ML infrastructure</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Agent 파이프라인 설계 · 품질 검증 · RAG 최적화</p>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {['Python', 'vLLM', 'FastAPI', 'Docker'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                            {['LangGraph', 'vLLM', 'FastAPI', 'RAG'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                         </div>
                                     </div>
                                 </div>
@@ -549,19 +549,19 @@ function HomePage() {
                             <div>
                                 <p className="text-xs font-bold text-gray-400 tracking-widest uppercase mb-3">About Me</p>
                                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                                    Building<br /><span className="text-gray-400">Reliable</span> AI Systems
+                                    Building<br /><span className="text-gray-400">Reliable</span> AI Agents
                                 </h2>
                             </div>
 
                             {/* PDF Page 1 스타일: 2단락 자기소개 */}
                             <div className="space-y-4">
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    <span className="font-bold text-gray-900">신뢰할 수 있는 AI 시스템을 설계하고 서빙하는 엔지니어입니다.</span>{' '}
-                                    3개 프로젝트에서 모델 서빙 아키텍처를 설계하여 GARCH 모형의 수백ms 연산을 5분 TTL 캐싱으로 해결하고, vLLM 기반 sLLM 프라이빗 서빙으로 GPT API 의존을 제거했으며, 4중 Guardrail 설계로 판단 정확도를 37%→85%로 개선한 경험이 있습니다.
+                                    <span className="font-bold text-gray-900">Agent가 틀렸을 때 잡는 시스템을 설계합니다.</span>{' '}
+                                    LangGraph 기반 3-node Agent 파이프라인으로 불필요한 LLM 호출을 제거하여 비용 85% 절감하고, 4중 Guardrail + 5-factor Confidence 보정으로 판단 정확도를 37%→85%로 개선했습니다. vLLM 기반 sLLM 프라이빗 서빙으로 GPT API 의존을 제거한 경험이 있습니다.
                                 </p>
                                 <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    <span className="font-bold text-gray-800">데이터로 판단하고, 구조로 해결합니다.</span>{' '}
-                                    RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의하여 Precision을 0.83→0.97로 개선하고, 공통 LLM 모듈 설계로 provider 전환을 1줄로 단순화했습니다. 팀 프로젝트에서 기술 문서화와 코드 리뷰를 주도하며, 함께 성장하는 개발 문화를 만들어갑니다.
+                                    <span className="font-bold text-gray-800">감이 아닌 지표로 병목을 특정하고, 구조로 해결합니다.</span>{' '}
+                                    RAGAS 4개 지표로 검색·생성을 분리 측정하여 병목을 "LLM"이 아닌 "embedding 품질"로 재정의, Precision 0.83→0.97(+14.4%) 달성. LoRA 3회 반복 실험으로 "데이터 양 &lt; 데이터 품질"이라는 판단 기준을 체득했습니다.
                                 </p>
                             </div>
 
@@ -569,9 +569,9 @@ function HomePage() {
                             <div className="space-y-3">
                                 <h3 className="text-sm font-bold text-gray-900 tracking-wider uppercase">Skills</h3>
                                 {[
-                                    { category: 'AI / ML', techs: ['Python', 'vLLM', 'LangGraph', 'LangChain', 'GARCH'], primary: true },
-                                    { category: 'Backend', techs: ['FastAPI', 'Django', 'PostgreSQL', 'Qdrant'], primary: true },
-                                    { category: 'Infra / DevOps', techs: ['Docker', 'AWS', 'Nginx', 'React'], primary: false },
+                                    { category: 'Agent / LLM', techs: ['LangGraph', 'LangChain', 'vLLM', 'LoRA', 'ChromaDB', 'Qdrant'], primary: true },
+                                    { category: 'Backend', techs: ['FastAPI', 'Django', 'Python', 'PostgreSQL'], primary: true },
+                                    { category: 'Eval / Infra', techs: ['RAGAS', 'Docker', 'AWS', 'Nginx'], primary: false },
                                 ].map((group) => (
                                     <div key={group.category} className="flex items-start gap-3">
                                         <span className="text-[10px] font-bold text-[#e27500] w-24 shrink-0 pt-1.5 tracking-wide">{group.category}</span>
@@ -591,7 +591,7 @@ function HomePage() {
                         <motion.div variants={fadeUp} custom={1} className="lg:col-span-3 space-y-3">
                             <TiltCard className="bg-gradient-to-br from-[#1a1a1a] to-[#333333] p-6 rounded-2xl text-white">
                                 <p className="text-4xl font-light mb-1">100%</p>
-                                <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase">Dedication to<br />Reliable AI Serving</p>
+                                <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase">Dedication to<br />Reliable AI Agents</p>
                             </TiltCard>
 
                             <TiltCard className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
@@ -629,7 +629,7 @@ function HomePage() {
                                 {/* Right column (or full width on desktop) */}
                                 <div className="flex-1">
                                     <h3 className="text-sm font-bold text-gray-900 mb-4 tracking-wider uppercase">Core Strength</h3>
-                                    {['Model Serving & Optimization', 'LLM/RAG System Design', 'Problem Solving', 'Statistical Thinking'].map((item, i) => (
+                                    {['Agent Pipeline Design', 'LLM/RAG Quality Assurance', 'Quantitative Evaluation', 'Problem Solving'].map((item, i) => (
                                         <motion.div key={i} whileHover={{ x: 4 }} className="flex items-center gap-3 py-2.5 cursor-default">
                                             <div className="w-6 h-6 rounded-full bg-[#e27500] text-white flex items-center justify-center flex-shrink-0 shadow-sm shadow-[#e27500]/30">
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
