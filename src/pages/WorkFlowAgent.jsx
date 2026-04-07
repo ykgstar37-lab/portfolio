@@ -1,16 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
-// Demo video hosted on Google Drive
+import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
+
+const WORKFLOW_TOTAL_SLIDES = 30;
+function WorkflowSlideViewer() {
+    const [current, setCurrent] = useState(1);
+    const prev = () => setCurrent(c => Math.max(1, c - 1));
+    const next = () => setCurrent(c => Math.min(WORKFLOW_TOTAL_SLIDES, c + 1));
+
+    return (
+        <motion.div className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Presentation Slides</h2>
+            <p className="text-gray-500 mb-8">최종 발표 자료 — 화살표로 슬라이드를 넘겨보세요</p>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div className="relative">
+                    <img
+                        src={`/slides-workflow/slide-${String(current).padStart(2, '0')}.png`}
+                        alt={`Slide ${current}`}
+                        className="w-full h-auto"
+                    />
+                    <button onClick={prev} disabled={current === 1}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button onClick={next} disabled={current === WORKFLOW_TOTAL_SLIDES}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                </div>
+                <div className="flex items-center justify-center gap-4 py-4 border-t border-gray-50">
+                    <span className="text-sm font-bold text-gray-900">{current}</span>
+                    <div className="w-48 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#5f7f95] rounded-full transition-all duration-300" style={{ width: `${(current / WORKFLOW_TOTAL_SLIDES) * 100}%` }}></div>
+                    </div>
+                    <span className="text-sm text-gray-400">{WORKFLOW_TOTAL_SLIDES}</span>
+                </div>
+            </div>
+        </motion.div>
+    );
+}
 
 const AGENTS = [
     {
@@ -143,6 +181,7 @@ const SECTIONS = [
     { id: 'contributions', label: 'My Contributions' },
     { id: 'challenges', label: 'Technical Challenges' },
     { id: 'demo', label: 'Demo', highlight: true },
+    { id: 'presentation', label: 'Presentation', highlight: true },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 
@@ -168,7 +207,7 @@ export default function WorkFlowAgent() {
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.02 — 2026.03</span>
                     </div>
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
-                        WorkFlow Agent <span className="text-[#5f7f95]">(듀듀)</span>
+                        WorkFlow Agent <span className="text-[#5f7f95]">(듀드)</span>
                     </h1>
                     <p className="text-xl text-[#5f7f95] font-semibold mb-6 tracking-tight">
                         "하나의 채팅으로 업무의 모든 것을"
@@ -563,7 +602,7 @@ export default function WorkFlowAgent() {
                         <div className="space-y-6">
                             {/* Project Introduction */}
                             <div className="bg-[#5f7f95] rounded-2xl p-6 text-white">
-                                <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>WorkFlow Agent (듀듀)</h3>
+                                <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>WorkFlow Agent (듀드)</h3>
                                 <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
                                     "하나의 채팅으로 업무의 모든 것" — 사내 규정 판단, 문서 생성, 일정 관리를 자연어 한 줄로 처리하는 프라이빗 AI 어시스턴트.
                                     GPT API 없이 사내 데이터를 보호하면서도, 4개 전문 Agent가 협력하여 복잡한 업무를 자동화합니다.
@@ -874,6 +913,11 @@ export default function WorkFlowAgent() {
                 </motion.div>
 
                 {/* Retrospective */}
+                {/* ═══ PRESENTATION: Slides ═══ */}
+                <CollapsibleSection id="presentation" title="Presentation" subtitle="최종 발표 자료">
+                    <WorkflowSlideViewer />
+                </CollapsibleSection>
+
                 <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Retrospective</h2>
                     <p className="text-gray-500 mb-6">프로젝트를 마치며</p>
