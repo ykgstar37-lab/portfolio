@@ -92,6 +92,16 @@ section { padding: 4rem 0 3rem; }
 .insight-box .insight-label { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #8b5cf6; margin-bottom: 0.3rem; }
 .insight-box p { font-size: 0.85rem; color: #555; font-style: italic; }
 
+/* ── Skills Grid (Cover) ── */
+.skills-section { margin-top: 2.5rem; }
+.skills-section h2 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: #999; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.skills-grid-cover { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem 2rem; }
+.skill-row { display: flex; align-items: baseline; gap: 0.8rem; }
+.skill-cat { font-size: 0.7rem; font-weight: 700; color: #5f7f95; width: 7.5rem; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.04em; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.skill-tag-hl { font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 4px; background: #1a1a1a; color: #fff; }
+.skill-tag-nm { font-size: 0.68rem; font-weight: 500; padding: 0.2rem 0.55rem; border-radius: 4px; background: #f0f0f0; color: #555; }
+
 /* ── Tech Tags ── */
 .tech-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
 .tech-tag { font-size: 0.68rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 5px; background: #f0f0f0; color: #666; }
@@ -190,6 +200,64 @@ section { padding: 4rem 0 3rem; }
       <strong>GitHub</strong>&ensp;<a href="https://github.com/ykgstar37-lab" target="_blank" style="color:#c23616;text-decoration:none;">github.com/ykgstar37-lab</a><br>
       <strong>Portfolio</strong>&ensp;<a href="https://yge-portfolio.vercel.app/" target="_blank" style="color:#c23616;text-decoration:none;">yge-portfolio.vercel.app</a><br>
       <strong>Education</strong>&ensp;가천대학교 응용통계학과
+    </div>
+
+    <div class="skills-section">
+      <h2>Skills</h2>
+      <div class="skills-grid-cover">
+        <div class="skill-row">
+          <span class="skill-cat">Agent Framework</span>
+          <div class="skill-tags">
+            <span class="skill-tag-hl">LangGraph</span>
+            <span class="skill-tag-hl">LangChain</span>
+            <span class="skill-tag-nm">MCP</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">LLM Serving</span>
+          <div class="skill-tags">
+            <span class="skill-tag-hl">vLLM</span>
+            <span class="skill-tag-hl">LoRA</span>
+            <span class="skill-tag-nm">OpenAI API</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">RAG / Memory</span>
+          <div class="skill-tags">
+            <span class="skill-tag-hl">ChromaDB</span>
+            <span class="skill-tag-hl">Qdrant</span>
+            <span class="skill-tag-nm">HyDE</span>
+            <span class="skill-tag-nm">BM25</span>
+            <span class="skill-tag-nm">Reranker</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Eval / Quality</span>
+          <div class="skill-tags">
+            <span class="skill-tag-hl">RAGAS</span>
+            <span class="skill-tag-nm">Guardrail</span>
+            <span class="skill-tag-nm">Confidence Cal.</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Backend</span>
+          <div class="skill-tags">
+            <span class="skill-tag-hl">FastAPI</span>
+            <span class="skill-tag-nm">Django</span>
+            <span class="skill-tag-nm">SSE</span>
+            <span class="skill-tag-nm">PostgreSQL</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-cat">Infra</span>
+          <div class="skill-tags">
+            <span class="skill-tag-nm">Docker</span>
+            <span class="skill-tag-nm">AWS</span>
+            <span class="skill-tag-nm">Nginx</span>
+            <span class="skill-tag-nm">Git</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="core-section">
