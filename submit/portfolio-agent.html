@@ -511,6 +511,24 @@ section { padding: 4rem 0 3rem; }
           <span class="arch-arrow">→</span>
           <span class="arch-node">검증된 응답</span>
         </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.4rem;margin-top:0.8rem;font-size:0.72rem;">
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.5rem 0.6rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Layer 1 — 키워드</div>
+            <div style="color:#666;">판단 근거가 실제 규정 키워드와 매칭되는지 0~1.0 스코어로 검증.</div>
+          </div>
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.5rem 0.6rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Layer 2 — 조항 검증</div>
+            <div style="color:#666;">인용된 조항이 실제 존재하는지 확인. 미존재 시 환각 플래그.</div>
+          </div>
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.5rem 0.6rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Layer 3 — 카테고리</div>
+            <div style="color:#666;">yes/no/conditional 외 응답 차단. 허용 범위 외 판단 원천 제거.</div>
+          </div>
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.5rem 0.6rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Layer 4 — 일관성</div>
+            <div style="color:#666;">500건 FIFO 캐시로 동일 유형 질의의 판단 일관성을 추적·모니터링.</div>
+          </div>
+        </div>
       </div>
       <p style="font-size:0.82rem;color:#555;margin:1rem 0 0.5rem;">같은 쿼리("인턴에게 AWS 접근 권한을 줘도 되나요?")에서의 Before/After:</p>
       <div class="metrics">
@@ -596,6 +614,42 @@ section { padding: 4rem 0 3rem; }
         <div class="tobe">
           <p class="label">TO-BE</p>
           Django 내장 기능(ORM migration, admin, collectstatic)으로 프로덕션 인프라 표준화. Nginx → Gunicorn → Django 소켓 바인딩 직접 구성하여 502 에러 해결. Reranker를 cross-encoder로 경량화하여 레이턴시 -1초.
+        </div>
+      </div>
+
+      <!-- RAG Pipeline Architecture -->
+      <div style="margin:1.5rem 0;">
+        <p style="font-size:0.75rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem;">9-Stage Hybrid RAG Pipeline</p>
+        <div class="arch">
+          <span class="arch-node">질의</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node active">쿼리 정제</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node active">HyDE 가설 문서</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node active">BM25 Top-15</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node active">벡터 Top-15</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node active">RRF 융합</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node active">Reranker</span>
+          <span class="arch-arrow">→</span>
+          <span class="arch-node">LLM 응답</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.8rem;font-size:0.72rem;">
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">쿼리 정제 + HyDE</div>
+            <div style="color:#666;">형태소 분석 + 동의어 확장 + 구어→문어 변환. HyDE로 가설 답변 문서를 생성하여 검색 품질 향상.</div>
+          </div>
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">BM25 + 벡터 + RRF</div>
+            <div style="color:#666;">BM25(키워드) + Qdrant 3,072D(시맨틱) 각 Top-15를 RRF(k=60)로 융합. 키워드·의미 검색의 상호 보완.</div>
+          </div>
+          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
+            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Reranker + 병목 진단</div>
+            <div style="color:#666;">bge-reranker-v2-m3로 최종 순위 결정. RAGAS 4개 지표로 각 단계별 품질을 분리 측정하여 병목 특정.</div>
+          </div>
         </div>
       </div>
 
