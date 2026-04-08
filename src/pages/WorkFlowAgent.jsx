@@ -669,55 +669,8 @@ export default function WorkFlowAgent() {
                         </div>
                     )},
                     { label: 'Architecture', content: (
-                        <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm space-y-3">
-                            <div className="flex justify-center">
-                                <div className="px-6 py-3 bg-gray-100 rounded-xl text-sm font-bold text-gray-700 text-center">사용자 입력</div>
-                            </div>
-                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-                            <div className="flex justify-center">
-                                <div className="px-6 py-4 bg-[#5f7f95] rounded-xl text-white text-center max-w-md w-full">
-                                    <p className="text-sm font-bold">Intent 분류</p>
-                                    <p className="text-xs text-white/70 mt-1">KoELECTRA, F1 97.88%</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-                            <div className="flex justify-center">
-                                <div className="px-6 py-4 bg-gray-900 rounded-xl text-white text-center max-w-md w-full">
-                                    <p className="text-sm font-bold">LangGraph Orchestrator</p>
-                                    <p className="text-xs text-white/50 mt-1">StateGraph + 조건부 라우팅</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-center gap-3 flex-wrap">
-                                {[
-                                    { name: 'Judgment', desc: '규정 판단' },
-                                    { name: 'Document', desc: '문서 처리' },
-                                    { name: 'Schedule', desc: '일정 관리' },
-                                    { name: 'General', desc: '일반 질의' },
-                                ].map((a, i) => (
-                                    <div key={i} className="flex-1 min-w-[120px] max-w-[160px] px-4 py-3 bg-[#5f7f95]/10 border border-[#5f7f95]/30 rounded-xl text-center">
-                                        <p className="text-xs font-bold text-[#4a6a80]">{a.name} Agent</p>
-                                        <p className="text-[10px] text-gray-400 mt-0.5">{a.desc}</p>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-                            <div className="flex justify-center">
-                                <div className="px-6 py-4 bg-[#5f7f95] rounded-xl text-white text-center max-w-md w-full">
-                                    <p className="text-sm font-bold">RAG Pipeline</p>
-                                    <p className="text-xs text-white/70 mt-1">HyDE → BM25 + Qdrant + RRF + Reranker</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-                            <div className="flex justify-center">
-                                <div className="px-6 py-4 bg-gray-900 rounded-xl text-white text-center max-w-md w-full">
-                                    <p className="text-sm font-bold">LLM Module</p>
-                                    <p className="text-xs text-white/50 mt-1">GPT / Claude API ↔ vLLM + LoRA</p>
-                                </div>
-                            </div>
-                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
-                            <div className="flex justify-center">
-                                <div className="px-6 py-3 bg-gray-100 rounded-xl text-sm font-bold text-gray-700 text-center">SSE 스트리밍 응답 → React UI</div>
-                            </div>
+                        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                            <img src="/workflow-architecture.png" alt="WorkFlow Agent Multi-Agent Architecture + 4-Layer Guardrail Pipeline" className="w-full h-auto" />
                         </div>
                     )},
                     { label: 'Agents', content: (
