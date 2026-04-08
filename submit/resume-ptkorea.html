@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>윤경은 — Data Platform Developer 이력서</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Inter", sans-serif; color: #1a1a1a; background: #fff; line-height: 1.7; word-break: keep-all; font-size: 13px; max-width: 800px; margin: 0 auto; padding: 2.5rem 2rem; }
+a { color: #1a1a1a; text-decoration: none; }
+a:hover { text-decoration: underline; }
+h2 { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #1a1a1a; margin: 2rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #1a1a1a; }
+h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
+
+/* Header */
+.header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
+.header-center { flex: 1; }
+.header-center h1 { font-family: "Syne", sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; }
+.header-center .role { font-size: 0.95rem; color: #555; margin-top: 0.1rem; }
+.header-right { text-align: right; font-size: 0.8rem; color: #555; line-height: 1.9; }
+.header-right a { font-weight: 600; }
+
+/* Summary */
+.summary-box { background: #f7f7f7; border-top: 3px solid #1a1a1a; padding: 1rem 1.2rem; margin-bottom: 0.5rem; font-size: 0.88rem; color: #333; line-height: 1.8; }
+
+/* Two Col */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
+
+/* Education */
+.edu-item { margin-bottom: 0.8rem; }
+.school { font-weight: 700; font-size: 0.9rem; }
+.detail { font-size: 0.82rem; color: #555; }
+
+/* Skills */
+.skill-group { margin-bottom: 0.8rem; }
+.skill-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #999; margin-bottom: 0.3rem; }
+.skills-grid { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.tag { font-size: 0.72rem; padding: 0.2rem 0.55rem; border-radius: 4px; background: #f0f0f0; color: #555; font-weight: 500; }
+.tag.hl { background: #1a1a1a; color: #fff; }
+
+/* Project */
+.project { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid #eee; }
+.project:last-of-type { border-bottom: none; }
+.project-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.2rem; }
+.meta { font-size: 0.75rem; color: #999; white-space: nowrap; }
+.project-link { margin-bottom: 0.4rem; }
+.project-link a { font-size: 0.78rem; color: #c23616; font-weight: 600; }
+.project-desc { font-size: 0.82rem; color: #555; margin-bottom: 0.5rem; }
+.project ul { padding-left: 1.2rem; margin-bottom: 0.5rem; }
+.project li { font-size: 0.82rem; color: #444; margin-bottom: 0.4rem; }
+.project li strong { color: #1a1a1a; }
+.retro { font-size: 0.78rem; color: #888; font-style: italic; padding-left: 0.8rem; border-left: 2px solid #eee; margin-top: 0.4rem; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+
+/* Statistics */
+.stat-item { margin-bottom: 0.8rem; }
+.stat-item h3 { font-size: 0.88rem; }
+.stat-item p { font-size: 0.82rem; color: #555; }
+
+/* Print */
+@media print {
+  body { font-size: 12px; padding: 1.5cm; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-center">
+    <h1>윤경은</h1>
+    <div class="role">Data Platform Developer — 데이터 파이프라인 설계 · 워크플로우 자동화 · 품질 검증</div>
+  </div>
+  <div class="header-right">
+    <a href="mailto:yge0307@gmail.com">yge0307@gmail.com</a><br>
+    <a href="https://github.com/ykgstar37-lab">github.com/ykgstar37-lab</a><br>
+    <a href="https://yge-portfolio.vercel.app/">yge-portfolio.vercel.app</a>
+  </div>
+</div>
+
+<!-- Summary -->
+<div class="summary-box">
+  응용통계학과에서 모형 평가·실험 설계의 기초를 다지고, AI Camp 6개월간 4개 프로젝트를 수행하며 데이터 파이프라인 설계와 품질 검증 체계를 실전 경험했습니다. WebSocket 스트리밍 + 배치 임베딩(200건 단위) 파이프라인으로 40개 API 설계, 조건분기 워크플로우로 비용 85% 절감, RAGAS 4개 지표로 파이프라인 병목을 진단해 데이터 검색 Precision +14.4% 달성, 4중 검증 레이어로 데이터 정합성 70%→97% 개선. AWS EC2 + Nginx + Gunicorn 프로덕션 배포 경험 보유.
+</div>
+
+<!-- Education -->
+<h2>Education</h2>
+<div class="two-col">
+  <div class="edu-item">
+    <div class="school">가천대학교</div>
+    <div class="detail">응용통계학과</div>
+    <div class="detail">2020.03 ~ 2026.08</div>
+  </div>
+  <div class="edu-item">
+    <div class="school">SK네트웍스 Family AI Camp</div>
+    <div class="detail">SKN 21기 — 데이터 파이프라인 · 품질 검증 실전 프로젝트</div>
+    <div class="detail">2025.09 ~ 2026.03</div>
+  </div>
+</div>
+
+<!-- Certificates -->
+<h2>Certificates</h2>
+<div class="two-col">
+  <div class="edu-item">
+    <div class="school">SQLD (SQL 개발자)</div>
+    <div class="detail">한국데이터산업진흥원</div>
+  </div>
+  <div class="edu-item">
+    <div class="school">ADsP (데이터분석 준전문가)</div>
+    <div class="detail">한국데이터산업진흥원</div>
+  </div>
+</div>
+
+<!-- Skills -->
+<h2>Skills</h2>
+<div class="skill-group">
+  <div class="skill-label">Data Pipeline / Processing (Main)</div>
+  <div class="skills-grid">
+    <span class="tag hl">Python</span><span class="tag hl">FastAPI</span><span class="tag hl">Django</span><span class="tag hl">WebSocket</span><span class="tag hl">SSE Streaming</span><span class="tag hl">ChromaDB</span><span class="tag hl">Qdrant</span>
+    <span class="tag">LangGraph</span><span class="tag">LangChain</span><span class="tag">RAGAS</span>
+  </div>
+</div>
+<div class="two-col">
+  <div class="skill-group">
+    <div class="skill-label">Cloud / Infra</div>
+    <div class="skills-grid"><span class="tag">AWS (EC2, S3, RDS)</span><span class="tag">Nginx</span><span class="tag">Gunicorn</span><span class="tag">Docker</span><span class="tag">Git</span></div>
+  </div>
+  <div class="skill-group">
+    <div class="skill-label">Data / Visualization</div>
+    <div class="skills-grid"><span class="tag">pandas</span><span class="tag">scikit-learn</span><span class="tag">SQL (SQLD)</span><span class="tag">Recharts</span><span class="tag">React 19</span><span class="tag">Leaflet</span></div>
+  </div>
+</div>
+
+<!-- Projects -->
+<h2>Projects</h2>
+
+<!-- CryptoVol Dashboard -->
+<div class="project">
+  <div class="project-head">
+    <h3>CryptoVol Dashboard — 실시간 스트리밍 데이터 수집 + API 서빙</h3>
+    <div class="meta">Personal · 2024.01 ~</div>
+  </div>
+  <div class="project-link"><a href="https://github.com/ykgstar37-lab/crypto-volatility-dashboard">github.com/ykgstar37-lab/crypto-volatility-dashboard</a></div>
+  <div class="project-desc">Binance 거래소 실시간 시세를 WebSocket으로 수집하고, 5개 변동성 모형 추론 결과를 TTL 캐싱 파이프라인으로 서빙하는 대시보드. 14 REST + 1 WS 엔드포인트 설계.</div>
+  <ul>
+    <li><strong>문제 정의:</strong> GARCH 모형 fit 연산이 요청마다 수백ms — 동시 접속 시 추론 큐가 쌓여 응답 지연. 외부 스트림을 브라우저에 직접 연결하면 API 키 노출 보안 리스크.</li>
+    <li><strong>Solution:</strong> 5분 TTL 인메모리 캐싱 + 120일 윈도우 제한으로 재계산 방지. FastAPI WebSocket 릴레이 서버 — Set 기반 클라이언트 추적으로 스트림 브로드캐스트. Rate Limiting(5 req/60s). 개별 모형 에러 격리(1개 실패 ≠ 전체 장애).</li>
+    <li><strong>Result:</strong> <strong>14 REST + 1 WS</strong> 엔드포인트 · 에러 격리 설계 · API 키 서버 격리 · Rate Limiting으로 외부 API 비용 제어.</li>
+  </ul>
+  <div class="retro">데이터 파이프라인에서 비용이 높은 연산은 캐싱으로 격리, 스트리밍 수집은 반드시 서버 릴레이를 거쳐 보안 확보.</div>
+  <div class="project-tags"><span class="tag hl">FastAPI</span><span class="tag hl">WebSocket</span><span class="tag hl">Python</span><span class="tag">GARCH</span><span class="tag">React 19</span><span class="tag">Recharts</span><span class="tag">Binance API</span></div>
+</div>
+
+<!-- Seoul Culture Map -->
+<div class="project">
+  <div class="project-head">
+    <h3>Seoul Culture Map — 조건분기 워크플로우 + 배치 임베딩 파이프라인</h3>
+    <div class="meta">Personal · 2026.03 ~</div>
+  </div>
+  <div class="project-link"><a href="https://github.com/ykgstar37-lab/seoul-culture-map">github.com/ykgstar37-lab/seoul-culture-map</a></div>
+  <div class="project-desc">서울시 2,500+ 문화시설 데이터를 3-node 조건분기 워크플로우로 처리. 로컬 배치 임베딩(200건 단위) + ChromaDB 시맨틱 검색 + SSE 스트리밍. 15개 API 엔드포인트 설계.</div>
+  <ul>
+    <li><strong>문제 정의:</strong> 모든 요청에 전체 데이터 검색을 태우면 비용이 높고 응답 지연. "안녕"과 "강남구 박물관 추천"을 같은 파이프라인으로 처리하는 것은 리소스 낭비.</li>
+    <li><strong>Solution:</strong> Intent → Retrieve → Generate 3단계 조건분기 — 일상대화는 검색 스킵. all-MiniLM-L6-v2 로컬 배치 임베딩($0). DB 변동 10% 미만 시 재임베딩 스킵. SSE 토큰 스트리밍. 세션 데이터 SQLite 관리(생성·조회·삭제 API).</li>
+    <li><strong>Result:</strong> 요청당 비용 ~$0.003(<strong>85% 절감</strong>) · 임베딩 비용 $0(로컬) · SSE 첫 토큰 ~500ms · <strong>15 API 엔드포인트</strong>.</li>
+  </ul>
+  <div class="retro">파이프라인의 핵심은 "언제 처리를 건너뛸지" — 조건분기 + 변동 감지 스킵으로 비용과 성능을 동시에 해결.</div>
+  <div class="project-tags"><span class="tag hl">LangGraph</span><span class="tag hl">ChromaDB</span><span class="tag hl">FastAPI</span><span class="tag">SSE</span><span class="tag">SQLite</span><span class="tag">React 19</span><span class="tag">Leaflet</span><span class="tag">scikit-learn</span></div>
+</div>
+
+<!-- PyMate -->
+<div class="project">
+  <div class="project-head">
+    <h3>PyMate — 데이터 검색 품질 정량 진단 + AWS 배포</h3>
+    <div class="meta">Team(4명) · 2026.01 ~ 02</div>
+  </div>
+  <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team</a></div>
+  <div class="project-desc">데이터 검색 파이프라인의 품질을 RAGAS 4개 지표로 분리 측정하여 병목 특정. 담당: Qdrant 벡터 DB 설계, 임베딩 차원 최적화, Django + AWS EC2 프로덕션 배포.</div>
+  <ul>
+    <li><strong>문제 정의:</strong> "검색 결과가 부정확"의 원인이 파이프라인 어느 단계인지 불분명. RAGAS로 측정한 결과, 생성 충실도(Faithfulness)는 높지만 검색 정확도(Context Precision)가 낮음 → <strong>병목은 데이터 임베딩 품질</strong>로 재정의.</li>
+    <li><strong>Solution:</strong> 임베딩 768D→3,072D 교체 + Qdrant 재설계. Reranker cross-encoder 경량화(레이턴시 -1초). Flask→Django 전환. AWS EC2 + Nginx + Gunicorn 소켓 바인딩 직접 구성.</li>
+    <li><strong>Result:</strong> Context Precision <strong>0.83→0.97</strong>(+14.4%) · Context Recall <strong>0.70→0.79</strong>(+12.7%) · Reranker -1초 · AWS 안정 배포(502 에러 해결).</li>
+  </ul>
+  <div class="retro">"결과가 안 좋다"는 증상이지 진단이 아니다 — 각 단계를 지표로 분리 측정해야 병목을 특정할 수 있다.</div>
+  <div class="project-tags"><span class="tag hl">Qdrant</span><span class="tag hl">RAGAS</span><span class="tag hl">Django</span><span class="tag">text-embedding-3-large</span><span class="tag">Nginx</span><span class="tag">Gunicorn</span><span class="tag">AWS EC2</span><span class="tag">LangChain</span></div>
+</div>
+
+<!-- WorkFlow Agent (보조) -->
+<div class="project">
+  <div class="project-head">
+    <h3>WorkFlow Agent — 데이터 정합성 검증 + 품질 모니터링 자동화</h3>
+    <div class="meta">Team(4명) · 2026.02 ~ 04</div>
+  </div>
+  <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM</a></div>
+  <div class="project-desc">사내 규정 데이터에 대한 질의 응답 시스템에서 데이터 정합성 검증을 자동화. 담당: 4중 검증 레이어 설계, 일관성 모니터링, 데이터 품질 실험(3회 반복).</div>
+  <ul>
+    <li><strong>문제 정의:</strong> 시스템이 존재하지 않는 데이터(미존재 조항)를 인용하고, 잘못된 결과에 높은 확신도(0.92)를 부여. 정합성 37.2%. 데이터 98건 추가 시 오히려 <strong>-3.2%p 하락</strong> — 라벨 오염 발견.</li>
+    <li><strong>Solution:</strong> 4중 검증(키워드 매칭 · 데이터 존재 검증 · 카테고리 제한 · 500건 FIFO 일관성 모니터링). 5-factor 확신도 보정(Hard Cap: 데이터 품질 < 0.2 → max 0.4). 3회 반복 실험으로 19건 약점만 타겟팅.</li>
+    <li><strong>Result:</strong> 데이터 정합성 <strong>37%→85%</strong> · 확신도 0.92→0.78(과신 보정) · 미존재 데이터 인용 → 실존 근거 2건으로 교체 · JSON 유효율 <strong>70%→97%</strong>.</li>
+  </ul>
+  <div class="retro">데이터 품질은 양이 아닌 정밀 타겟팅이 결정한다 — 98건 무작위 추가(-3.2%p) vs 19건 약점 타겟팅(+회복).</div>
+  <div class="project-tags"><span class="tag hl">FastAPI</span><span class="tag hl">Python</span><span class="tag">Qdrant</span><span class="tag">LangGraph</span><span class="tag">Docker</span><span class="tag">vLLM</span><span class="tag">LoRA</span></div>
+</div>
+
+<!-- Statistics Foundation -->
+<h2>Statistics Foundation</h2>
+<div class="two-col">
+  <div class="stat-item">
+    <h3>암호화폐 변동성 GARCH 분석 <span style="font-size:0.72rem;color:#999;font-weight:400;">2023.12~2024.01</span></h3>
+    <p>5개 GARCH 모형 비교(HAR-TGARCH-X R²=0.89). ADF·ARCH-LM 사전 검정, AIC/BIC 기반 모형 선택. → CryptoVol Dashboard에서 FastAPI 실시간 서빙으로 확장.</p>
+  </div>
+  <div class="stat-item">
+    <h3>서울 관광 군집분석 <span style="font-size:0.72rem;color:#999;font-weight:400;">2023.09~11 · 학술제 2등상</span></h3>
+    <p>K-means(k=3), NbClust+Silhouette 최적 k 결정, PCA 설명력 91.3%. → Seoul Culture Map에서 데이터 파이프라인 + 시맨틱 검색 서비스로 확장.</p>
+  </div>
+</div>
+
+</body>
+</html>

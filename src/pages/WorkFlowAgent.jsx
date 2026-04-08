@@ -204,7 +204,7 @@ export default function WorkFlowAgent() {
                     <div className="flex items-center gap-3 mb-4 flex-wrap">
                         <span className="text-[10px] font-bold px-3 py-1 bg-slate-50 text-slate-800 rounded-full tracking-wider uppercase">SKN21 Final</span>
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Team — 3팀 (4명)</span>
-                        <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.02 — 2026.03</span>
+                        <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.02 — 2026.04</span>
                     </div>
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         WorkFlow Agent <span className="text-[#5f7f95]">(듀드)</span>
