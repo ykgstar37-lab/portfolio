@@ -55,7 +55,7 @@ const AGENTS = [
         name: 'Judgment Agent',
         title: '규정 판단',
         desc: '다중 규정 교차 판단 + 근거 제시 + 대안 추천. cross_references와 confidence 보정으로 정확도 강화.',
-        color: '[#5f7f95]',
+        color: '#5f7f95',
         icon: '01',
         input: '사용자 질의 + RAG 검색 결과',
         coreTech: 'Kanana-1.5-8B LoRA + 4중 Guardrail',
@@ -67,7 +67,7 @@ const AGENTS = [
         name: 'Document Agent',
         title: '문서 처리',
         desc: '회의록/보고서/제안서 생성, 요약, 검색, QA. Docling+PaddleOCR+python-docx 통합 파싱.',
-        color: '[#6b8ea3]',
+        color: '#6b8ea3',
         icon: '02',
         input: '문서 파일 / 텍스트 / 질의',
         coreTech: 'Kanana LoRA (생성/요약/QA)',
@@ -79,7 +79,7 @@ const AGENTS = [
         name: 'Schedule Agent',
         title: '일정 관리',
         desc: '자연어 → 일정 자동 등록/조회. Google Calendar+Tasks+Gmail+Sheets 4종 연동.',
-        color: '[#7a9db0]',
+        color: '#7a9db0',
         icon: '03',
         input: '자연어 일정 요청',
         coreTech: 'Google API 4종 연동',
@@ -91,7 +91,7 @@ const AGENTS = [
         name: 'Planner Agent',
         title: '복합 요청 분해',
         desc: '멀티스텝 요청을 단계별 계획으로 분해 + 병렬 처리. LoRA 파인튜닝 적용.',
-        color: '[#89abbe]',
+        color: '#89abbe',
         icon: '04',
         input: '복합 멀티스텝 요청',
         coreTech: 'Kanana LoRA (Planner)',
@@ -724,7 +724,7 @@ export default function WorkFlowAgent() {
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {AGENTS.map((agent, idx) => (
-                                    <motion.div key={idx} whileHover={{ y: -4 }} className={`relative bg-${agent.color} p-6 rounded-2xl text-white overflow-hidden cursor-default`}>
+                                    <motion.div key={idx} whileHover={{ y: -4 }} className="relative p-6 rounded-2xl text-white overflow-hidden cursor-default" style={{ backgroundColor: agent.color }}>
                                         <div className="absolute top-3 right-4 text-white/10 text-5xl font-bold">{agent.icon}</div>
                                         <div className="relative z-10">
                                             <p className="text-[10px] font-bold text-white/50 uppercase tracking-wider mb-1">{agent.title}</p>
