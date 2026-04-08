@@ -19,7 +19,7 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
 .header-center h1 { font-family: "Syne", sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; }
 .header-center .role { font-size: 0.95rem; color: #555; margin-top: 0.1rem; }
 .header-right { text-align: right; font-size: 0.8rem; color: #555; line-height: 1.9; }
-.header-right a { font-weight: 600; }
+.header-right a { font-weight: 600; color: #e67e22; }
 
 /* Summary */
 .summary-box { background: #f7f7f7; border-top: 3px solid #1a1a1a; padding: 1rem 1.2rem; margin-bottom: 0.5rem; font-size: 0.88rem; color: #333; line-height: 1.8; }
@@ -45,7 +45,7 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
 .project-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.2rem; }
 .meta { font-size: 0.75rem; color: #999; flex-shrink: 0; }
 .project-link { font-size: 0.75rem; color: #888; margin-bottom: 0.5rem; }
-.project-link a { color: #555; }
+.project-link a { color: #e67e22; font-weight: 600; }
 .project-desc { font-size: 0.85rem; color: #555; margin-bottom: 0.7rem; padding: 0.6rem 0.8rem; background: #fafafa; border-radius: 6px; border-left: 3px solid #ddd; }
 .project ul { list-style: none; padding: 0; }
 .project li { font-size: 0.82rem; color: #444; margin-bottom: 0.5rem; padding-left: 0; line-height: 1.7; }
@@ -83,10 +83,12 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
 
 <!-- Summary -->
 <div class="summary-box">
-  <strong>Agent 파이프라인 설계</strong> — LangGraph 3-node 파이프라인으로 의도 분류 → 조건분기 → 생성을 분리하여 불필요한 LLM 호출 제거, 요청당 비용 85% 절감.<br>
-  <strong>Agent 품질 검증 체계</strong> — 4중 Guardrail + 5-factor Confidence 보정 + LoRA 3회 반복 실험으로 정확도 37%→85% 개선. "데이터 양보다 약점 타겟팅"으로 전략 전환.<br>
-  <strong>정량 평가 기반 병목 진단</strong> — RAGAS 4개 지표로 검색·생성을 분리 측정하여 "LLM이 아닌 embedding"이 병목임을 특정, Context Precision +14.4% 달성.<br>
-  <span style="color:#888; font-size:0.82rem;">3개 프로젝트(6개월)에서 40개 API 엔드포인트 설계 · 2,500+ 시설 데이터 대상 3종 의도 분기 구현 · Flask→Django 프로덕션 전환 + AWS 배포 수행.</span>
+  존재하지 않는 조항을 확신 있게 인용하는 응답을 경험하며, LLM 출력은 신뢰 대상이 아니라 검증 대상이라고 판단했습니다.<br>
+  저는 모델 성능이 아닌 시스템 구조로 정확도를 개선합니다. 측정 없이 개선하지 않습니다.<br><br>
+  <strong>LLM 호출을 줄이는 구조로 비용 85% 절감</strong> — 의도 분류 기반 3-node 파이프라인 설계.<br>
+  <strong>Guardrail 설계로 환각·과신 차단</strong> — 4중 검증 + Confidence 보정. 정확도 37%→85%.<br>
+  <strong>정량 지표로 병목 특정</strong> — RAGAS로 검색·생성 분리 측정. Precision +14.4%.<br>
+  <span style="color:#888; font-size:0.82rem;">3개 프로젝트(6개월) · 40 API · 2,500+ 시설 3종 의도 분기 · Flask→Django + AWS 배포.</span>
 </div>
 
 <!-- Education -->
@@ -143,51 +145,51 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
 <!-- Seoul Culture Map -->
 <div class="project">
   <div class="project-head">
-    <h3>Seoul Culture Map — LangGraph 3-node Agent + ChromaDB RAG</h3>
+    <h3>Seoul Culture Map <span style="font-weight:400;color:#888;">— LLM 호출을 줄이는 구조로 비용 85% 절감</span></h3>
     <div class="meta">Personal · 2026.03 ~</div>
   </div>
-  <div class="project-link"><a href="https://github.com/ykgstar37-lab/seoul-culture-map">github.com/ykgstar37-lab/seoul-culture-map</a></div>
-  <div class="project-desc">서울시 2,500+ 문화시설 탐색 서비스에 Agentic RAG 파이프라인을 설계. LangGraph 기반 Intent→Retrieve→Generate 3-node 그래프 + ChromaDB 시맨틱 검색 + SSE 스트리밍 챗봇.</div>
+  <div class="project-link"><a href="https://github.com/ykgstar37-lab/seoul-culture-map">github.com/ykgstar37-lab/seoul-culture-map</a> · LangGraph · ChromaDB · FastAPI · SSE</div>
+  <div class="project-desc">학술제 군집분석 결과가 PDF로만 남아 아무도 쓸 수 없었던 경험에서 출발. 모든 요청에 LLM을 호출할 필요가 없다는 판단으로, 의도 분류 기반 3-node 파이프라인을 설계.</div>
   <ul>
-    <li><strong>Problem:</strong> "안녕"과 "강남구 박물관 추천"이 같은 파이프라인을 타며, 매 요청마다 전체 컨텍스트를 주입해야 해서 비용이 높고 응답 품질 제어 불가.</li>
-    <li><strong>Solution:</strong> LangGraph 3-node 파이프라인 — Intent(GPT-4o-mini)로 3종 의도 분류 → 일상대화는 검색 스킵 → SQL+ChromaDB 병렬 검색(LLM 비용 $0) → SSE 스트리밍 응답. 로컬 임베딩(all-MiniLM-L6-v2) + 세션 메모리(10턴, SQLite).</li>
-    <li><strong>Result:</strong> 요청당 비용 <strong>85% 절감</strong>(~$0.003) · 임베딩 비용 $0 · SSE 첫 토큰 ~500ms · 15 API 엔드포인트.</li>
+    <li><strong>Problem:</strong> "안녕"과 "강남구 박물관 추천"이 같은 파이프라인을 탐. 비용과 품질 모두 제어 불가.</li>
+    <li><strong>Solution:</strong> LangGraph 3-node. Intent 분류로 일상대화는 검색 스킵. SQL+ChromaDB 병렬 검색(LLM 비용 $0). SSE 스트리밍 + 세션 메모리(10턴).</li>
+    <li><strong>Result:</strong> 비용 <strong>85% 절감</strong>(~$0.003/req) · 임베딩 $0(로컬) · 첫 토큰 ~500ms · 15 API.</li>
   </ul>
-  <div class="retro">핵심 인사이트: Agent 파이프라인의 핵심은 "언제 LLM을 호출하지 않을지" — 노드를 추가하면 복잡해진다는 직관과 달리, 조건분기가 파이프라인을 단순화한다.</div>
+  <div class="retro">조건분기는 복잡도를 높이는 것이 아니라 낮추는 설계라고 확인했다. 이 경험이 이후 WorkFlow Agent의 멀티 에이전트 라우팅 설계로 이어졌다.</div>
   <div class="project-tags"><span class="tag hl">LangGraph</span><span class="tag hl">ChromaDB</span><span class="tag">FastAPI</span><span class="tag">SSE</span><span class="tag">SQLite</span><span class="tag">React 19</span><span class="tag">Leaflet</span><span class="tag">scikit-learn</span><span class="tag">GPT-4o-mini</span></div>
 </div>
 
 <!-- WorkFlow Agent -->
 <div class="project">
   <div class="project-head">
-    <h3>WorkFlow Agent — 4중 Guardrail + Confidence 보정 품질 체계</h3>
+    <h3>WorkFlow Agent <span style="font-weight:400;color:#888;">— Guardrail 설계로 환각·과신 차단, 정확도 37%→85%</span></h3>
     <div class="meta">Team(4명) · 2026.02 ~ 04</div>
   </div>
-  <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM</a></div>
-  <div class="project-desc">사내 규정 판단 Agent의 오답·환각·과신을 시스템적으로 차단하는 품질 검증 체계 설계. vLLM + LoRA 기반 프라이빗 sLLM 서빙. 담당: Judgment Agent 품질 보장, 9단계 RAG, LoRA 파인튜닝.</div>
+  <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM</a> · vLLM · LoRA · Qdrant · FastAPI</div>
+  <div class="project-desc">sLLM이 confidence 0.95를 출력하면서 틀린 답을 내는 상황을 반복적으로 마주하며, 모델 성능 개선보다 시스템 레벨 검증이 더 효과적이라고 결론 내렸다.</div>
   <ul>
-    <li><strong>Problem:</strong> Base 모델이 "인턴에게 AWS 접근 권한을 줘도 되나요?"에 "yes"(오답) + confidence 0.92(과신) + "제12조"(미존재 조항 환각) 반환. 정확도 37.2%. LoRA v2에서 98건 무작위 추가 시 라벨 오염으로 오히려 -3.2%p 하락.</li>
-    <li><strong>Solution:</strong> 4중 Guardrail(키워드 매칭·조항 존재 검증·카테고리 제한·500건 FIFO 일관성 모니터링) + 5-factor Confidence 보정(Hard Cap: RAG 품질 &lt; 0.2 → max 0.4). LoRA v3에서 19건만 약점 정밀 타겟팅(재량 표현 14 + 경계 케이스 5)으로 전략 전환.</li>
-    <li><strong>Result:</strong> 판단 정확도 <strong>37%→85%</strong> · confidence 과신(0.92)→적절(0.78) · 환각 차단 → 실존 조항 2건 인용 · JSON 유효율 70%→97% · GPT 의존 제거(vLLM 프라이빗 서빙).</li>
+    <li><strong>Problem:</strong> "인턴에게 AWS 접근 권한을 줘도 되나요?" → "yes"(오답) + confidence 0.92(과신) + "제12조"(미존재 조항). 정확도 37.2%.</li>
+    <li><strong>Solution:</strong> 4중 Guardrail로 환각 차단. 5-factor Confidence 보정으로 과신 제한. LoRA v3에서 19건만 약점 타겟팅.</li>
+    <li><strong>Result:</strong> 정확도 <strong>37%→85%</strong> · confidence 0.92→0.78 · 환각→실존 조항 2건 인용 · JSON 유효율 70%→97%.</li>
   </ul>
-  <div class="retro">핵심 인사이트: 모델 성능을 높이는 것보다 서버 레벨에서 출력을 검증·보정하는 구조가 더 효과적. 데이터는 양이 아닌 약점 타겟팅이 품질을 결정한다.</div>
+  <div class="retro">LLM 출력은 검증 대상이지 신뢰 대상이 아니라는 결론을 내렸다. LoRA v2에서 98건 추가 시 -3.2%p 하락한 경험이 전환점이 되어, 데이터는 양이 아닌 약점 타겟팅이 품질을 결정한다는 원칙을 확립했다.</div>
   <div class="project-tags"><span class="tag hl">vLLM</span><span class="tag hl">LoRA</span><span class="tag hl">LangGraph</span><span class="tag">Qdrant</span><span class="tag">KoELECTRA</span><span class="tag">FastAPI</span><span class="tag">SSE</span><span class="tag">RunPod A100</span><span class="tag">Docker</span></div>
 </div>
 
 <!-- PyMate -->
 <div class="project">
   <div class="project-head">
-    <h3>PyMate — RAGAS 기반 RAG 병목 진단 + 임베딩 최적화</h3>
+    <h3>PyMate <span style="font-weight:400;color:#888;">— 정량 지표로 병목 특정, Precision +14.4%</span></h3>
     <div class="meta">Team(4명) · 2026.01 ~ 02</div>
   </div>
-  <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team</a></div>
-  <div class="project-desc">Python 학습 도우미 RAG 챗봇의 답변 품질을 RAGAS 지표로 분리 측정하여 진짜 병목을 특정. 담당: Qdrant 벡터 DB 설계, embedding 차원 최적화, Django 프로덕션 배포.</div>
+  <div class="project-link"><a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team">github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team</a> · Qdrant · RAGAS · Django · AWS</div>
+  <div class="project-desc">"답변이 부정확하다"는 피드백이 반복되었지만 원인을 모르는 상태였다. 감으로 모델을 바꾸기보다 RAGAS 도입을 제안하여 병목을 특정하고 구조적으로 해결했다.</div>
   <ul>
-    <li><strong>Problem:</strong> "답변이 부정확하다"는 피드백 반복. 팀에서 "LLM을 바꾸자"는 의견이 나왔지만, 원인이 LLM인지 검색인지 구분 불가 — 감으로 약을 바꾸는 상태.</li>
-    <li><strong>Solution:</strong> RAGAS 4개 지표 도입을 제안하여 검색·생성 분리 측정. Faithfulness 높음 + Context Precision 낮음 → 병목은 embedding 검색 품질로 재정의. 768D→3,072D 교체 + Qdrant 재설계. Reranker cross-encoder 경량화(-1초). Flask→Django 전환 + AWS EC2 배포.</li>
-    <li><strong>Result:</strong> Context Precision <strong>0.83→0.97</strong>(+14.4%) · Recall <strong>0.70→0.79</strong>(+12.7%) · Reranker 레이턴시 -1초 · Nginx→Gunicorn→Django 소켓 바인딩 502 에러 직접 해결.</li>
+    <li><strong>Problem:</strong> 팀에서 "LLM을 바꾸자"는 의견이 나옴. 원인 모르는 상태에서 모델을 바꾸는 건 감으로 약을 바꾸는 것과 같다고 판단.</li>
+    <li><strong>Solution:</strong> RAGAS 4개 지표로 검색·생성 분리 측정. 병목은 embedding으로 재정의. 768D→3,072D 교체 + Qdrant 재설계. Reranker 경량화(-1초). Flask→Django + AWS 배포.</li>
+    <li><strong>Result:</strong> Precision <strong>0.83→0.97</strong>(+14.4%) · Recall <strong>0.70→0.79</strong>(+12.7%) · Reranker -1초 · 502 에러 직접 해결.</li>
   </ul>
-  <div class="retro">핵심 인사이트: "모호한 피드백을 정량 지표로 번역하여 구조적 원인을 특정하는 것"이 RAG 시스템 개선의 출발점.</div>
+  <div class="retro">"답변이 안 좋다"는 증상이지 진단이 아니라는 결론을 내렸다. 이 경험이 이후 프로젝트에서 "측정 먼저, 개선은 그 다음"이라는 원칙으로 이어졌다.</div>
   <div class="project-tags"><span class="tag hl">Qdrant</span><span class="tag hl">RAGAS</span><span class="tag">text-embedding-3-large</span><span class="tag">cross-encoder Reranker</span><span class="tag">LangChain</span><span class="tag">Django</span><span class="tag">Nginx</span><span class="tag">AWS EC2</span></div>
 </div>
 
@@ -196,7 +198,7 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
 <div class="two-col">
   <div class="stat-item">
     <h3>암호화폐 변동성 GARCH 분석 <span style="font-size:0.72rem;color:#999;font-weight:400;">2023.12~2024.01</span></h3>
-    <p>5개 GARCH 모형 비교 → HAR-TGARCH-X 선택(R²=0.89). ADF·ARCH-LM 사전 검정, AIC/BIC 기반 모형 선택 과정을 통해 <strong>통계적 모형 선택의 판단 기준</strong>을 체득.</p>
+    <p>5개 GARCH 모형 비교 → HAR-TGARCH-X 선택(R²=0.89). ADF·ARCH-LM 사전 검정, AIC/BIC 기반 모형 선택 과정이 이후 RAG 파이프라인에서 <strong>정량 지표 기반 의사결정의 기초</strong>가 되었다.</p>
   </div>
   <div class="stat-item">
     <h3>서울 관광 군집분석 → Seoul Culture Map 서비스 확장 <span style="font-size:0.72rem;color:#999;font-weight:400;">2023.09~11 · 학술제 2등상</span></h3>
