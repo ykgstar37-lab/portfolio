@@ -565,38 +565,49 @@ section { padding: 4rem 0 3rem; }
         </div>
       </div>
 
-      <!-- RAG Pipeline Architecture -->
+      <!-- RAG Workflow Architecture -->
       <div style="margin:1.5rem 0;">
-        <p style="font-size:0.75rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.6rem;">9-Stage Hybrid RAG Pipeline</p>
-        <div class="arch">
-          <span class="arch-node">질의</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node active">쿼리 정제</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node active">HyDE 가설 문서</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node active">BM25 Top-15</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node active">벡터 Top-15</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node active">RRF 융합</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node active">Reranker</span>
-          <span class="arch-arrow">→</span>
-          <span class="arch-node">LLM 응답</span>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.8rem;font-size:0.72rem;">
-          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
-            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">쿼리 정제 + HyDE</div>
-            <div style="color:#666;">형태소 분석 + 동의어 확장 + 구어→문어 변환. HyDE로 가설 답변 문서를 생성하여 검색 품질 향상.</div>
+        <p style="font-size:0.75rem;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem;">RAG Workflow Flowchart</p>
+        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:1.2rem;font-size:0.72rem;">
+          <!-- 세로 흐름: Start → Search → Rerank → Build Context -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:0.3rem;color:#555;margin-bottom:1rem;">
+            <span style="border:1px solid #ccc;border-radius:50%;padding:0.2rem 0.6rem;font-weight:600;">Start</span>
+            <span>↓</span>
+            <span style="background:#e27500;color:#fff;padding:0.3rem 0.8rem;border-radius:8px;font-weight:600;">Search Node</span>
+            <span style="color:#999;font-size:0.65rem;">BM25(키워드) + Qdrant 3,072D(시맨틱) 각 Top-15 → RRF(k=60) 융합</span>
+            <span>↓</span>
+            <span style="background:#e27500;color:#fff;padding:0.3rem 0.8rem;border-radius:8px;font-weight:600;">Rerank Node</span>
+            <span style="color:#999;font-size:0.65rem;">bge-reranker-v2-m3로 최종 순위 결정</span>
+            <span>↓</span>
+            <span style="background:#1a1a1a;color:#fff;padding:0.3rem 0.8rem;border-radius:8px;font-weight:600;">Build Context</span>
           </div>
-          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
-            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">BM25 + 벡터 + RRF</div>
-            <div style="color:#666;">BM25(키워드) + Qdrant 3,072D(시맨틱) 각 Top-15를 RRF(k=60)로 융합. 키워드·의미 검색의 상호 보완.</div>
+          <!-- Relevance 3분기 -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.6rem;text-align:center;">
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.7rem;">
+              <div style="font-weight:700;color:#e27500;margin-bottom:0.3rem;">High Relevance</div>
+              <div style="color:#999;font-size:0.65rem;margin-bottom:0.3rem;">&gt; 0.5</div>
+              <span>↓</span>
+              <div style="background:#e27500;color:#fff;padding:0.2rem 0.5rem;border-radius:6px;font-weight:600;margin-top:0.3rem;">Analyst Node</div>
+              <div style="color:#999;font-size:0.6rem;margin-top:0.2rem;">LLM 응답 생성</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.7rem;">
+              <div style="font-weight:700;color:#e27500;margin-bottom:0.3rem;">Med Relevance</div>
+              <div style="color:#999;font-size:0.65rem;margin-bottom:0.3rem;">0.3 ~ 0.5</div>
+              <span>↓</span>
+              <div style="background:#555;color:#fff;padding:0.2rem 0.5rem;border-radius:6px;font-weight:600;margin-top:0.3rem;">Web Search</div>
+              <div style="color:#999;font-size:0.6rem;margin-top:0.2rem;">보완 검색 → Analyst</div>
+            </div>
+            <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:0.7rem;">
+              <div style="font-weight:700;color:#e27500;margin-bottom:0.3rem;">Low Relevance</div>
+              <div style="color:#999;font-size:0.65rem;margin-bottom:0.3rem;">&lt; 0.3</div>
+              <span>↓</span>
+              <div style="background:#999;color:#fff;padding:0.2rem 0.5rem;border-radius:6px;font-weight:600;margin-top:0.3rem;">No Data Node</div>
+              <div style="color:#999;font-size:0.6rem;margin-top:0.2rem;">답변 불가 응답</div>
+            </div>
           </div>
-          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
-            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Reranker + 병목 진단</div>
-            <div style="color:#666;">bge-reranker-v2-m3로 최종 순위 결정. RAGAS 4개 지표로 각 단계별 품질을 분리 측정하여 병목 특정.</div>
+          <div style="text-align:center;margin-top:0.5rem;color:#555;">
+            <span>↓</span><br>
+            <span style="border:1px solid #ccc;border-radius:50%;padding:0.2rem 0.6rem;font-weight:600;">End</span>
           </div>
         </div>
       </div>
@@ -609,7 +620,8 @@ section { padding: 4rem 0 3rem; }
 
       <div class="retro-box">
         <p class="retro-label">회고</p>
-        <p>팀에서 "LLM을 바꾸자"는 의견이 나왔을 때, RAGAS 지표를 먼저 도입하자고 제안한 것이 가장 중요한 기여였습니다. 측정 결과 병목은 LLM이 아닌 embedding이었고, 이 경험으로 "모호한 피드백을 정량 지표로 번역하여 구조적 원인을 특정하는 것"이 RAG 시스템 개선의 출발점이라는 판단 기준을 얻었습니다.</p>
+        <p>팀에서 "LLM을 바꾸자"는 의견이 나왔을 때, RAGAS 지표를 먼저 도입하자고 제안한 것이 가장 중요한 기여였습니다. 측정 결과 병목은 LLM이 아닌 embedding이었고, <strong>"모호한 피드백을 정량 지표로 번역하여 구조적 원인을 특정하는 것"</strong>이 RAG 시스템 개선의 출발점이라는 판단 기준을 얻었습니다.</p>
+        <p style="margin-top:0.5rem;">또한 Flask MVP를 Django 프로덕션으로 전환하고 Nginx→Gunicorn→Django 서버 흐름을 직접 구성하면서, 로컬과 배포 환경의 차이로 발생하는 설정 이슈를 해결했습니다. 기능 구현보다 <strong>환경 설정과 구조 이해가 서비스 안정성에 더 중요할 수 있다</strong>는 점을 체감한 프로젝트였습니다.</p>
       </div>
 
       <div class="tech-row">
