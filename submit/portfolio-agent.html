@@ -618,9 +618,9 @@ section { padding: 4rem 0 3rem; }
         <div class="arch">
           <span class="arch-node">질의</span>
           <span class="arch-arrow">→</span>
-          <span class="arch-node active">쿼리 정제</span>
+          <span class="arch-node" style="background:#3b82f6;color:#fff;border-color:#3b82f6;">쿼리 정제</span>
           <span class="arch-arrow">→</span>
-          <span class="arch-node active">HyDE</span>
+          <span class="arch-node" style="background:#3b82f6;color:#fff;border-color:#3b82f6;">HyDE</span>
           <span class="arch-arrow">→</span>
           <span class="arch-node active">BM25 Top-15</span>
           <span class="arch-arrow">→</span>
@@ -628,23 +628,23 @@ section { padding: 4rem 0 3rem; }
           <span class="arch-arrow">→</span>
           <span class="arch-node active">RRF 융합</span>
           <span class="arch-arrow">→</span>
-          <span class="arch-node active">태그 부스팅</span>
+          <span class="arch-node" style="background:#10b981;color:#fff;border-color:#10b981;">태그 부스팅</span>
           <span class="arch-arrow">→</span>
-          <span class="arch-node active">다양성 필터</span>
+          <span class="arch-node" style="background:#10b981;color:#fff;border-color:#10b981;">다양성 필터</span>
           <span class="arch-arrow">→</span>
-          <span class="arch-node active">Reranker</span>
+          <span class="arch-node" style="background:#10b981;color:#fff;border-color:#10b981;">Reranker</span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.5rem;margin-top:0.8rem;font-size:0.72rem;">
-          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
-            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">쿼리 정제 + HyDE</div>
+          <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.6rem 0.8rem;">
+            <div style="font-weight:700;color:#2563eb;margin-bottom:0.2rem;">쿼리 정제 + HyDE</div>
             <div style="color:#666;">형태소 분석 + 동의어 확장 + 구어→문어 변환. HyDE로 가설 답변 문서를 생성하여 검색 품질 향상.</div>
           </div>
-          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
+          <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:0.6rem 0.8rem;">
             <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">BM25 + 벡터 + RRF</div>
             <div style="color:#666;">BM25(키워드) + Qdrant 3,072D(시맨틱) 각 Top-15를 RRF(k=60)로 융합. 키워드·의미 검색의 상호 보완.</div>
           </div>
-          <div style="background:#fafafa;border:1px solid #eee;border-radius:8px;padding:0.6rem 0.8rem;">
-            <div style="font-weight:700;color:#e27500;margin-bottom:0.2rem;">Reranker + RAGAS 진단</div>
+          <div style="background:#ecfdf5;border:1px solid #a7f3d0;border-radius:8px;padding:0.6rem 0.8rem;">
+            <div style="font-weight:700;color:#059669;margin-bottom:0.2rem;">Reranker + RAGAS 진단</div>
             <div style="color:#666;">bge-reranker-v2-m3로 최종 순위 결정. RAGAS 4개 지표로 각 단계별 품질을 분리 측정하여 병목 특정.</div>
           </div>
         </div>
