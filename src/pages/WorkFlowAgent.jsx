@@ -416,33 +416,11 @@ export default function WorkFlowAgent() {
                         </div>
                     </div>
 
-                    {/* Base vs LoRA 정성 비교 */}
+                    {/* Base vs LoRA 정성 비교 — 이미지 */}
                     <div className="mt-6">
-                        <p className="text-xs font-bold text-[#5f7f95] uppercase tracking-wider mb-2">Base vs LoRA 출력 비교</p>
-                        <p className="text-sm text-gray-500 mb-4" style={{ wordBreak: 'keep-all' }}>입력: <span className="font-medium text-gray-700">"인턴에게 AWS 콘솔 접근 권한을 줘도 되나요?"</span> + RAG: 정보보안규정 제5장, 인사규정 제8조</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            <div className="bg-red-50/50 border border-red-100 rounded-2xl p-5">
-                                <p className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">Base (37.2%) — 오답 + 환각 + 과신</p>
-                                <div className="font-mono text-xs space-y-1.5 text-gray-700">
-                                    <p>"result": <span className="text-red-500 font-bold">"yes"</span> <span className="text-red-400 text-[10px] ml-2">// 오답 (정답: conditional)</span></p>
-                                    <p>"confidence": <span className="text-red-500 font-bold">0.92</span> <span className="text-red-400 text-[10px] ml-2">// 근거 없이 과신</span></p>
-                                    <p>"reasoning": "접근 권한 부여가 가능합니다"</p>
-                                    <p>"regulations": [<span className="text-red-500">{"{"}"article": "제12조"{"}"}</span>] <span className="text-red-400 text-[10px] ml-2">// 존재하지 않는 조항</span></p>
-                                    <p className="text-red-400 text-[10px] mt-2">// conditions 없음, alternatives 없음</p>
-                                </div>
-                            </div>
-                            <div className="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-5">
-                                <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-3">LoRA v1_judgment (85.4%) — 정답 + 실존 근거 + 조건 명시</p>
-                                <div className="font-mono text-xs space-y-1.5 text-gray-700">
-                                    <p>"result": <span className="text-emerald-600 font-bold">"conditional"</span> <span className="text-emerald-500 text-[10px] ml-2">// 정답</span></p>
-                                    <p>"confidence": <span className="text-emerald-600 font-bold">0.78</span> <span className="text-emerald-500 text-[10px] ml-2">// 불확실성 반영</span></p>
-                                    <p>"reasoning": "수습기간 80% 이상 근무 후 제한적 접근 가능"</p>
-                                    <p>"regulations": [<span className="text-emerald-600">{"{"}"article": "정보보안규정 제25조"{"}"}</span>,</p>
-                                    <p className="pl-24"><span className="text-emerald-600">{"{"}"article": "인사규정 제8조"{"}"}</span>] <span className="text-emerald-500 text-[10px] ml-2">// 실존 조항</span></p>
-                                    <p>"conditions": "보안 교육 이수 + 부서장 승인"</p>
-                                    <p>"alternatives": ["테스트 환경 한정 접근"]</p>
-                                </div>
-                            </div>
+                        <p className="text-xs font-bold text-[#5f7f95] uppercase tracking-wider mb-3">같은 쿼리에서의 Before / After</p>
+                        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                            <img src="/workflow-before-after.png" alt="Base vs LoRA Before/After 정성적 비교" className="w-full h-auto" />
                         </div>
                     </div>
                 </motion.div>
@@ -452,6 +430,9 @@ export default function WorkFlowAgent() {
                 <motion.div id="guardrail" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>4중 보조장치 (Guardrail)</h2>
                     <p className="text-gray-500 mb-8">Judgment Agent의 판단 정확도를 보장하는 4단계 검증 시스템</p>
+                    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-6">
+                        <img src="/workflow-guardrail.png" alt="4-Layer Guardrail Pipeline" className="w-full h-auto" />
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {GUARDRAILS.map((item, idx) => (
                             <motion.div key={idx} whileHover={{ y: -4 }} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex gap-5 cursor-default">
@@ -669,12 +650,62 @@ export default function WorkFlowAgent() {
                         </div>
                     )},
                     { label: 'Architecture', content: (
-                        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                            <img src="/workflow-architecture.png" alt="WorkFlow Agent Multi-Agent Architecture + 4-Layer Guardrail Pipeline" className="w-full h-auto" />
+                        <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm space-y-3">
+                            <div className="flex justify-center">
+                                <div className="px-6 py-3 bg-gray-100 rounded-xl text-sm font-bold text-gray-700 text-center">사용자 입력</div>
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+                            <div className="flex justify-center">
+                                <div className="px-6 py-4 bg-[#5f7f95] rounded-xl text-white text-center max-w-md w-full">
+                                    <p className="text-sm font-bold">Intent 분류</p>
+                                    <p className="text-xs text-white/70 mt-1">KoELECTRA, F1 97.88%</p>
+                                </div>
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+                            <div className="flex justify-center">
+                                <div className="px-6 py-4 bg-gray-900 rounded-xl text-white text-center max-w-md w-full">
+                                    <p className="text-sm font-bold">LangGraph Orchestrator</p>
+                                    <p className="text-xs text-white/50 mt-1">StateGraph + 조건부 라우팅</p>
+                                </div>
+                            </div>
+                            <div className="flex justify-center gap-3 flex-wrap">
+                                {[
+                                    { name: 'Judgment', desc: '규정 판단' },
+                                    { name: 'Document', desc: '문서 처리' },
+                                    { name: 'Schedule', desc: '일정 관리' },
+                                    { name: 'General', desc: '일반 질의' },
+                                ].map((a, i) => (
+                                    <div key={i} className="flex-1 min-w-[120px] max-w-[160px] px-4 py-3 bg-[#5f7f95]/10 border border-[#5f7f95]/30 rounded-xl text-center">
+                                        <p className="text-xs font-bold text-[#4a6a80]">{a.name} Agent</p>
+                                        <p className="text-[10px] text-gray-400 mt-0.5">{a.desc}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+                            <div className="flex justify-center">
+                                <div className="px-6 py-4 bg-[#5f7f95] rounded-xl text-white text-center max-w-md w-full">
+                                    <p className="text-sm font-bold">RAG Pipeline</p>
+                                    <p className="text-xs text-white/70 mt-1">HyDE → BM25 + Qdrant + RRF + Reranker</p>
+                                </div>
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+                            <div className="flex justify-center">
+                                <div className="px-6 py-4 bg-gray-900 rounded-xl text-white text-center max-w-md w-full">
+                                    <p className="text-sm font-bold">LLM Module</p>
+                                    <p className="text-xs text-white/50 mt-1">GPT / Claude API ↔ vLLM + LoRA</p>
+                                </div>
+                            </div>
+                            <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
+                            <div className="flex justify-center">
+                                <div className="px-6 py-3 bg-gray-100 rounded-xl text-sm font-bold text-gray-700 text-center">SSE 스트리밍 응답 → React UI</div>
+                            </div>
                         </div>
                     )},
                     { label: 'Agents', content: (
                         <>
+                            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden mb-8">
+                                <img src="/workflow-agents.png" alt="Multi-Agent Architecture" className="w-full h-auto" />
+                            </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {AGENTS.map((agent, idx) => (
                                     <motion.div key={idx} whileHover={{ y: -4 }} className="relative p-6 rounded-2xl text-white overflow-hidden cursor-default" style={{ backgroundColor: agent.color }}>
