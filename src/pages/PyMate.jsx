@@ -90,9 +90,9 @@ const IMPROVEMENTS = [
 ];
 
 const RAGAS_METRICS = [
-    { label: 'Context Precision', before: '0.8333', after: '0.9758', improvement: '+14.4%', color: 'from-[#e8609c] to-[#d4578e]' },
-    { label: 'Context Recall', before: '0.7044', after: '0.7944', improvement: '+12.7%', color: 'from-[#d4578e] to-[#c74b82]' },
-    { label: 'Reranker 변경', before: 'BAAI/bge-reranker-v2-m3', after: 'cross-encoder/ms-marco-MiniLM-L6-v2', improvement: '경량화, -1s', color: 'from-[#c74b82] to-[#b84178]' },
+    { label: 'Context Precision', before: '0.8333', after: '0.9758', improvement: '+14.4%p', desc: '검색 결과 중 관련 문서 비율' },
+    { label: 'Context Recall', before: '0.7044', after: '0.7944', improvement: '+12.7%p', desc: '필요 문서 중 실제 검색된 비율' },
+    { label: 'Reranker 경량화', before: 'bge-reranker-v2-m3', after: 'ms-marco-MiniLM-L6-v2', improvement: '-1초', desc: 'cross-encoder로 교체하여 레이턴시 절감' },
 ];
 
 const DB_SCHEMA = {
@@ -297,6 +297,19 @@ const DRAWER_TABS = [
         </div>
     )},
     { label: 'Architecture', content: (
+        <div className="space-y-8">
+            {/* RAG Workflow Flowchart Image */}
+            <div>
+                <p className="text-xs font-bold text-[#c74b82] uppercase tracking-wider mb-3">RAG Workflow Flowchart</p>
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <img src="/pymate-rag-workflow.png" alt="RAG Workflow Flowchart — Search Node 내부 9-Stage Hybrid Pipeline" className="w-full h-auto" />
+                </div>
+            </div>
+
+            {/* System Architecture */}
+            <div>
+                <p className="text-xs font-bold text-[#c74b82] uppercase tracking-wider mb-3">System Architecture</p>
+            </div>
         <div className="bg-white rounded-2xl p-8 border border-gray-200 shadow-sm space-y-3">
             {/* User → Nginx → Django */}
             <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -352,6 +365,7 @@ const DRAWER_TABS = [
                     <p className="text-[10px] text-gray-400 mt-0.5">AWS RDS</p>
                 </div>
             </div>
+        </div>
         </div>
     )},
     { label: 'Search Strategy', content: (
@@ -592,25 +606,26 @@ export default function PyMate() {
                 <motion.div id="rag-eval" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>RAG 성능 평가</h2>
                     <p className="text-gray-500 mb-8">RAGAS 프레임워크 기반 검색 품질 측정 및 리랭커 최적화 결과</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {RAGAS_METRICS.map((metric, idx) => (
-                            <motion.div key={idx} whileHover={{ y: -6 }} className={`relative bg-[#e8609c] p-6 rounded-2xl text-white overflow-hidden cursor-default`}>
-                                <div className="absolute top-3 right-4 text-white/10 text-5xl font-bold">{String(idx + 1).padStart(2, '0')}</div>
-                                <p className="text-xs font-bold text-white/60 uppercase tracking-wider mb-3">{metric.label}</p>
-                                <div className="flex items-end gap-3 mb-3">
+                            <motion.div key={idx} whileHover={{ y: -6 }} className="relative bg-white p-7 rounded-2xl border border-gray-100 shadow-sm overflow-hidden cursor-default group">
+                                <div className="absolute top-4 right-5 text-gray-100 text-6xl font-bold transition-colors group-hover:text-[#e8609c]/10">{String(idx + 1).padStart(2, '0')}</div>
+                                <p className="text-xs font-bold text-[#c74b82] uppercase tracking-wider mb-1">{metric.label}</p>
+                                <p className="text-[11px] text-gray-400 mb-5">{metric.desc}</p>
+                                <div className="flex items-end gap-4 mb-4">
                                     <div>
-                                        <p className="text-[10px] text-white/50 mb-0.5">Before</p>
-                                        <p className="text-sm font-mono text-white/70">{metric.before}</p>
+                                        <p className="text-[10px] text-gray-400 mb-1">Before</p>
+                                        <p className="text-base font-mono text-gray-400 line-through decoration-red-300">{metric.before}</p>
                                     </div>
-                                    <svg className="w-5 h-5 text-white/40 flex-shrink-0 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                    <svg className="w-6 h-6 text-[#e8609c]/40 flex-shrink-0 mb-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                     </svg>
                                     <div>
-                                        <p className="text-[10px] text-white/50 mb-0.5">After</p>
-                                        <p className="text-lg font-bold font-mono">{metric.after}</p>
+                                        <p className="text-[10px] text-gray-400 mb-1">After</p>
+                                        <p className="text-2xl font-bold font-mono text-gray-900">{metric.after}</p>
                                     </div>
                                 </div>
-                                <span className="inline-block text-[11px] font-bold bg-white/15 px-3 py-1 rounded-full">{metric.improvement}</span>
+                                <span className="inline-block text-xs font-bold bg-[#e8609c] text-white px-4 py-1.5 rounded-full">{metric.improvement}</span>
                             </motion.div>
                         ))}
                     </div>
