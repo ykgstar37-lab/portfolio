@@ -214,7 +214,7 @@ export default function CryptoVolatility() {
                         Comparison and Analysis of Cryptocurrency Volatility Forecast Based on the <span className="text-[#2b4fcb]">GARCH</span> Model
                     </h1>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        5개 GARCH 계열 모형을 비교하여 비트코인 변동성 최적 예측 모형을 탐색하고, 외생변수(Volume+FNG)의 예측력 향상 기여도를 실증 분석
+                        5개 GARCH 계열 모형을 비교해 비트코인 변동성 예측의 기준선을 세우고, 외생변수(Volume+FNG)가 모델 선택과 성능 해석에 어떤 기여를 하는지 검증한 프로젝트
                     </p>
                     <div className="flex gap-3">
                         <a href="https://www.notion.so/p-2024-27fbec2d3d51803bada9dcfdb30f8d50" target="_blank" rel="noopener noreferrer"
@@ -253,13 +253,13 @@ export default function CryptoVolatility() {
                             <div>
                                 <p className="text-[10px] font-bold text-[#2b4fcb] uppercase tracking-widest mb-2">Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    암호화폐 시장의 변동성을 GARCH 계열 5개 모형(GARCH, TGARCH, HAR-GARCH, HAR-TGARCH, HAR-TGARCH-X)으로 비교 분석한 팀 연구 프로젝트. ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, AIC/BIC/R² 기준으로 최적 모형을 선정.
+                                    암호화폐 시장의 변동성을 GARCH 계열 5개 모형으로 비교 분석한 팀 연구 프로젝트입니다. ADF·ARCH-LM 사전 검정으로 모델 적용 조건을 확인하고, AIC/BIC/R²를 함께 보며 단순 적합이 아니라 평가 기준이 분명한 모델 비교 체계를 설계했습니다. 이후 CryptoVol Dashboard에서 어떤 모형을 실시간 서빙할지 판단하는 기반이 되었습니다.
                                 </p>
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정 수행, HAR-TGARCH-X 최적 모형 선정, 외생변수(FNG) 효과 검증, 발표 자료 작성.
+                                    GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정 수행, HAR-TGARCH-X 후보 검증, 외생변수(FNG) 효과 분석, 평가 지표 정리와 발표 자료 작성을 담당했습니다. 모델링 자체보다 검증 근거를 명확히 남기는 데 집중했습니다.
                                 </p>
                             </div>
                             <div>

@@ -213,7 +213,7 @@ export default function WorkFlowAgent() {
                         "하나의 채팅으로 업무의 모든 것을"
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        수동 규정 검색에 10~15분 소요되고, GPT API로는 사내 데이터 외부 유출이 불가피한 문제를 해결. 4개 전문 Agent + sLLM 파인튜닝으로 프라이빗 환경 구축, Intent F1 97.88% 달성, JSON 유효율 70%→97%로 서빙 안정성 확보. 과신뢰 오분류 69% 감소하는 4중 Guardrail 설계.
+                        수동 규정 검색에 10~15분이 걸리고 GPT API로는 사내 데이터 외부 반출을 피할 수 없는 문제를 해결했습니다. 4개 전문 Agent 구조를 유지하되 핵심은 모델이 아니라 서빙 안정성에 두고, sLLM 파인튜닝·vLLM 서빙·4중 Guardrail을 결합해 Intent F1 97.88%, JSON 유효율 70%→97%, 과신뢰 오분류 69% 감소를 달성했습니다.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM" target="_blank" rel="noopener noreferrer"
@@ -236,13 +236,13 @@ export default function WorkFlowAgent() {
                             <div>
                                 <p className="text-[10px] font-bold text-[#5f7f95] uppercase tracking-widest mb-2">Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    사내 업무 자동화를 위한 LLM 에이전트 시스템. 규정 판단, 문서 처리, 일정 관리, 복합 요청 분해를 4개 전문 에이전트가 처리합니다. GPT API 의존을 제거하고 vLLM 기반 프라이빗 sLLM 서빙으로 전환하여 비용 제거 + 데이터 보안을 확보했습니다.
+                                    사내 업무 자동화를 위한 LLM 시스템입니다. 규정 판단, 문서 처리, 일정 관리, 복합 요청 분해를 4개 전문 Agent가 수행하지만, 핵심 차별점은 검색·판단·출력 검증을 측정 가능한 구조로 분리한 점입니다. GPT API 의존을 제거하고 vLLM 기반 프라이빗 sLLM 서빙으로 전환해 비용과 보안 리스크를 동시에 줄였습니다.
                                 </p>
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 5-factor Confidence 보정 시스템, LoRA 파인튜닝 데이터 품질 실험(v1→v3 반복), 공통 LLM 모듈 설계로 provider 전환 1줄 단순화.
+                                    vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 5-factor Confidence 보정 시스템, LoRA 파인튜닝 데이터 품질 실험(v1→v3 반복), 공통 LLM 모듈 설계로 provider 전환 비용 최소화를 담당했습니다. 모델 정확도뿐 아니라 JSON 유효율, 근거 검증, 운영 안정성까지 함께 책임졌습니다.
                                 </p>
                             </div>
                             <div>
@@ -529,7 +529,7 @@ export default function WorkFlowAgent() {
                 {/* My Contributions */}
                 <motion.div id="contributions" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>My Contributions</h2>
-                    <p className="text-gray-500 mb-8">AI Engineer — 판단 Agent + RAG 파이프라인 담당</p>
+                    <p className="text-gray-500 mb-8">ML Systems — 판단 Agent, RAG 파이프라인, 서빙 안정성 설계 담당</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {CONTRIBUTIONS.map((item, idx) => (
                             <div key={idx} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex gap-5">

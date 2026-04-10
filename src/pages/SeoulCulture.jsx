@@ -174,7 +174,7 @@ export default function SeoulCulture() {
                         외국인에게 관광목적에 맞는 <span className="text-[#d4a03c]">지역구 제안</span>
                     </h1>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed">
-                        위드 코로나 시대, 급증하는 외국인 관광객을 위해 서울특별시 25개 자치구의 관광 시설 현황을 조사·분석하고 군집분석을 통해 관광 목적에 맞는 지역구를 제안했습니다.
+                        위드 코로나 이후 빠르게 늘어난 외국인 관광 수요를 데이터로 해석하기 위해, 서울특별시 25개 자치구의 관광 시설을 정량화하고 군집분석으로 관광 목적별 추천 단위를 설계했습니다. 단순 현황 정리가 아니라 추천 가능한 기준을 만드는 데 초점을 둔 프로젝트입니다.
                     </p>
                     <div className="flex gap-3 mt-6">
                         <a href="https://www.notion.so/2023-27fbec2d3d51809bb7d7e69f958f3103" target="_blank" rel="noopener noreferrer"
@@ -213,7 +213,7 @@ export default function SeoulCulture() {
                             <div>
                                 <p className="text-[10px] font-bold text-[#16a34a] uppercase tracking-widest mb-2">Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    서울시 25개 자치구 관광시설 데이터를 군집분석하여, 외국인 관광객에게 목적(자연/역사, 문화/예술, 쇼핑/도시)에 맞는 지역구를 추천하는 팀 연구 프로젝트. NbClust+Silhouette로 최적 k=3을 결정하고, PCA 설명력 91.3%를 달성하여 학술제 2등상 수상.
+                                    서울시 25개 자치구 관광시설 데이터를 군집분석해 외국인 관광객에게 목적별 지역구를 추천하는 팀 연구 프로젝트입니다. NbClust+Silhouette로 최적 k=3을 결정하고 PCA 설명력 91.3%를 확보해, 추천 로직의 기준이 되는 지역 특성 벡터를 해석 가능하게 만들었습니다. 이후 Seoul Culture Map 서비스로 확장된 분석 기반입니다.
                                 </p>
                             </div>
                             <div>

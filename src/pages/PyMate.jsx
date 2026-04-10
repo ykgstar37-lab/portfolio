@@ -125,8 +125,8 @@ const DRAWER_TABS = [
             <div className="bg-[#e8609c] rounded-2xl p-6 text-white">
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>PyMate</h3>
                 <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
-                    부트캠프 학생들의 Python 학습을 돕는 RAG AI 튜터. Flask MVP에서 검색 품질 병목을 발견하고 Django로 전환,
-                    임베딩 3072D 교체로 Context Precision 0.83→0.97 달성. 3단계 라우팅으로 LLM 환각 응답을 원천 차단.
+                    부트캠프 학습 데이터를 검색·평가 가능한 구조로 바꾼 RAG 기반 ML 서비스. Flask MVP에서 검색 품질 병목을 발견하고 Django로 전환,
+                    임베딩 3072D 교체로 Context Precision 0.83→0.97을 달성했으며, 3단계 라우팅으로 잘못된 생성 응답을 서빙 레이어에서 차단했습니다.
                 </p>
                 <div className="flex flex-wrap gap-2">
                     {['Django', 'LangGraph', 'Qdrant', 'RAGAS', 'SSE', 'AWS EC2'].map(t => (
@@ -512,7 +512,7 @@ export default function PyMate() {
                         <span className="text-[#e8609c]">PyMate</span> — Bootcamp AI RAG Tutor
                     </h1>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        부트캠프 학생들의 강의 이해도 검증 도구가 없는 문제를 해결하기 위해 RAG 기반 AI 학습 튜터를 개발. Flask MVP에서 검색 품질 병목을 발견하고 Django로 전환, 임베딩 3072D 교체로 Context Precision 0.83→0.97 달성. 3단계 관련도 라우팅으로 LLM 환각 응답을 원천 차단.
+                        부트캠프 학생들의 강의 이해도 검증 도구가 없는 문제를 해결하기 위해 검색 품질과 응답 신뢰도를 함께 관리하는 RAG 학습 튜터를 개발. Flask MVP에서 병목을 찾은 뒤 Django로 전환하고, 임베딩 3072D 교체로 Context Precision 0.83→0.97을 달성했습니다. 또한 3단계 관련도 라우팅으로 환각 응답을 생성 단계가 아니라 시스템 단계에서 차단했습니다.
                     </p>
                     <div className="flex items-center gap-3 flex-wrap">
                         <a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21_3rd_4Team" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition">

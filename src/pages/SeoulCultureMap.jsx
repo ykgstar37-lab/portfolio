@@ -255,10 +255,10 @@ export default function SeoulCultureMap() {
                         <span style={{ color: PRIMARY }}>Seoul</span> Culture Map
                     </h1>
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
-                        서울시 2,500+ 문화시설 탐색 + LangGraph AI 챗봇
+                        서울 문화 데이터 탐색 · 군집 해석 · LLM 추천 서비스
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        학술제 팀 분석이 PDF 보고서로만 공유되어 일반인이 활용할 수 없는 문제를 해결. 2개 공공API의 좌표 필드·카테고리 코드가 달라 통합이 어려웠지만, 데이터 정규화 파이프라인으로 2,500+ 시설 · 1,177장 이미지를 확보. LangGraph 3-node Agent로 AI 추천 비용을 요청당 ~$0.003(85% 절감)으로 최적화하고, 로컬 임베딩으로 월 API 비용 $0을 달성.
+                        학술제 팀 분석이 PDF 보고서로만 남아 일반 사용자가 활용할 수 없는 문제를 해결했습니다. 2개 공공API의 좌표 필드와 카테고리 코드가 달라 통합이 어려웠지만, 데이터 정규화 파이프라인으로 2,500+ 시설과 1,177장 이미지를 확보했습니다. 이후 LangGraph 3-node 구조로 추천 비용을 요청당 ~$0.003까지 낮추고, 로컬 임베딩으로 월 API 비용 $0을 달성해 데이터 제품을 운영 가능한 형태로 바꿨습니다.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/ykgstar37-lab/seoul-culture-map" target="_blank" rel="noopener noreferrer"
@@ -281,13 +281,13 @@ export default function SeoulCultureMap() {
                             <div>
                                 <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: PRIMARY }}>Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    서울시 2,500+ 문화시설 데이터를 K-means 군집분석하고, Agentic RAG 기반 AI 추천과 인터랙티브 Leaflet 지도를 결합한 풀스택 서비스. 팀 학술제 R 분석 결과를 웹 서비스로 확장하여, 일반 사용자도 서울 문화시설을 쉽게 탐색·추천받을 수 있도록 구현.
+                                    서울시 2,500+ 문화시설 데이터를 K-means 군집분석하고, Agentic RAG 기반 추천과 Leaflet 지도를 결합한 데이터 서비스입니다. 팀 학술제의 R 분석 결과를 웹 서비스로 확장하면서, 정적 분석을 사용자의 탐색 행동과 추천 응답으로 연결하는 구조를 설계했습니다.
                                 </p>
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    개인 프로젝트로서 RESTful API 설계(11개 엔드포인트), LangGraph 기반 Agentic RAG 파이프라인, K-means 군집분석, SSE 스트리밍, 프론트엔드 인터랙티브 지도까지 전 과정 담당.
+                                    개인 프로젝트로서 RESTful API 설계(11개 엔드포인트), LangGraph 기반 Agentic RAG 파이프라인, K-means 군집분석, SSE 스트리밍, 인터랙티브 지도 구현까지 전 과정을 담당했습니다. 특히 검색 비용, 추천 품질, 데이터 정규화, 응답 지연을 함께 고려해 서비스 구조를 설계했습니다.
                                 </p>
                             </div>
                             <div>

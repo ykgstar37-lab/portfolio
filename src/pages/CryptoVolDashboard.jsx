@@ -230,10 +230,10 @@ export default function CryptoVolDashboard() {
                         <span style={{ color: PRIMARY }}>CryptoVol</span> Dashboard
                     </h1>
                     <p className="text-xl font-semibold mb-6 tracking-tight" style={{ color: PRIMARY }}>
-                        실시간 멀티코인(BTC/ETH/SOL) 변동성 예측 대시보드
+                        실시간 멀티코인 변동성 서빙 · 모델 비교 · 리스크 해석 대시보드
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        P학기 팀 분석이 Jupyter 안에 갇혀 실시간 의사결정에 활용 불가능한 문제를 해결하기 위해, Python 분석 코드를 FastAPI + React 풀스택 서비스로 전환. Binance WebSocket 릴레이로 실시간 시세를 연동하고, 5개 GARCH 모형의 캐싱 전략(5분 TTL)으로 수백ms 적합 비용을 해결. BTC-FNG 상관계수 r=0.72를 근거로 외생변수를 주입한 HAR-TGARCH-X 모형까지 서빙.
+                        P학기 팀 분석이 Jupyter 안에 갇혀 실시간 의사결정에 활용되지 못하는 문제를 해결하기 위해, Python 분석 코드를 FastAPI + React 서비스로 전환했습니다. 핵심은 단순 시각화가 아니라 5개 GARCH 모형을 실시간 비교·평가·서빙 가능한 구조로 바꾼 점이며, Binance WebSocket 릴레이와 5분 TTL 캐싱으로 수백ms 적합 비용을 제어했습니다. BTC-FNG 상관계수 r=0.72를 근거로 외생변수를 주입한 HAR-TGARCH-X까지 포함해 모델 선택 근거를 투명하게 제공했습니다.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/ykgstar37-lab/crypto-volatility-dashboard" target="_blank" rel="noopener noreferrer"
@@ -256,7 +256,7 @@ export default function CryptoVolDashboard() {
                             <div>
                                 <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: PRIMARY }}>Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 풀스택 프로젝트. Binance WebSocket으로 실시간 시세를 수신하고, 5개 변동성 예측 모형의 적합 결과를 캐싱하여 안정적으로 서빙합니다. 매매 시그널, 포트폴리오 시뮬레이터, AI 브리핑을 포함한 종합 대시보드.
+                                    팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 프로젝트입니다. Binance WebSocket으로 실시간 시세를 수신하고, 5개 변동성 예측 모형의 적합 결과를 캐싱해 안정적으로 서빙합니다. 중요한 점은 하나의 모델을 고정 추천하는 대신, 모델 성능 비교와 리스크 지표를 함께 노출해 사용자가 근거 기반으로 판단할 수 있게 만든 것입니다.
                                 </p>
                             </div>
                             <div>

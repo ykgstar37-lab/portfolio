@@ -475,7 +475,7 @@ function HomePage() {
                         {/* Left */}
                         <div className="lg:w-1/2 space-y-6 sm:space-y-8">
                             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex gap-8 sm:gap-12">
-                                {[{ v: '+8', l: 'Tech Stacks' }, { v: '100%', l: 'Commitment' }].map((s, i) => (
+                                {[{ v: '3', l: 'ML Systems Shipped' }, { v: '2', l: 'Evaluation Loops Built' }].map((s, i) => (
                                     <div key={i}>
                                         <p className="text-2xl sm:text-4xl font-light text-gray-300">{s.v}</p>
                                         <p className="text-[10px] sm:text-xs font-semibold text-gray-400 mt-1 tracking-wider uppercase">{s.l}</p>
@@ -492,7 +492,7 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium">
-                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an AI Engineer (Agent)
+                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an ML Engineer focused on ranking, evaluation, and reliable LLM serving
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -526,11 +526,11 @@ function HomePage() {
                                 {/* Hover overlay - hidden on mobile (no hover) */}
                                 <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
                                     <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">AI Engineer (Agent)</span>
+                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">ML Engineer</span>
                                         <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">Agent 파이프라인 설계 · 품질 검증 · RAG 최적화</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">검색 랭킹 · 평가 지표 설계 · LLM 서빙 안정화</p>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {['LangGraph', 'vLLM', 'FastAPI', 'RAG'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                            {['RAGAS', 'vLLM', 'Qdrant', 'FastAPI'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                         </div>
                                     </div>
                                 </div>
@@ -629,7 +629,7 @@ function HomePage() {
                                 {/* Right column (or full width on desktop) */}
                                 <div className="flex-1">
                                     <h3 className="text-sm font-bold text-gray-900 mb-4 tracking-wider uppercase">Core Strength</h3>
-                                    {['Agent Pipeline Design', 'LLM/RAG Quality Assurance', 'Quantitative Evaluation', 'Problem Solving'].map((item, i) => (
+                                    {['Ranking & Retrieval Design', 'Offline-to-Online Thinking', 'LLM Serving Reliability', 'Quantitative Evaluation'].map((item, i) => (
                                         <motion.div key={i} whileHover={{ x: 4 }} className="flex items-center gap-3 py-2.5 cursor-default">
                                             <div className="w-6 h-6 rounded-full bg-[#e27500] text-white flex items-center justify-center flex-shrink-0 shadow-sm shadow-[#e27500]/30">
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
