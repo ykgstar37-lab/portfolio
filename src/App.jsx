@@ -160,7 +160,7 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 /* ── Shared project data (single source of truth) ── */
 const ALL_PROJECTS = [
     { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: 'GARCH 적합 연산(수백ms) 지연 → 5분 TTL 캐싱 + 에러 격리로 5개 모형 안정 서빙(14 REST + 1 WS). WebSocket 릴레이로 API 키 노출 차단, 1개 모형 실패가 전체 장애로 번지지 않는 설계.', overview: '팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 풀스택 프로젝트. 5개 변동성 예측 모형, 매매 시그널, 포트폴리오 시뮬레이터, AI 브리핑을 제공하는 대시보드.', role: 'API 서빙 아키텍처 설계, WebSocket 릴레이 구현, 캐싱 전략, 에러 격리 설계', tech: ['FastAPI', 'React', 'GARCH', 'Binance WS', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
-    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, AI 코스 추천까지 연결한 풀스택 서비스.', overview: '서울시 2,500+ 문화시설 데이터를 군집분석하고, Agentic RAG 기반 AI 추천과 인터랙티브 지도를 결합한 풀스택 서비스.', role: 'RESTful API 설계(11개 엔드포인트), LangGraph Agentic RAG 파이프라인, K-means 군집분석, SSE 스트리밍', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, AI 코스 추천까지 연결한 풀스택 서비스.', overview: '서울시 2,500+ 문화시설 데이터를 군집분석하고, Intent 라우팅 기반 RAG 추천과 인터랙티브 지도를 결합한 풀스택 서비스.', role: 'RESTful API 설계(11개 엔드포인트), LangGraph Intent 라우팅 파이프라인, K-means 군집분석, SSE 스트리밍', tech: ['FastAPI', 'React', 'Leaflet', 'scikit-learn', 'OpenAI'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
     { id: '03', title: 'WorkFlow Agent (듀드)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.04', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70%→97%, 판단 정확도 37%→85%. 공통 LLM 모듈로 provider 전환 설정 1줄.', overview: '사내 업무 자동화를 위한 LLM 에이전트 시스템. 규정 판단, 문서 처리, 일정 관리, 복합 요청 분해를 4개 전문 에이전트가 처리.', role: 'vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 5-factor Confidence 보정, LoRA 파인튜닝 데이터 품질 실험', tech: ['LangGraph', 'Kanana-1.5-8B', 'FastAPI', 'React'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
     { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. 768D→3,072D 교체로 Precision 0.83→0.97(+14.4%), Reranker 경량화로 레이턴시 -1초. Flask→Django 프로덕션 표준화.', overview: 'AI Camp 교육과정에 특화된 RAG 기반 AI 튜터. 교육 규정과 학습 자료를 검색하여 즉시 답변을 제공하는 챗봇 서비스.', role: 'RAG 파이프라인 설계(HyDE+BM25+Reranker), Flask→Django 마이그레이션, RAGAS 기반 정량 평가, AWS 배포', tech: ['Django', 'LangChain', 'Qdrant', 'AWS'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
     { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', overview: '암호화폐 시장의 변동성을 GARCH 계열 5개 모형으로 비교 분석한 팀 연구 프로젝트.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, HAR-TGARCH-X 최적 모형 선정, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
@@ -257,7 +257,7 @@ const PROBLEM_SOLVING_CASES = [
         problem: 'Flask MVP는 기능적으로 동작했지만, ORM 마이그레이션·정적 파일 서빙·관리자 페이지 등 프로덕션 기능을 모두 수동 구성해야 했음. AWS 배포 시 Nginx → Gunicorn → Flask 연결에서 반복적인 502 에러 발생.',
         solutions: [
             'Django 내장 기능(ORM migration, admin, collectstatic)으로 프로덕션 인프라 표준화',
-            'RAG 임베딩 768D → 3072D 교체 + Qdrant 벡터 DB 재설계로 검색 품질 향상',
+            'RAG 임베딩 768D → 3072D 교체 + Qdrant 벡터 DB 재설계로 RAG 검색 품질 향상',
             'Nginx → Gunicorn → Django 서버 흐름 직접 구성, 소켓 바인딩 설정 문제 해결',
         ],
         results: [
@@ -293,7 +293,7 @@ const PROBLEM_SOLVING_CASES = [
         num: '04',
         tag: 'Seoul Culture Map',
         tagColor: '#0ea5e9',
-        title: 'LangGraph 기반 Agentic RAG 파이프라인으로 비용 85% 절감',
+        title: 'LangGraph 기반 Intent 라우팅 파이프라인으로 비용 85% 절감',
         problem: '2,500+ 시설 데이터에 대해 단일 LLM 호출로 추천·검색·일상대화를 모두 처리하면, 매 요청마다 전체 컨텍스트를 주입해야 하여 토큰 비용이 높고 응답 품질 제어가 어려움.',
         solutions: [
             'LangGraph 3-node 파이프라인 설계 — Intent Classification → Data Retrieval → Response Generation. 일상대화(chitchat)는 검색을 건너뛰어 불필요한 DB/벡터 검색 비용 제거',
@@ -306,7 +306,7 @@ const PROBLEM_SOLVING_CASES = [
             { label: '체감 응답', value: 'SSE 첫 토큰 ~500ms' },
         ],
         insight: 'LLM 파이프라인의 핵심은 "언제 LLM을 호출하지 않을지" 결정하는 것 — 의도 분류로 불필요한 검색을 건너뛰고, 검색 단계에서 LLM 없이 SQL+벡터만 사용하면 비용과 레이턴시를 동시에 절감',
-        keywords: ['#AgenticRAG', '#LangGraph', '#벡터검색', '#비용최적화'],
+        keywords: ['#IntentRouting', '#LangGraph', '#벡터검색', '#비용최적화'],
     },
 ];
 
@@ -492,7 +492,7 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium">
-                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an ML Engineer focused on ranking, evaluation, and reliable LLM serving
+                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an AI / ML Engineer focused on evaluation, search quality, and reliable LLM serving
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -526,9 +526,9 @@ function HomePage() {
                                 {/* Hover overlay - hidden on mobile (no hover) */}
                                 <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
                                     <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">ML Engineer</span>
+                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">AI / ML Engineer</span>
                                         <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">검색 랭킹 · 평가 지표 설계 · LLM 서빙 안정화</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">RAG 검색 파이프라인 · 평가 체계 설계 · LLM 서빙 안정화</p>
                                         <div className="flex flex-wrap gap-1.5">
                                             {['RAGAS', 'vLLM', 'Qdrant', 'FastAPI'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                         </div>

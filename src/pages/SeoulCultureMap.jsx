@@ -281,13 +281,13 @@ export default function SeoulCultureMap() {
                             <div>
                                 <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: PRIMARY }}>Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    서울시 2,500+ 문화시설 데이터를 K-means 군집분석하고, Agentic RAG 기반 추천과 Leaflet 지도를 결합한 데이터 서비스입니다. 팀 학술제의 R 분석 결과를 웹 서비스로 확장하면서, 정적 분석을 사용자의 탐색 행동과 추천 응답으로 연결하는 구조를 설계했습니다.
+                                    서울시 2,500+ 문화시설 데이터를 K-means 군집분석하고, Intent 라우팅 RAG 기반 추천과 Leaflet 지도를 결합한 데이터 서비스입니다. 팀 학술제의 R 분석 결과를 웹 서비스로 확장하면서, 정적 분석을 사용자의 탐색 행동과 추천 응답으로 연결하는 구조를 설계했습니다.
                                 </p>
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    개인 프로젝트로서 RESTful API 설계(11개 엔드포인트), LangGraph 기반 Agentic RAG 파이프라인, K-means 군집분석, SSE 스트리밍, 인터랙티브 지도 구현까지 전 과정을 담당했습니다. 특히 검색 비용, 추천 품질, 데이터 정규화, 응답 지연을 함께 고려해 서비스 구조를 설계했습니다.
+                                    개인 프로젝트로서 RESTful API 설계(11개 엔드포인트), LangGraph 기반 Intent 라우팅 RAG 파이프라인, K-means 군집분석, SSE 스트리밍, 인터랙티브 지도 구현까지 전 과정을 담당했습니다. 특히 검색 비용, 추천 품질, 데이터 정규화, 응답 지연을 함께 고려해 서비스 구조를 설계했습니다.
                                 </p>
                             </div>
                             <div>
@@ -393,7 +393,7 @@ export default function SeoulCultureMap() {
                             {
                                 question: 'AI 추천을 단일 LLM 호출 대신 LangGraph 3-node 파이프라인으로 설계한 이유는?',
                                 answer: '단일 LLM 호출은 의도 분류·데이터 검색·응답 생성을 한 번에 처리하여 비용이 높고 제어가 어렵습니다. Intent → Retrieve → Generate 3단계로 분리하면, 일상 대화(chitchat)는 검색을 건너뛰어 비용을 절감하고, 검색 단계는 LLM 없이 SQL + ChromaDB만 사용합니다. 요청당 ~$0.003으로 엔터프라이즈 대비 85% 비용 절감.',
-                                tag: 'Agentic RAG'
+                                tag: 'Intent 라우팅 RAG'
                             },
                             {
                                 question: 'ChromaDB 로컬 임베딩을 선택한 이유는?',
@@ -453,7 +453,7 @@ export default function SeoulCultureMap() {
                         </table>
                     </div>
 
-                    {/* Data Integration + Agentic RAG */}
+                    {/* Data Integration + Intent 라우팅 RAG */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
                             <p className="text-xs font-bold" style={{ color: PRIMARY }}>공공 API 통합 — 2개 소스 데이터 정규화</p>
@@ -472,7 +472,7 @@ export default function SeoulCultureMap() {
                             <p className="text-xs text-gray-400 mt-3">→ 좌표 필드 통합, 카테고리 매핑, 중복 제거 후 6개 카테고리 · 25개 자치구 데이터 확보</p>
                         </div>
                         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                            <p className="text-xs font-bold" style={{ color: PRIMARY }}>Agentic RAG — 3-node 비용 최적화</p>
+                            <p className="text-xs font-bold" style={{ color: PRIMARY }}>Intent 라우팅 RAG — 3-node 비용 최적화</p>
                             <div className="space-y-3 mt-4">
                                 {[
                                     { node: 'Intent', desc: 'chitchat은 검색 건너뜀', cost: 'LLM 1회', color: 'bg-sky-50' },
@@ -826,7 +826,7 @@ export default function SeoulCultureMap() {
                                 </li>
                                 <li className="flex gap-3">
                                     <span className="font-bold text-gray-900 shrink-0">03</span>
-                                    <span><strong className="text-gray-900">Agentic RAG 비용 최적화</strong> — Intent→Retrieve→Generate 분리로 chitchat은 검색 스킵, 검색은 LLM 없이 SQL+ChromaDB만 사용 → 요청당 $0.003(85% 절감). API 실패 시 SQL만으로 fallback</span>
+                                    <span><strong className="text-gray-900">Intent 라우팅 RAG 비용 최적화</strong> — Intent→Retrieve→Generate 분리로 chitchat은 검색 스킵, 검색은 LLM 없이 SQL+ChromaDB만 사용 → 요청당 $0.003(85% 절감). API 실패 시 SQL만으로 fallback</span>
                                 </li>
                             </ul>
                         </div>

@@ -28,7 +28,7 @@ export default function Hero() {
 
                         <h1 className="hero__title-huge reveal reveal-delay-1">Hello</h1>
                         <p className="hero__subtitle reveal reveal-delay-2">
-                            — I'm <strong>Yoon Gyeongeun</strong>, an AI Engineer
+                            — I'm <strong>Yoon Gyeongeun</strong>, AI / ML Engineer
                         </p>
 
                         <div className="hero__social reveal reveal-delay-3">
@@ -60,7 +60,7 @@ export default function Hero() {
                         <div className="hero__portrait-card">
                             <img src={profileImg} alt="윤경은 프로필" className="hero__portrait-img" />
                             <div className="hero__portrait-overlay">
-                                <span className="hero__portrait-badge">AI Engineer</span>
+                                <span className="hero__portrait-badge">AI / ML Engineer</span>
                                 <h3 className="hero__portrait-name">Gyeongeun Yoon</h3>
                                 <p className="hero__portrait-desc">
                                     Building reliable AI serving systems with ML infrastructure
