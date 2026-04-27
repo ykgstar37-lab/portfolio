@@ -229,48 +229,8 @@ function ProjectsPage() {
 
 const PROBLEM_SOLVING_CASES = [
     {
-        id: 'api-serving',
-        num: '01',
-        tag: 'CryptoVol Dashboard',
-        tagColor: '#2b4fcb',
-        title: '분석 모형을 실시간 서빙 API로 전환하며 모델 서빙 설계를 체득',
-        problem: 'GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 모델 재계산 비용이 높아 서빙 안정성 확보가 핵심 과제.',
-        solutions: [
-            '5분 TTL 인메모리 캐싱 + 120일 윈도우 제한으로 GARCH 재계산 방지. 개별 모형 실패 시 0.0 반환으로 에러 격리',
-            'FastAPI WebSocket 릴레이 서버 구현 — Set 기반 클라이언트 추적으로 Binance 스트림을 브라우저에 브로드캐스트',
-            '코인 전환 시 Promise.all로 API 호출 병렬화하여 체감 전환 속도 확보',
-        ],
-        results: [
-            { label: 'Endpoints', value: '14 REST + 1 WS' },
-            { label: '에러 격리', value: '1개 실패 ≠ 전체 장애' },
-            { label: '보안', value: 'API 키 노출 차단' },
-        ],
-        insight: '"모델을 만드는 것"과 "모델을 안정적으로 서빙하는 것"은 완전히 다른 설계 관점 — 캐싱, 에러 격리, 보안 아키텍처가 서빙 안정성의 핵심',
-        keywords: ['#모델서빙', '#캐싱전략', '#추론최적화', '#에러격리'],
-    },
-    {
-        id: 'migration',
-        num: '02',
-        tag: 'PyMate',
-        tagColor: '#16a34a',
-        title: 'Flask MVP → Django 프로덕션 전환과 인프라 구조 이해',
-        problem: 'Flask MVP는 기능적으로 동작했지만, ORM 마이그레이션·정적 파일 서빙·관리자 페이지 등 프로덕션 기능을 모두 수동 구성해야 했음. AWS 배포 시 Nginx → Gunicorn → Flask 연결에서 반복적인 502 에러 발생.',
-        solutions: [
-            'Django 내장 기능(ORM migration, admin, collectstatic)으로 프로덕션 인프라 표준화',
-            'RAG 임베딩 768D → 3072D 교체 + Qdrant 벡터 DB 재설계로 RAG 검색 품질 향상',
-            'Nginx → Gunicorn → Django 서버 흐름 직접 구성, 소켓 바인딩 설정 문제 해결',
-        ],
-        results: [
-            { label: 'Context Precision', value: '0.83 → 0.97' },
-            { label: 'Context Recall', value: '0.70 → 0.79' },
-            { label: '병목 재정의', value: 'LLM이 아닌 embedding' },
-        ],
-        insight: 'RAGAS로 검색·생성을 분리 측정하여 병목이 "LLM 답변 능력"이 아닌 "embedding 검색 품질"임을 특정 — 구조를 바꾸는 것이 기능 추가보다 서비스 품질에 큰 영향',
-        keywords: ['#프레임워크마이그레이션', '#인프라설계', '#RAG품질', '#배포안정화'],
-    },
-    {
         id: 'guardrail',
-        num: '03',
+        num: '01',
         tag: 'WorkFlow Agent',
         tagColor: '#e27500',
         title: 'vLLM 기반 sLLM 서빙과 출력 검증 시스템 설계',
@@ -290,7 +250,7 @@ const PROBLEM_SOLVING_CASES = [
     },
     {
         id: 'agentic-rag',
-        num: '04',
+        num: '02',
         tag: 'Seoul Culture Map',
         tagColor: '#0ea5e9',
         title: 'LangGraph 기반 Intent 라우팅 파이프라인으로 비용 85% 절감',
@@ -307,6 +267,46 @@ const PROBLEM_SOLVING_CASES = [
         ],
         insight: 'LLM 파이프라인의 핵심은 "언제 LLM을 호출하지 않을지" 결정하는 것 — 의도 분류로 불필요한 검색을 건너뛰고, 검색 단계에서 LLM 없이 SQL+벡터만 사용하면 비용과 레이턴시를 동시에 절감',
         keywords: ['#IntentRouting', '#LangGraph', '#벡터검색', '#비용최적화'],
+    },
+    {
+        id: 'migration',
+        num: '03',
+        tag: 'PyMate',
+        tagColor: '#16a34a',
+        title: 'Flask MVP → Django 프로덕션 전환과 인프라 구조 이해',
+        problem: 'Flask MVP는 기능적으로 동작했지만, ORM 마이그레이션·정적 파일 서빙·관리자 페이지 등 프로덕션 기능을 모두 수동 구성해야 했음. AWS 배포 시 Nginx → Gunicorn → Flask 연결에서 반복적인 502 에러 발생.',
+        solutions: [
+            'Django 내장 기능(ORM migration, admin, collectstatic)으로 프로덕션 인프라 표준화',
+            'RAG 임베딩 768D → 3072D 교체 + Qdrant 벡터 DB 재설계로 RAG 검색 품질 향상',
+            'Nginx → Gunicorn → Django 서버 흐름 직접 구성, 소켓 바인딩 설정 문제 해결',
+        ],
+        results: [
+            { label: 'Context Precision', value: '0.83 → 0.97' },
+            { label: 'Context Recall', value: '0.70 → 0.79' },
+            { label: '병목 재정의', value: 'LLM이 아닌 embedding' },
+        ],
+        insight: 'RAGAS로 검색·생성을 분리 측정하여 병목이 "LLM 답변 능력"이 아닌 "embedding 검색 품질"임을 특정 — 구조를 바꾸는 것이 기능 추가보다 서비스 품질에 큰 영향',
+        keywords: ['#프레임워크마이그레이션', '#인프라설계', '#RAG품질', '#배포안정화'],
+    },
+    {
+        id: 'api-serving',
+        num: '04',
+        tag: 'CryptoVol Dashboard',
+        tagColor: '#2b4fcb',
+        title: '분석 모형을 실시간 서빙 API로 전환하며 모델 서빙 설계를 체득',
+        problem: 'GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 모델 재계산 비용이 높아 서빙 안정성 확보가 핵심 과제.',
+        solutions: [
+            '5분 TTL 인메모리 캐싱 + 120일 윈도우 제한으로 GARCH 재계산 방지. 개별 모형 실패 시 0.0 반환으로 에러 격리',
+            'FastAPI WebSocket 릴레이 서버 구현 — Set 기반 클라이언트 추적으로 Binance 스트림을 브라우저에 브로드캐스트',
+            '코인 전환 시 Promise.all로 API 호출 병렬화하여 체감 전환 속도 확보',
+        ],
+        results: [
+            { label: 'Endpoints', value: '14 REST + 1 WS' },
+            { label: '에러 격리', value: '1개 실패 ≠ 전체 장애' },
+            { label: '보안', value: 'API 키 노출 차단' },
+        ],
+        insight: '"모델을 만드는 것"과 "모델을 안정적으로 서빙하는 것"은 완전히 다른 설계 관점 — 캐싱, 에러 격리, 보안 아키텍처가 서빙 안정성의 핵심',
+        keywords: ['#모델서빙', '#캐싱전략', '#추론최적화', '#에러격리'],
     },
 ];
 
@@ -475,7 +475,7 @@ function HomePage() {
                         {/* Left */}
                         <div className="lg:w-1/2 space-y-6 sm:space-y-8">
                             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex gap-8 sm:gap-12">
-                                {[{ v: '3', l: 'ML Systems Shipped' }, { v: '2', l: 'Evaluation Loops Built' }].map((s, i) => (
+                                {[{ v: '37→85%', l: 'Agent Accuracy' }, { v: '4-Layer', l: 'Guardrail Design' }].map((s, i) => (
                                     <div key={i}>
                                         <p className="text-2xl sm:text-4xl font-light text-gray-300">{s.v}</p>
                                         <p className="text-[10px] sm:text-xs font-semibold text-gray-400 mt-1 tracking-wider uppercase">{s.l}</p>
@@ -491,8 +491,10 @@ function HomePage() {
                                 Hello
                             </motion.h1>
 
-                            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium">
-                                — I'm <span className="text-black font-bold">Yoon Gyeongeun</span>, an AI / ML Engineer focused on evaluation, search quality, and reliable LLM serving
+                            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium leading-relaxed" style={{ wordBreak: 'keep-all' }}>
+                                — 저는 <span className="text-black font-bold">윤경은</span>입니다,<br />
+                                Guardrail · 평가 · 프라이빗 sLLM 서빙으로<br />
+                                <span className="text-black font-bold">신뢰 가능한 Agent 시스템</span>을 설계하는 AI / ML 엔지니어입니다
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -526,11 +528,11 @@ function HomePage() {
                                 {/* Hover overlay - hidden on mobile (no hover) */}
                                 <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
                                     <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">AI / ML Engineer</span>
+                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-[#e27500]/15 text-[#e27500] rounded-full uppercase tracking-widest">Reliable Agent Engineer</span>
                                         <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">RAG 검색 파이프라인 · 평가 체계 설계 · LLM 서빙 안정화</p>
+                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">신뢰 가능한 Agent 설계 · 4중 Guardrail 검증 · sLLM 프라이빗 서빙</p>
                                         <div className="flex flex-wrap gap-1.5">
-                                            {['RAGAS', 'vLLM', 'Qdrant', 'FastAPI'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                            {['LangGraph', 'Guardrail', 'vLLM', 'RAGAS'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                         </div>
                                     </div>
                                 </div>
