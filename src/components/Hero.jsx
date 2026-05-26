@@ -28,7 +28,7 @@ export default function Hero() {
 
                         <h1 className="hero__title-huge reveal reveal-delay-1">Hello</h1>
                         <p className="hero__subtitle reveal reveal-delay-2">
-                            — I'm <strong>Yoon Gyeongeun</strong>, AI / ML Engineer
+                            — I'm <strong>Yoon Gyeongeun</strong>, AI DevOps / ML Systems Engineer
                         </p>
 
                         <div className="hero__social reveal reveal-delay-3">
@@ -43,7 +43,7 @@ export default function Hero() {
                                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                                 </svg>
                             </a>
-                            <a href="https://www.notion.so/Portfolio-2c6bec2d3d51809ca4f2c7b1150ce12d?source=copy_link" target="_blank" rel="noopener noreferrer" className="hero__social-link" aria-label="Notion">
+                            <a href="https://www.notion.so/Portfolio-0f5bec2d3d5183c59c0781ef20c9988a?source=copy_link" target="_blank" rel="noopener noreferrer" className="hero__social-link" aria-label="Notion">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.09c-.42-.326-.98-.7-2.055-.607L3.01 2.721c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.84-.046.933-.56.933-1.167V6.354c0-.606-.233-.933-.746-.886l-15.177.887c-.56.046-.747.326-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.746 0-.933-.234-1.495-.933l-4.577-7.186v6.952l1.449.327s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.726l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.279v-6.44l-1.215-.14c-.093-.514.28-.886.747-.933zM2.332 1.68l13.582-.934c1.682-.14 2.101.093 2.801.606l3.876 2.708c.466.326.606.746.606 1.26l-.001 15.38c0 .793-.28 1.26-1.26 1.353l-15.457.933c-.746.047-1.12-.046-1.54-.56L2.03 19.052c-.466-.606-.653-1.073-.653-1.72V2.94c0-.84.28-1.213 1.12-1.26z"/>
                                 </svg>
@@ -60,10 +60,10 @@ export default function Hero() {
                         <div className="hero__portrait-card">
                             <img src={profileImg} alt="윤경은 프로필" className="hero__portrait-img" />
                             <div className="hero__portrait-overlay">
-                                <span className="hero__portrait-badge">AI / ML Engineer</span>
+                                <span className="hero__portrait-badge">AI DevOps Engineer</span>
                                 <h3 className="hero__portrait-name">Gyeongeun Yoon</h3>
                                 <p className="hero__portrait-desc">
-                                    Building reliable AI serving systems with ML infrastructure
+                                    Delivering reliable AI services with serving, API, and deployment systems
                                 </p>
                                 <div className="hero__portrait-tags">
                                     <span>Python</span>
