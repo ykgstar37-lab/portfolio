@@ -28,7 +28,7 @@ export default function Hero() {
 
                         <h1 className="hero__title-huge reveal reveal-delay-1">Hello</h1>
                         <p className="hero__subtitle reveal reveal-delay-2">
-                            — I'm <strong>Yoon Gyeongeun</strong>, AI DevOps / ML Systems Engineer
+                            — 안녕하세요, <strong>윤경은</strong>입니다. AI 모델을 안정적인 서비스로 연결하는 AI DevOps / ML Systems 엔지니어입니다.
                         </p>
 
                         <div className="hero__social reveal reveal-delay-3">

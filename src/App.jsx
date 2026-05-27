@@ -493,9 +493,9 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                — 저는 <span className="text-black font-bold">윤경은</span>입니다,<br />
-                                AI 모델을 배포·검증·운영 가능한 서비스로 연결하는<br />
-                                <span className="text-black font-bold">AI DevOps / ML Systems 엔지니어</span>입니다
+                                — 안녕하세요, <span className="text-black font-bold">윤경은</span>입니다.<br />
+                                AI 모델을 안정적인 서비스로 연결하는<br />
+                                <span className="text-black font-bold">AI DevOps / ML Systems 엔지니어</span>입니다.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -559,12 +559,12 @@ function HomePage() {
                             {/* PDF Page 1 스타일: 2단락 자기소개 */}
                             <div className="space-y-4">
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    <span className="font-bold text-gray-900">AI 모델을 고객 환경에서 안정적으로 쓰이는 서비스로 만드는 데 관심이 있습니다.</span>{' '}
-                                    GPT API 의존 구조를 vLLM 기반 프라이빗 sLLM 서빙으로 전환하고, 공통 LLM 모듈로 provider 교체 비용을 설정 1줄 수준으로 줄였습니다. 구조화 출력 검증과 fallback 파싱으로 JSON 유효율을 70%→97%로 개선했습니다.
+                                    <span className="font-bold text-gray-900">AI 모델을 고객 환경에서 안정적으로 쓰이는 서비스로 연결해왔습니다.</span>{' '}
+                                    GPT API 의존 구조를 vLLM 기반 프라이빗 sLLM 서빙으로 전환하고, 공통 LLM 모듈을 설계해 provider 교체 비용을 설정 1줄 수준으로 줄였습니다. 구조화 출력 검증과 fallback 파싱으로 JSON 유효율을 70%→97%로 개선했습니다.
                                 </p>
                                 <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    <span className="font-bold text-gray-800">운영 중 생길 수 있는 실패를 먼저 가정하고, 지표와 자동화로 줄입니다.</span>{' '}
-                                    Docker, Nginx, Gunicorn, AWS 배포 과정에서 502 장애를 디버깅했고, 모델 API는 캐싱·에러 격리·Rate Limiting으로 보호했습니다. RAGAS로 검색·생성 병목을 분리 측정해 Precision 0.83→0.97(+14.4%)을 달성했습니다.
+                                    <span className="font-bold text-gray-800">운영 중 발생할 수 있는 장애를 먼저 가정하고, 지표와 자동화로 줄입니다.</span>{' '}
+                                    Docker, Nginx, Gunicorn, AWS 배포 과정에서 502 장애를 디버깅했고, 캐싱·에러 격리·Rate Limiting으로 모델 API를 보호했습니다. RAGAS 평가로 검색·생성 병목을 분리 측정해 Precision을 0.83→0.97로 개선했습니다.
                                 </p>
                             </div>
 
@@ -593,8 +593,8 @@ function HomePage() {
                         {/* Center */}
                         <motion.div variants={fadeUp} custom={1} className="lg:col-span-3 space-y-3">
                             <TiltCard className="bg-gradient-to-br from-[#1a1a1a] to-[#333333] p-6 rounded-2xl text-white">
-                                <p className="text-4xl font-light mb-1">100%</p>
-                                <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase">Commitment to<br />Reliable Delivery</p>
+                                <p className="text-4xl font-light mb-1">70→97%</p>
+                                <p className="text-gray-400 text-xs font-semibold tracking-wider uppercase">JSON<br />Reliability</p>
                             </TiltCard>
 
                             <TiltCard className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-shadow">
@@ -632,7 +632,7 @@ function HomePage() {
                                 {/* Right column (or full width on desktop) */}
                                 <div className="flex-1">
                                     <h3 className="text-sm font-bold text-gray-900 mb-4 tracking-wider uppercase">Core Strength</h3>
-                                    {['AI Serving Reliability', 'API & DB Integration', 'Deployment Troubleshooting', 'Quantitative Verification'].map((item, i) => (
+                                    {['AI Serving Reliability', 'API & DB Integration', 'Deployment Troubleshooting', 'Evaluation-driven Improvement'].map((item, i) => (
                                         <motion.div key={i} whileHover={{ x: 4 }} className="flex items-center gap-3 py-2.5 cursor-default">
                                             <div className="w-6 h-6 rounded-full bg-[#e27500] text-white flex items-center justify-center flex-shrink-0 shadow-sm shadow-[#e27500]/30">
                                                 <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>

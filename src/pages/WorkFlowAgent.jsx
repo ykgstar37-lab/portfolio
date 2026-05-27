@@ -138,7 +138,7 @@ const AS_IS_TO_BE = [
 ];
 
 const CONTRIBUTIONS = [
-    { title: 'Judgment Agent — LLM 과신뢰 방지', desc: '4중 Guardrail 설계 → JSON 유효율 70%→97%, 과신뢰 오분류 69% 감소.' },
+    { title: 'Judgment Agent — LLM 과신뢰 방지', desc: '4중 Guardrail + Confidence 보정 → 규정 판단 정확도 37%→85%, JSON 유효율 70%→97%, confidence 0.92→0.78 보정.' },
     { title: 'RAG — 단일 검색 한계 극복', desc: 'HyDE + BM25/Vector + RRF + Reranker 9단계 파이프라인 → 규정 10개 문서 교차 검색.' },
     { title: 'LoRA — 데이터 양보다 질', desc: 'v2 대량 보강 시 -3.2%p → v3 정밀 타겟팅 +2.0%p 회복. 3,468건 LoRA 학습 완료.' },
     { title: '쿼리 정제 — 구어 대응', desc: '"연차 쓸 수 있어?" → "연차 사용 가능 여부" 변환 → Intent F1 97.88% 달성.' },
@@ -148,7 +148,7 @@ const CHALLENGES = [
     { title: 'sLLM JSON 파싱 실패', problem: 'sLLM이 구조화된 JSON 출력을 일관되게 생성하지 못함 (초기 유효율 70%)', solution: '프롬프트 최적화 + 출력 포맷 단순화 + fallback 파싱 로직', result: '70% → 97%' },
     { title: 'Intent 과신뢰 오분류', problem: '모델이 confidence 0.95 이상으로 잘못된 Intent를 분류하는 문제 빈발', solution: 'Label Smoothing 0.1 적용 + 7단계 체계적 실험', result: '오분류 69%↓, F1 97.88%' },
     { title: 'RAG 검색 정밀도', problem: '단일 벡터 검색으로는 "연차"↔"유급휴가" 같은 다양한 표현 커버 불가', solution: 'HyDE + BM25/Vector 하이브리드 + RRF(k=60) + Reranker', result: '다중 규정 교차 검색' },
-    { title: '규정 교차 판단 정확도', problem: '복수 규정 간 상충/보완 관계에서 sLLM이 일방적으로 판단', solution: '4중 Guardrail + 5-factor Confidence 보정', result: 'conditional 78%' },
+    { title: '규정 교차 판단 정확도', problem: '복수 규정 간 상충/보완 관계에서 sLLM이 일방적으로 판단 (초기 정확도 37%)', solution: '4중 Guardrail + 5-factor Confidence 보정', result: '37% → 85% (conditional 78%)' },
     { title: '문서 파싱 다양성', problem: 'PDF, DOCX, 스캔 이미지 등 다양한 형식이 혼재', solution: 'Docling + PaddleOCR + python-docx 라우터', result: '3종 형식 지원' },
     { title: 'LLM → sLLM 전환', problem: 'GPT/Claude API → 온프레미스 sLLM 전환 시 코드 전면 수정 필요', solution: '공통 LLM 모듈 설계 (provider 패턴)', result: '코드 수정 0줄' },
 ];
@@ -213,7 +213,7 @@ export default function WorkFlowAgent() {
                         "하나의 채팅으로 업무의 모든 것을"
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        수동 규정 검색에 10~15분이 걸리고 GPT API로는 사내 데이터 외부 반출을 피할 수 없는 문제를 해결했습니다. 4개 전문 Agent 구조를 유지하되 핵심은 모델이 아니라 서빙 안정성에 두고, sLLM 파인튜닝·vLLM 서빙·4중 Guardrail을 결합해 Intent F1 97.88%, JSON 유효율 70%→97%, 과신뢰 오분류 69% 감소를 달성했습니다.
+                        수동 규정 검색에 10~15분이 걸리고 GPT API로는 사내 데이터 외부 반출을 피할 수 없는 문제를 해결했습니다. 4개 전문 Agent 구조를 유지하되 핵심은 모델이 아니라 서빙 안정성에 두고, sLLM 파인튜닝·vLLM 서빙·4중 Guardrail을 결합해 규정 판단 정확도 37%→85%, JSON 유효율 70%→97%, 과신뢰 confidence 0.92→0.78 보정, Intent F1 97.88%를 달성했습니다.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM" target="_blank" rel="noopener noreferrer"
@@ -357,7 +357,9 @@ export default function WorkFlowAgent() {
                             </thead>
                             <tbody>
                                 {[
+                                    { metric: '규정 판단 정확도', before: '37%', after: '85%', improvement: '+48%p' },
                                     { metric: 'JSON 유효율', before: '70%', after: '97%', improvement: '+27%p' },
+                                    { metric: '과신 Confidence 보정', before: '0.92', after: '0.78', improvement: '−0.14' },
                                     { metric: 'Intent 분류 F1', before: 'Rule 기반', after: '97.88%', improvement: 'KoELECTRA' },
                                     { metric: 'Adversarial F1', before: '—', after: '87.58%', improvement: '463건 테스트' },
                                     { metric: '과신뢰 오분류', before: '빈발', after: '69% 감소', improvement: 'Label Smoothing' },

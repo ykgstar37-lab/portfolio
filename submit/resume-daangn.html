@@ -62,10 +62,51 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
 .stat-item { margin-bottom: 0.8rem; }
 .stat-item h3 { font-size: 0.88rem; }
 .stat-item p { font-size: 0.82rem; color: #555; }
-
+@page { margin: 18mm 14mm 11mm 14mm; }
+@page :first { margin-top: 21mm; }
 @media print {
-  body { padding: 1.5cm; font-size: 12px; }
-  .project { page-break-inside: avoid; }
+  body { padding: 1mm 5mm 1.5mm; font-size: 11.1px; line-height: 1.52; max-width: none; }
+  h2 { margin: 1.45rem 0 0.62rem; padding-bottom: 0.32rem; }
+  h3 { font-size: 0.9rem; margin-bottom: 0.08rem; }
+  .header { gap: 1rem; margin-bottom: 0.95rem; }
+  .header-center h1 { font-size: 1.7rem; }
+  .header-center .role { font-size: 0.88rem; }
+  .header-right { font-size: 0.74rem; line-height: 1.55; }
+  .summary-box { padding: 0.72rem 0.9rem; margin-bottom: 0.25rem; font-size: 0.8rem; line-height: 1.58; }
+  .two-col { gap: 0 1.25rem; }
+  .edu-item { margin-bottom: 0.38rem; }
+  .edu-item .school { font-size: 0.84rem; }
+  .edu-item .detail { font-size: 0.74rem; }
+  .impact-strip { gap: 0.55rem; margin: 0.9rem 0 1.35rem; }
+  .impact-item { padding: 0.76rem 0.82rem; border-radius: 8px; }
+  .impact-item .impact-label { font-size: 0.68rem; margin-bottom: 0.08rem; }
+  .impact-item .impact-project { font-size: 0.6rem; margin-bottom: 0.22rem; }
+  .impact-item .impact-metric { font-size: 1.1rem; margin-bottom: 0.18rem; }
+  .impact-item .impact-title { font-size: 0.8rem; margin-bottom: 0.14rem; }
+  .impact-item .impact-desc { font-size: 0.69rem; line-height: 1.45; }
+  .skill-group { margin-bottom: 0.28rem; }
+  .skill-label { font-size: 0.63rem; margin-bottom: 0.16rem; }
+  .skills-grid { gap: 0.2rem; }
+  .tag { font-size: 0.63rem; padding: 0.12rem 0.42rem; }
+  .project { margin-bottom: 1.2rem; padding-bottom: 1rem; break-inside: auto; page-break-inside: auto; }
+  .project-head { margin-bottom: 0.08rem; }
+  .project-head, .project-subline, .contribution-note, .project-desc, .project-retro, .project-tags { break-inside: avoid; page-break-inside: avoid; }
+  h2 { break-after: avoid-page; page-break-after: avoid; }
+  h2.projects-section { break-before: page; page-break-before: always; margin-top: 0; }
+  h2.stats-section { break-before: page; page-break-before: always; margin-top: 0; }
+  .meta, .project-link { font-size: 0.69rem; }
+  .project-subline { gap: 0.5rem; margin-bottom: 0.1rem; }
+  .contribution-row { padding-left: 0.45rem; }
+  .contribution-label, .contribution-value { font-size: 0.62rem; }
+  .contribution-note { font-size: 0.6rem; margin: 0 0 0.26rem; line-height: 1.32; }
+  .project-desc { font-size: 0.75rem; margin-bottom: 0.42rem; padding: 0.42rem 0.55rem; }
+  .project li { font-size: 0.73rem; margin-bottom: 0.26rem; line-height: 1.45; }
+  .project-retro { font-size: 0.68rem; margin: 0.08rem 0 0.28rem; line-height: 1.42; }
+  .project-tags { gap: 0.2rem; margin-top: 0.38rem; }
+  .stat-item { margin-bottom: 0.42rem; }
+  .stat-item h3 { font-size: 0.78rem; }
+  .stat-item p { font-size: 0.72rem; line-height: 1.45; }
+  .stat-item { break-inside: avoid; page-break-inside: avoid; }
 }
 </style>
 </head>
@@ -158,7 +199,7 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
   </div>
 </div>
 
-<h2>Projects</h2>
+<h2 class="projects-section">Projects</h2>
 
 <div class="project">
   <div class="project-head">
@@ -211,7 +252,7 @@ h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.15rem; }
   <div class="project-tags"><span class="tag hl">LangGraph</span><span class="tag hl">ChromaDB</span><span class="tag">FastAPI</span><span class="tag">SSE</span><span class="tag">SQLite</span><span class="tag">React 19</span><span class="tag">Leaflet</span><span class="tag">scikit-learn</span><span class="tag">GPT-4o-mini</span></div>
 </div>
 
-<h2>Statistics Foundation</h2>
+<h2 class="stats-section">Statistics Foundation</h2>
 <div class="two-col">
   <div class="stat-item">
     <h3>시계열 분석 · 변동성 모델링</h3>
