@@ -5,6 +5,7 @@ import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
+import ProjectFlowSection from '../components/ProjectFlowSection';
 
 import cmMain from '../assets/culturemap/culturemap-main.png';
 import cmAnalytics from '../assets/culturemap/culturemap-analytics.png';
@@ -23,6 +24,144 @@ const fadeInUp = {
 };
 
 const PRIMARY = '#0ea5e9';
+
+const SEOUL_CULTURE_MAP_CHARTS = [
+    {
+        title: '시스템 아키텍처',
+        description: 'React 지도 UI, FastAPI, LangGraph Agent, SQLite/ChromaDB, 외부 공공 API의 연결 구조',
+        chart: String.raw`graph LR
+    subgraph Frontend
+        React[React 19 + Vite]
+        Leaflet[Leaflet 지도]
+        Tailwind[Tailwind CSS]
+    end
+
+    subgraph Backend
+        FastAPI[FastAPI]
+        LangGraph[LangGraph Agent]
+        sklearn[scikit-learn]
+    end
+
+    subgraph Storage
+        SQLite[(SQLite\n2,500+ 시설)]
+        ChromaDB[(ChromaDB\n벡터 검색)]
+    end
+
+    subgraph External["External APIs"]
+        Seoul[서울 열린데이터광장]
+        Tour[한국관광공사 Tour API]
+        OpenAI[OpenAI GPT-4o-mini]
+    end
+
+    React <-->|REST /api + SSE| FastAPI
+    FastAPI --> LangGraph
+    FastAPI --> sklearn
+    LangGraph --> SQLite
+    LangGraph --> ChromaDB
+    LangGraph --> OpenAI
+    FastAPI -->|POST /api/sync| Seoul
+    FastAPI -->|POST /api/sync| Tour
+    Seoul --> SQLite
+    Tour --> SQLite
+    SQLite -->|임베딩| ChromaDB`,
+    },
+    {
+        title: 'LangGraph Agent Pipeline',
+        description: '의도 분류, 데이터 검색, 응답 생성, 지도 마커 출력까지의 대화형 추천 흐름',
+        chart: String.raw`flowchart TD
+    Start([사용자 메시지]) --> Intent
+
+    subgraph Step1["1단계: 의도 분류"]
+        Intent[GPT-4o-mini\nStructured Output]
+    end
+
+    Intent -->|recommend\n코스 추천| Retrieve
+    Intent -->|search\n장소 검색| Retrieve
+    Intent -->|info\n정보 질의| Retrieve
+    Intent -->|chitchat\n일상 대화| Generate
+
+    subgraph Step2["2단계: 데이터 검색"]
+        Retrieve --> SQLite[(SQLite DB\n시설·지하철·군집)]
+        Retrieve --> Chroma[(ChromaDB\n시맨틱 검색)]
+        SQLite --> Merge[컨텍스트 병합]
+        Chroma --> Merge
+    end
+
+    Merge --> Generate
+
+    subgraph Step3["3단계: 응답 생성"]
+        Generate[GPT-4o-mini\n컨텍스트 주입]
+    end
+
+    Generate --> Output
+
+    subgraph Result["응답 출력"]
+        Output[마크다운 텍스트\n+ 추천 장소 좌표]
+        Output -->|JSON| API["/api/chat 응답"]
+        Output -->|SSE 스트리밍| Stream["/api/chat/stream\n토큰 단위 전송"]
+        Output -->|장소 좌표| Map["지도 마커 표시\n번호 + 경로선"]
+        Output -->|이력 저장| DB[(SQLite\nchat_messages)]
+    end
+
+    style Step1 fill:#fef3c7,stroke:#f59e0b
+    style Step2 fill:#dbeafe,stroke:#3b82f6
+    style Step3 fill:#dcfce7,stroke:#22c55e
+    style Result fill:#f3e8ff,stroke:#a855f7`,
+    },
+    {
+        title: 'Data Pipeline',
+        description: '공공데이터 수집, 정규화, SQLite 저장, 로컬 임베딩, API/Agent 서빙 흐름',
+        chart: String.raw`flowchart TD
+    subgraph Sources["데이터 소스"]
+        Seoul["서울 열린데이터광장\n문화공간 ~1,039\n공원 ~133\n지하철역 ~700+"]
+        Tour["한국관광공사 Tour API\n관광지 · 문화시설\n공연/축제 · 레포츠\n+ 이미지 URL"]
+        CSV["학술제 CSV (seed)\n자치구별 집계\n6카테고리 × 25자치구"]
+    end
+
+    subgraph Sync["POST /api/sync"]
+        Normalize["데이터 정규화\n좌표 검증 · 자치구 추출\n카테고리 매핑 · 중복 제거"]
+    end
+
+    Seoul --> Normalize
+    Tour --> Normalize
+
+    subgraph DB["SQLite DB"]
+        Places["places\n2,500+ 개별 시설"]
+        Facilities["facilities\n자치구별 집계"]
+        Subway["subway_stations\n700+ 역"]
+        Chat["chat_sessions\nchat_messages"]
+    end
+
+    Normalize --> Places
+    Normalize --> Subway
+    CSV -->|서버 시작 시 seed| Facilities
+
+    subgraph Vector["ChromaDB"]
+        Embed["all-MiniLM-L6-v2\n로컬 임베딩\nAPI 비용 없음"]
+        Index["벡터 인덱스\n시맨틱 검색 지원"]
+    end
+
+    Places -->|서버 시작 시 임베딩| Embed
+    Embed --> Index
+
+    subgraph Serve["서빙"]
+        REST["REST API\n시설 · 통계 · 지하철"]
+        Agent["LangGraph Agent\nRAG 기반 대화"]
+        Cluster["K-means 군집분석\nscikit-learn"]
+    end
+
+    Places --> REST
+    Places --> Agent
+    Index --> Agent
+    Facilities --> Cluster
+
+    style Sources fill:#fef3c7,stroke:#f59e0b
+    style Sync fill:#fee2e2,stroke:#ef4444
+    style DB fill:#dbeafe,stroke:#3b82f6
+    style Vector fill:#dcfce7,stroke:#22c55e
+    style Serve fill:#f3e8ff,stroke:#a855f7`,
+    },
+];
 
 const FEATURES = [
     {
@@ -154,6 +293,7 @@ const SCREENSHOTS = [
 const SECTIONS = [
     { id: 'goal', label: 'Goal' },
     { id: 'problem', label: 'Problem' },
+    { id: 'architecture', label: 'Architecture' },
     { id: 'origin', label: 'Origin Story' },
     { id: 'decisions', label: 'Technical Decisions' },
     { id: 'evaluation', label: 'Evaluation' },
@@ -342,6 +482,26 @@ export default function SeoulCultureMap() {
                         </div>
                     </div>
                 </motion.div>
+
+                <ProjectFlowSection
+                    id="architecture"
+                    title="Architecture"
+                    subtitle="정적 R 분석 결과를 실제 탐색 서비스로 확장하기 위해 공공데이터 통합, 공간 분석, AI 추천을 API 단위로 분리했습니다."
+                    accentColor={PRIMARY}
+                    variant={fadeInUp}
+                    charts={SEOUL_CULTURE_MAP_CHARTS}
+                    steps={[
+                        { title: 'Public Data', subtitle: '시설/관광 데이터 수집', items: ['Seoul Open Data', 'Tour API', '2,500+ facilities'] },
+                        { title: 'FastAPI Backend', subtitle: '정규화와 검색 API', items: ['15 endpoints', 'SQLite', 'ChromaDB'] },
+                        { title: 'Analysis & Agent', subtitle: '군집/거리/추천 계산', items: ['K-means', 'Haversine', 'LangGraph 3-node'] },
+                        { title: 'React Map UI', subtitle: '사용자 탐색 화면', items: ['Leaflet map', 'AI chatbot', 'Course', 'Analytics'] },
+                    ]}
+                    notes={[
+                        { label: 'Data Merge', value: '2개 공공 API 좌표/카테고리 정규화' },
+                        { label: 'Cost', value: 'Intent 라우팅으로 AI 호출 비용 85% 절감' },
+                        { label: 'Embedding', value: '로컬 MiniLM 임베딩으로 월 비용 $0' },
+                    ]}
+                />
 
                 {/* Origin Story */}
                 <motion.div id="origin" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

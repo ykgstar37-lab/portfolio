@@ -5,6 +5,7 @@ import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
+import ProjectFlowSection from '../components/ProjectFlowSection';
 import { MapContainer, TileLayer, CircleMarker, Tooltip as LeafletTooltip } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
@@ -18,6 +19,54 @@ const fadeInUp = {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
 };
 const stagger = { visible: { transition: { staggerChildren: 0.1 } } };
+
+const SEOUL_CULTURE_CHARTS = [
+    {
+        title: 'Analysis Pipeline',
+        description: '서울 25개 자치구 관광 지표를 정제하고 PCA, K-means, 지도 해석으로 연결한 분석 흐름',
+        chart: String.raw`flowchart LR
+    subgraph Source["Data Sources"]
+        Public["Public Tourism Data"]
+        District["25 Districts"]
+        Variables["Tourism / Culture Variables"]
+    end
+
+    subgraph Prep["Preprocessing"]
+        Clean["Missing Value Check"]
+        Scale["Scaling"]
+        Corr["Correlation Review"]
+    end
+
+    subgraph Reduce["Dimension Reduction"]
+        PCA["PCA"]
+        Axis["Comparable Feature Axis"]
+    end
+
+    subgraph Cluster["Clustering"]
+        KMeans["K-means"]
+        NbClust["NbClust"]
+        Silhouette["Silhouette Score"]
+    end
+
+    subgraph Interpret["Interpretation"]
+        Map["District Map"]
+        Profile["Cluster Profile"]
+        Strategy["Purpose-based\nTourism Strategy"]
+    end
+
+    Source --> Prep
+    Prep --> Reduce
+    Reduce --> Cluster
+    Cluster --> Interpret
+    Interpret --> Result["k=3 군집 도출\n지역별 관광 포지셔닝 제안"]
+
+    style Source fill:#fef3c7,stroke:#f59e0b
+    style Prep fill:#fee2e2,stroke:#ef4444
+    style Reduce fill:#dbeafe,stroke:#3b82f6
+    style Cluster fill:#dcfce7,stroke:#22c55e
+    style Interpret fill:#f3e8ff,stroke:#a855f7`,
+    },
+];
 
 const TOTAL_SLIDES = 40;
 function SlideViewer() {
@@ -130,6 +179,7 @@ const SEOUL_CONTRIBUTIONS = [
 
 const SECTIONS = [
     { id: 'background', label: 'Research Background' },
+    { id: 'analysis-pipeline', label: 'Analysis Pipeline' },
     { id: 'methodology', label: 'Methodology' },
     { id: 'variables', label: 'Data Variables' },
     { id: 'eda', label: 'EDA Process' },
@@ -295,6 +345,26 @@ export default function SeoulCulture() {
                 </motion.div>
 
                 {/* ═══ METHODOLOGY PIPELINE ═══ */}
+                <ProjectFlowSection
+                    id="analysis-pipeline"
+                    title="Analysis Pipeline"
+                    subtitle="서울 25개 자치구의 관광 특성을 설명하기 위해 변수 정제, 차원 축소, 군집 수 검증, 지도 해석 순서로 분석했습니다."
+                    accentColor="#d4a03c"
+                    variant={fadeInUp}
+                    charts={SEOUL_CULTURE_CHARTS}
+                    steps={[
+                        { title: 'Data Selection', subtitle: '자치구별 관광 지표 수집', items: ['25 districts', 'Public data', 'Tourism variables'] },
+                        { title: 'Preprocessing', subtitle: '스케일 차이와 상관 구조 정리', items: ['Scaling', 'Correlation', 'PCA'] },
+                        { title: 'Clustering', subtitle: '최적 군집 수 판단', items: ['K-means', 'NbClust', 'Silhouette'] },
+                        { title: 'Interpretation', subtitle: '지도와 프로필로 결과 해석', items: ['District map', 'Cluster profile', 'Policy insight'] },
+                    ]}
+                    notes={[
+                        { label: 'Problem', value: '외국인 관광객에게 목적별 지역 추천 근거가 부족함' },
+                        { label: 'Decision', value: 'PCA + K-means로 지역 특성을 비교 가능한 축으로 정리' },
+                        { label: 'Result', value: 'k=3 군집과 목적별 지역 전략 도출' },
+                    ]}
+                />
+
                 <motion.div id="methodology" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Methodology</h2>
                     <p className="text-gray-500 mb-8">분석방법론 3단계 플로우</p>

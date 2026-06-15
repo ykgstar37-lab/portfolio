@@ -5,12 +5,33 @@ import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
+import ProjectFlowSection from '../components/ProjectFlowSection';
 
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
+
+const PYMATE_CHARTS = [
+    {
+        title: 'RAG Workflow Flowchart',
+        description: '검색, 재정렬, 컨텍스트 구성 후 관련도에 따라 답변 생성/웹검색/무응답으로 라우팅하는 흐름',
+        chart: String.raw`%%{init: {'theme': 'neutral', 'themeVariables': { 'fontSize': '14px'}}}%%
+graph TD
+    START((Start)) --> Search[Search Node]
+    Search --> Rerank[Rerank Node]
+    Rerank --> Context[Build Context]
+
+    Context -- High Relevance > 0.5 --> Analyst[Analyst Node]
+    Context -- Med Relevance 0.3~0.5 --> Web[Web Search]
+    Context -- Low Relevance < 0.3 --> NoData[No Data Node]
+
+    Web --> Analyst
+    Analyst --> END((End))
+    NoData --> END`,
+    },
+];
 
 const TECH_STACK = {
     'Backend': ['Python 3.12', 'Django 5.x', 'DRF', 'Flask', 'Gunicorn', 'SSE'],
@@ -110,6 +131,7 @@ const DB_SCHEMA = {
 
 const SECTIONS = [
     { id: 'goal', label: 'Goal' },
+    { id: 'architecture', label: 'Architecture' },
     { id: 'embedding-serving', label: 'Embedding Serving' },
     { id: 'rag-eval', label: 'RAG 성능 평가' },
     { id: 'contributions', label: 'My Contributions' },
@@ -572,6 +594,26 @@ export default function PyMate() {
                         </p>
                     </div>
                 </motion.div>
+
+                <ProjectFlowSection
+                    id="architecture"
+                    title="Architecture"
+                    subtitle="Flask MVP에서 Django 기반 학습 서비스로 전환하면서 인증, 학습 기록, RAG 검색, 실시간 응답을 분리했습니다."
+                    accentColor="#e8609c"
+                    variant={fadeInUp}
+                    charts={PYMATE_CHARTS}
+                    steps={[
+                        { title: 'User & Proxy', subtitle: '브라우저 요청 진입점', items: ['Browser', 'Nginx', 'Gunicorn'] },
+                        { title: 'Django + DRF', subtitle: '서비스 API와 인증', items: ['Django Auth', 'Quiz API', 'Bookmarks'] },
+                        { title: 'RAG Engine', subtitle: '검색 품질 개선 흐름', items: ['KO+EN query', 'BM25+Vector', 'Reranker'] },
+                        { title: 'Storage', subtitle: '관계형/벡터 데이터 분리', items: ['PostgreSQL', 'Qdrant', 'Learning docs'] },
+                    ]}
+                    notes={[
+                        { label: 'Migration', value: 'Flask 수동 구성 -> Django Auth/ORM/DRF 활용' },
+                        { label: 'Retrieval', value: 'Context Precision 0.8333 -> 0.9758' },
+                        { label: 'Deployment', value: 'AWS EC2 + Nginx + Gunicorn 502 해결' },
+                    ]}
+                />
 
                 {/* Embedding Serving Optimization */}
                 <motion.div id="embedding-serving" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

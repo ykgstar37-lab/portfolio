@@ -6,11 +6,64 @@ import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
+import ProjectFlowSection from '../components/ProjectFlowSection';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
+
+const WORKFLOW_AGENT_CHARTS = [
+    {
+        title: '시스템 아키텍처',
+        description: 'Frontend, FastAPI, LangGraph Orchestrator, Agent, RAG, vLLM Serving이 연결되는 전체 구조',
+        chart: String.raw`flowchart TB
+    User([사용자]) --> FE[React Frontend<br/>Vite + Zustand + TanStack Query]
+    FE -->|REST API + SSE Streaming| BE[FastAPI Backend]
+
+    BE --> Auth[JWT + Google OAuth 2.0]
+    BE --> DB[(PostgreSQL<br/>12 Tables)]
+    BE --> Redis[(Redis Cache)]
+    BE --> S3[(AWS S3)]
+
+    BE --> Orch[LangGraph Orchestrator]
+    Orch --> Intent[Intent Classifier<br/>roberta-large ONNX]
+
+    Intent -->|conf >= 0.85| Router{Agent Router}
+    Intent -->|conf < 0.85| Clarify[Clarification Node]
+    Intent -->|복합 인텐트| Planner[Planner Agent<br/>v7_planner LoRA]
+    Clarify --> Router
+    Planner -->|단계별 분해| Router
+
+    Router -->|doc_retrieve<br/>doc_generate| DocAgent[문서 Agent]
+    Router -->|judgment| JudgeAgent[판단 Agent]
+    Router -->|schedule_add<br/>schedule_view<br/>approval_create| SchedAgent[일정 Agent]
+    Router -->|general| General[General Agent]
+
+    DocAgent --> RAG_Doc[RAG<br/>source=documents]
+    DocAgent --> vLLM
+
+    JudgeAgent --> RAG_Reg[RAG<br/>source=regulations]
+    JudgeAgent --> Guard[4중 보조장치]
+    JudgeAgent --> vLLM
+
+    SchedAgent --> Google[Google Workspace<br/>Calendar / Meet / Gmail / Tasks / Sheets]
+    SchedAgent --> Approval[결재/승인 엔진]
+    Approval -->|규정 검증| RAG_Reg
+
+    RAG_Doc --> HybridSearch[Hybrid Search<br/>BM25 + Vector + RRF]
+    RAG_Reg --> HybridSearch
+    HybridSearch --> Qdrant[(Qdrant<br/>Vector DB)]
+    HybridSearch --> Reranker[bge-reranker-v2-m3]
+
+    vLLM[vLLM Serving<br/>Kanana-1.5-8B + LoRA]
+
+    style DocAgent fill:#e8f4fd,stroke:#4a90d9
+    style JudgeAgent fill:#fdf2e8,stroke:#d9944a
+    style SchedAgent fill:#e8fdf0,stroke:#4ad97a
+    style Planner fill:#f0e8fd,stroke:#944ad9`,
+    },
+];
 
 const WORKFLOW_TOTAL_SLIDES = 30;
 function WorkflowSlideViewer() {
@@ -173,6 +226,7 @@ const TECH_STACK = {
 const SECTIONS = [
     { id: 'goal', label: 'Goal' },
     { id: 'strategy', label: 'Development Strategy' },
+    { id: 'architecture', label: 'Architecture' },
     { id: 'vllm-serving', label: 'vLLM Serving' },
     { id: 'evaluation', label: 'Evaluation' },
     { id: 'guardrail', label: '4중 보조장치' },
@@ -290,6 +344,26 @@ export default function WorkFlowAgent() {
                         ))}
                     </div>
                 </motion.div>
+
+                <ProjectFlowSection
+                    id="architecture"
+                    title="Architecture"
+                    subtitle="업무 요청을 Intent로 분류한 뒤, LangGraph가 전문 Agent와 RAG/LLM 모듈을 조합해 검증 가능한 응답으로 반환하는 구조입니다."
+                    accentColor="#5f7f95"
+                    variant={fadeInUp}
+                    charts={WORKFLOW_AGENT_CHARTS}
+                    steps={[
+                        { title: 'User Request', subtitle: '자연어 업무 요청', items: ['Regulation', 'Document', 'Schedule', 'General'] },
+                        { title: 'Intent Router', subtitle: '요청 유형 분류', items: ['KoELECTRA', 'F1 97.88%', 'Label smoothing'] },
+                        { title: 'LangGraph Agents', subtitle: '업무별 실행 흐름', items: ['Judgment', 'Document', 'Schedule', 'General'] },
+                        { title: 'RAG & sLLM', subtitle: '근거 검색과 생성', items: ['HyDE', 'BM25+Vector', 'RRF', 'vLLM+LoRA'] },
+                    ]}
+                    notes={[
+                        { label: 'Guardrail', value: '4중 검증으로 판단 정확도 37% -> 85%' },
+                        { label: 'Provider', value: 'GPT/Claude/vLLM 전환 시 호출부 수정 최소화' },
+                        { label: 'UX', value: 'SSE 스트리밍으로 긴 응답 대기감 완화' },
+                    ]}
+                />
 
                 {/* vLLM Serving */}
                 <motion.div id="vllm-serving" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

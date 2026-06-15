@@ -5,12 +5,65 @@ import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import CollapsibleSection from '../components/CollapsibleSection';
 import SectionDotNav from '../components/SectionDotNav';
+import ProjectFlowSection from '../components/ProjectFlowSection';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
 };
+
+const CRYPTO_VOLATILITY_CHARTS = [
+    {
+        title: 'Analysis Pipeline',
+        description: '2018.02~2023.11 BTC 데이터를 정제한 뒤 사전 검정, GARCH 계열 모델링, 예측 검증으로 이어지는 분석 흐름',
+        chart: String.raw`flowchart LR
+    subgraph Data["Data Collection"]
+        Price["BTC Price\n2018.02~2023.11"]
+        Volume["Trading Volume"]
+        FNG["Fear & Greed Index"]
+        Market["Market Indices"]
+    end
+
+    subgraph Prep["Preprocessing"]
+        Return["Log Return"]
+        Clean["Missing / Outlier Check"]
+        Split["Train / Test Split"]
+    end
+
+    subgraph Test["Pre-Tests"]
+        ADF["ADF Stationarity"]
+        ARCH["ARCH-LM Effect"]
+        Normality["Normality Check"]
+    end
+
+    subgraph Model["Modeling"]
+        GARCH["GARCH"]
+        TGARCH["TGARCH"]
+        HAR["HAR"]
+        HARTGARCH["HAR-TGARCH"]
+        HARX["HAR-TGARCH-X\nVolume + FNG"]
+    end
+
+    subgraph Eval["Validation"]
+        Info["AIC / BIC"]
+        Error["MSE / RMSE / MAE / MAPE"]
+        Explain["R2 + Coefficient Effect"]
+    end
+
+    Data --> Prep
+    Prep --> Test
+    Test --> Model
+    Model --> Eval
+    Eval --> Insight["외생변수와 HAR/TGARCH 계열의\n변동성 설명력 비교"]
+
+    style Data fill:#fef3c7,stroke:#f59e0b
+    style Prep fill:#fee2e2,stroke:#ef4444
+    style Test fill:#dbeafe,stroke:#3b82f6
+    style Model fill:#dcfce7,stroke:#22c55e
+    style Eval fill:#f3e8ff,stroke:#a855f7`,
+    },
+];
 
 // Bitcoin price data (sampled monthly from 2018-2023)
 const BTC_PRICE_DATA = [
@@ -90,6 +143,7 @@ const CRYPTO_CONTRIBUTIONS = [
 
 const SECTIONS = [
     { id: 'background', label: 'Research Background' },
+    { id: 'analysis-pipeline', label: 'Analysis Pipeline' },
     { id: 'price-trend', label: 'Bitcoin Price Trend' },
     { id: 'log-returns', label: 'Daily Log Returns' },
     { id: 'pretests', label: 'Statistical Pre-Tests' },
@@ -314,6 +368,26 @@ export default function CryptoVolatility() {
                         <p className="text-sm text-gray-600 leading-relaxed"><span className="font-bold text-gray-900">연구 동기:</span> 과거의 암호화폐 폭락 사태의 재발을 막기 위한 해답은 지나친 변동성에 있다고 판단하였고, 청년들의 안정적인 투자를 위해 최적의 변동성 예측 모형을 구현하고자 하였습니다.</p>
                     </div>
                 </motion.div>
+
+                <ProjectFlowSection
+                    id="analysis-pipeline"
+                    title="Analysis Pipeline"
+                    subtitle="암호화폐 변동성이 예측 가능한 구조를 갖는지 확인하기 위해 데이터 정제, 사전 검정, 후보 모델 비교, 외생변수 검증 순서로 분석했습니다."
+                    accentColor="#2b4fcb"
+                    variant={fadeInUp}
+                    charts={CRYPTO_VOLATILITY_CHARTS}
+                    steps={[
+                        { title: 'Data Collection', subtitle: '2018.02~2023.11 시계열', items: ['BTC price', 'Volume', 'FNG', 'Market indices'] },
+                        { title: 'Pre-Tests', subtitle: '모형 적용 가능성 확인', items: ['Log return', 'ADF', 'ARCH-LM', 'Normality'] },
+                        { title: 'Modeling', subtitle: '5개 GARCH 계열 비교', items: ['GARCH', 'TGARCH', 'HAR', 'HAR-TGARCH', 'HAR-TGARCH-X'] },
+                        { title: 'Validation', subtitle: '설명력과 예측력 비교', items: ['AIC/BIC', 'MSE/RMSE', 'MAPE/MAE', 'R2'] },
+                    ]}
+                    notes={[
+                        { label: 'Problem', value: '단일 모델로 변동성 리스크를 설명하기 어려움' },
+                        { label: 'Hypothesis', value: '거래량과 FNG가 변동성 예측력을 보완할 수 있음' },
+                        { label: 'Result', value: 'HAR/TGARCH 계열과 외생변수 효과를 비교 근거로 확보' },
+                    ]}
+                />
 
                 {/* BTC Price Chart */}
                 <motion.div id="price-trend" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>

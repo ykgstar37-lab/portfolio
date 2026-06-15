@@ -5,6 +5,7 @@ import FloatingNav from '../components/FloatingNav';
 import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
+import ProjectFlowSection from '../components/ProjectFlowSection';
 
 import cvMain from '../assets/cryptovol/cryptovol-main.png';
 import cvDarkmode from '../assets/cryptovol/cryptovol-darkmode.png';
@@ -36,6 +37,64 @@ const fadeInUp = {
 };
 
 const PRIMARY = '#2b4fcb';
+
+const CRYPTO_VOL_DASHBOARD_CHARTS = [
+    {
+        title: '시스템 아키텍처',
+        description: '실시간 시세 수집, 변동성 모델 계산, 캐싱, React 대시보드 렌더링의 서비스 구조',
+        chart: String.raw`flowchart LR
+    subgraph External["Market / External APIs"]
+        Binance["Binance WebSocket\n실시간 가격"]
+        CoinGecko["CoinGecko API\n과거 가격 · 메타데이터"]
+        FNG["Fear & Greed API"]
+        OpenAI["OpenAI GPT-4o-mini"]
+    end
+
+    subgraph Backend["FastAPI Backend"]
+        WSRelay["WebSocket Relay"]
+        REST["REST API\n13 endpoints"]
+        Scheduler["APScheduler\n주기 갱신"]
+        Cache["5min TTL Cache"]
+    end
+
+    subgraph Model["Model Layer"]
+        GARCH["5 GARCH Models"]
+        Accuracy["60-day Rolling RMSE"]
+        MonteCarlo["Monte Carlo\n10,000 scenarios"]
+        Signal["FNG + Volatility + Momentum\nTrading Signal"]
+    end
+
+    subgraph Frontend["React Dashboard"]
+        Chart["Volatility Chart"]
+        Portfolio["Portfolio Simulator"]
+        Briefing["AI Market Briefing"]
+        Alert["Price Alert / Report"]
+    end
+
+    Binance --> WSRelay
+    CoinGecko --> REST
+    FNG --> REST
+    REST --> Cache
+    Scheduler --> Cache
+    Cache --> GARCH
+    Cache --> Accuracy
+    GARCH --> Signal
+    GARCH --> MonteCarlo
+    OpenAI --> Briefing
+    WSRelay --> Frontend
+    REST --> Frontend
+    Model --> Frontend
+    Frontend --> Chart
+    Frontend --> Portfolio
+    Frontend --> Briefing
+    Frontend --> Alert
+
+    style External fill:#fef3c7,stroke:#f59e0b
+    style Backend fill:#dbeafe,stroke:#3b82f6
+    style Model fill:#dcfce7,stroke:#22c55e
+    style Frontend fill:#f3e8ff,stroke:#a855f7`,
+    },
+];
 
 const FEATURES = [
     {
@@ -126,6 +185,7 @@ const TECH_STACK = {
 const SECTIONS = [
     { id: 'goal', label: 'Goal' },
     { id: 'problem', label: 'Problem' },
+    { id: 'architecture', label: 'Architecture' },
     { id: 'origin', label: 'Origin Story' },
     { id: 'decisions', label: 'Technical Decisions' },
     { id: 'evaluation', label: 'Evaluation' },
@@ -317,6 +377,26 @@ export default function CryptoVolDashboard() {
                         </div>
                     </div>
                 </motion.div>
+
+                <ProjectFlowSection
+                    id="architecture"
+                    title="Architecture"
+                    subtitle="Jupyter 분석 코드를 실시간 서비스로 바꾸기 위해 데이터 수집, 모델 적합, 캐싱, 화면 렌더링을 분리했습니다."
+                    accentColor={PRIMARY}
+                    variant={fadeInUp}
+                    charts={CRYPTO_VOL_DASHBOARD_CHARTS}
+                    steps={[
+                        { title: 'Market Data', subtitle: '실시간/과거 시세 수집', items: ['Binance WS', 'CoinGecko API', 'BTC/ETH/SOL'] },
+                        { title: 'FastAPI Backend', subtitle: '모델 계산과 API 제공', items: ['13 REST', '1 WebSocket', 'APScheduler'] },
+                        { title: 'Model Layer', subtitle: '비용 큰 연산 격리', items: ['5 GARCH models', '5min TTL cache', 'Monte Carlo 10K'] },
+                        { title: 'React Dashboard', subtitle: '투자 의사결정 화면', items: ['Volatility chart', 'Signal', 'Portfolio', 'AI briefing'] },
+                    ]}
+                    notes={[
+                        { label: 'Bottleneck', value: 'GARCH 적합 수백ms -> 5분 TTL 캐싱' },
+                        { label: 'Reliability', value: '모형별 실패 격리로 전체 응답 장애 방지' },
+                        { label: 'Deployment', value: 'Render backend + Vercel frontend' },
+                    ]}
+                />
 
                 {/* Origin Story */}
                 <motion.div id="origin" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
