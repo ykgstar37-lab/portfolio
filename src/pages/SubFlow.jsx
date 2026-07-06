@@ -6,6 +6,8 @@ import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
 import ProjectFlowSection from '../components/ProjectFlowSection';
+import webDemo from '../assets/subflow/subflow_web.gif';
+import mobileDemo from '../assets/subflow/subflow_mobile.gif';
 
 const PRIMARY = '#14b8a6';
 const SECONDARY = '#2563eb';
@@ -28,26 +30,26 @@ const chips = ['FastAPI','React 19','TypeScript','React Native','Expo','PostgreS
 
 // 문제 → 의사결정 → 해결·결과 (PORTFOLIO.md 5개 서사, 실제 GitHub 구현 기준)
 const narratives = [
-  ['외부 구독 연동의 현실적 한계 → 카탈로그 기반으로 전환',
-   '카드·앱스토어·카카오 결제 내역을 자동으로 긁어와 구독을 채워주는 것이 "구독 관리 앱"의 이상. 하지만 이게 실제로 가능한지 검증이 필요했다.',
-   '플랫폼별 연동 가능성을 직접 조사(INTEGRATION_RESEARCH). 앱스토어·플레이스토어·카카오는 제3자에게 전체 구독 목록 API를 주지 않고, 카드 내역은 마이데이터(금융위 인가)가 있어야 접근 가능. 남는 경로는 Gmail 파싱/IAP뿐 → 개인 범위 초과. 자동 수집을 포기하고 사전 구축 카탈로그에서 선택하는 방식으로 방향 전환.',
-   '인기 서비스 83종(12카테고리)·요금제를 DB 카탈로그로 구축 → 검색 → 서비스 선택 → 요금제 선택만으로 등록. 자동 수집 대신 환율·중복·예산·가격 인상 알림 등 "관리형 인사이트"로 제품 가치를 재정의.'],
-  ['수동 입력 UX 문제 → 카탈로그 + 요금제 모델로 재설계',
-   '초기 버전은 서비스명·금액·결제주기를 직접 타이핑하는 방식. 오타·표기 불일치로 중복 감지·지출 분석 같은 기능의 데이터 품질이 떨어졌다.',
-   '기존 인증·분석·알림 코드는 유지하면서 services/service_plans 테이블을 추가하고 subscriptions에 service_id·plan_id FK를 연결하는 점진적 마이그레이션 설계(CATALOG_MIGRATION_PLAN, Alembic 리비전 순차 적용). 전면 재작성이 아닌 스키마 확장으로 리스크 최소화.',
-   '정규화된 데이터 위에서 카테고리별 중복 감지, 가격 인상 이력(plan_price_history), 로고·해지 링크가 정확히 동작. 입력이 "타이핑"에서 "선택"으로 바뀌어 입력 마찰과 데이터 오류를 동시에 감소.'],
-  ['웹·모바일 코드 이원화 위험 → API-first 단일 백엔드',
-   '웹(React)과 모바일(React Native)을 모두 지원해야 하는데, 비즈니스 로직을 양쪽에 중복 구현하면 유지보수가 두 배가 된다.',
-   '설계 초기부터 API-first 원칙. 지출 분석·중복 감지·환율 변환 등 모든 도메인 로직을 FastAPI 서비스 계층(8개 service 모듈)에 두고, 웹·모바일은 /api/v1을 소비하는 얇은 클라이언트로만 유지.',
-   '웹과 모바일이 동일한 백엔드·동일한 계약(JWT + Axios 인터셉터)을 공유 → 로직 변경 시 한 곳만 수정. 모바일 목업 폴백을 제거하고 실데이터만 렌더링해 두 클라이언트 동작을 일치.'],
-  ['"설정만 있고 안 오는 알림" → 개인화 실발송 파이프라인',
-   '알림 설정 UI는 있었지만 실제로 발송되는 로직이 없었다(TODO 명시). 외화 구독은 환율에 따라 실질 부담이 달라지는데 사용자가 이를 체감하기 어려웠다.',
-   'Frankfurter 환율 API로 외화 구독을 KRW로 자동 변환하고, "결제 N일 전 / 환율 급등 / 예산 초과 / 중복 구독 / 가격 인상"을 notification_settings 기반으로 개인화. APScheduler로 주기 발송하고 발송 이력을 notifications 인박스에 적재.',
-   '단순 CRUD를 넘어 선제적으로 돈 새는 지점을 알려주는 서비스로 차별화. 사용자별 설정으로 스팸이 아닌 유의미한 알림만 전달.'],
-  ['개인 프로젝트라도 인증은 프로덕션 기준으로 → 보안 하드닝',
-   '로그인·회원가입은 흔한 공격 표면(무차별 대입, 사용자 열거, 시크릿 노출). 데모 수준이 아니라 실제 배포 가능한 수준으로 만들고 싶었다.',
-   '사용자 열거 방지(로그인 실패 401 통일 + 타이밍 완화), slowapi rate limiting(로그인 10회/분·가입 5회/분), 비밀번호 강도 검증(8자+영문+숫자), 시크릿 환경변수화(.env.example, 기본값 사용 시 기동 경고), 프록시 스푸핑 대비(TRUST_PROXY 기본 off).',
-   '보안 동작에 맞춰 테스트를 갱신하고 nginx 컨테이너 + CORS/DB 비밀번호 환경변수화로 운영 배포 구성까지 완료. "돌아가는 데모"가 아니라 배포를 전제로 한 설계.'],
+  ['외부 구독 연동의 한계 → 카탈로그 기반 전환',
+   '카드·앱스토어 결제 내역을 자동으로 긁어와 구독을 채우는 게 이상이지만, 실제 가능한지 검증이 필요했다.',
+   '플랫폼별 API를 직접 조사 → 앱스토어·카드사 모두 제3자에게 구독 목록을 주지 않음(카드는 마이데이터 인가 필요). 자동 수집을 포기하고 카탈로그 선택 방식으로 전환.',
+   '83종(12카테고리) 카탈로그 구축 → 검색·선택만으로 등록. 환율·중복·예산 알림 등 관리형 인사이트로 가치 재정의.'],
+  ['수동 입력 UX → 카탈로그 + 요금제 재설계',
+   '서비스명을 직접 타이핑하는 방식이라, 오타·표기 불일치로 중복 감지·분석 품질이 떨어졌다.',
+   '기존 코드는 유지하고 services/service_plans 테이블을 추가해 FK로 연결하는 점진적 마이그레이션. 전면 재작성 대신 스키마 확장.',
+   '입력이 "타이핑→선택"으로 바뀌어 데이터 오류 감소. 가격 이력·중복 감지가 정확히 동작.'],
+  ['웹·모바일 이원화 위험 → API-first 백엔드',
+   '웹·모바일 로직을 양쪽에 중복 구현하면 유지보수가 두 배가 된다.',
+   '모든 도메인 로직을 FastAPI 서비스 계층에 두고, 두 클라이언트는 /api/v1만 소비하는 얇은 계층으로 유지.',
+   '동일 백엔드·계약(JWT+Axios) 공유 → 로직 변경 시 한 곳만 수정.'],
+  ['안 오는 알림 → 개인화 실발송 파이프라인',
+   '알림 설정 UI만 있고 실제 발송 로직이 없었다(TODO). 외화 부담도 체감하기 어려웠다.',
+   'Frankfurter로 KRW 변환 + 결제·환율·예산·중복·가격 인상을 설정 기반으로 개인화, APScheduler로 발송.',
+   '단순 CRUD를 넘어 돈 새는 지점을 선제 안내. 스팸이 아닌 유의미한 알림만 전달.'],
+  ['개인 프로젝트라도 인증은 프로덕션 기준',
+   '로그인·회원가입은 무차별 대입·사용자 열거 등 공격 표면. 데모가 아닌 배포 수준으로.',
+   '401 통일(열거 방지) + slowapi rate limit + 비밀번호 강도 검증 + 시크릿 환경변수화 + 프록시 스푸핑 대비.',
+   'nginx 컨테이너 + 환경변수화로 배포 구성 완료. 배포를 전제로 한 설계.'],
 ];
 
 const contributions = [
@@ -64,7 +66,6 @@ const challenges = [
   ['뉴스 AI 요약의 비용·지연','기사마다 OpenAI 요약을 호출하면 비용과 응답 지연이 커짐','news_cache 테이블로 요약 결과를 캐싱해 동일 기사 재요약 제거','중복 호출 없이 즉시 응답'],
 ];
 
-function Mockup(){return <div className="rounded-[28px] border border-slate-200 bg-white p-3 shadow-xl shadow-slate-200/70"><div className="rounded-[22px] bg-slate-950 p-5 text-white"><div className="mb-5 flex items-center justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-widest text-teal-300">SubFlow Dashboard</p><p className="mt-1 text-lg font-black">KRW 128,400 / month</p></div><div className="rounded-full bg-teal-400 px-3 py-1 text-[10px] font-black text-slate-950">D-3 billing</div></div><div className="grid grid-cols-3 gap-2">{[['Active','12','bg-cyan-400'],['Overlap','2','bg-indigo-400'],['Trial','1','bg-teal-300']].map(([a,b,c])=><div key={a} className="rounded-2xl bg-white/10 p-3"><p className="text-[10px] font-bold text-slate-400">{a}</p><p className="mt-2 text-2xl font-black">{b}</p><div className={'mt-3 h-1.5 rounded-full '+c}></div></div>)}</div><div className="mt-3 grid grid-cols-5 items-end gap-2 rounded-2xl bg-white/10 p-4">{[30,58,42,74,50].map((h,i)=><div key={i} className="rounded-full bg-gradient-to-t from-teal-300 to-sky-300" style={{height:h}} />)}</div></div></div>}
 
 function DrawerTabs(){return [{label:'About',content:<div className="space-y-4"><p className="rounded-2xl p-6 text-sm leading-relaxed text-white" style={{background:'linear-gradient(135deg,#14b8a6,#2563eb)',wordBreak:'keep-all'}}>흩어진 구독 지출을 Web/Mobile에서 한 번에 관리하는 플랫폼. 결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고 83종(12카테고리) 서비스 카탈로그 선택 방식으로 전환해, 총액·결제일·예산 초과·중복·환율 같은 관리형 인사이트에 집중했습니다. 기획·설계·웹/모바일·백엔드·배포를 풀스택 단독으로 담당.</p><div className="grid grid-cols-2 sm:grid-cols-4 gap-3">{stats.map(([v,l,s])=><div key={l} className="bg-gray-50 p-4 rounded-xl text-center"><p className="text-xl font-black" style={{color:PRIMARY}}>{v}</p><p className="text-[10px] font-bold uppercase text-gray-400">{l}</p><p className="text-[10px] text-gray-500">{s}</p></div>)}</div></div>},{label:'Tech Stack',content:<div className="flex flex-wrap gap-2">{chips.concat(['SQLAlchemy 2.0(async)','Alembic','Pydantic','Docker','slowapi','APScheduler','OpenAI','Frankfurter API']).map(x=><span key={x} className="px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-sm">{x}</span>)}</div>},{label:'API',content:<div className="space-y-3">{['Auth: POST /auth/register, POST /auth/login','Services: GET /services, GET /services/{id}/plans','Subscriptions: GET /subscriptions, POST /subscriptions/from-catalog','Analytics: GET /analytics/overview, GET /analytics/spending-trend','Categories: GET /categories','Notifications: GET /notifications, PUT /notifications/settings','News: GET /news, POST /news/summary (AI 요약)'].map(x=><div key={x} className="rounded-xl border border-gray-100 bg-white p-4 text-sm text-gray-600"><span className="font-bold" style={{color:PRIMARY}}>{x.split(':')[0]}</span>{':'+x.split(':').slice(1).join(':')}</div>)}</div>},{label:'DB Schema',content:<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{['users','categories','services','service_plans','plan_price_history','subscriptions','subscription_history','payment_history','notification_settings','notifications','news_cache'].map(x=><div key={x} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm"><p className="font-mono text-sm font-bold" style={{color:SECONDARY}}>{x}</p></div>)}</div>}];}
 
@@ -75,21 +76,50 @@ export default function SubFlow(){
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <motion.button onClick={()=>navigate('/projects')} className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition mb-12 group" initial={{opacity:0}} animate={{opacity:1}}>← All Projects</motion.button>
 
-      <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mb-16 grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-8 items-center">
-        <div>
-          <div className="flex flex-wrap gap-3 mb-4">
-            <span className="text-[10px] font-bold px-3 py-1 bg-teal-50 text-teal-800 rounded-full uppercase">Full-Stack · Solo</span>
-            <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full uppercase">2026.03 - 2026.04</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-4" style={{fontFamily:"'Syne', sans-serif",color:PRIMARY}}>SubFlow</h1>
-          <p className="text-xl font-semibold mb-5" style={{color:SECONDARY}}>구독 지출을 한 화면에서 관리하는 Web + Mobile 풀스택 플랫폼</p>
-          <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하는 구독 관리 플랫폼입니다. 결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고, 83종(12카테고리) 서비스 카탈로그, 11개 DB 테이블, 7종 API 라우터로 구독 등록, 지출 분석, 중복 감지, 환율 추적, 가격 인상 알림, 뉴스 AI 요약을 하나의 흐름으로 묶었습니다. 기획·설계·웹/모바일·백엔드·배포를 풀스택 단독으로 담당했습니다.</p>
-          <div className="flex gap-3">
-            <a href="https://github.com/hyebinhy/SubFlow" target="_blank" rel="noopener noreferrer" className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-full">GitHub</a>
-            <button onClick={()=>document.getElementById('screenshots')?.scrollIntoView({behavior:'smooth'})} className="px-4 py-2 text-white text-sm font-medium rounded-full" style={{backgroundColor:PRIMARY}}>Preview</button>
+      {/* Hero */}
+      <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mb-20">
+        <div className="flex items-center gap-3 mb-4 flex-wrap">
+          <span className="text-[10px] font-bold px-3 py-1 bg-teal-50 text-teal-800 rounded-full tracking-wider uppercase">Full-Stack · Solo</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Web + Mobile</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 - 2026.04</span>
+        </div>
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{fontFamily:"'Syne', sans-serif",color:PRIMARY}}>SubFlow</h1>
+        <p className="text-xl font-semibold mb-6 tracking-tight" style={{color:SECONDARY}}>구독 지출을 한 화면에서 관리하는 Web + Mobile 풀스택 플랫폼</p>
+        <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고, 방향을 바꿔 83종(12카테고리) 서비스 카탈로그 기반으로 재설계했습니다. React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하도록 API-first로 설계해, 11개 DB 테이블·7개 라우터 위에서 구독 등록·지출 분석·중복 감지·환율 추적·개인화 알림·뉴스 AI 요약을 하나의 흐름으로 묶었습니다.</p>
+        <div className="flex gap-3">
+          <a href="https://github.com/hyebinhy/SubFlow" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
+            GitHub
+          </a>
+          <button onClick={()=>document.getElementById('screenshots')?.scrollIntoView({behavior:'smooth'})} className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-full transition" style={{backgroundColor:'#e27500'}}>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+            Demo
+          </button>
+        </div>
+      </motion.div>
+
+      {/* README-style Overview / Role / Skills */}
+      <motion.div id="overview" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          <div className="p-6 sm:p-8 space-y-6">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{color:PRIMARY}}>Overview</p>
+              <p className="text-gray-700 leading-relaxed" style={{wordBreak:'keep-all'}}>흩어진 개인 구독(Netflix·Spotify·ChatGPT 등)을 한곳에서 관리하고, 지출을 분석하고, 결제일·환율·중복 구독을 알려주는 Web + Mobile 풀스택 서비스입니다. 자동 수집이 불가능함을 사전 조사로 확인한 뒤 83종(12카테고리) 카탈로그 선택 방식으로 방향을 전환하고, 총액·결제일·예산·중복·환율 같은 관리형 인사이트에 집중했습니다.</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
+              <p className="text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>기획·설계부터 React 웹 대시보드, Expo 모바일, FastAPI 백엔드(11개 테이블·7개 라우터), 배포까지 풀스택을 단독으로 담당했습니다. 실현 가능성 조사, 점진적 스키마 마이그레이션, API-first 설계, 개인화 알림 파이프라인, 프로덕션 기준 보안 하드닝을 직접 결정하고 구현했습니다.</p>
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
+              <div className="flex flex-wrap gap-1.5">
+                {['FastAPI','React 19','TypeScript','React Native','Expo','PostgreSQL','SQLAlchemy 2.0','Zustand','JWT','Docker','nginx','OpenAI'].map(t=>(
+                  <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
-        <Mockup />
       </motion.div>
 
       <Section id="goal" title="Goal" sub="구독 관리를 기능 목록이 아니라 행동 지표 중심으로 재구성">
@@ -103,7 +133,7 @@ export default function SubFlow(){
 
       {/* Approach — 문제 → 의사결정 → 해결·결과 (핵심 섹션) */}
       <motion.div id="decisions" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-2" style={{fontFamily:"'Syne', sans-serif"}}>Approach</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-2 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Approach</h2>
         <p className="text-gray-500 mb-8">문제 → 의사결정 → 해결·결과 · 실제 구현 기준 5개 의사결정 스토리</p>
         <div className="space-y-5">
           {narratives.map(([t,p,d,r],i)=>(
@@ -123,26 +153,44 @@ export default function SubFlow(){
       </motion.div>
 
       <motion.div id="evaluation" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{fontFamily:"'Syne', sans-serif"}}>Results</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Results</h2>
         <p className="text-gray-500 mb-8">구현 범위와 검증 가능한 산출물 (실제 레포 기준)</p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">{stats.map(([v,l,s])=><div key={l} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"><p className="text-3xl font-black" style={{color:PRIMARY}}>{v}</p><p className="text-xs font-bold uppercase text-gray-400 mt-1">{l}</p><p className="text-xs text-gray-500 mt-2">{s}</p></div>)}</div>
       </motion.div>
 
       <motion.div id="contributions" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-8" style={{fontFamily:"'Syne', sans-serif"}}>My Contributions</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-8 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>My Contributions</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">{contributions.map(([t,d],i)=><div key={t} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex gap-5"><div className="w-12 h-12 rounded-xl text-white flex items-center justify-center shrink-0 text-lg font-bold" style={{backgroundColor:i%2?SECONDARY:PRIMARY}}>{i+1}</div><div><h3 className="text-base font-bold text-gray-900 mb-2">{t}</h3><p className="text-sm text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p></div></div>)}</div>
       </motion.div>
 
       <motion.div id="challenges" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{fontFamily:"'Syne', sans-serif"}}>Technical Challenges</h2>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Technical Challenges</h2>
         <p className="text-gray-500 mb-8">구현 단계에서 마주친 기술적 문제와 해결</p>
         <div className="space-y-4">{challenges.map(([t,p,s,r],i)=><div key={t} className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm"><h3 className="font-bold mb-3">{i+1}. {t}</h3><div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs"><Box label="Problem" text={p}/><Box label="Solution" text={s}/><Box label="Result" text={r} good/></div></div>)}</div>
       </motion.div>
 
       <motion.div id="screenshots" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{fontFamily:"'Syne', sans-serif"}}>Interface Preview</h2>
-        <p className="text-gray-500 mb-8">SubFlow 포인트 색상: teal + sky blue + indigo</p>
-        <Mockup />
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Demo</h2>
+        <p className="text-gray-500 mb-8">실제 화면 시연 — Web 우선, Mobile 동일 API 공유</p>
+        {/* Web (primary) */}
+        <div className="mb-8">
+          <div className="flex items-center gap-2 mb-3"><span className="text-[10px] font-bold px-2.5 py-1 rounded-full text-white" style={{backgroundColor:PRIMARY}}>WEB</span><span className="text-sm font-semibold text-gray-500">React 대시보드 · 지출 분석 · 알림</span></div>
+          <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-lg bg-slate-950">
+            <img src={webDemo} alt="SubFlow Web 시연" className="w-full block" loading="lazy" />
+          </div>
+        </div>
+        {/* Mobile */}
+        <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+          <div className="w-full sm:w-auto flex justify-center">
+            <div className="rounded-[28px] overflow-hidden border-4 border-slate-900 shadow-xl max-w-[260px] bg-slate-950">
+              <img src={mobileDemo} alt="SubFlow Mobile 시연" className="w-full block" loading="lazy" />
+            </div>
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-3"><span className="text-[10px] font-bold px-2.5 py-1 rounded-full text-white" style={{backgroundColor:INDIGO}}>MOBILE</span><span className="text-sm font-semibold text-gray-500">Expo · React Native</span></div>
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>웹과 동일한 <b className="text-gray-900">FastAPI /api/v1 백엔드</b>를 공유합니다. 목업 폴백을 제거하고 실데이터만 렌더링해, 총액·다음 결제일·중복·환율 같은 지표를 모바일에서도 같은 계약으로 보여줍니다.</p>
+          </div>
+        </div>
       </motion.div>
 
       <Section id="retrospective" title="Retrospective" sub="프로젝트를 진행하며 얻은 판단 기준">
@@ -161,7 +209,7 @@ export default function SubFlow(){
   </div>;
 }
 
-function PDR({label,color,bg,text}){return <div className={bg+' rounded-xl p-4'}><p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{color}}>{label}</p><p className="text-xs sm:text-sm text-gray-700 leading-relaxed" style={{wordBreak:'keep-all'}}>{text}</p></div>}
-function Section({id,title,sub,children}){return <motion.div id={id} className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}><h2 className="text-2xl sm:text-3xl font-bold mb-3" style={{fontFamily:"'Syne', sans-serif"}}>{title}</h2>{sub&&<p className="text-gray-500 mb-6">{sub}</p>}<div className="bg-white p-6 sm:p-8 rounded-2xl border-l-4 shadow-sm space-y-4 text-gray-700 leading-relaxed" style={{borderColor:PRIMARY,wordBreak:'keep-all'}}>{children}</div></motion.div>}
-function Cards({id,title,items}){return <motion.div id={id} className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}><h2 className="text-2xl sm:text-3xl font-bold mb-8" style={{fontFamily:"'Syne', sans-serif"}}>{title}</h2><div className="grid grid-cols-1 md:grid-cols-2 gap-4">{items.map(([t,d],i)=><div key={t} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6"><p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{color:i%2?SECONDARY:PRIMARY}}>0{i+1}</p><h3 className="font-bold text-gray-900 mb-2">{t}</h3><p className="text-sm text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p></div>)}</div></motion.div>}
+function PDR({label,color,bg,text}){return <div className={bg+' rounded-xl p-4 sm:p-5'}><p className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{color}}>{label}</p><p className="text-sm text-gray-700 leading-relaxed" style={{wordBreak:'keep-all'}}>{text}</p></div>}
+function Section({id,title,sub,children}){return <motion.div id={id} className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}><h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>{title}</h2>{sub&&<p className="text-gray-500 mb-6">{sub}</p>}<div className="bg-white p-6 sm:p-8 rounded-2xl border-l-4 shadow-sm space-y-4 text-gray-700 leading-relaxed" style={{borderColor:PRIMARY,wordBreak:'keep-all'}}>{children}</div></motion.div>}
+function Cards({id,title,items}){return <motion.div id={id} className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}><h2 className="text-2xl sm:text-3xl font-bold mb-8 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>{title}</h2><div className="grid grid-cols-1 md:grid-cols-2 gap-4">{items.map(([t,d],i)=><div key={t} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6"><p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{color:i%2?SECONDARY:PRIMARY}}>0{i+1}</p><h3 className="font-bold text-gray-900 mb-2">{t}</h3><p className="text-sm text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p></div>)}</div></motion.div>}
 function Box({label,text,good}){return <div className={(good?'bg-emerald-50':'bg-slate-50')+' rounded-xl p-3'}><p className={(good?'text-emerald-600':'text-slate-500')+' text-[10px] font-bold uppercase mb-1'}>{label}</p><p className="text-gray-700 leading-relaxed">{text}</p></div>}

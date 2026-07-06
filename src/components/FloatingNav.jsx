@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SiNotion, SiGithub } from 'react-icons/si';
+
+const NOTION_URL = 'https://www.notion.so/Portfolio-0f5bec2d3d5183c59c0781ef20c9988a?source=copy_link';
+const GITHUB_URL = 'https://github.com/ykgstar37-lab';
 
 export default function FloatingNav() {
     const navigate = useNavigate();
@@ -45,18 +49,29 @@ export default function FloatingNav() {
                     Projects
                 </button>
 
-                {/* Study */}
-                <button
-                    onClick={() => {
-                        navigate('/');
-                        setTimeout(() => {
-                            document.getElementById('research')?.scrollIntoView({ behavior: 'smooth' });
-                        }, 100);
-                    }}
-                    className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-all"
+                <div className="w-px h-5 bg-white/10 mx-0.5 sm:mx-1" />
+
+                {/* Notion */}
+                <a
+                    href={NOTION_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                    title="Notion"
                 >
-                    Study
-                </button>
+                    <SiNotion className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
+                </a>
+
+                {/* GitHub */}
+                <a
+                    href={GITHUB_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                    title="GitHub"
+                >
+                    <SiGithub className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
+                </a>
 
                 <div className="w-px h-5 bg-white/10 mx-0.5 sm:mx-1" />
 
