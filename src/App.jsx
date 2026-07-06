@@ -11,6 +11,7 @@ import thumbCryptoVol from './assets/cryptovol.gif';
 import thumbSeoulCulture from './assets/seoulculture.gif';
 import thumbPymate from './assets/pymate.gif';
 import thumbWorkflow from './assets/workflow.gif';
+import thumbSubFlow from './assets/subflow-thumb.svg';
 
 import CryptoVolatility from './pages/CryptoVolatility';
 import SeoulCulture from './pages/SeoulCulture';
@@ -18,6 +19,7 @@ import PyMate from './pages/PyMate';
 import WorkFlowAgent from './pages/WorkFlowAgent';
 import CryptoVolDashboard from './pages/CryptoVolDashboard';
 import SeoulCultureMap from './pages/SeoulCultureMap';
+import SubFlow from './pages/SubFlow';
 
 /* ── Animation variants ── */
 const fadeUp = {
@@ -163,8 +165,9 @@ const ALL_PROJECTS = [
     { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, Intent 라우팅으로 AI 호출 비용을 85% 절감.', overview: '서울시 2,500+ 문화시설 데이터를 고객 요구 조건(지역/목적/접근성)에 맞춰 검색·추천하는 데이터 서비스. SQL/벡터 검색/SSE를 조합해 비용과 응답 품질을 제어.', role: 'RESTful API 설계(11개 엔드포인트), Intent 라우팅, SQL+Vector 검색 연계, SSE 스트리밍, 비용 최적화', tech: ['FastAPI', 'React', 'SQLite', 'Vector DB', 'SSE'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
     { id: '03', title: 'WorkFlow Agent (듀드)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.04', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70%→97%, 판단 정확도 37%→85%. 공통 LLM 모듈로 provider 전환 설정 1줄.', overview: '사내 업무 자동화를 위한 LLM 시스템. 고객사 보안 환경을 가정해 프라이빗 sLLM 서빙, 출력 검증, SSE 응답, PostgreSQL/JWT 기반 백엔드 흐름을 설계.', role: 'vLLM 서빙 인프라, 공통 LLM provider 모듈, Guardrail 검증, LoRA 품질 실험, 운영 안정성 지표 관리', tech: ['vLLM', 'FastAPI', 'PostgreSQL', 'Docker', 'SSE'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
     { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. Precision 0.83→0.97(+14.4%) 개선 후 Flask→Django, AWS EC2+Nginx+Gunicorn 배포로 운영 구조 표준화.', overview: '교육 자료 기반 RAG 튜터를 MVP에서 프로덕션 구조로 확장한 팀 프로젝트. 인증/ORM/정적파일/배포 흐름을 Django와 AWS 환경으로 정리.', role: 'Flask→Django 마이그레이션, AWS EC2 배포, Nginx+Gunicorn 502 디버깅, RAGAS 평가, Quiz API', tech: ['Django', 'AWS EC2', 'Nginx', 'Gunicorn', 'Qdrant'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
-    { id: '05', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', overview: '암호화폐 시장의 변동성을 GARCH 계열 5개 모형으로 비교 분석한 팀 연구 프로젝트.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, HAR-TGARCH-X 최적 모형 선정, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
-    { id: '06', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', overview: '서울시 25개 자치구 관광시설 데이터를 군집분석하여 외국인 관광객에게 목적에 맞는 지역구를 추천하는 연구 프로젝트.', role: '공공데이터 전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 시각화 및 발표', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
+    { id: '05', title: 'SubFlow — Subscription Manager', category: 'Team', domain: 'Dev', date: '2026.03 — 2026.04', description: '흩어진 구독 지출 파악 문제 → 자동 수집이 불가능함을 사전 조사로 확인하고 카탈로그 기반 Web/Mobile/FastAPI 공유 구조로 전환. 11개 DB 테이블, 7종 API 라우터, 83종(12카테고리) 서비스 카탈로그로 지출 분석·중복 감지·환율 추적·뉴스 AI 요약까지 통합.', overview: 'React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하는 구독 관리 플랫폼. 총액, 다음 결제일, 예산 초과, 중복 구독처럼 반복 사용자가 바로 행동할 지표를 우선 설계.', role: '기획·설계·웹/모바일 프론트·FastAPI 백엔드·배포를 풀스택 단독 담당, PostgreSQL 11테이블 스키마, JWT 인증, 지출 분석/알림 도메인', tech: ['FastAPI', 'React', 'React Native', 'PostgreSQL', 'Zustand'], github: 'https://github.com/hyebinhy/SubFlow', link: '/projects/subflow', thumbnail: thumbSubFlow, badge: 'Team', demoHash: 'screenshots' },
+    { id: '06', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', overview: '암호화폐 시장의 변동성을 GARCH 계열 5개 모형으로 비교 분석한 팀 연구 프로젝트.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, HAR-TGARCH-X 최적 모형 선정, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
+    { id: '07', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', overview: '서울시 25개 자치구 관광시설 데이터를 군집분석하여 외국인 관광객에게 목적에 맞는 지역구를 추천하는 연구 프로젝트.', role: '공공데이터 전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 시각화 및 발표', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
 ];
 const DEV_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Dev');
 const STAT_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Data');
@@ -439,7 +442,7 @@ function HomePage() {
 
     const socials = [
         { href: 'https://github.com/ykgstar37-lab', title: 'GitHub', icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg> },
-        { href: '#', title: 'Email', onClick: handleCopyEmail, icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> },
+        { href: 'mailto:yge0307@gmail.com', title: 'Email', icon: <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> },
         { href: 'https://www.notion.so/Portfolio-0f5bec2d3d5183c59c0781ef20c9988a?source=copy_link', title: 'Notion', icon: <SiNotion className="w-5 h-5" /> },
         { href: 'https://www.linkedin.com/in/%EA%B2%BD%EC%9D%80-%EC%9C%A4-7218b73b1/', title: 'LinkedIn', icon: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg> },
     ];
@@ -778,11 +781,11 @@ function HomePage() {
                             ))}
                             <a href="https://blog.naver.com/yooonstar" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors px-2 sm:px-3 py-1.5 rounded-lg hover:bg-white/5">Blog</a>
                         </div>
-                        <div className="cursor-pointer" onClick={handleCopyEmail}>
+                        <a href="mailto:yge0307@gmail.com" className="cursor-pointer no-underline" aria-label="Email">
                             <p className="text-3xl sm:text-4xl md:text-7xl font-light tracking-tighter hover:text-gray-500 transition-colors" style={{ fontFamily: "'Syne', sans-serif" }}>
-                                hello@yge
+                                yge0307@gmail.com
                             </p>
-                        </div>
+                        </a>
                     </div>
                     <div className="flex justify-between items-center mt-12 sm:mt-20 pt-8 border-t border-white/5 text-xs text-gray-600">
                         <p>Yoon Gyeongeun</p>
@@ -814,6 +817,7 @@ export default function App() {
                 <Route path="/projects/workflow-agent" element={<WorkFlowAgent />} />
                 <Route path="/projects/crypto-vol-dashboard" element={<CryptoVolDashboard />} />
                 <Route path="/projects/seoul-culture-map" element={<SeoulCultureMap />} />
+                <Route path="/projects/subflow" element={<SubFlow />} />
             </Routes>
         </BrowserRouter>
     );
