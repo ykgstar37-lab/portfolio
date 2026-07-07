@@ -6,7 +6,8 @@ import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
 import ProjectFlowSection from '../components/ProjectFlowSection';
-import webDemo from '../assets/subflow/subflow_web.gif';
+import webDemo from '../assets/subflow/subflow_web.mp4';
+import webPoster from '../assets/subflow/subflow_web.png';
 import mobileDemo from '../assets/subflow/subflow_mobile.gif';
 
 const PRIMARY = '#14b8a6';
@@ -187,35 +188,35 @@ export default function SubFlow(){
         <div className="mb-8">
           <div className="flex items-center gap-2 mb-3"><span className="text-[10px] font-bold px-2.5 py-1 rounded-full text-white" style={{backgroundColor:PRIMARY}}>WEB</span><span className="text-sm font-semibold text-gray-500">React 대시보드 · 지출 분석 · 알림</span></div>
           <div className="rounded-2xl overflow-hidden border border-gray-100 shadow-lg bg-slate-950">
-            <img src={webDemo} alt="SubFlow Web 시연" className="w-full block" loading="lazy" />
+            <video src={webDemo} poster={webPoster} autoPlay muted loop playsInline className="w-full block" />
           </div>
         </div>
-        {/* Mobile */}
-        <div className="flex flex-col sm:flex-row gap-6 items-center sm:items-start">
-          <div className="w-full sm:w-auto flex justify-center">
+        {/* Mobile + Feature Highlights (옆 공간 활용) */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
+          {/* Phone */}
+          <div className="w-full lg:w-auto flex justify-center shrink-0">
             <div className="rounded-[28px] overflow-hidden border-4 border-slate-900 shadow-xl max-w-[260px] bg-slate-950">
               <img src={mobileDemo} alt="SubFlow Mobile 시연" className="w-full block" loading="lazy" />
             </div>
           </div>
-          <div className="flex-1">
+          {/* Right: mobile note + feature highlights */}
+          <div className="flex-1 w-full">
             <div className="flex items-center gap-2 mb-3"><span className="text-[10px] font-bold px-2.5 py-1 rounded-full text-white" style={{backgroundColor:INDIGO}}>MOBILE</span><span className="text-sm font-semibold text-gray-500">Expo · React Native</span></div>
-            <p className="text-sm sm:text-base text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>웹과 동일한 <b className="text-gray-900">FastAPI /api/v1 백엔드</b>를 공유합니다. 목업 폴백을 제거하고 실데이터만 렌더링해, 총액·다음 결제일·중복·환율 같은 지표를 모바일에서도 같은 계약으로 보여줍니다.</p>
-          </div>
-        </div>
-
-        {/* Feature details — 데모 영상 순서 */}
-        <h3 className="text-lg sm:text-xl font-bold mt-10 mb-2 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Feature Highlights</h3>
-        <p className="text-gray-500 text-sm mb-6">데모 영상에서 확인할 수 있는 주요 기능</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {demoFeatures.map(([n,t,d])=>(
-            <div key={n} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex gap-4">
-              <span className="text-xl font-black text-gray-200 shrink-0 leading-none pt-0.5" style={{fontFamily:"'Syne', sans-serif"}}>{n}</span>
-              <div>
-                <h4 className="text-sm font-bold text-gray-900 mb-1">{t}</h4>
-                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p>
-              </div>
+            <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>웹과 동일한 <b className="text-gray-900">FastAPI /api/v1 백엔드</b>를 공유합니다. 목업 폴백을 제거하고 실데이터만 렌더링해, 총액·다음 결제일·중복·환율 같은 지표를 모바일에서도 같은 계약으로 보여줍니다.</p>
+            <h3 className="text-base font-bold text-gray-900 mb-1 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Feature Highlights</h3>
+            <p className="text-gray-400 text-xs mb-4">데모 영상 순서 기준 주요 기능</p>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-2.5">
+              {demoFeatures.map(([n,t,d])=>(
+                <div key={n} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex gap-3">
+                  <span className="text-base font-black text-gray-200 shrink-0 leading-none pt-0.5" style={{fontFamily:"'Syne', sans-serif"}}>{n}</span>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-900 mb-1">{t}</h4>
+                    <p className="text-xs text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </motion.div>
 
