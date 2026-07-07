@@ -59,6 +59,17 @@ const contributions = [
   ['외화 원화 환산 + 개인화 알림 실발송','외화 결제는 환율에 따라 월 지출이 달라지고 알림은 설정만 있던 문제 -> Frankfurter KRW 변환 + APScheduler 기반 개인화 발송 파이프라인 구현 -> 환율 변동까지 반영한 선제적 알림 전달.'],
 ];
 
+// 핵심 기능 (PORTFOLIO.md · 데모 영상 순서 기준)
+const demoFeatures = [
+  ['01','구독 관리','80여 개 서비스 카탈로그에서 선택 추가 또는 커스텀 입력. 활성·일시정지·해지·체험 상태와 다양한 결제 주기 지원.'],
+  ['02','대시보드','월/연 총 지출·활성 구독 수·다음 결제일을 한 화면에 요약. 7일 내 결제 예정 위젯으로 임박 결제 강조.'],
+  ['03','지출 분석','카테고리별 지출 비중 도넛 + 월별 추이 라인 차트. 다운그레이드·해지·주기 전환 절약 인사이트를 원클릭 적용.'],
+  ['04','캘린더 · 타임라인','반복 결제를 달력에 자동 전개하고, 구독 생성·플랜 변경·해지 이력을 타임라인으로 추적.'],
+  ['05','예산 · 알림','월 예산 초과 알림 + 결제 N일 전 이메일(SMTP)·푸시 실발송. 요금 인상·중복·환율 알림을 인박스로 통합 관리.'],
+  ['06','고급 인사이트','같은 카테고리 중복 구독 감지, 외화 구독 환율 추적(KRW 환산), 요금 인상 이력(plan_price_history) 관리.'],
+  ['07','뉴스 + AI 요약','내 구독 서비스 기준으로 뉴스 개인화 정렬, 기사 탭 시 OpenAI(gpt-4o-mini) AI 요약 모달 제공.'],
+];
+
 const challenges = [
   ['카탈로그 마이그레이션 중 데이터 보존','운영 중 subscriptions 테이블에 FK를 추가하면 기존 행 처리와 무결성이 문제','전면 재작성 대신 Alembic 리비전으로 services/service_plans를 먼저 만들고 FK를 점진 연결','기존 데이터 유지한 채 스키마 확장'],
   ['외화 환율의 최신성 vs 호출 비용','환율은 계속 바뀌는데 매 요청마다 외부 API 호출은 비효율적','초기 환율을 저장하고 APScheduler로 주기 갱신 + 임계치 초과 시에만 알림 발송','비용 줄이며 최신 환율 유지'],
@@ -190,6 +201,21 @@ export default function SubFlow(){
             <div className="flex items-center gap-2 mb-3"><span className="text-[10px] font-bold px-2.5 py-1 rounded-full text-white" style={{backgroundColor:INDIGO}}>MOBILE</span><span className="text-sm font-semibold text-gray-500">Expo · React Native</span></div>
             <p className="text-sm sm:text-base text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>웹과 동일한 <b className="text-gray-900">FastAPI /api/v1 백엔드</b>를 공유합니다. 목업 폴백을 제거하고 실데이터만 렌더링해, 총액·다음 결제일·중복·환율 같은 지표를 모바일에서도 같은 계약으로 보여줍니다.</p>
           </div>
+        </div>
+
+        {/* Feature details — 데모 영상 순서 */}
+        <h3 className="text-lg sm:text-xl font-bold mt-10 mb-2 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Feature Highlights</h3>
+        <p className="text-gray-500 text-sm mb-6">데모 영상에서 확인할 수 있는 주요 기능</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {demoFeatures.map(([n,t,d])=>(
+            <div key={n} className="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex gap-4">
+              <span className="text-xl font-black text-gray-200 shrink-0 leading-none pt-0.5" style={{fontFamily:"'Syne', sans-serif"}}>{n}</span>
+              <div>
+                <h4 className="text-sm font-bold text-gray-900 mb-1">{t}</h4>
+                <p className="text-xs sm:text-sm text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </motion.div>
 

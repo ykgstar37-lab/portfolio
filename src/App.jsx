@@ -11,7 +11,7 @@ import thumbCryptoVol from './assets/cryptovol.gif';
 import thumbSeoulCulture from './assets/seoulculture.gif';
 import thumbPymate from './assets/pymate.gif';
 import thumbWorkflow from './assets/workflow.gif';
-import thumbSubFlow from './assets/subflow/subflow_web.gif';
+import thumbSubFlow from './assets/subflow/subflow_thumb.gif';
 
 import CryptoVolatility from './pages/CryptoVolatility';
 import SeoulCulture from './pages/SeoulCulture';
