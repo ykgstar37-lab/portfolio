@@ -220,14 +220,39 @@ export default function SubFlow(){
         </div>
       </motion.div>
 
-      <Section id="retrospective" title="Retrospective" sub="프로젝트를 진행하며 얻은 판단 기준">
-        <ul className="space-y-3 text-sm text-gray-600">
-          <li><b className="text-gray-900">검증 안 된 기능은 실현 가능성부터</b> — 자동 수집을 구현하기 전에 API 제공 범위를 먼저 조사해 방향을 튼 것이 시간을 아꼈습니다.</li>
-          <li><b className="text-gray-900">Web/Mobile 공유 기준은 API 계약</b> — UI는 달라도 인증, DTO, 분석 응답은 같은 계약으로 묶어야 합니다.</li>
-          <li><b className="text-gray-900">결제 도메인은 이력이 중요</b> — 가격과 플랜은 계속 바뀌므로 plan_price_history·subscription_history로 변경 이력을 남겨야 합니다.</li>
-          <li><b className="text-gray-900">개인 프로젝트라도 인증은 프로덕션 기준</b> — rate limiting, 사용자 열거 방지, 시크릿 분리는 데모와 배포를 가르는 기본기입니다.</li>
-        </ul>
-      </Section>
+      <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Retrospective</h2>
+        <p className="text-gray-500 mb-6">프로젝트를 마치며</p>
+        <div className="space-y-4">
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <p className="text-xs font-bold uppercase tracking-wider mb-3" style={{color:PRIMARY}}>핵심 인사이트</p>
+            <p className="text-gray-700 leading-relaxed mb-4" style={{wordBreak:'keep-all'}}>
+              자동 수집이라는 이상을 <span className="font-semibold text-gray-900">실현 가능성부터 검증</span>해 카탈로그 방식으로 방향을 틀고, 웹·모바일이 하나의 백엔드를 공유하도록 설계하면서 <span className="font-semibold text-gray-900">"기능을 만드는 것"과 "운영 가능한 서비스로 만드는 것"의 차이</span>를 체감했습니다.
+            </p>
+            <ul className="space-y-3 text-sm text-gray-600">
+              <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">01</span><span><strong className="text-gray-900">검증 안 된 기능은 실현 가능성부터</strong> — 자동 수집을 구현하기 전에 API 제공 범위를 먼저 조사해 방향을 튼 것이 시간을 아꼈습니다.</span></li>
+              <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">Web/Mobile 공유 기준은 API 계약</strong> — UI는 달라도 인증·DTO·분석 응답은 같은 계약으로 묶어야 유지보수가 한 곳에서 끝납니다.</span></li>
+              <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">03</span><span><strong className="text-gray-900">결제 도메인은 이력이 중요</strong> — 가격과 플랜은 계속 바뀌므로 plan_price_history·subscription_history로 변경 이력을 남겨야 인상 감지·타임라인이 가능합니다.</span></li>
+              <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">04</span><span><strong className="text-gray-900">개인 프로젝트라도 인증은 프로덕션 기준</strong> — rate limiting·사용자 열거 방지·시크릿 분리는 데모와 배포를 가르는 기본기입니다.</span></li>
+            </ul>
+          </div>
+          <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <p className="text-xs font-bold text-amber-600 uppercase tracking-wider mb-3">아쉬운 점 & 다음에 하고 싶은 것</p>
+            <ul className="space-y-2 text-sm text-gray-600">
+              <li className="flex items-start gap-2"><span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span><span className="line-through text-gray-400">알림 발송 로직 부재(TODO) → <strong className="text-gray-600 no-underline">APScheduler 기반 개인화 실발송 구현 완료</strong></span></li>
+              <li className="flex items-start gap-2"><span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span><span className="line-through text-gray-400">수동 입력 데이터 품질 저하 → <strong className="text-gray-600 no-underline">83종 카탈로그 + FK 마이그레이션으로 정규화 완료</strong></span></li>
+              <li className="flex items-start gap-2"><span className="text-red-400 text-xs font-bold mt-0.5 w-14 shrink-0">높음</span><span>관측성(Observability) — 배포 후 로그로만 상태를 확인 중. 헬스체크·에러 트래킹·지표 대시보드 도입 필요</span></li>
+              <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">중간</span><span>테스트 커버리지 — 현재 6개 스위트에서 알림·뉴스 등 엣지 케이스까지 확대 필요</span></li>
+              <li className="flex items-start gap-2"><span className="text-gray-400 text-xs font-bold mt-0.5 w-14 shrink-0">낮음</span><span>CI/CD — 현재 수동 배포, GitHub Actions 자동화 파이프라인 미구축</span></li>
+            </ul>
+          </div>
+          <div className="mt-6 p-6 bg-gray-50 rounded-2xl">
+            <p className="text-sm text-gray-600 leading-relaxed italic" style={{wordBreak:'keep-all'}}>
+              직접 만든 서비스를 처음으로 배포해 실제로 띄워보고, 컨테이너 상태와 스케줄러·알림 로그로 서비스가 살아 움직이는 것을 지켜보는 경험이 특히 신선했습니다. 코드를 완성하는 것과 운영 중인 시스템을 관찰하며 반응하는 것은 전혀 다른 감각이었고, 기능을 만드는 사람에서 배포·운영까지 책임지는 개발자로 관점이 넓어진 프로젝트였습니다.
+            </p>
+          </div>
+        </div>
+      </motion.div>
     </div>
     <TechnicalDrawer accentColor={PRIMARY} tabs={DrawerTabs()} />
     <ScrollToTop/>
