@@ -525,22 +525,65 @@ function HomePage() {
                             </motion.div>
                         </div>
 
-                        {/* Right — Profile Photo */}
-                        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} className="lg:w-1/2 flex justify-center">
-                            <div className="relative rounded-3xl overflow-hidden max-w-xs sm:max-w-md w-full group cursor-pointer">
-                                <img src={profileImg} alt="Yoon Gyeongeun" className="w-full h-full object-cover block" />
-                                {/* Hover overlay - hidden on mobile (no hover) */}
-                                <div className="absolute inset-0 bg-white/85 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-8">
-                                    <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                                        <span className="text-[10px] font-bold px-2.5 py-1 bg-[#e27500]/15 text-[#e27500] rounded-full uppercase tracking-widest">AI DevOps Engineer</span>
-                                        <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed mb-4">AI 서빙 안정화 · 배포 자동화 · B2B API 연계 설계</p>
-                                        <div className="flex flex-wrap gap-1.5">
-                                            {['vLLM', 'FastAPI', 'Docker', 'AWS'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
-                                        </div>
+                        {/* Right — Lanyard ID Badge */}
+                        <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }} className="lg:w-1/2 flex justify-center lg:self-start lg:-mt-10">
+                            <motion.div
+                                animate={{ rotate: [-1.3, 1.3, -1.3] }}
+                                transition={{ repeat: Infinity, duration: 6, ease: 'easeInOut' }}
+                                style={{ transformOrigin: 'top center' }}
+                                className="relative flex flex-col items-center select-none"
+                            >
+                                {/* Lanyard straps (V) — fabric-like with center sheen */}
+                                <div className="relative w-48 sm:w-56 h-20 sm:h-24 flex justify-center">
+                                    <div className="absolute bottom-0 left-1/2 w-4 h-36 sm:h-40 rounded-t-2xl overflow-hidden shadow-[2px_0_4px_rgba(0,0,0,0.25)]" style={{ transformOrigin: 'bottom center', transform: 'translateX(-50%) rotate(17deg)' }}>
+                                        <div className="w-full h-full bg-gradient-to-r from-neutral-900 via-neutral-600 to-neutral-900" />
+                                    </div>
+                                    <div className="absolute bottom-0 left-1/2 w-4 h-36 sm:h-40 rounded-t-2xl overflow-hidden shadow-[-2px_0_4px_rgba(0,0,0,0.25)]" style={{ transformOrigin: 'bottom center', transform: 'translateX(-50%) rotate(-17deg)' }}>
+                                        <div className="w-full h-full bg-gradient-to-r from-neutral-900 via-neutral-600 to-neutral-900" />
                                     </div>
                                 </div>
-                            </div>
+                                {/* Metal clasp: split ring + connector */}
+                                <div className="relative z-20 -mt-2 flex flex-col items-center">
+                                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-white via-slate-300 to-slate-600 ring-1 ring-slate-400/60 flex items-center justify-center shadow-[0_3px_8px_rgba(0,0,0,0.3)]">
+                                        <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-slate-100 shadow-[inset_0_1px_3px_rgba(0,0,0,0.4)] ring-1 ring-slate-400/50" />
+                                    </div>
+                                    <div className="w-7 h-5 -mt-1.5 rounded-b-lg bg-gradient-to-b from-slate-200 via-slate-400 to-slate-600 ring-1 ring-slate-400/50 shadow-md" />
+                                </div>
+                                {/* Badge card (clear plastic holder look) */}
+                                <div className="relative z-10 -mt-1 w-[300px] sm:w-[380px] rounded-[28px] bg-gradient-to-b from-white to-slate-50 border border-slate-200/70 p-5 sm:p-6"
+                                    style={{ boxShadow: '0 20px 40px -18px rgba(15,23,42,0.26), 0 8px 16px -12px rgba(15,23,42,0.15)' }}>
+                                    {/* Glossy plastic sheen + inner rim */}
+                                    <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/60 via-white/0 to-white/0" />
+                                    <div className="pointer-events-none absolute inset-0 rounded-[28px] ring-1 ring-inset ring-white/70" />
+                                    {/* Punch slot */}
+                                    <div className="relative mx-auto mb-4 w-24 h-3 rounded-full bg-slate-200/90 shadow-[inset_0_1.5px_2px_rgba(0,0,0,0.3)]" />
+                                    {/* Brand label */}
+                                    <div className="relative flex items-center justify-center gap-2.5 mb-4">
+                                        <span className="h-px w-6 bg-slate-200" />
+                                        <p className="text-center text-[12px] sm:text-[13px] tracking-[0.34em] text-slate-400 font-semibold" style={{ fontFamily: "'Syne', sans-serif" }}>YGE · PORTFOLIO</p>
+                                        <span className="h-px w-6 bg-slate-200" />
+                                    </div>
+                                    {/* Photo + hover overlay (동일 애니메이션, 배경 꽉 채움) */}
+                                    <div className="relative rounded-2xl overflow-hidden group cursor-pointer bg-slate-100 ring-1 ring-slate-200/70" style={{ aspectRatio: '3 / 4' }}>
+                                        <img src={profileImg} alt="Yoon Gyeongeun" className="w-full h-full object-cover block" />
+                                        <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-100 transition-all duration-500 hidden sm:flex flex-col justify-end p-6">
+                                            <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
+                                                <span className="text-[10px] font-bold px-2.5 py-1 bg-[#e27500]/15 text-[#e27500] rounded-full uppercase tracking-widest">AI DevOps Engineer</span>
+                                                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
+                                                <p className="text-gray-500 text-sm leading-relaxed mb-4">AI 서빙 안정화 · 배포 자동화 · B2B API 연계 설계</p>
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {['vLLM', 'FastAPI', 'Docker', 'AWS'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* Name plate */}
+                                    <div className="relative mt-4 text-center">
+                                        <h3 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
+                                        <p className="text-[11px] sm:text-xs text-slate-400 font-semibold tracking-wide mt-1">AI DevOps / ML Systems Engineer</p>
+                                    </div>
+                                </div>
+                            </motion.div>
                         </motion.div>
                     </div>
                 </motion.div>
