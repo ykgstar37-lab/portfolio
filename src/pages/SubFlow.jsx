@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import FloatingNav from '../components/FloatingNav';
@@ -14,7 +14,7 @@ const PRIMARY = '#14b8a6';
 const SECONDARY = '#2563eb';
 const INDIGO = '#4f46e5';
 const fadeInUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } } };
-const sections = ['goal','problem','architecture','decisions','evaluation','contributions','challenges','demo','retrospective'].map((id) => ({ id, label: id === 'decisions' ? 'Approach' : id[0].toUpperCase() + id.slice(1), highlight: id === 'decisions' || id === 'demo' || id === 'retrospective' }));
+const sections = ['goal','problem','architecture','decisions','evaluation','contributions','challenges','demo','presentation','retrospective'].map((id) => ({ id, label: id === 'decisions' ? 'Approach' : id[0].toUpperCase() + id.slice(1), highlight: id === 'decisions' || id === 'demo' || id === 'presentation' || id === 'retrospective' }));
 const chart = String.raw`flowchart LR
   Web["React Web\\nTS + Zustand"] --> API["FastAPI /api/v1\\n7 routers"]
   Mobile["Expo Mobile\\nReact Native"] --> API
@@ -52,6 +52,39 @@ const narratives = [
    '401 통일(열거 방지) + slowapi rate limit + 비밀번호 강도 검증 + 시크릿 환경변수화 + 프록시 스푸핑 대비.',
    'nginx 컨테이너 + 환경변수화로 배포 구성 완료. 배포를 전제로 한 설계.'],
 ];
+
+const SUBFLOW_TOTAL_SLIDES = 11;
+function SubflowSlideViewer() {
+  const [current, setCurrent] = useState(1);
+  const prev = () => setCurrent(c => Math.max(1, c - 1));
+  const next = () => setCurrent(c => Math.min(SUBFLOW_TOTAL_SLIDES, c + 1));
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="relative">
+        <img
+          src={`/slides-subflow/slide-${String(current).padStart(2, '0')}.png`}
+          alt={`SubFlow 카드뉴스 ${current}`}
+          className="w-full h-auto"
+        />
+        <button onClick={prev} disabled={current === 1}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+        </button>
+        <button onClick={next} disabled={current === SUBFLOW_TOTAL_SLIDES}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+        </button>
+      </div>
+      <div className="flex items-center justify-center gap-4 py-4 border-t border-gray-50">
+        <span className="text-sm font-bold text-gray-900">{current}</span>
+        <div className="w-48 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(current / SUBFLOW_TOTAL_SLIDES) * 100}%`, backgroundColor: PRIMARY }}></div>
+        </div>
+        <span className="text-sm text-gray-400">{SUBFLOW_TOTAL_SLIDES}</span>
+      </div>
+    </div>
+  );
+}
 
 const contributions = [
   ['흩어진 구독 지출을 한 화면으로 통합','서비스별 앱을 직접 열어야 총액을 알 수 없는 문제 -> 83종 카탈로그와 결제 데이터를 묶어 월/연 지출, 다음 결제일, 예산 상태를 대시보드에 통합 -> 반복 결제 규모를 즉시 확인 가능한 구조로 전환.'],
@@ -218,6 +251,12 @@ export default function SubFlow(){
             </div>
           </div>
         </div>
+      </motion.div>
+
+      <motion.div id="presentation" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
+        <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Presentation</h2>
+        <p className="text-gray-500 mb-8">프로젝트 소개 카드뉴스 — 화살표로 넘겨보세요</p>
+        <SubflowSlideViewer />
       </motion.div>
 
       <motion.div id="retrospective" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
