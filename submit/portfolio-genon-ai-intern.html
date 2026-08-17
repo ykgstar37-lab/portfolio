@@ -6,840 +6,738 @@
   <title>윤경은 - GenON AI Engineer Intern Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    :root { --ink:#1a1a1a; --sub:#666; --muted:#999; --line:#eee; --accent:#e27500; --accent-2:#2366c8; --panel:#fafafa; --panel-2:#f8fafc; }
-    html { scroll-behavior:smooth; }
-    html, body { max-width:100%; overflow-x:hidden; }
-    body { font-family:'Inter',-apple-system,sans-serif; color:var(--ink); background:#fff; line-height:1.75; word-break:keep-all; overflow-wrap:anywhere; -webkit-font-smoothing:antialiased; font-size:15px; }
-    a { color:inherit; }
-    h1,h2,h3,h4 { margin:0; }
-    p { margin:0; }
-    .syne { font-family:'Syne',sans-serif; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ink:#151515; --body:#343434; --muted:#737373; --line:#e7e7e7; --panel:#fafafa;
+      --accent:#1f3a5f; --blue:#1f3a5f; --green:#1f3a5f; --purple:#1f3a5f;
+      --cream:#f8fafc; --blue-soft:#eef3f9; --green-soft:#eef3f9; --accent-soft:#eef3f9; --accent-border:#a8b7cc;
+    }
+    html { scroll-behavior: smooth; }
+    body { color: var(--ink); background: #fff; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; line-height: 1.75; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    h1, h2, h3, h4 { line-height: 1.3; }
+    .syne { font-family: Syne, Inter, sans-serif; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 36px; }
+    .page { padding: 78px 0; border-bottom: 1px solid var(--line); }
+    .page:last-child { border-bottom: 0; }
 
-    /* ── Shell / Page ── */
-    .shell { max-width:100%; margin:0; padding:0; }
-    .page { background:#fff; }
-    .wrap { max-width:800px; margin:0 auto; padding:0 2.5rem; }
+    .hero { padding: 72px 0 54px; border-bottom: 3px solid var(--ink); }
+    .hero-profile-row { display: grid; grid-template-columns: 230px minmax(0, 1fr); align-items: start; gap: 34px; }
+    .hero-side { min-width: 0; }
+    .profile-photo { display: block; width: 180px; height: 224px; object-fit: cover; object-position: center top; border: 1px solid var(--line); border-radius: 5px; background: #fff; }
+    .hero-copy { min-width: 0; padding-top: 12px; }
+    .eyebrow { display: inline-flex; margin-bottom: 18px; font-size: 11px; font-weight: 800; letter-spacing: 0.16em; color: var(--accent); text-transform: uppercase; }
+    h1 { max-width: 900px; margin-bottom: 16px; font-family: Syne, Inter, sans-serif; font-size: clamp(34px, 4.35vw, 50px); font-weight: 800; letter-spacing: -0.045em; line-height: 1.13; }
+    .hero-title-line { display: block; }
+    .lead { max-width: 780px; color: var(--body); font-size: 17px; line-height: 1.72; }
+    .hero-lead-wide { max-width: 920px; margin-top: 24px; font-size: 17px; line-height: 1.74; }
+    .lead strong { color: var(--ink); font-weight: 800; }
+    .lead .line, .hero-card .line { display: block; }
+    .lead .line + .line { margin-top: 2px; }
+    .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) max-content; gap: 18px; align-items: start; margin-top: 26px; }
+    .hero-card { padding: 18px 20px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    .hero-card h3 { margin-bottom: 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; }
+    .hero-card p, .hero-card li { color: var(--body); font-size: 13.5px; line-height: 1.68; }
+    .hero-card ul { display: grid; gap: 7px; list-style: none; }
+    .hero-card li::before { content: "—"; margin-right: 8px; color: #aaa; }
+    .contact { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; width: max-content; }
+    .contact a { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #cbd5e1; border-radius: 999px; color: var(--blue); background: #fff; font-weight: 800; line-height: 1; transition: background 160ms ease, color 160ms ease, border-color 160ms ease; }
+    .contact a:hover { color: #fff; border-color: var(--blue); background: var(--blue); }
+    .contact svg { width: 21px; height: 21px; display: block; fill: currentColor; stroke: currentColor; }
+    .notion-mark { font-family: Georgia, serif; font-size: 20px; font-weight: 800; }
 
-    /* ── Hero ── */
-    .hero { padding:4rem 0 3rem; border-bottom:1px solid var(--line); }
-    .eyebrow { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--accent); margin-bottom:1.2rem; display:inline-block; }
-    h1 { font-family:'Syne',sans-serif; font-size:clamp(2.2rem, 5vw, 3.2rem); font-weight:800; letter-spacing:-0.03em; line-height:1.15; margin-bottom:0.8rem; }
-    .subhead { font-size:1rem; color:var(--sub); margin-bottom:2rem; max-width:640px; line-height:1.7; }
-    .hero-grid { display:grid; grid-template-columns:1.2fr 0.8fr; gap:2rem; align-items:start; }
-    .hero-copy p { font-size:0.88rem; color:#444; line-height:1.85; margin-bottom:0.9rem; }
-    .hero-copy strong { color:var(--ink); font-weight:700; }
-    .hero-card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.3rem; }
-    .hero-card h3 { font-size:0.68rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:0.7rem; }
-    .hero-card h3 + h3 { margin-top:0.9rem; }
-    .contact a { text-decoration:none; }
-    .contact div, .hero-card li { font-size:0.78rem; color:#555; line-height:1.8; }
-    .hero-card ul { list-style:none; }
-    .hero-card ul li::before { content:'—'; margin-right:0.4rem; color:#bbb; }
+    .section-label { margin-bottom: 10px; font-size: 11px; font-weight: 800; letter-spacing: 0.16em; color: var(--muted); text-transform: uppercase; }
+    .section-title { margin-bottom: 14px; font-family: Syne, Inter, sans-serif; font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.035em; }
+    .section-intro { max-width: 760px; margin-bottom: 30px; color: var(--body); font-size: 16px; line-height: 1.8; }
+    .section-intro strong { color: var(--ink); font-weight: 800; }
 
-    /* ── Stats ── */
-    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:0.8rem; padding:2rem 0; border-bottom:1px solid var(--line); }
-    .stat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:1rem 1rem 0.9rem; }
-    .stat strong { display:block; font-family:'Syne',sans-serif; font-size:1.2rem; font-weight:800; line-height:1; margin-bottom:0.4rem; color:var(--ink); }
-    .stat span { font-size:0.7rem; color:var(--muted); line-height:1.55; font-weight:600; }
+    .structure-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+    .structure-step { position: relative; padding: 16px 16px 15px; border: 1px solid #d8e1ee; border-radius: 10px; background: #fff; }
+    .structure-step::after { content: "→"; position: absolute; right: -11px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 18px; font-weight: 800; }
+    .structure-step:last-child::after { display: none; }
+    .structure-no { display: block; margin-bottom: 8px; color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    .structure-step h3 { margin-bottom: 7px; font-size: 15px; font-weight: 800; line-height: 1.35; }
+    .structure-step p { color: var(--body); font-size: 12.5px; line-height: 1.6; }
+    .structure-step strong { color: var(--ink); font-weight: 800; }
+    .structure-principle { margin-top: 18px; padding: 13px 16px; border-left: 4px solid var(--accent); background: #f8fafc; color: var(--body); font-size: 13.5px; line-height: 1.65; }
+    .structure-principle strong { color: var(--ink); font-weight: 800; }
 
-    /* ── Section ── */
-    section { padding:3.5rem 0 2.8rem; border-bottom:1px solid var(--line); }
-    section:last-of-type { border-bottom:0; }
-    .section-label { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--muted); margin-bottom:0.5rem; }
-    .section-title { font-family:'Syne',sans-serif; font-size:clamp(1.4rem,3vw,1.8rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:0.5rem; }
-    .section-intro { font-size:0.86rem; color:var(--sub); margin-bottom:2rem; max-width:640px; line-height:1.75; }
+    .jd-map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .jd-card { padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .jd-card h3 { margin-bottom: 8px; color: var(--accent); font-size: 16px; font-weight: 800; }
+    .jd-card p { color: var(--body); font-size: 14px; line-height: 1.7; }
+    .jd-card strong { color: var(--ink); font-weight: 800; }
 
-    /* ── Generic cards (fit/career/source/mini/map) ── */
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:0.9rem; }
-    .grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:0.9rem; }
-    .info-card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:1.1rem 1.2rem; }
-    .info-card h3 { font-size:0.9rem; font-weight:700; margin-bottom:0.45rem; line-height:1.4; display:flex; align-items:baseline; gap:0.4rem; }
-    .info-card p { font-size:0.8rem; color:var(--sub); line-height:1.7; }
-    .info-card p + p { margin-top:0.5rem; }
-    .info-card strong { color:var(--ink); font-weight:700; }
-    .info-card a { color:var(--accent); font-weight:600; text-decoration:none; font-size:0.78rem; }
-    .num-badge { display:inline-block; font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:800; color:var(--accent); letter-spacing:0.04em; }
+    .impact-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 28px 0 0; }
+    .impact { padding: 18px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+    .impact .value { display: block; margin-bottom: 8px; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 29px; font-weight: 800; letter-spacing: -0.01em; line-height: 1.05; color: var(--accent); font-variant-numeric: tabular-nums lining-nums; font-feature-settings: "tnum" 1, "lnum" 1; }
+    .impact .name { display: block; color: var(--ink); font-size: 13px; font-weight: 800; }
+    .impact p { margin-top: 6px; color: var(--muted); font-size: 12px; line-height: 1.55; }
 
-    /* ── Project Header ── */
-    .project { margin-top:0.5rem; }
-    .project-header { margin-bottom:1.8rem; }
-    .badges { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.9rem; }
-    .badge { font-size:0.6rem; font-weight:700; padding:0.28rem 0.75rem; border-radius:20px; text-transform:uppercase; letter-spacing:0.04em; }
-    .badge-dark { background:var(--ink); color:#fff; }
-    .badge-muted { background:#f0f0f0; color:#777; }
-    .badge-orange { background:#fff3e6; color:#c2410c; }
-    .badge-blue { background:#e8f0fa; color:#2b6cb0; }
-    .project-name { font-family:'Syne',sans-serif; font-size:1.5rem; font-weight:700; letter-spacing:-0.02em; margin-bottom:0.35rem; }
-    .project-fit { margin-top:0.8rem; padding:0.9rem 1rem; border-radius:12px; background:#fbfbf8; border:1px solid #ecebdd; }
-    .project-fit-label { font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#9aa38a; margin-bottom:0.4rem; }
-    .project-fit p { font-size:0.8rem; color:#555; line-height:1.7; }
-    .project-fit strong { color:var(--ink); font-weight:700; }
-    .project-tagline { font-size:0.88rem; color:var(--accent); font-weight:600; margin-top:0.9rem; margin-bottom:0.35rem; }
-    .project-oneliner { font-size:0.86rem; color:var(--sub); line-height:1.75; margin-bottom:0.6rem; }
-    .project-oneliner strong, .project-oneliner .emph { color:var(--ink); font-weight:700; }
-    .project-intro { font-size:0.86rem; color:#444; line-height:1.85; margin-top:0.8rem; }
-    .project-intro .emph { color:var(--ink); font-weight:700; }
-    .github-link { display:inline-flex; align-items:center; gap:0.4rem; margin-top:0.9rem; padding:0.4rem 0.9rem; background:var(--ink); color:#fff; font-size:0.72rem; font-weight:600; border-radius:20px; text-decoration:none; }
+    .project { padding: 70px 0; border-bottom: 1px solid var(--line); }
+    .project:last-child { border-bottom: 0; }
+    .project-head { display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: start; margin-bottom: 20px; }
+    .project-no { color: var(--accent); font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; }
+    .project-name { margin: 5px 0 8px; font-family: Syne, Inter, sans-serif; font-size: clamp(28px, 3.6vw, 40px); font-weight: 800; letter-spacing: -0.03em; }
+    .project-title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 11px; margin: 5px 0 10px; }
+    .project-title-row .project-name { margin: 0; }
+    .title-keep { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; }
+    .github-icon-link { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: 1px solid #cbd5e1; border-radius: 999px; color: var(--accent); background: #fff; transition: background 160ms ease, border-color 160ms ease, color 160ms ease; }
+    .github-icon-link:hover { color: #fff; border-color: var(--accent); background: var(--accent); }
+    .github-icon-link svg { width: 18px; height: 18px; fill: currentColor; }
+    .project-one { max-width: 690px; color: var(--body); font-size: 15.5px; line-height: 1.68; }
+    .project-one strong { color: var(--ink); font-weight: 800; }
+    .badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; max-width: 300px; }
+    .badge { display: inline-flex; align-items: center; justify-content: center; padding: 4px 9px; border: 1px solid transparent; border-radius: 999px; background: #f0f0f0; color: #555; font-size: 10.5px; font-weight: 800; line-height: 1.2; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .badge.jd { background: var(--accent-soft); color: var(--accent); }
+    .badge.blue { background: var(--accent-soft); color: var(--accent); }
 
-    /* ── Contribution Strip ── */
-    .contrib-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0.7rem; margin-top:1rem; }
-    .contrib-item { padding:0.85rem 0.95rem; border-radius:12px; background:#fcfcfb; border:1px solid #ecefe7; }
-    .contrib-item.share { background:linear-gradient(180deg,#fff8ef 0%,#fffdf8 100%); border-color:#f7d6a8; }
-    .contrib-head { font-size:0.62rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#9aa38a; margin-bottom:0.35rem; }
-    .contrib-body { font-size:0.76rem; color:#444; line-height:1.65; }
-    .share-bar { margin:0.15rem 0 0.45rem; }
-    .share-bar-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:0.3rem; font-size:0.66rem; font-weight:700; color:#8b6a2b; }
-    .share-track { height:0.55rem; border-radius:999px; background:#f6ead8; overflow:hidden; }
-    .share-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,#f5b041 0%,#e27500 100%); }
+    .project-meta { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 16px; }
+    .meta-card { min-height: 104px; padding: 12px 13px; border: 1px solid #d8e1ee; border-radius: 8px; background: #fff; }
+    .meta-card h4 { margin-bottom: 6px; color: var(--muted); font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+    .meta-card p { color: var(--body); font-size: 12px; line-height: 1.5; }
+    .meta-card strong { color: var(--ink); font-weight: 800; }
 
-    /* ── AS-IS / TO-BE ── */
-    .asistobe { display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin:1.3rem 0 1.4rem; }
-    .asistobe h4 { grid-column:1/-1; display:flex; align-items:center; gap:0.5rem; font-size:0.9rem; font-weight:700; margin-bottom:0.05rem; color:var(--ink); }
-    .asistobe h4::before { content:'COMPARE'; display:inline-flex; padding:0.16rem 0.44rem; border-radius:999px; background:#f3f4f6; color:#6b7280; font-size:0.55rem; font-weight:800; letter-spacing:0.12em; }
-    .asis, .tobe { position:relative; padding:1rem 1rem; border-radius:14px; border:1px solid transparent; box-shadow:0 10px 24px rgba(15,23,42,0.04); }
-    .asis { background:linear-gradient(180deg,#fff9eb 0%,#fffbf2 100%); border-color:#f6d79e; color:#7c4a10; }
-    .tobe { background:linear-gradient(180deg,#effcf5 0%,#f6fffa 100%); border-color:#b7efd3; color:#0f5b43; }
-    .asis .label, .tobe .label { display:inline-flex; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.65rem; padding:0.24rem 0.54rem; border-radius:999px; }
-    .asis .label { background:rgba(245,158,11,0.14); color:#d97706; }
-    .tobe .label { background:rgba(16,185,129,0.14); color:#059669; }
-    .compare-points { list-style:none; display:grid; gap:0.55rem; }
-    .compare-points li { position:relative; padding-left:0.9rem; font-size:0.78rem; line-height:1.65; }
-    .compare-points li::before { content:''; position:absolute; left:0; top:0.6rem; width:0.32rem; height:0.32rem; border-radius:50%; background:currentColor; opacity:0.45; }
-    .compare-points strong { color:#1f2937; font-weight:800; }
+    .arch-panel { margin: 18px 0; padding: 18px; border: 1px solid #d8e1ee; border-radius: 12px; background: #fff; overflow-x: auto; }
+    .arch-title { margin-bottom: 12px; color: #64748b; font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    .arch-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .arch-node { flex: 1 1 116px; min-height: 74px; display: grid; place-items: center; padding: 12px; border: 1px solid #cbd5e1; border-radius: 12px; background: #fff; text-align: center; color: #334155; font-size: 13px; font-weight: 800; line-height: 1.35; }
+    .arch-node.accent { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); }
+    .arch-node.green { border-color: var(--accent-border); background: var(--accent-soft); color: var(--accent); }
+    .arch-arrow { color: #94a3b8; font-size: 20px; font-weight: 800; }
+    .mermaid-wrap { min-width: 760px; padding: 14px 14px 8px; border: 1px solid #d8e1ee; border-radius: 10px; background: #fff; }
+    .mermaid-wrap.compact { min-width: 520px; }
+    .mermaid-wrap.seoul-pipeline { min-width: 660px; max-width: 780px; margin: 0 auto; padding: 12px 14px 8px; }
+    .mermaid { display: flex; justify-content: flex-start; width: 100%; min-height: 240px; color: var(--ink); font-family: Inter, sans-serif; }
+    .mermaid svg { max-width: 100%; height: auto; }
+    .seoul-pipeline .mermaid { justify-content: center; min-height: 180px; }
+    .seoul-pipeline .mermaid svg { width: min(100%, 680px) !important; }
+    .arch-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .arch-summary-item { padding: 10px 11px; border: 1px solid #d8e1ee; border-radius: 8px; background: #fff; }
+    .arch-summary-item b { display: block; margin-bottom: 4px; color: var(--accent); font-size: 11px; font-weight: 800; letter-spacing: 0.03em; }
+    .arch-summary-item p { color: var(--body); font-size: 12px; line-height: 1.5; }
+    .arch-summary-item strong { color: var(--ink); font-weight: 800; }
 
-    /* ── KPI Cards (with bar-chart) ── */
-    .compare-kpis { display:grid; grid-template-columns:repeat(2,1fr); gap:0.7rem; margin:1.2rem 0 1.4rem; }
-    .compare-kpi { background:#fbfcfa; border:1px solid #e8ece4; border-radius:12px; padding:0.9rem 0.95rem; }
-    .kpi-name { font-size:0.66rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:#8b9381; margin-bottom:0.65rem; }
-    .kpi-note { margin-top:0.6rem; font-size:0.72rem; color:#666; line-height:1.55; }
-    .bar-chart { display:grid; gap:0.5rem; }
-    .bar-row { display:grid; grid-template-columns:2.8rem 1fr auto; gap:0.5rem; align-items:center; }
-    .bar-label { font-size:0.64rem; font-weight:700; color:#7b7b7b; letter-spacing:0.04em; }
-    .bar-track { height:0.55rem; border-radius:999px; background:#eef1f3; overflow:hidden; }
-    .bar-fill { height:100%; border-radius:999px; }
-    .bar-fill.before { background:linear-gradient(90deg,#f3c46f 0%,#eaa11c 100%); }
-    .bar-fill.after { background:linear-gradient(90deg,#5bd6a0 0%,#10b981 100%); }
-    .bar-value { font-size:0.72rem; font-weight:800; color:#333; font-family:'Syne',sans-serif; }
-    .delta-metric { padding:0.7rem 0.8rem; border-radius:10px; background:linear-gradient(180deg,#fff9ef 0%,#fffdf8 100%); border:1px solid #f2e4c5; }
-    .delta-value { font-family:'Syne',sans-serif; font-size:1.3rem; font-weight:800; line-height:1; color:var(--ink); }
-    .delta-meta { margin-top:0.35rem; font-size:0.68rem; font-weight:700; color:#9b6a16; text-transform:uppercase; letter-spacing:0.06em; }
+    .portfolio-breakdown { display: grid; gap: 16px; margin-top: 20px; }
+    .breakdown-section h3 { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; color: var(--accent); font-size: 15.5px; font-weight: 800; }
+    .breakdown-section h3::before { content: "•"; color: var(--ink); font-size: 20px; line-height: 1; }
+    .breakdown-section ul { display: grid; gap: 5px; padding-left: 20px; list-style-type: circle; }
+    .breakdown-section li { color: var(--body); font-size: 13.8px; line-height: 1.62; }
+    .breakdown-section strong { color: var(--ink); font-weight: 800; }
 
-    /* ── Flow / Guard (WorkFlow Agent) ── */
-    .flow-box { margin:1rem 0 1.2rem; padding:1rem; background:var(--panel-2); border:1px solid #e2e8f0; border-radius:12px; }
-    .flow-box-title { font-size:0.65rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.7rem; }
-    .flow-chain { display:flex; flex-wrap:wrap; align-items:center; gap:0.4rem; }
-    .flow-node { flex:1 1 120px; background:#fff; border:1px solid #d0dbe6; border-radius:8px; padding:0.55rem 0.6rem; text-align:center; min-width:100px; }
-    .flow-node.hl { background:var(--accent); color:#fff; border-color:var(--accent); }
-    .flow-node strong { display:block; font-size:0.72rem; font-weight:700; line-height:1.25; margin-bottom:0.2rem; font-family:'Syne',sans-serif; }
-    .flow-node span { display:block; font-size:0.66rem; color:#64748b; line-height:1.4; }
-    .flow-node.hl span { color:rgba(255,255,255,0.9); }
-    .flow-arrow { color:#cbd5e1; font-weight:800; font-size:0.9rem; }
-    .guard { display:grid; grid-template-columns:repeat(4,1fr); gap:0.5rem; margin-top:0.75rem; }
-    .guard-item { background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:0.55rem 0.65rem; }
-    .guard-item strong { display:block; font-size:0.68rem; color:var(--accent); font-family:'Syne',sans-serif; font-weight:700; margin-bottom:0.2rem; }
-    .guard-item span { font-size:0.65rem; color:#7c4a10; line-height:1.4; }
+    .domain-box { margin-top: 18px; padding: 16px 18px; border-radius: 10px; border: 1px solid #d8e1ee; border-left: 4px solid var(--accent); background: #fff; }
+    .domain-box h3 { margin-bottom: 6px; color: var(--accent); font-size: 15px; font-weight: 800; }
+    .domain-box p { color: var(--body); font-size: 13.4px; line-height: 1.65; }
+    .domain-box strong { color: var(--ink); font-weight: 800; }
 
-    /* ── Flow Steps (vertical story blocks) ── */
-    .story { padding:1.1rem 1.3rem; border-left:3px solid #eee; position:relative; margin-top:1.1rem; }
-    .story::before { content:''; position:absolute; left:-6px; top:1.3rem; width:9px; height:9px; border-radius:50%; background:#ddd; }
-    .story.goal { border-left-color:#94a3b8; }
-    .story.goal::before { background:#94a3b8; }
-    .story.goal .story-label { color:#64748b; }
-    .story.problem { border-left-color:#f59e0b; }
-    .story.problem::before { background:#f59e0b; }
-    .story.problem .story-label { color:#d97706; }
-    .story.solution { border-left-color:#10b981; }
-    .story.solution::before { background:#10b981; }
-    .story.solution .story-label { color:#059669; }
-    .story.result { border-left-color:#3b82f6; }
-    .story.result::before { background:#3b82f6; }
-    .story.result .story-label { color:#2563eb; }
-    .story-label { font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:0.4rem; color:#888; }
-    .story h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.5rem; line-height:1.4; }
-    .story ul { list-style:none; padding:0; }
-    .story li { font-size:0.8rem; color:#555; padding-left:1rem; position:relative; margin-bottom:0.45rem; line-height:1.7; }
-    .story li::before { content:'—'; position:absolute; left:0; color:#ccc; }
-    .story strong { color:var(--ink); font-weight:700; }
-    .emph { color:var(--ink); font-weight:700; }
+    .retrospective { margin-top: 18px; padding: 16px 18px; border-radius: 10px; border: 1px solid #d8e1ee; border-left: 4px solid var(--accent); background: #fff; }
+    .retrospective h3 { margin-bottom: 6px; color: var(--accent); font-size: 15px; font-weight: 800; }
+    .retrospective p { color: var(--body); font-size: 13.4px; line-height: 1.65; }
 
-    /* ── Retro / Tech ── */
-    .retro-box { background:#faf5ff; border-radius:12px; padding:1.1rem 1.3rem; margin-top:1.2rem; border:1px solid #e9d5ff; }
-    .retro-label { font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:#7c3aed; margin-bottom:0.4rem; }
-    .retro-box h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.6rem; line-height:1.4; color:var(--ink); }
-    .retro-box ul { list-style:none; padding:0; }
-    .retro-box li { font-size:0.8rem; color:#555; padding-left:1rem; position:relative; margin-bottom:0.5rem; line-height:1.7; }
-    .retro-box li::before { content:'—'; position:absolute; left:0; color:#c8a4e6; }
-    .retro-box strong { color:var(--ink); font-weight:700; }
-    .tech-row { display:flex; flex-wrap:wrap; gap:0.35rem; margin-top:1rem; }
-    .tech-tag { font-size:0.66rem; font-weight:500; padding:0.2rem 0.6rem; border-radius:5px; background:#f0f0f0; color:#666; }
-    .tech-tag.hl { background:var(--ink); color:#fff; font-weight:600; }
+    .closing { padding: 66px 0 78px; }
+    .closing-card { padding: 34px 36px; border-radius: 24px; color: #fff; background: linear-gradient(135deg, #171717 0%, #2a251f 100%); }
+    .closing-card h2 { margin-bottom: 13px; font-family: Syne, Inter, sans-serif; font-size: clamp(26px, 4vw, 40px); letter-spacing: -0.04em; }
+    .closing-card p { max-width: 760px; color: rgba(255,255,255,0.82); font-size: 16px; line-height: 1.75; }
+    .closing-card strong { color: #bfdbfe; font-weight: 800; }
 
-    /* ── Work Style (compact list) ── */
-    .workstyle-list { list-style:none; padding:0; max-width:720px; margin-top:0.4rem; }
-    .workstyle-list li { font-size:0.86rem; color:#555; line-height:1.85; padding:0.85rem 0; border-bottom:1px solid var(--line); }
-    .workstyle-list li:last-child { border-bottom:0; }
-    .workstyle-list strong { color:var(--ink); font-weight:700; }
-    .workstyle-list em { color:var(--accent); font-style:normal; font-weight:700; }
-
-    /* ── CTA (Future Contribution) ── */
-    .cta-lead { max-width:640px; margin:0 auto 1.4rem; font-size:0.86rem; color:#666; line-height:1.85; text-align:center; }
-    .cta-headline { font-family:'Syne',sans-serif; font-size:clamp(1.6rem,3.5vw,2rem); font-weight:700; letter-spacing:-0.02em; text-align:center; margin:0.6rem auto 1.8rem; line-height:1.2; }
-    .cta-item { max-width:620px; margin:0 auto 1.6rem; text-align:left; }
-    .cta-item h4 { font-size:0.92rem; font-weight:700; margin-bottom:0.4rem; color:var(--accent); line-height:1.4; }
-    .cta-item p { font-size:0.83rem; color:#555; line-height:1.85; }
-    .cta-item strong, .cta-item em { color:var(--ink); font-style:normal; font-weight:700; }
-
-    /* ── Closing Banner ── */
-    .closing { padding:3rem 0 4rem; text-align:left; }
-    .closing-banner { background:linear-gradient(135deg,#171717 0%,#282521 100%); color:#f4efe8; padding:2.4rem 2.4rem 2.6rem; border-radius:22px; }
-    .closing-banner h2 { font-family:'Syne',sans-serif; font-size:clamp(1.3rem,2.6vw,1.7rem); line-height:1.25; margin:0 0 0.9rem; color:#fff; font-weight:700; letter-spacing:-0.02em; }
-    .closing-banner p { font-size:0.9rem; color:rgba(244,239,232,0.82); max-width:720px; line-height:1.75; }
-    .closing-banner a { color:#ffb573; text-decoration:none; font-weight:700; }
-
-    /* ── Responsive ── */
-    @media (max-width:820px) {
-      .wrap { padding:0 1.6rem; }
-      .hero { padding:3rem 0 2.4rem; }
-      .hero-grid { grid-template-columns:1fr; gap:1.4rem; }
-      .stats { grid-template-columns:repeat(2,1fr); }
-      .grid-3 { grid-template-columns:1fr; }
-      .grid-2 { grid-template-columns:1fr; }
-      .asistobe { grid-template-columns:1fr; }
-      .compare-kpis { grid-template-columns:1fr; }
-      .contrib-strip { grid-template-columns:1fr; }
-      .guard { grid-template-columns:repeat(2,1fr); }
-      section { padding:2.4rem 0 2rem; }
+    @media screen and (max-width: 840px) {
+      .wrap { padding: 0 22px; }
+      .page, .project, .closing { padding: 52px 0; }
+      .hero { padding: 48px 0 38px; }
+      .hero-profile-row { grid-template-columns: 1fr; gap: 18px; }
+      .profile-photo { width: 116px; height: 144px; }
+      .hero-copy { padding-top: 0; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .jd-map, .impact-row, .project-meta { grid-template-columns: 1fr; }
+      .project-head { grid-template-columns: 1fr; }
+      .badges { justify-content: flex-start; max-width: none; }
+      .structure-flow { grid-template-columns: 1fr; }
+      .structure-step::after { display: none; }
+      .arch-summary { grid-template-columns: 1fr; }
     }
 
-    /* ── Print (A4) ── */
-    @page { size:A4; margin:10mm 9mm; }
+    @page { size: A4; margin: 10mm 9mm; }
     @media print {
-      body { background:#fff; font-size:10.5px; line-height:1.5; }
-      .wrap { max-width:100%; padding:0 8mm; }
-      .hero { padding:1.2rem 0 0.9rem; }
-      h1 { font-size:22px; }
-      .subhead { font-size:11px; margin-bottom:0.8rem; }
-      .hero-grid { gap:0.7rem; margin-top:0.6rem; }
-      .hero-copy p { font-size:9.5px; line-height:1.55; margin-bottom:0.35rem; }
-      .hero-card { padding:0.6rem 0.7rem; }
-      .hero-card h3 { font-size:9px; margin-bottom:0.3rem; }
-      .hero-card div, .hero-card li { font-size:9px; line-height:1.5; }
-      .stats { padding:0.7rem 0; gap:0.3rem; }
-      .stat { padding:0.5rem 0.6rem; }
-      .stat strong { font-size:13px; margin-bottom:0.15rem; }
-      .stat span { font-size:8.5px; line-height:1.35; }
-      section { padding:1rem 0 0.8rem; break-inside:auto; page-break-inside:auto; }
-      .section-label { font-size:8.5px; margin-bottom:0.2rem; }
-      .section-title { font-size:14px; margin-bottom:0.2rem; }
-      .section-intro { font-size:9.5px; margin-bottom:0.7rem; }
-      .grid-3, .grid-2 { gap:0.4rem; }
-      .info-card { padding:0.55rem 0.7rem; }
-      .info-card h3 { font-size:10px; margin-bottom:0.2rem; }
-      .info-card p { font-size:9px; line-height:1.55; }
-      .project-name { font-size:14px; }
-      .project-tagline { font-size:9.5px; margin-top:0.4rem; }
-      .project-oneliner { font-size:9.5px; line-height:1.6; margin-bottom:0.35rem; }
-      .project-intro { font-size:9.5px; line-height:1.6; margin-top:0.4rem; }
-      .project-fit { padding:0.5rem 0.65rem; margin-top:0.4rem; }
-      .project-fit-label { font-size:8px; margin-bottom:0.2rem; }
-      .project-fit p { font-size:9px; line-height:1.55; }
-      .github-link { font-size:8.5px; padding:0.2rem 0.55rem; margin-top:0.4rem; }
-      .contrib-strip { gap:0.3rem; margin-top:0.4rem; break-inside:avoid; page-break-inside:avoid; }
-      .contrib-item { padding:0.45rem 0.55rem; }
-      .contrib-head { font-size:8px; margin-bottom:0.15rem; }
-      .contrib-body { font-size:8.5px; line-height:1.5; }
-      .asistobe { gap:0.4rem; margin:0.6rem 0 0.7rem; break-inside:avoid; page-break-inside:avoid; }
-      .asistobe h4 { font-size:10px; }
-      .asistobe h4::before { font-size:7.5px; padding:0.1rem 0.3rem; }
-      .asis, .tobe { padding:0.5rem 0.6rem; }
-      .asis .label, .tobe .label { font-size:8px; margin-bottom:0.3rem; padding:0.1rem 0.35rem; }
-      .compare-points li { font-size:8.5px; line-height:1.55; padding-left:0.7rem; }
-      .compare-points li::before { top:0.4rem; width:0.22rem; height:0.22rem; }
-      .compare-kpis { gap:0.3rem; margin:0.5rem 0 0.6rem; break-inside:avoid; page-break-inside:avoid; }
-      .compare-kpi { padding:0.45rem 0.55rem; }
-      .kpi-name { font-size:8px; margin-bottom:0.3rem; }
-      .kpi-note { font-size:8.5px; line-height:1.45; margin-top:0.3rem; }
-      .bar-row { grid-template-columns:1.9rem 1fr auto; gap:0.25rem; }
-      .bar-label { font-size:7.5px; }
-      .bar-track { height:0.35rem; }
-      .bar-value { font-size:8.5px; }
-      .delta-value { font-size:14px; }
-      .delta-meta { font-size:7.5px; margin-top:0.15rem; }
-      .flow-box { padding:0.5rem 0.6rem; margin:0.5rem 0 0.6rem; break-inside:avoid; page-break-inside:avoid; }
-      .flow-box-title { font-size:8px; margin-bottom:0.3rem; }
-      .flow-chain { gap:0.2rem; }
-      .flow-node { padding:0.3rem 0.35rem; flex:1 1 80px; min-width:65px; }
-      .flow-node strong { font-size:8px; margin-bottom:0.1rem; }
-      .flow-node span { font-size:7.5px; line-height:1.3; }
-      .flow-arrow { font-size:9px; }
-      .guard { gap:0.25rem; margin-top:0.3rem; break-inside:avoid; page-break-inside:avoid; }
-      .guard-item { padding:0.3rem 0.35rem; }
-      .guard-item strong { font-size:7.5px; margin-bottom:0.1rem; }
-      .guard-item span { font-size:7.5px; line-height:1.3; }
-      .story { padding:0.5rem 0.65rem; margin-top:0.4rem; break-inside:avoid; page-break-inside:avoid; }
-      .story::before { top:0.6rem; width:5px; height:5px; left:-3.5px; }
-      .story h4 { font-size:10px; margin-bottom:0.2rem; }
-      .story-label { font-size:7.5px; margin-bottom:0.2rem; }
-      .story li { font-size:8.5px; line-height:1.55; margin-bottom:0.2rem; padding-left:0.6rem; }
-      .retro-box { padding:0.5rem 0.7rem; margin-top:0.5rem; break-inside:avoid; page-break-inside:avoid; }
-      .retro-label { font-size:7.5px; margin-bottom:0.2rem; }
-      .retro-box h4 { font-size:10px; margin-bottom:0.3rem; line-height:1.35; }
-      .retro-box li { font-size:8.5px; line-height:1.55; margin-bottom:0.25rem; }
-      .tech-row { gap:0.2rem; margin-top:0.4rem; }
-      .tech-tag { font-size:7.5px; padding:0.1rem 0.35rem; }
-      .cta-lead { font-size:9.5px; line-height:1.55; margin:0 auto 0.6rem; }
-      .cta-headline { font-size:15px; margin:0.3rem auto 0.7rem; }
-      .cta-item { margin:0 auto 0.6rem; }
-      .cta-item h4 { font-size:9.5px; margin-bottom:0.15rem; }
-      .cta-item p { font-size:9px; line-height:1.5; }
-      .workstyle-list li { font-size:9px; line-height:1.55; padding:0.35rem 0; }
-      .closing { padding:0.9rem 0 1.2rem; break-inside:avoid; page-break-inside:avoid; }
-      .closing-banner { padding:0.9rem 1rem 1rem; border-radius:12px; }
-      .closing-banner h2 { font-size:13px; margin-bottom:0.4rem; line-height:1.25; }
-      .closing-banner p { font-size:9px; line-height:1.55; }
+      body { font-size: 10.9px; line-height: 1.58; }
+      .wrap { max-width: none; padding: 0; }
+      .hero { padding: 0 0 18px; border-bottom: 2px solid var(--ink); page-break-after: auto; }
+      .hero-profile-row { grid-template-columns: 112px minmax(0, 1fr); gap: 10px; }
+      .profile-photo { width: 104px; height: 130px; border-radius: 3px; }
+      .hero-copy { padding-top: 4px; }
+      .page, .project { padding: 30px 0; border-bottom: 1px solid var(--line); page-break-after: auto; }
+      .closing { display: none !important; }
+      main.wrap { display: block; }
+      main > .project {
+        min-height: 268mm;
+        padding-top: 24px;
+        padding-bottom: 14px;
+        border-bottom: 0;
+        break-before: page;
+        page-break-before: always;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      main > .project:last-of-type { min-height: auto; }
+      h1 { font-size: 24px; line-height: 1.12; margin-bottom: 8px; }
+      .lead, .section-intro, .project-one { font-size: 10.8px; }
+      .lead { line-height: 1.52; }
+      .hero-lead-wide { max-width: none; margin-top: 10px; font-size: 10.2px; line-height: 1.52; text-align: left; }
+      .hero-lead-wide .line { display: inline; }
+      .hero-lead-wide .line + .line::before { content: " "; }
+      .lead .line + .line { margin-top: 0; }
+      .section-label { margin-bottom: 7px; }
+      .section-title { font-size: 26px; margin-bottom: 9px; }
+      .section-intro { margin-bottom: 16px; line-height: 1.62; }
+      .hero-grid { margin-top: 14px; }
+      .hero-grid { display: grid !important; grid-template-columns: minmax(0, 1fr) max-content !important; gap: 8px; align-items: start !important; }
+      .hero-card { padding: 10px 11px; border-radius: 8px; }
+      .hero-card h3 { margin-bottom: 5px; font-size: 8.9px; }
+      .hero-card p, .hero-card li { font-size: 9.3px; line-height: 1.44; }
+      .contact { gap: 6px; }
+      .contact a { width: 30px; height: 30px; }
+      .contact svg { width: 15px; height: 15px; }
+      .notion-mark { font-size: 14px; }
+      .structure-flow { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 6px; }
+      .structure-step { padding: 8px 8px 7px; border-radius: 7px; }
+      .structure-step::after { right: -7px; font-size: 11px; }
+      .structure-no { margin-bottom: 4px; font-size: 7.6px; letter-spacing: 0.08em; }
+      .structure-step h3 { margin-bottom: 4px; font-size: 10px; }
+      .structure-step p { font-size: 8.6px; line-height: 1.42; }
+      .structure-principle { margin-top: 9px; padding: 7px 9px; font-size: 9.3px; line-height: 1.45; }
+      .jd-card, .impact, .meta-card, .domain-box, .retrospective { padding: 10px 11px; border-radius: 8px; border-color: #d8e1ee; background: #fff; }
+      .hero-card, .jd-card, .impact, .meta-card, .domain-box, .retrospective, .arch-panel, .breakdown-section, .structure-step { break-inside: avoid; page-break-inside: avoid; }
+      .jd-map { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 8px; }
+      .impact-row { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 8px; margin-top: 16px; }
+      .impact .value { font-size: 18px; }
+      .badges { max-width: 238px; gap: 4px 5px; align-content: flex-start; }
+      .badge { padding: 3px 6px; border: 1px solid #d8e1ee; background: #fff; color: var(--ink); font-size: 7.8px; line-height: 1.18; }
+      .badge.jd, .badge.blue { border-color: #cbd9ea; background: #fff; color: var(--accent); }
+      .project-head { display: grid !important; grid-template-columns: 1fr auto !important; margin-bottom: 16px; }
+      .project-name { font-size: 23px; }
+      .project-one { line-height: 1.64; }
+      .project-meta { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 8px; margin-bottom: 15px; }
+      .meta-card { min-height: 66px; padding: 8px 9px; }
+      .arch-panel { padding: 12px; border-radius: 9px; margin: 15px 0; background: #fff; }
+      .arch-node { flex-basis: 82px; min-height: 48px; padding: 7px; font-size: 9.5px; border-radius: 8px; }
+      .arch-arrow { font-size: 13px; }
+      .mermaid-wrap { min-width: 640px; padding: 10px; border-radius: 9px; }
+      .mermaid-wrap.compact { min-width: 620px; }
+      .mermaid-wrap.seoul-pipeline { min-width: 620px; max-width: 720px; padding: 10px; }
+      .mermaid { min-height: 150px; }
+      .mermaid svg { max-height: 210px; }
+      .mermaid-wrap.compact .mermaid svg { max-height: 190px; }
+      #seoul-pipeline { padding: 10px; margin: 12px 0; }
+      #seoul-pipeline .arch-title { margin-bottom: 6px; }
+      .seoul-pipeline .mermaid { min-height: 130px; }
+      .seoul-pipeline .mermaid svg { width: min(100%, 700px) !important; max-height: 190px; }
+      .arch-summary { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px; margin-top: 11px; }
+      .arch-summary-item { padding: 8px 9px; border-radius: 7px; background: #fff; }
+      .arch-summary-item b { margin-bottom: 3px; font-size: 8.4px; }
+      .arch-summary-item p { font-size: 8.2px; line-height: 1.42; }
+      .domain-box h3, .retrospective h3 { margin-bottom: 4px; font-size: 10.5px; }
+      .domain-box p, .retrospective p, .jd-card p { font-size: 9.8px; line-height: 1.6; }
+      .portfolio-breakdown { gap: 14px; margin-top: 16px; }
+      .breakdown-section h3 { margin-bottom: 6px; font-size: 10.6px; gap: 5px; }
+      .breakdown-section h3::before { font-size: 13px; }
+      .breakdown-section ul { gap: 4px; padding-left: 14px; }
+      .breakdown-section li { font-size: 9.35px; line-height: 1.54; }
+      .meta-card h4 { margin-bottom: 4px; font-size: 7.8px; letter-spacing: 0.09em; }
+      .meta-card p { font-size: 9.1px; line-height: 1.4; }
+      .domain-box, .retrospective { margin-top: 14px; padding: 11px 12px; border-left: 3px solid var(--accent); }
+
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <main class="page">
-      <header class="hero">
-        <div class="wrap">
-          <div class="eyebrow">GenON AI Engineer Intern</div>
-          <h1>LLM Agent 신뢰성과 RAG 품질을 데이터로 검증해<br>고객 솔루션에 연결하는 AI 엔지니어</h1>
-          <p class="subhead">윤경은 · Python 백엔드 · RAG/Vector Search · Agent 검증 · 배포 안정화</p>
-          <div class="hero-grid">
-            <div class="hero-copy">
-              <p>세 프로젝트(<strong>PyMate · WorkFlow Agent · Seoul Culture Map</strong>)에서 RAG 진단 · Agent 검증 게이트 · Intent 라우팅을 각각 지표 단위로 측정해 본 경험이 있습니다. <strong>실패 지점을 분리해 검증하고 백엔드 구조로 고치는 방식</strong>으로 일합니다.</p>
-            </div>
-            <div class="hero-card">
-              <h3>Contact</h3>
-              <div class="contact">
-                <div><a href="mailto:yge0307@gmail.com">yge0307@gmail.com</a></div>
-                <div><a href="https://github.com/ykgstar37-lab">github.com/ykgstar37-lab</a></div>
-                <div><a href="https://yge-portfolio.vercel.app/">yge-portfolio.vercel.app</a></div>
-              </div>
-              <h3>Background</h3>
-              <ul>
-                <li>가천대학교 응용통계학과</li>
-                <li>SK Networks Family AI Camp 수료</li>
-                <li>팀 2개 · 개인 1개 AI/Agent 프로젝트</li>
-                <li>Python, FastAPI, Django 중심 구현</li>
-              </ul>
-            </div>
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden;">
+    <symbol id="icon-github" viewBox="0 0 24 24">
+      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.06c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.05.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.7.82.58A12.01 12.01 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+    </symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24">
+      <path d="M4 6h16v12H4z" fill="none" stroke-width="2"/>
+      <path d="M4 7l8 6 8-6" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9" fill="none" stroke-width="2"/>
+      <path d="M3.5 12h17M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21M12 3c-2.4 2.5-3.6 5.5-3.6 9s1.2 6.5 3.6 9" fill="none" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+  </svg>
+    <header class="hero">
+    <div class="wrap">
+      <div class="hero-profile-row">
+        <div class="hero-side">
+          <img class="profile-photo" src="profile.jpg" alt="윤경은 프로필 사진">
+        </div>
+        <div class="hero-copy">
+          <span class="eyebrow">GenON AI Engineer Intern Portfolio</span>
+          <h1>
+            <span class="hero-title-line">GenON 공고와 연결한</span>
+            <span class="hero-title-line">Agent/RAG 문제 해결 경험</span>
+          </h1>
+        </div>
+      </div>
+      <p class="lead hero-lead-wide">
+        <span class="line">GenON 공고를 <strong>고객사별 업무·데이터를 테스트 가능한 Agent PoC로 바꾸고,</strong></span>
+        <span class="line"><strong>GenOS 테스트페이지에서 지표·로그로 검증하는 역할</strong>로 읽었습니다.</span>
+        <span class="line">3개 프로젝트를 <strong>테스트페이지·고객사 커스터마이징·모델 학습 데이터셋 관리·Agent 생성</strong> 관점으로 재정리했습니다.</span>
+      </p>
+      <div class="hero-grid">
+        <div class="hero-card">
+          <h3>Application Motivation</h3>
+          <p>
+            <span class="line">저는 GenON의 업무를 모델을 붙이는 데서 끝내지 않고,</span>
+            <span class="line">고객사별 실패 원인을 테스트페이지·API·로그·데이터셋으로 확인 가능하게 만드는 일로 보았습니다.</span>
+            <span class="line">WorkFlow Agent는 Agent 신뢰성, PyMate는 RAG 품질,</span>
+            <span class="line">Seoul Culture Map은 고객사 PoC의 비용·라우팅 문제를 보여주는 근거입니다.</span>
+          </p>
+        </div>
+        <div class="hero-card">
+          <h3>Links</h3>
+          <div class="contact" aria-label="Portfolio links">
+            <a href="mailto:yge0307@gmail.com" aria-label="Email" title="Email"><svg aria-hidden="true"><use href="#icon-mail"></use></svg></a>
+            <a href="https://github.com/ykgstar37-lab" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub"><svg aria-hidden="true"><use href="#icon-github"></use></svg></a>
+            <a href="https://yge-portfolio.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Web Portfolio" title="Web Portfolio"><svg aria-hidden="true"><use href="#icon-globe"></use></svg></a>
+            <a href="https://www.notion.so/Portfolio-0f5bec2d3d5183c59c0781ef20c9988a?source=copy_link" target="_blank" rel="noopener noreferrer" aria-label="Notion Portfolio" title="Notion Portfolio"><span class="notion-mark" aria-hidden="true">N</span></a>
           </div>
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
-      <div class="wrap">
-        <div class="stats">
-          <div class="stat"><strong>37%→85%</strong><span>WorkFlow Agent 정확도<br>· LoRA 데이터셋 재구성으로 회복</span></div>
-          <div class="stat"><strong>$0.020→$0.003</strong><span>Seoul Culture Map 요청 비용<br>· 85%↓ · 월 1만 요청 ~$200→~$30</span></div>
-          <div class="stat"><strong>0.83→0.97</strong><span>PyMate Context Precision<br>· RAGAS로 병목 재정의</span></div>
-          <div class="stat"><strong>0.92→0.78</strong><span>WorkFlow Agent 과신 보정<br>· Confidence calibration</span></div>
+  <section class="page">
+    <div class="wrap">
+      <div class="section-label">Portfolio Structure</div>
+      <h2 class="section-title">프로젝트 구성 의도</h2>
+      <p class="section-intro">
+        GenON 업무를 <strong>테스트 가능한 Agent PoC를 만들고, 고객사 데이터에 맞게 검증·커스터마이징하는 일</strong>로 해석했습니다.
+        그래서 3개 프로젝트를 아래 흐름으로 재배열했습니다.
+      </p>
+      <div class="structure-flow" aria-label="Portfolio Structure">
+        <div class="structure-step">
+          <span class="structure-no">01 · WorkFlow Agent</span>
+          <h3>Agent 신뢰성 검증</h3>
+          <p>고신뢰 오답을 <strong>Guardrail·데이터셋</strong> 문제로 다뤘습니다.</p>
+        </div>
+        <div class="structure-step">
+          <span class="structure-no">02 · PyMate</span>
+          <h3>RAG 품질 진단</h3>
+          <p>부정확한 답변을 <strong>검색 병목</strong>과 평가 지표로 분해했습니다.</p>
+        </div>
+        <div class="structure-step">
+          <span class="structure-no">03 · Seoul Culture Map</span>
+          <h3>고객 PoC 비용/라우팅</h3>
+          <p>질의 유형별 경로를 나눠 <strong>비용·지연</strong>을 줄였습니다.</p>
+        </div>
+        <div class="structure-step">
+          <span class="structure-no">GenON Fit</span>
+          <h3>테스트·커스터마이징</h3>
+          <p>실패 원인을 로그와 지표로 확인하는 <strong>Agent 테스트 구조</strong>로 연결했습니다.</p>
+        </div>
+      </div>
+      <p class="structure-principle">
+        읽는 기준은 하나입니다. <strong>기능을 만들었다</strong>가 아니라,
+        문제를 어떻게 정의했고 어떤 구조로 검증했으며 그 결과가 GenON의 고객사 Agent 업무에 어떻게 쓰이는지 보이도록 구성했습니다.
+      </p>
+
+      <div class="impact-row">
+        <div class="impact"><span class="value">37→85%</span><span class="name">Agent 정확도</span><p>Guardrail + confidence 보정</p></div>
+        <div class="impact"><span class="value">0.83→0.97</span><span class="name">RAG Precision</span><p>Embedding + hybrid retrieval</p></div>
+        <div class="impact"><span class="value">70→97%</span><span class="name">JSON Validity</span><p>Structured output validation</p></div>
+        <div class="impact"><span class="value">85%↓</span><span class="name">LLM Cost</span><p>Intent routing으로 호출 절감</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page">
+    <div class="wrap">
+      <div class="section-label">JD Fit Summary</div>
+      <h2 class="section-title">공고에서 읽은 역할과 제 경험의 연결</h2>
+      <p class="section-intro">
+        GenON 공고를 <strong>테스트 가능한 Agent 흐름을 만들고, 고객사별 실패 원인을 지표·로그·데이터셋으로 좁히는 역할</strong>로 읽었습니다.
+        아래 4개 관점만 먼저 제시하고, 세부 근거는 각 프로젝트의 GenON 적용 포인트에서 풀었습니다.
+      </p>
+      <div class="jd-map">
+        <div class="jd-card"><h3>테스트 가능한 Agent</h3><p>FastAPI·SSE·로그·평가 지표로 Agent 응답 실패를 화면과 기록에서 확인할 수 있게 만들었습니다.</p></div>
+        <div class="jd-card"><h3>고객사 커스터마이징</h3><p>문서 검색, 판단 Agent, Guardrail, 비용 라우팅을 분리해 도메인별 교체가 가능한 구조로 설계했습니다.</p></div>
+        <div class="jd-card"><h3>데이터셋/평가 루프</h3><p>RAGAS와 오답 로그 19건 재구성으로 품질 하락 원인을 데이터 단위에서 다시 추적했습니다.</p></div>
+        <div class="jd-card"><h3>API/운영화</h3><p>REST endpoint, SSE streaming, provider abstraction, Docker/AWS 배포로 실험을 서비스 형태로 연결했습니다.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <article class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-no">Project 01 · Agent Reliability</div>
+          <div class="project-title-row">
+            <h2 class="project-name">WorkFlow <span class="title-keep">Agent <a class="github-icon-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM" target="_blank" rel="noopener noreferrer" aria-label="WorkFlow Agent GitHub 저장소"><svg><use href="#icon-github"></use></svg></a></span></h2>
+          </div>
+          <p class="project-one">
+            LLM Agent가 “모른다”고 말해야 할 상황에서 높은 confidence로 오답을 내는 문제를
+            <strong>서버 검증 게이트와 데이터셋 재구성</strong>으로 해결한 사내 규정 업무 보조 Agent 프로젝트입니다.
+          </p>
+        </div>
+        <div class="badges">
+          <span class="badge jd">Agent 생성</span><span class="badge jd">데이터셋 관리</span><span class="badge blue">vLLM</span><span class="badge">LoRA</span><span class="badge">FastAPI</span>
         </div>
       </div>
 
-      <section>
-        <div class="wrap">
-          <p class="section-label">Main Project ? Project 01</p>
-          <h2 class="section-title">AI 엔지니어 직무 매칭 1순위: PyMate (RAG·임베딩)</h2>
-          <p class="section-intro">RAGAS 진단·임베딩 모델 업그레이드·하이브리드 검색 도입으로 RAG 검색 품질을 끌어올린 프로젝트.</p>
+      <div class="project-meta">
+        <div class="meta-card"><h4>일정</h4><p>2026.02 ~ 2026.04<br><strong>8주</strong></p></div>
+        <div class="meta-card"><h4>기술 스택</h4><p>LangGraph, FastAPI, vLLM, LoRA, Qdrant, Docker, RunPod A100</p></div>
+        <div class="meta-card"><h4>참여 인력</h4><p>팀 4명<br><strong>검증·서빙 파이프라인 담당</strong></p></div>
+        <div class="meta-card"><h4>서비스</h4><p>사내 규정 질의에 근거와 판단 결과를 제공하는 업무 보조 Agent</p></div>
+        <div class="meta-card"><h4>운영 기준</h4><p>오답이 업무 의사결정에 영향을 주므로 정확도보다 검증 가능성 우선</p></div>
+      </div>
 
-          <article class="project">
-            <div class="project-header">
-              <div class="badges">
-                <span class="badge badge-dark">Team 4명</span>
-                <span class="badge badge-muted">2026.01 — 2026.02</span>
-                <span class="badge badge-blue">RAG · 측정 · 배포</span>
-              </div>
-              <h3 class="project-name">PyMate</h3>
-              <p class="project-tagline">"LLM이 문제"라는 가정을 RAGAS로 반증하고 검색 구조 재설계</p>
-              <p class="project-oneliner">RAGAS로 검색·생성을 분리 측정해 LLM 교체 가설을 기각하고 임베딩 한계를 병목으로 식별, Precision <strong>0.83→0.97</strong> / Recall <strong>0.70→0.79</strong>로 개선했습니다.</p>
-              <div class="project-fit">
-                <div class="project-fit-label">Role Fit</div>
-                <p><strong>측정 우선 · 병목 재정의 · 배포 안정화</strong>. 검색 품질을 분리 측정하고 프로덕션 전환까지 책임졌습니다.</p>
-              </div>
-              <a class="github-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team">GitHub Repository</a>
-              <div class="contrib-strip">
-                <div class="contrib-item share">
-                  <div class="contrib-head">My Ownership</div>
-                  <div class="contrib-body">
-                    <strong>팀 4명 중 RAG 평가·임베딩 영역 담당</strong> — 지표 정의 · 모델 업그레이드 · Flask→Django 전환 · AWS EC2 운영. RAGAS 지표 정의와 임베딩 모델 선정은 본인이 주도해 진행했습니다.
-                  </div>
-                </div>
-                <div class="contrib-item">
-                  <div class="contrib-head">Process</div>
-                  <div class="contrib-body">RAGAS 4개 지표로 분리 측정, 768D→3,072D 임베딩 교체, Flask→Django 전환, AWS EC2 배포까지 연결했습니다.</div>
-                </div>
-                <div class="contrib-item">
-                  <div class="contrib-head">Outcome</div>
-                  <div class="contrib-body">Precision 0.83→0.97, Recall 0.70→0.79, 체감 응답 시간 약 1초 단축을 만들었습니다.</div>
-                </div>
-              </div>
-            </div>
+      <div class="arch-panel">
+        <div class="arch-title">Architecture · Agent Reliability Gate</div>
+        <div class="mermaid-wrap compact">
+          <pre class="mermaid">
+flowchart LR
+    User([사용자]) --> FE["React Frontend&lt;br/&gt;SSE UI"]
+    FE --> BE["FastAPI Backend"]
+    BE --> Orch["LangGraph&lt;br/&gt;Orchestrator"]
+    Orch --> Intent["Intent Classifier&lt;br/&gt;ONNX"]
+    Intent --> Router{"Agent Router"}
+    Router --> Doc["문서 Agent"]
+    Router --> Judge["판단 Agent"]
+    Router --> Schedule["일정 Agent"]
+    Judge --> RAG["RAG source=regulations"]
+    RAG --> Hybrid["Hybrid Search&lt;br/&gt;BM25+Vector+RRF"]
+    Hybrid --> Qdrant[("Qdrant")]
+    Judge --> Guard["4중 Guardrail&lt;br/&gt;keyword/article/category/consistency"]
+    Judge --> Provider["Provider Adapter&lt;br/&gt;GPT/Claude/vLLM"]
+    Provider --> vLLM["vLLM + LoRA"]
+    Guard -->|pass| Answer["Verified Answer"]
+    Guard -->|fail| Fallback["Clarify / No-answer"]
+    Fallback --> Answer
+    vLLM --> Answer
 
-            <div class="story goal">
-              <div class="story-label">Goal</div>
-              <h4>시작 배경과 목표</h4>
-              <ul>
-                <li>검색·생성 어느 단계가 병목인지 분리되지 않은 채 LLM 교체 가설이 먼저 거론됐습니다.</li>
-                <li>더 비싼 모델로 가기 전에 <strong>원인을 분리 측정</strong>해 실제 원인에 맞는 개선을 하는 것이 목표였습니다.</li>
-              </ul>
-            </div>
-
-            <div class="story problem">
-              <div class="story-label">Role · Team</div>
-              <h4>팀 4명 분담과 내 담당 영역</h4>
-              <ul>
-                <li>팀 구성: <span class="emph">윤경은(BE/Data · 검색 품질 진단·RAG·인프라)</span>, BE 협업 1명, FE 1명, 콘텐츠/기획 1명 — 총 4명 분담.</li>
-                <li><strong>내 담당 산출물</strong>: ① RAGAS로 검색·생성 분리 측정해 LLM이 아닌 <strong>임베딩 모델 한계</strong>를 병목으로 식별, ② 인프라 비용·성능 트레이드오프를 고려한 <strong>768D→3,072D 임베딩 모델 업그레이드</strong>(Context Precision 0.83→0.97), ③ HyDE + 하이브리드 검색(BM25+RRF) <strong>다단계 RAG 파이프라인</strong> 설계, Reranker는 검색 품질을 높이되 레이턴시 병목을 최소화하도록 마지막 단계에만 적용, ④ <strong>Flask→Django 마이그레이션</strong>(ORM·인증·정적파일 수동 구성을 프레임워크 기본 제공으로 정리), ⑤ <strong>Nginx + Gunicorn 502 디버깅</strong>으로 AWS 배포 환경 안정화(장애 0건 운영).</li>
-                <li><strong>공동 작업</strong>: Quiz API 3종(객관식·O/X·단답형) 설계 — 응답 스키마·채점 로직을 BE 팀원과 협의해 정리. 검색 평가·랭킹 구조·프로덕션 전환은 본인 주도.</li>
-              </ul>
-            </div>
-
-            <div class="asistobe">
-              <h4>RAG 병목 재정의</h4>
-              <div class="asis">
-                <span class="label">AS-IS</span>
-                <ul class="compare-points">
-                  <li><strong>문제 정의 부재.</strong> "답변이 부정확하다"는 피드백만 반복되고, 검색 문제인지 생성 문제인지 분리 측정 불가.</li>
-                  <li><strong>잘못된 대응 방향.</strong> 병목 확인 없이 바로 LLM 교체로 가자는 의견, 비용만 늘고 원인을 놓칠 위험.</li>
-                  <li><strong>제품 리스크.</strong> 관련 없는 문서가 먼저 노출되어 첫 답변 성공률이 흔들리고, 재질문 증가 가능성.</li>
-                </ul>
-              </div>
-              <div class="tobe">
-                <span class="label">TO-BE</span>
-                <ul class="compare-points">
-                  <li><strong>병목 분리.</strong> RAGAS 4개 지표로 검색·생성을 분리 측정해, Faithfulness는 높고 Precision이 낮다는 근거로 embedding 병목 특정.</li>
-                  <li><strong>해결 구조.</strong> 768D→3,072D 교체, HyDE, BM25+RRF 조합으로 짧은 질문과 긴 문서 사이의 vocabulary mismatch 해소.</li>
-                  <li><strong>결과 해석.</strong> Precision 0.83→0.97 (+14.4%p). 첫 답변 성공률과 재질문 감소의 선행지표로 해석.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="story solution">
-              <div class="story-label">Decisions · "왜 이 숫자인가"</div>
-              <h4>판단 근거</h4>
-              <ul>
-                <li><strong>왜 임베딩 교체부터 했나</strong>: RAGAS 측정에서 <span class="emph">Context Precision 0.83</span>이 병목, Answer Relevancy는 양호. LLM 교체가 무의미하다고 판단해 검색 품질을 먼저 건드렸습니다.</li>
-                <li><strong>왜 768D → 3,072D인가</strong>: 1,024D·1,536D도 후보였지만 text-embedding-3-large가 한국어 교육 도메인 용어를 더 잘 잡는 걸 평가셋에서 확인. 단일 교체로 Precision <span class="emph">+14.4%p</span>.</li>
-                <li><strong>왜 Reranker를 경량화했나</strong>: bge-reranker-v2-m3는 정확하지만 무거워, ms-marco-MiniLM-L6-v2로 교체해 약 <span class="emph">-1초</span>. 정확도 손실은 평가셋에서 무시할 수준임을 미리 확인.</li>
-              </ul>
-            </div>
-
-            <div class="story result">
-              <div class="story-label">Result · 산출물</div>
-              <h4>정성 결과</h4>
-              <ul>
-                <li>HyDE+BM25+Cross-encoder Reranker 검색 구조 + <span class="emph">RAGAS 평가셋·측정 루프</span>로 검색·생성 분리 진단 체계 구축, Flask→Django 마이그레이션 + AWS EC2 배포 안정화(운영 중 <span class="emph">장애 0건</span>)</li>
-              </ul>
-            </div>
-
-            <div class="compare-kpis">
-              <div class="compare-kpi">
-                <div class="kpi-name">관련 문서 상위 노출</div>
-                <div class="bar-chart">
-                  <div class="bar-row"><span class="bar-label">AS-IS</span><div class="bar-track"><div class="bar-fill before" style="width:83%;"></div></div><span class="bar-value">0.83</span></div>
-                  <div class="bar-row"><span class="bar-label">TO-BE</span><div class="bar-track"><div class="bar-fill after" style="width:97%;"></div></div><span class="bar-value">0.97</span></div>
-                </div>
-                <div class="kpi-note">관련 문서가 먼저 보이도록 랭킹 구조를 재설계했습니다 (+14%p).</div>
-              </div>
-              <div class="compare-kpi">
-                <div class="kpi-name">검색 커버리지 확대</div>
-                <div class="bar-chart">
-                  <div class="bar-row"><span class="bar-label">AS-IS</span><div class="bar-track"><div class="bar-fill before" style="width:70%;"></div></div><span class="bar-value">0.70</span></div>
-                  <div class="bar-row"><span class="bar-label">TO-BE</span><div class="bar-track"><div class="bar-fill after" style="width:79%;"></div></div><span class="bar-value">0.79</span></div>
-                </div>
-                <div class="kpi-note">Recall도 함께 올려 검색 커버리지를 넓히고 누락을 줄였습니다 (+9%p).</div>
-              </div>
-              <div class="compare-kpi">
-                <div class="kpi-name">RAG 병목 재정의</div>
-                <div class="delta-metric">
-                  <div class="delta-value">embedding</div>
-                  <div class="delta-meta">LLM ✗ · 측정으로 증명</div>
-                </div>
-                <div class="kpi-note">RAGAS로 검색·생성을 분리 측정해 LLM이 아닌 embedding이 병목임을 확인했습니다.</div>
-              </div>
-            </div>
-
-            <div class="retro-box">
-              <p class="retro-label">Retrospective · 아쉬운 점</p>
-              <h4>아쉬운 점과 다음 프로젝트로 이어진 기준</h4>
-              <ul>
-                <li><span class="emph">[높음]</span> 모니터링/로깅 부족 — 프로덕션에서 어떤 질문이 실패하는지 추적하는 체계가 없어 개선 방향 설정이 어려웠습니다. 다음 프로젝트에서는 Sentry + 구조화 로그를 1일차에 넣고 싶습니다.</li>
-                <li><span class="emph">[중간]</span> Reranker 도입 후 응답 +1초 — 정확도 vs 속도 트레이드오프를 사용자 관점에서 A/B 검증하지 못했습니다.</li>
-                <li><strong>이어진 기준</strong>: "원인을 LLM 탓으로 돌리기 전에 검색·생성을 분리 측정한다"는 절차를 WorkFlow Agent의 LoRA 학습 디버깅까지 같은 방식으로 적용했습니다 — RAG·학습 양쪽에서 "먼저 분리 측정한다"는 기준을 정착시켰습니다.</li>
-              </ul>
-            </div>
-
-            <div class="tech-row">
-              <span class="tech-tag hl">RAGAS</span><span class="tech-tag hl">Qdrant</span><span class="tech-tag">LangChain</span><span class="tech-tag">Django</span><span class="tech-tag">Nginx</span><span class="tech-tag">AWS EC2</span>
-            </div>
-          </article>
+    classDef infra fill:#f8fafc,stroke:#a8b7cc,color:#151515;
+    classDef agent fill:#eef3f9,stroke:#1f3a5f,color:#151515,stroke-width:1.5px;
+    classDef risk fill:#f6f8fb,stroke:#1f3a5f,color:#151515,stroke-width:1.5px;
+    class Orch,Intent,Router,Doc,Schedule agent;
+    class Judge,Guard,Fallback,Answer risk;
+    class BE,FE,RAG,Hybrid,Qdrant,Provider,vLLM infra;
+          </pre>
         </div>
-      </section>
-
-      <section>
-        <div class="wrap">
-          <p class="section-label">More Projects ? Project 02-03</p>
-          <h2 class="section-title">Agent 개발·AI 솔루션 구축을 보여주는 두 프로젝트</h2>
-          <p class="section-intro">데이터 파이프라인·RAG 비용 설계와 Agent 신뢰성·자체 서빙 경험을 함께 보여주는 사례입니다.</p>
-
-          <article class="project">
-            <div class="project-header">
-              <div class="badges">
-                <span class="badge badge-dark">Personal</span>
-                <span class="badge badge-muted">2026.03 — 현재</span>
-                <span class="badge badge-blue">Agent Routing · 비용 최적화</span>
-              </div>
-              <h3 class="project-name">Seoul Culture Map</h3>
-              <p class="project-tagline">Intent 라우팅으로 요청당 비용 $0.020→$0.003 (85%↓)</p>
-              <p class="project-oneliner">서울시 문화시설 <strong>2,500+</strong>개 RAG 챗봇에서 Intent 라우팅으로 요청당 <strong>$0.020→$0.003 (85%↓)</strong>, 월 1만 요청 환산 <strong>~$200→~$30</strong>으로 절감했습니다.</p>
-              <div class="project-fit">
-                <div class="project-fit-label">Role Fit</div>
-                <p><strong>고객 데이터 서비스화 · 데이터 파이프라인 · 검색/RAG 비용 설계</strong>와 맞닿은 프로젝트입니다. 호출 회피 분기 룰과 토큰 비용을 직접 설계·측정했습니다.</p>
-              </div>
-              <a class="github-link" href="https://github.com/ykgstar37-lab/seoul-culture-map">GitHub Repository</a>
-              <div class="contrib-strip">
-                <div class="contrib-item share">
-                  <div class="contrib-head">My Ownership</div>
-                  <div class="contrib-body">
-                    <strong>개인 프로젝트 — 1인 진행</strong>. 문제 정의·LangGraph 3-node 라우팅 설계·공공 API 2종 정규화·로컬 임베딩 파이프라인·SSE 스트리밍·AWS 배포·pytest 15건까지 진행했습니다.
-                  </div>
-                </div>
-                <div class="contrib-item">
-                  <div class="contrib-head">Process</div>
-                  <div class="contrib-body">공공 API 2종 정규화(좌표·카테고리 코드 불일치), LangGraph 3-node 설계, 로컬 임베딩 파이프라인, pytest 15개를 반복했습니다.</div>
-                </div>
-                <div class="contrib-item">
-                  <div class="contrib-head">Outcome</div>
-                  <div class="contrib-body">요청당 비용 ~$0.02→~$0.003, 첫 토큰 3-5s→~500ms, 10턴 세션 메모리로 반복 질문 감소.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="story goal">
-              <div class="story-label">Goal</div>
-              <h4>시작 배경과 목표</h4>
-              <ul>
-                <li>학술제 분석 결과가 PDF로만 남아 탐색 경험으로 이어지지 못했고, 모든 요청에 단일 LLM 호출을 태우는 구조는 비용이 과했습니다.</li>
-                <li>일상 대화와 검색형 질문을 분리해 <strong>불필요한 LLM 호출을 줄이는 구조</strong>를 만드는 것이 목표였습니다.</li>
-              </ul>
-            </div>
-
-            <div class="asistobe">
-              <h4>Agent Routing — 3-node 분리</h4>
-              <div class="asis">
-                <span class="label">AS-IS</span>
-                <ul class="compare-points">
-                  <li><strong>과한 단일 처리.</strong> 2,500+ 시설 질의를 모두 단일 LLM 호출로 처리해, 모든 요청에 전체 컨텍스트 주입.</li>
-                  <li><strong>비용 비효율.</strong> 단순 인사와 실제 검색 질의가 같은 파이프라인을 타면서 토큰 비용이 불필요하게 커짐.</li>
-                  <li><strong>품질 제어 한계.</strong> 의도 분류·검색·생성이 섞여 있어 어느 단계가 실패했는지 제어 어려움.</li>
-                </ul>
-              </div>
-              <div class="tobe">
-                <span class="label">TO-BE</span>
-                <ul class="compare-points">
-                  <li><strong>노드 분리.</strong> LangGraph 3-node 구조로 의도 분류·검색·응답 생성을 분리하고 각 노드를 독립 테스트 가능하게.</li>
-                  <li><strong>불필요한 호출 제거.</strong> 검색이 필요 없는 요청에는 DB/벡터 쿼리 자체를 건너뛰고, 로컬 임베딩으로 외부 API 비용도 절감.</li>
-                  <li><strong>결과.</strong> 요청당 비용 ~$0.02→~$0.003. "언제 검색하지 않을지"가 핵심 최적화 포인트임을 확인.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="asistobe">
-              <h4>컨텍스트 · 메모리 설계</h4>
-              <div class="asis">
-                <span class="label">AS-IS · 컨텍스트</span>
-                <ul class="compare-points">
-                  <li><strong>외부 의존성.</strong> OpenAI Embedding API로 요청마다 비용 발생, 외부 서비스 의존.</li>
-                  <li><strong>UX 지연.</strong> 응답 완료까지 3-5초로 대화 흐름이 끊길 위험.</li>
-                  <li><strong>문맥 단절.</strong> 세션 문맥 미유지로 같은 질문 반복, 어떤 정보를 언제 보여줄지 설계 부족.</li>
-                </ul>
-              </div>
-              <div class="tobe">
-                <span class="label">TO-BE · 컨텍스트</span>
-                <ul class="compare-points">
-                  <li><strong>로컬 임베딩.</strong> ChromaDB + all-MiniLM-L6-v2로 API 비용을 0으로 만들고 외부 의존성 제거.</li>
-                  <li><strong>문맥 유지.</strong> 최근 10턴 대화를 SQLite에 저장하는 단기 메모리로 세션 생성·조회·삭제 관리.</li>
-                  <li><strong>응답 체감 개선.</strong> SSE 토큰 스트리밍으로 첫 토큰 ~500ms, 200건 배치·재임베딩 스킵으로 비용도 최적화.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="story solution">
-              <div class="story-label">Decisions · "왜 이 숫자인가"</div>
-              <h4>판단 근거</h4>
-              <ul>
-                <li><strong>왜 로컬 임베딩인가</strong>: OpenAI embedding은 요청마다 비용·외부 의존성이 누적. all-MiniLM-L6-v2(384D)를 로컬로 돌려 월 <span class="emph">$0</span>, 변화 10% 이내 재임베딩 스킵으로 서버 재시작 30~60초 절약.</li>
-                <li><strong>왜 공공 API 2종을 통합했나</strong>: 서울 열린데이터광장(메타 풍부, 이미지 없음)과 Tour API(반대)를 좌표·카테고리 정규화로 결합해 <span class="emph">2,500+ 시설 + 1,177장 이미지</span> 확보.</li>
-                <li><strong>왜 LangGraph 3-node인가</strong>: 단일 호출 구조는 "인사 요청"에도 토큰을 소진. Intent→Retrieve→Generate로 분리해 검색 불필요 시 LLM 호출 자체를 건너뛰도록 설계 — <strong>$0.020→$0.003 (85%↓)</strong>의 직접 근거.</li>
-              </ul>
-            </div>
-
-            <div class="story result">
-              <div class="story-label">Result · 산출물</div>
-              <h4>정성 결과</h4>
-              <ul>
-                <li><span class="emph">시설 2,500+개 + 이미지 1,177장</span> 확보, LangGraph 3-node Agent + ChromaDB + SSE + Leaflet 시각화, <span class="emph">REST API 11개 · pytest 15개</span>, FastAPI 서빙 구성</li>
-              </ul>
-            </div>
-
-            <div class="compare-kpis">
-              <div class="compare-kpi">
-                <div class="kpi-name">요청당 비용</div>
-                <div class="delta-metric">
-                  <div class="delta-value">~$0.02 → ~$0.003</div>
-                  <div class="delta-meta">-85%↓ · 단일 LLM 호출 대비</div>
-                </div>
-                <div class="kpi-note">GPT-4o-mini 토큰 단가 기준 추정치로, Intent Routing이 일상 대화의 불필요한 LLM 호출을 차단해 요청당 85%↓, 월 1만 요청 환산 ~$200→~$30 절감.</div>
-              </div>
-              <div class="compare-kpi">
-                <div class="kpi-name">첫 토큰 응답 시간</div>
-                <div class="delta-metric">
-                  <div class="delta-value">3-5s → ~500ms</div>
-                  <div class="delta-meta">SSE 스트리밍 적용</div>
-                </div>
-                <div class="kpi-note">응답 완료를 기다리지 않고 첫 토큰부터 바로 보여주도록 바꿨습니다.</div>
-              </div>
-              <div class="compare-kpi">
-                <div class="kpi-name">세션 문맥 유지</div>
-                <div class="delta-metric">
-                  <div class="delta-value">0턴 → 10턴</div>
-                  <div class="delta-meta">SQLite 단기 메모리</div>
-                </div>
-                <div class="kpi-note">최근 10턴 대화를 저장해 세션 내 문맥을 유지하고 반복 질문을 줄였습니다.</div>
-              </div>
-            </div>
-
-            <div class="retro-box">
-              <p class="retro-label">Retrospective · 아쉬운 점</p>
-              <h4>호출 회피 설계로 비용을 결정한 사례</h4>
-              <ul>
-                <li><span class="emph">[높음]</span> 다국어(i18n) 미지원 — 외국인 관광객 대상 서비스인데 한국어만 구현. 다음 버전 1순위.</li>
-                <li><span class="emph">[중간]</span> TypeScript 미도입 — 좌표 필드명 불일치 같은 런타임 버그를 컴파일 타임에 잡을 수 있었을 것.</li>
-                <li><strong>배운 점</strong>: Agent routing은 "언제 LLM을 호출할지"를 고르는 비용 판단 문제. <strong>외부 API 의존성을 끊고 비용 곡선을 통제</strong>하는 운영 패턴이 트래픽 큰 서비스의 비용 설계로 이어진다고 봅니다.</li>
-              </ul>
-            </div>
-
-            <div class="tech-row">
-              <span class="tech-tag hl">OpenAI API</span><span class="tech-tag hl">LangGraph</span><span class="tech-tag">ChromaDB</span><span class="tech-tag">FastAPI</span><span class="tech-tag">SSE</span><span class="tech-tag">React</span>
-            </div>
-          </article>
-          <article class="project" style="margin-top:3rem;">
-            <div class="project-header">
-              <div class="badges">
-                <span class="badge badge-dark">Team 4명</span>
-                <span class="badge badge-muted">2026.02 — 2026.04</span>
-                <span class="badge badge-orange">AI · Guardrail · LoRA</span>
-              </div>
-              <h3 class="project-name">WorkFlow Agent</h3>
-            <p class="project-tagline">다단계 Guardrail + Confidence 보정으로 과신 응답 차단</p>
-            <p class="project-oneliner">고신뢰 오답(confidence <strong>0.92</strong>)을 서비스 노출 전에 차단하기 위한 검증 게이트를 설계해 정확도 <strong>37%→85%</strong>, JSON 유효율 <strong>70%→97%</strong>를 만들었습니다.</p>
-              <div class="project-fit">
-                <div class="project-fit-label">Role Fit</div>
-                <p><strong>AI 솔루션 신뢰성 · Guardrail · 자체 서빙</strong> 역량을 보여주는 프로젝트입니다. LLM 출력을 <strong>검증 대상</strong>으로 두고 Kanana-1.5-8B + LoRA v3 / FastAPI / LangGraph / vLLM으로 서빙했습니다.</p>
-              </div>
-              <a class="github-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM">GitHub Repository</a>
-              <div class="contrib-strip">
-                <div class="contrib-item share">
-                  <div class="contrib-head">My Ownership</div>
-                  <div class="contrib-body">
-                    <strong>팀 4명 중 AI 파이프라인(검증·서빙) 설계 책임</strong> — 판단 Agent · Guardrail · LoRA 데이터셋 · vLLM 서빙. 검증 게이트 정책·LoRA 데이터셋·서빙 구조의 아키텍처 설계를 주도하고, 코드 리뷰로 구현 디테일을 팀과 함께 확정했습니다.
-                  </div>
-                </div>
-                <div class="contrib-item">
-                  <div class="contrib-head">Process</div>
-                  <div class="contrib-body">오답 패턴을 4종(키워드·조항·카테고리·일관성)으로 분류해 Guardrail을 고정, LoRA 데이터셋 재구성으로 v3 회복(총 3,468건), Intent 분류 실험을 반복했습니다.</div>
-                </div>
-                <div class="contrib-item">
-                  <div class="contrib-head">Outcome</div>
-                  <div class="contrib-body">규정 도메인 GT QA <strong>200건</strong> LLM-as-a-judge 평가 기준, 정확도 37%→85%, JSON 유효율 70%→97%, confidence 0.92→0.78 보정, Intent F1 97.88%를 만들었습니다.</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="story goal">
-              <div class="story-label">Goal</div>
-              <h4>시작 배경과 목표</h4>
-              <ul>
-                <li>"정답을 잘 말하는 모델"이 아니라 "틀릴 때도 위험하게 굴지 않는 시스템"을 만드는 것이 목표였습니다.</li>
-                <li>정확도뿐 아니라 JSON 유효성·confidence calibration·환각 발생 여부를 함께 봐야 한다고 정의했습니다.</li>
-              </ul>
-            </div>
-
-            <div class="story problem">
-              <div class="story-label">Role · Team</div>
-              <h4>팀 4명 분담과 내 담당 영역</h4>
-              <ul>
-                <li>팀 구성: <span class="emph">윤경은(AI · 판단 Agent·RAG·LoRA 파인튜닝)</span>, 신지용(PM·오케스트레이터), 문지영(FE·Intent LoRA), 안혜빈(BE·FastAPI·DB·인증) — 총 4명 분담.</li>
-                <li><strong>내 담당 산출물</strong>: ① 판단 Agent 구조 설계, ② 다단계 Guardrail 구현(키워드·조항·카테고리·일관성 4종), ③ Confidence 보정 로직, ④ LoRA 데이터셋 재구성(총 3,468건), ⑤ 공통 LLM 모듈(provider 패턴) — GPT/Claude/vLLM을 1줄 교체로 전환, ⑥ PagedAttention 기반 vLLM으로 RunPod A100에 자체 모델 서빙.</li>
-                <li><strong>공동 작업</strong>: Intent 분류 라벨링(문지영과 라벨 기준 협의), LangGraph 오케스트레이터 흐름 통합(PM과).</li>
-              </ul>
-            </div>
-
-            <div class="asistobe">
-              <h4>Guardrail 설계</h4>
-              <div class="asis">
-                <span class="label">AS-IS</span>
-                <ul class="compare-points">
-                  <li><strong>위험한 실패.</strong> "인턴에게 AWS 접근 권한을 줘도 되나요?" 질의에 Base 모델이 오답을 내면서도 confidence 0.92를 반환.</li>
-                  <li><strong>환각 문제.</strong> 존재하지 않는 조항 번호를 근거처럼 제시해, 잘못된 응답이 더 신뢰롭게 보임.</li>
-                  <li><strong>기본 성능.</strong> 규정 판단 정확도 37.2%로 서비스 레이어에서 바로 쓰기 어려움.</li>
-                </ul>
-              </div>
-              <div class="tobe">
-                <span class="label">TO-BE</span>
-                <ul class="compare-points">
-                  <li><strong>차단 구조.</strong> 다단계 Guardrail로 키워드 매칭·조항 존재·카테고리 제한·일관성 모니터링 4종을 분리 적용.</li>
-                  <li><strong>Confidence 보정.</strong> RAG 품질이 0.2 미만이면 confidence를 max 0.4로 제한해 고신뢰 오답 차단.</li>
-                  <li><strong>결과.</strong> 37%→85%. 전수 ML 검증보다 규칙 기반으로 명확한 실패를 먼저 막음.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="flow-box">
-              <div class="flow-box-title">End-to-End Agent Pipeline</div>
-              <div class="flow-chain">
-                <div class="flow-node"><strong>Query</strong><span>"연차 쓸 수 있어?"</span></div>
-                <span class="flow-arrow">→</span>
-                <div class="flow-node"><strong>Intent</strong><span>F1 97.88%</span></div>
-                <span class="flow-arrow">→</span>
-                <div class="flow-node"><strong>RAG 9-stage</strong><span>HyDE+BM25+Vector+RRF+Reranker</span></div>
-                <span class="flow-arrow">→</span>
-                <div class="flow-node"><strong>Judgment</strong><span>Kanana-1.5-8B + LoRA v3</span></div>
-                <span class="flow-arrow">→</span>
-              <div class="flow-node hl"><strong>다단계 Guardrail + Confidence 보정</strong><span>틀릴 때의 거동 제어</span></div>
-              </div>
-              <div class="guard">
-                <div class="guard-item"><strong>① 키워드</strong><span>질문 핵심어가 답변에 포함됐는가</span></div>
-                <div class="guard-item"><strong>② 조항 존재</strong><span>인용한 조항이 실제 문서에 있는가</span></div>
-                <div class="guard-item"><strong>③ 카테고리</strong><span>다른 규정 카테고리 답변은 거절</span></div>
-                <div class="guard-item"><strong>④ 일관성</strong><span>같은 문서 내 앞뒤 모순 탐지</span></div>
-              </div>
-            </div>
-
-            <div class="asistobe">
-              <h4>LoRA 파인튜닝 — 데이터 양 vs 품질 실험</h4>
-              <div class="asis">
-                <span class="label">AS-IS</span>
-                <ul class="compare-points">
-                  <li><strong>초기 가설.</strong> "데이터를 많이 넣으면 좋아진다"는 가정으로 v2에서 98건을 추가 보강.</li>
-                  <li><strong>실험 결과.</strong> 성능이 오히려 <strong>-3.2%p 하락</strong>해 양적 확대가 개선으로 이어지지 않음.</li>
-                  <li><strong>원인.</strong> 재량 표현이 섞인 라벨 오염 발견 — 데이터 품질 자체가 병목.</li>
-                </ul>
-              </div>
-              <div class="tobe">
-                <span class="label">TO-BE</span>
-                <ul class="compare-points">
-                  <li><strong>정밀 타겟팅.</strong> v3에서 약점 <strong>19건</strong>만 재설계 (재량 표현 14건 + 경계 케이스 5건).</li>
-                  <li><strong>판단 전환.</strong> 양 확대 대신 데이터셋 구성 자체를 바꿔, 틀린 가설을 즉시 수정.</li>
-                  <li><strong>결과.</strong> <strong>85.4%</strong> 회복 — "더 많이"보다 "어디가 약한가"가 Agent 신뢰성의 출발점.</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="story solution">
-              <div class="story-label">Decisions · "왜 이 숫자인가"</div>
-              <h4>판단 근거</h4>
-              <ul>
-                <li><strong>왜 "4중" Guardrail인가</strong>: 오답 패턴을 분류했더니 키워드 누락·조항 환각·카테고리 혼선·앞뒤 모순 4종이 전부. 3중은 모순을 못 잡고 5중부터 직교성이 무너져 4개로 고정.</li>
-                <li><strong>왜 LoRA v3는 19건만 / RAG는 학습에 안 넣었나</strong>: v2에서 98건 보강했더니 <span class="emph">-3.2%p 하락</span> → 라벨 오염 원인, 약점 19건만 재설계. 학습에 RAG 결과를 섞으면 <span class="emph">-9.8%p 급락</span>해 "학습은 깨끗한 데이터, 서빙은 RAG 삽입"으로 분리 안정화.</li>
-              </ul>
-            </div>
-
-            <div class="story result">
-              <div class="story-label">Result · 산출물</div>
-              <h4>정성 결과</h4>
-              <ul>
-                <li>RAG <span class="emph">다단계 파이프라인</span>(HyDE+BM25/Vector+RRF+Reranker) + 문서 파싱 3종으로 규정 10개 문서 교차 검색, FastAPI+LangGraph+vLLM+LoRA+Qdrant+Docker+<span class="emph">RunPod A100</span> 서빙 인프라 구성</li>
-              </ul>
-            </div>
-
-            <div class="compare-kpis">
-              <div class="compare-kpi">
-                <div class="kpi-name">규정 판단 정확도</div>
-                <div class="bar-chart">
-                  <div class="bar-row"><span class="bar-label">AS-IS</span><div class="bar-track"><div class="bar-fill before" style="width:37%;"></div></div><span class="bar-value">37%</span></div>
-                  <div class="bar-row"><span class="bar-label">TO-BE</span><div class="bar-track"><div class="bar-fill after" style="width:85%;"></div></div><span class="bar-value">85%</span></div>
-                </div>
-                <div class="kpi-note">328건 사내 규정 평가셋 기준으로 정확도와 안정성을 함께 끌어올렸습니다 (+48%p).</div>
-              </div>
-              <div class="compare-kpi">
-                <div class="kpi-name">과신 응답 보정</div>
-                <div class="bar-chart">
-                  <div class="bar-row"><span class="bar-label">AS-IS</span><div class="bar-track"><div class="bar-fill before" style="width:92%;"></div></div><span class="bar-value">0.92</span></div>
-                  <div class="bar-row"><span class="bar-label">TO-BE</span><div class="bar-track"><div class="bar-fill after" style="width:78%;"></div></div><span class="bar-value">0.78</span></div>
-                </div>
-                <div class="kpi-note">과신 confidence를 보정해, 틀리면서 확신하는 응답을 줄였습니다 (-0.14).</div>
-              </div>
-            </div>
-
-            <div class="retro-box">
-              <p class="retro-label">Retrospective · 아쉬운 점 / 다음에 하고 싶은 것</p>
-              <h4>Agent를 신뢰의 대상이 아닌 검증의 대상으로</h4>
-              <ul>
-                <li><span class="emph">[높음]</span> conditional(재량 표현) 정확도 <strong>78%</strong> — 목표 85% 대비 -7%p 미달. 경계 모호 케이스("필요한 경우" 등) 학습 데이터 추가 필요.</li>
-                <li><span class="emph">[중간]</span> 멀티턴 미지원 — 단건 Q&amp;A 구조라 세션 맥락이 끊김. 다음 버전에 세션 메모리 추가 예정.</li>
-                <li><span class="emph">[낮음]</span> Reranker가 응답에 <strong>+5.7초</strong>. 비동기 Reranking·top-k 캐싱으로 개선 여지.</li>
-                <li><strong>배운 점</strong>: Agent 시스템은 "잘 답하는 능력"만큼 "틀릴 때의 거동"이 중요. sLLM 신뢰성을 <strong>데이터·코드·인프라 세 층에서</strong> 다루는 감각을 익혔습니다.</li>
-              </ul>
-            </div>
-
-            <div class="tech-row">
-              <span class="tech-tag hl">LangGraph</span><span class="tech-tag hl">vLLM</span><span class="tech-tag hl">LoRA</span><span class="tech-tag hl">PyTorch</span><span class="tech-tag hl">Guardrail</span><span class="tech-tag">FastAPI</span><span class="tech-tag">OpenAI API</span><span class="tech-tag">Qdrant</span><span class="tech-tag">PostgreSQL</span><span class="tech-tag">Docker</span><span class="tech-tag">AWS</span>
-            </div>
-          </article>
+        <div class="arch-summary">
+          <div class="arch-summary-item"><b>요청 흐름</b><p>React SSE UI에서 FastAPI로 들어온 요청을 LangGraph가 의도 분류 후 문서·판단·일정 Agent로 라우팅합니다.</p></div>
+          <div class="arch-summary-item"><b>핵심 판단</b><p>판단 Agent는 RAG 근거와 모델 응답을 분리해 생성하고, provider adapter로 GPT/Claude/vLLM 교체 실험이 가능하게 했습니다.</p></div>
+          <div class="arch-summary-item"><b>검증 지점</b><p>서버의 4중 Guardrail이 규정 키워드 매칭, 조항 존재, 카테고리 제한, 일관성을 확인해 고신뢰 오답 노출을 막습니다.</p></div>
         </div>
-      </section>
+      </div>
 
-      <section>
-        <div class="wrap">
-          <p class="section-label">Work Style</p>
-          <h2 class="section-title">제가 AI 엔지니어 직무와 맞는 이유</h2>
-          <ul class="workstyle-list">
-            <li><em>직무 적합성</em> — Agent 신뢰성(WorkFlow Agent)·RAG 진단·임베딩 학습(PyMate)·Agent 라우팅(Seoul Culture Map) 세 영역을 GT QA·RAGAS·Intent F1 지표 단위로 분리 측정해 본 경험. AI 엔지니어 자격요건·우대사항(LLM·RAG·Agent·임베딩 학습·배포)과 맞닿아 있습니다.</li>
-            <li><em>성장 방향</em> — 모델을 붙이는 사람이 아니라, <strong>LLM Agent의 실패율을 지표 게이트로 통제하고 RAG·임베딩·LoRA 학습을 솔루션 단위로 설계</strong>하는 AI 엔지니어로 성장하고 싶습니다.</li>
+      <div class="portfolio-breakdown">
+        <div class="breakdown-section">
+          <h3>문제 원인</h3>
+          <ul>
+            <li>Base model은 존재하지 않는 규정에도 confidence <strong>0.92</strong>를 출력했고, 단순 threshold로는 고신뢰 오답을 막기 어려웠습니다.</li>
+            <li>근거 없는 답변, 카테고리 오류, JSON 형식 오류가 한 덩어리로 섞여 있어 실패 유형별 조치가 어려웠습니다.</li>
+            <li>LoRA v2에서 데이터 98건을 추가했지만 정확도가 <strong>-3.2%p</strong> 하락해, 데이터 양보다 품질 문제가 더 크다는 신호가 있었습니다.</li>
+            <li>고객 업무 Agent에서는 환각이 기능 오류가 아니라 비즈니스 리스크로 이어지므로 모델 바깥 검증 레이어가 필요했습니다.</li>
           </ul>
         </div>
-      </section>
-
-      <section class="cta">
-        <div class="wrap">
-          <p class="section-label" style="text-align:center;">Contribution</p>
-          <p class="cta-lead">LLM Agent 신뢰성·RAG 품질·임베딩 학습·Agent 라우팅을 하나의 솔루션 흐름으로 다뤄 본 경험으로, 다음 세 영역에서 기여하고 싶습니다.</p>
-          <h2 class="cta-headline">GenON AI 엔지니어로<br>이렇게 기여하고 싶습니다</h2>
-
-          <div class="cta-item">
-            <h4>01 &ensp;LLM Agent 개발 — 신뢰의 대상이 아닌 검증의 대상으로</h4>
-            <p>WorkFlow Agent에서 <strong>다단계 Guardrail(4종)</strong>+Confidence 보정+LoRA v3 약점 타겟팅으로 GT QA 200건 기준 정확도 <strong>37%→85%</strong>, JSON 유효율 <strong>70%→97%</strong>를 만들었습니다. GenOS 신규 Agent 생성·커스터마이징에서도 오답 패턴 분류 후 검증 레이어로 안정화하는 데 기여하고 싶습니다.</p>
-          </div>
-
-          <div class="cta-item">
-            <h4>02 &ensp;벡터 검색·RAG 솔루션 — 호출 회피 분기까지 설계하기</h4>
-            <p>Seoul Culture Map에서 LangGraph 3-node 라우팅으로 요청당 <strong>$0.020→$0.003 (85%↓)</strong>, 월 1만 요청 환산 <strong>~$200→~$30</strong> 절감. AI 솔루션 프로젝트에서도 RAG·벡터 검색을 비용·정확도가 측정 가능한 구조로 설계하겠습니다.</p>
-          </div>
-
-          <div class="cta-item">
-            <h4>03 &ensp;LLM·임베딩 데이터셋 학습/서빙 — 모델 학습부터 운영 배포까지</h4>
-            <p>WorkFlow Agent에서 Kanana-1.5-8B+LoRA 가중치를 PagedAttention 기반 vLLM(RunPod A100)으로 서빙·운영하고, LoRA 데이터셋 재구성을 맡았습니다. PyMate에서는 임베딩 768D→3072D 업그레이드로 RAG를 운영 환경까지 연결했습니다. 임베딩·LoRA·서빙을 한 솔루션 단위로 다루는 AI 엔지니어로 기여하고 싶습니다.</p>
-          </div>
+        <div class="breakdown-section">
+          <h3>해결 과정</h3>
+          <ul>
+            <li>환각, 근거 없음, 카테고리 오류로 실패 유형을 먼저 분리해 검증 기준을 정의했습니다.</li>
+            <li>키워드 매칭, 조항 존재 검증, 카테고리 제한, 일관성 모니터링의 <strong>4중 Guardrail</strong>을 설계했습니다.</li>
+            <li>LLM confidence를 그대로 쓰지 않고 LLM 자체 신뢰도·RAG 검색 유사도·규정 커버리지를 가중 결합하고, 규정 충돌·환각·조항 미존재는 감점하는 5-factor로 보정했습니다.</li>
+            <li>오답 로그 <strong>19건</strong>만 선별해 LoRA v3 데이터셋을 재구성하고, GPT/Claude/vLLM을 provider 패턴으로 묶었습니다.</li>
+          </ul>
         </div>
-      </section>
-
-      <footer class="closing">
-        <div class="wrap">
-          <div class="closing-banner">
-            <h2>GenON 고객 솔루션의 신뢰성과 비용 구조를<br>함께 만들어가는 AI 엔지니어가 되고 싶습니다.</h2>
-            <p>병목을 정의하고, 빠르게 재현하고, 숫자로 확인하고, 구조로 고칩니다.<br><a href="mailto:yge0307@gmail.com">yge0307@gmail.com</a> · <a href="https://github.com/ykgstar37-lab" target="_blank">github.com/ykgstar37-lab</a> · <a href="https://yge-portfolio.vercel.app/" target="_blank">yge-portfolio.vercel.app</a></p>
-          </div>
+        <div class="breakdown-section">
+          <h3>결과</h3>
+          <ul>
+            <li>규정 판단 정확도 <strong>37%→85%</strong>, JSON 유효율 <strong>70%→97%</strong>로 개선했습니다.</li>
+            <li>고신뢰 오답 confidence를 <strong>0.92→0.78</strong>로 보정해 서비스 노출 전 검증 기준을 만들었습니다.</li>
+            <li>GenON의 <strong>Agent 생성·고객사 규정 문서 커스터마이징·데이터셋 관리</strong> 업무와 직접 연결됩니다.</li>
+          </ul>
         </div>
-      </footer>
-    </main>
-  </div>
+      </div>
+
+      <div class="domain-box">
+        <h3>GenON 적용 포인트</h3>
+        <p>
+          GenON의 고객사 Agent 생성 업무에서 가장 중요한 것은 “Agent가 답한다”가 아니라
+          <strong>Agent가 언제 답하지 말아야 하는지</strong>를 정하는 것입니다.
+          이 프로젝트는 고객사 규정·업무 문서에 맞춘 Guardrail, 데이터셋 생성, 테스트페이지 검증 시나리오로 확장할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="retrospective">
+        <h3>Retrospective</h3>
+        <p>
+          모델 정확도를 높이는 실험보다 더 중요했던 것은 실패 케이스를 어떤 기준으로 라벨링할지였습니다.
+          v2 실패 이후 “데이터 양”이 아니라 “실패 유형을 겨냥한 데이터셋”이 Agent 신뢰성 개선에 더 강하게 작동한다는 기준을 얻었습니다.
+        </p>
+      </div>
+    </article>
+
+<article class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-no">Project 02 · RAG Quality</div>
+          <div class="project-title-row">
+            <h2 class="project-name">PyMate</h2>
+            <a class="github-icon-link" href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team" target="_blank" rel="noopener noreferrer" aria-label="PyMate GitHub 저장소">
+              <svg><use href="#icon-github"></use></svg>
+            </a>
+          </div>
+          <p class="project-one">
+            “답변이 부정확하다”는 피드백을 <strong>LLM 문제</strong>로 단정하지 않고,
+            RAGAS로 검색/생성 병목을 분해해 <strong>임베딩·검색 파이프라인 문제</strong>로 재정의한 프로젝트입니다.
+          </p>
+        </div>
+        <div class="badges">
+          <span class="badge jd">RAG Solution</span><span class="badge jd">Vector Search</span><span class="badge blue">RAGAS</span><span class="badge">Django</span><span class="badge">AWS EC2</span>
+        </div>
+      </div>
+
+      <div class="project-meta">
+        <div class="meta-card"><h4>일정</h4><p>2026.01 ~ 2026.02<br><strong>6주</strong></p></div>
+        <div class="meta-card"><h4>기술 스택</h4><p>Python, Django, Qdrant, RAGAS, BM25, HyDE, RRF, AWS EC2</p></div>
+        <div class="meta-card"><h4>참여 인력</h4><p>팀 4명<br><strong>RAG 평가·임베딩 담당</strong></p></div>
+        <div class="meta-card"><h4>서비스</h4><p>Python 공식 문서·강의 자료 기반 학습 보조 RAG 챗봇</p></div>
+        <div class="meta-card"><h4>인프라 기준</h4><p>반복 질의 사용을 가정해 검색 품질과 응답 지연 균형 우선</p></div>
+      </div>
+
+      <div class="arch-panel">
+        <div class="arch-title">Architecture · RAG Evaluation & Retrieval Flow</div>
+        <div class="mermaid-wrap compact">
+          <pre class="mermaid">
+flowchart LR
+    Q([사용자 질문]) --> Embed["Query Embedding&lt;br/&gt;3072D"]
+    Q --> Keyword["Keyword Query&lt;br/&gt;BM25"]
+    Embed --> Vec[("Qdrant Vector Index")]
+    Keyword --> BM25[("BM25 Index")]
+    Vec --> RRF["RRF Candidate Merge"]
+    BM25 --> RRF
+    RRF --> Rerank["Reranker"]
+    Rerank --> Context["Context Builder"]
+    Context -->|High Relevance 0.5+| Analyst["Analyst Node&lt;br/&gt;Grounded Answer"]
+    Context -->|Med Relevance 0.3~0.5| Web["Web Search Fallback"]
+    Context -->|Low Relevance 0.3-| NoData["No Data Response"]
+    Web --> Analyst
+    Analyst --> END((End))
+    NoData --> END
+
+    Rerank -.-> Eval["RAGAS 평가&lt;br/&gt;Context Precision/Recall"]
+
+    classDef main fill:#eef3f9,stroke:#1f3a5f,color:#151515,stroke-width:1.5px;
+    classDef branch fill:#fff,stroke:#a8b7cc,color:#151515;
+    classDef offline fill:#f7f3ea,stroke:#9a8866,color:#151515,stroke-dasharray: 4 3;
+    class Embed,RRF,Rerank,Context,Analyst main;
+    class Keyword,Vec,BM25,Web,NoData branch;
+    class Eval offline;
+          </pre>
+        </div>
+        <div class="arch-summary">
+          <div class="arch-summary-item"><b>요청 흐름</b><p>질문을 <strong>semantic/vector</strong>와 <strong>keyword/BM25</strong> 두 경로로 보내 후보를 넓힌 뒤 RRF와 reranker로 근거를 압축했습니다.</p></div>
+          <div class="arch-summary-item"><b>핵심 판단</b><p>LLM 교체보다 먼저 <strong>RAGAS</strong>로 검색 병목을 분리했고, Context Precision <strong>0.83</strong>을 구조 변경 기준으로 삼았습니다.</p></div>
+          <div class="arch-summary-item"><b>실시간 게이트</b><p>실시간 분기는 RAGAS가 아니라 <strong>relevance threshold</strong>로, 답변·웹 보강·no-data를 나누어 테스트페이지에서 실패 원인을 추적할 수 있게 했습니다.</p></div>
+        </div>
+      </div>
+
+      <div class="portfolio-breakdown">
+        <div class="breakdown-section">
+          <h3>문제 원인</h3>
+          <ul>
+            <li>사용자 피드백은 “답변이 부정확”이었지만, 원인이 <strong>LLM 생성</strong>인지 <strong>검색 후보 회수</strong>인지 분리되지 않았습니다.</li>
+            <li>강의 자료와 Python 공식 문서의 용어 차이 때문에 초기 벡터 검색만으로는 필요한 근거를 충분히 회수하지 못했습니다.</li>
+            <li>모델 교체부터 진행하면 비용은 늘지만, 실제 병목이 retrieval이면 품질 개선이 제한될 수 있었습니다.</li>
+          </ul>
+        </div>
+        <div class="breakdown-section">
+          <h3>해결 과정</h3>
+          <ul>
+            <li>“부정확한 답변”을 검색 실패, 근거 부족, 생성 불일치로 나누고 RAGAS 4지표로 병목을 측정했습니다.</li>
+            <li>Context Precision <strong>0.83</strong>을 검색 병목으로 보고, LLM 교체보다 <strong>embedding 768D→3072D</strong> 전환을 먼저 결정했습니다.</li>
+            <li>HyDE+BM25+RRF로 후보 회수를 넓히고, reranker는 마지막 단계에만 배치해 품질·지연 trade-off를 조정했습니다.</li>
+            <li>Flask MVP를 Django/EC2 배포 구조로 옮겨 반복 테스트 가능한 서비스 형태로 정리했습니다.</li>
+          </ul>
+        </div>
+        <div class="breakdown-section">
+          <h3>결과</h3>
+          <ul>
+            <li>Context Precision <strong>0.83→0.97</strong>, Context Recall <strong>0.70→0.79</strong>로 검색 품질을 개선했습니다.</li>
+            <li>“LLM 교체 전 검색 품질부터 확인한다”는 판단 기준을 만들었습니다.</li>
+            <li>GenON 고객사 문서 RAG의 <strong>품질 진단·커스터마이징·테스트페이지 지표</strong>로 확장 가능한 경험입니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="domain-box">
+        <h3>GenON 적용 포인트</h3>
+        <p>
+          고객사 문서 기반 RAG 솔루션을 만들 때 “LLM을 바꾸면 해결된다”는 접근보다
+          <strong>검색 후보 회수·재랭킹·평가 지표</strong>를 테스트페이지에서 확인할 수 있게 만드는 것이 중요합니다.
+          이 경험은 GenOS 테스트페이지의 품질 점검 항목과 고객사별 RAG 커스터마이징에 바로 연결됩니다.
+        </p>
+      </div>
+
+      <div class="retrospective">
+        <h3>Retrospective</h3>
+        <p>
+          이 프로젝트에서 얻은 가장 큰 기준은 “답변 품질 문제를 바로 모델 문제로 해석하지 않는다”였습니다.
+          검색 후보 회수, 재랭킹, 평가 지표를 먼저 분리해 보면 고객사 문서 RAG에서도 개선 우선순위를 더 빠르게 좁힐 수 있습니다.
+        </p>
+      </div>
+    </article>
+
+<article class="project">
+      <div class="project-head">
+        <div>
+          <div class="project-no">Project 03 · Customer PoC / Routing</div>
+          <div class="project-title-row">
+            <h2 class="project-name">Seoul Culture <span class="title-keep">Map <a class="github-icon-link" href="https://github.com/ykgstar37-lab/seoul-culture-map" target="_blank" rel="noopener noreferrer" aria-label="Seoul Culture Map GitHub 저장소"><svg><use href="#icon-github"></use></svg></a></span></h2>
+          </div>
+          <p class="project-one">
+            서울시 문화시설 2,500+개 데이터를 기반으로 자연어 질의를 처리하면서,
+            모든 요청을 LLM에 태우지 않고 <strong>Intent Routing</strong>으로 비용과 응답 지연을 줄인 Agent PoC입니다.
+          </p>
+        </div>
+        <div class="badges">
+          <span class="badge jd">HTTP API</span><span class="badge jd">테스트페이지</span><span class="badge blue">LangGraph</span><span class="badge">FastAPI</span><span class="badge">SSE</span>
+        </div>
+      </div>
+
+      <div class="project-meta">
+        <div class="meta-card"><h4>일정</h4><p>2026.03 ~ 진행중<br><strong>개인 PoC</strong></p></div>
+        <div class="meta-card"><h4>기술 스택</h4><p>FastAPI, LangGraph, OpenAI API, ChromaDB, SQLite, SSE, React</p></div>
+        <div class="meta-card"><h4>참여 인력</h4><p>개인<br><strong>문제 정의~배포 전담</strong></p></div>
+        <div class="meta-card"><h4>서비스</h4><p>서울시 문화시설 조건 검색·추천형 Agent</p></div>
+        <div class="meta-card"><h4>트래픽 기준</h4><p>월 1만 요청 가정, 호출 비용과 첫 응답 시간 중심으로 설계</p></div>
+      </div>
+
+      <div class="arch-panel" id="seoul-pipeline">
+        <div class="arch-title">Architecture · Intent Routing & Hybrid Retrieval</div>
+        <div class="mermaid-wrap seoul-pipeline">
+          <pre class="mermaid">
+flowchart LR
+    Start([사용자 메시지]) --> Intent["Intent Classifier&lt;br/&gt;GPT-4o-mini"]
+    Intent -->|"recommend / search / info"| Retrieve["Retrieve"]
+    Intent -->|"chitchat"| Generate["Generate"]
+    Retrieve --> SQLite[("SQLite DB&lt;br/&gt;정형 조건")]
+    Retrieve --> Chroma[("ChromaDB&lt;br/&gt;시맨틱 검색")]
+    SQLite --> Merge["컨텍스트 병합"]
+    Chroma --> Merge
+    Merge --> Generate
+    Generate --> Output["Markdown + 좌표"]
+    Output --> API["/api/chat"]
+    Output --> Stream["SSE Streaming"]
+    Output --> Map["지도 마커"]
+    Output --> ChatDB[("chat_messages")]
+
+    classDef step fill:#eef3f9,stroke:#1f3a5f,color:#151515,stroke-width:1.5px;
+    classDef data fill:#fff,stroke:#a8b7cc,color:#151515;
+    classDef output fill:#f6f8fb,stroke:#1f3a5f,color:#151515;
+    class Intent,Retrieve,Generate step;
+    class SQLite,Chroma,ChatDB data;
+    class Output,API,Stream,Map output;
+          </pre>
+        </div>
+        <div class="arch-summary">
+          <div class="arch-summary-item"><b>요청 흐름</b><p><strong>/api/chat</strong> 요청을 Intent Classifier가 먼저 분류하고, 필요한 경우에만 SQLite/ChromaDB 검색 경로를 탑니다.</p></div>
+          <div class="arch-summary-item"><b>핵심 판단</b><p>정형 조건은 SQL filter, 의미 기반 추천은 vector search로 분기해 “모든 요청을 LLM에 태우는” 비용 구조를 피했습니다.</p></div>
+          <div class="arch-summary-item"><b>검증 지점</b><p>SSE 첫 응답 시간, 요청당 비용, 지도 마커/좌표 출력 여부를 테스트페이지에서 확인할 수 있게 설계했습니다.</p></div>
+        </div>
+      </div>
+
+      <div class="portfolio-breakdown">
+        <div class="breakdown-section">
+          <h3>문제 원인</h3>
+          <ul>
+            <li>단순 인사, 조건 검색, 추천형 질문이 같은 LLM 경로를 타면 불필요한 호출 비용이 커지고 응답 시간이 늘어났습니다.</li>
+            <li>서울시 문화시설 <strong>2,500+</strong>개 데이터는 정형 필터와 의미 검색이 섞여 있어 단일 검색 방식으로는 사용자 의도를 놓치기 쉬웠습니다.</li>
+            <li>고객사 PoC에서는 기능 동작뿐 아니라 월 요청량 기준 비용과 응답 지연을 함께 설명해야 했습니다.</li>
+          </ul>
+        </div>
+        <div class="breakdown-section">
+          <h3>해결 과정</h3>
+          <ul>
+            <li>일상 대화, 조건 검색, 추천 질의를 먼저 나누고 Intent→Retrieve→Generate <strong>3-node</strong> 구조로 분리했습니다.</li>
+            <li>LLM 호출 전 검색 필요 여부를 먼저 판단하고, 정형 조건은 SQLite/SQL filter로 처리했습니다.</li>
+            <li>의미 기반 추천 요청은 ChromaDB vector search로 라우팅하고, 두 검색 결과를 컨텍스트로 병합했습니다.</li>
+            <li>SSE streaming으로 첫 토큰을 빠르게 보여주고, 월 1만 요청 기준 API 비용을 비교했습니다.</li>
+          </ul>
+        </div>
+        <div class="breakdown-section">
+          <h3>결과</h3>
+          <ul>
+            <li>요청당 비용 <strong>$0.020→$0.003</strong>, 월 1만 요청 환산 <strong>~$200→~$30</strong>로 약 85% 절감했습니다.</li>
+            <li>첫 토큰 약 <strong>500ms</strong>, 응답 완료 평균 약 <strong>2.4s</strong>로 테스트 가능한 Agent PoC를 만들었습니다.</li>
+            <li>GenON 고객사별 트래픽/도메인에 따라 <strong>Agent 경로와 테스트 시나리오</strong>를 조정하는 역량을 보여줍니다.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="domain-box">
+        <h3>GenON 적용 포인트</h3>
+        <p>
+          고객사마다 트래픽 분포와 질의 유형이 다르기 때문에, Agent PoC에서는 모델 성능뿐 아니라
+          <strong>어떤 요청을 어떤 경로로 보낼지</strong>가 비용과 안정성을 좌우합니다.
+          이 경험은 GenOS 테스트페이지에서 시나리오별 비용·응답 시간을 보여주는 방식으로 활용할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="retrospective">
+        <h3>Retrospective</h3>
+        <p>
+          개인 PoC를 만들며 Agent 구조는 모델 선택보다 요청 유형을 어떻게 나누는지가 먼저라는 기준을 얻었습니다.
+          고객사별 데이터와 트래픽이 달라질수록 Intent Routing, 비용 추정, 테스트페이지 로그를 함께 설계해야 운영 가능한 PoC가 됩니다.
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <section class="closing">
+    <div class="wrap">
+      <div class="closing-card">
+        <h2>GenON에서 기여하고 싶은 방식</h2>
+        <p>
+          저는 GenON 공고를 보고, 제가 경험한 <strong>RAG 병목 진단·Agent 검증 게이트·Intent Routing PoC</strong>가
+          고객사별 실패 패턴을 빠르게 찾고 테스트 가능한 Agent 구조로 바꾸는 업무에 바로 연결된다고 판단했습니다.
+          합류 후에는 테스트페이지에서 확인 가능한 지표와 로그를 기준으로 고객사 커스터마이징과 데이터셋 개선 실험을 빠르게 반복하는 엔지니어로 기여하겠습니다.
+        </p>
+      </div>
+    </div>
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    const renderMermaid = async () => {
+      if (!window.mermaid) return;
+      if (!window.__mermaidInitialized) {
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "loose",
+          theme: "base",
+          themeVariables: {
+            fontFamily: "Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
+            primaryColor: "#eef3f9",
+            primaryTextColor: "#151515",
+            primaryBorderColor: "#1f3a5f",
+            lineColor: "#1f3a5f",
+            secondaryColor: "#f8fafc",
+            tertiaryColor: "#ffffff",
+            noteBkgColor: "#f6f8fb",
+            clusterBkg: "#f8fafc",
+            clusterBorder: "#a8b7cc"
+          }
+        });
+        window.__mermaidInitialized = true;
+      }
+      await mermaid.run({ querySelector: ".mermaid:not([data-processed='true'])" });
+      document.documentElement.classList.add("mermaid-ready");
+    };
+
+    window.addEventListener("load", () => { renderMermaid(); });
+    window.addEventListener("beforeprint", () => { renderMermaid(); });
+  </script>
 </body>
 </html>
