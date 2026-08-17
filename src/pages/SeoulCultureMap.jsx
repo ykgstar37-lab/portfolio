@@ -731,7 +731,7 @@ export default function SeoulCultureMap() {
                             </div>
                             <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
                                 {[
-                                    { label: '시설', value: '2,500+', sub: '6개 카테고리' },
+                                    { label: '시설', value: '2,500+', sub: '7개 카테고리' },
                                     { label: '이미지', value: '1,177장', sub: 'Tour API' },
                                     { label: '자치구', value: '25개', sub: '서울 전역' },
                                     { label: 'Endpoints', value: '15', sub: 'REST+SSE' },
@@ -754,7 +754,7 @@ export default function SeoulCultureMap() {
                                         'R 정적 분석 → React+Leaflet 인터랙티브 맵 + SSE AI 챗봇으로 완전 전환',
                                         '2개 공공API 통합 — 좌표 필드·카테고리 코드 정규화로 2,500+ 시설 + 1,177장 이미지 확보',
                                         'K-means 5대 권역 분류 — 방탈출 64개(강남), 박물관 42개(중구) 등 분포 불균형을 데이터로 증명',
-                                        '6개 카테고리 + 116개 법정동 단위 다층 공간 분석',
+                                        '7개 카테고리 + 116개 법정동 단위 다층 공간 분석',
                                         'Leaflet + React 충돌을 react-leaflet + useEffect cleanup으로 해결',
                                     ].map((text, idx) => (
                                         <div key={idx} className="flex items-start gap-2 text-sm text-gray-600">

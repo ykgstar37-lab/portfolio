@@ -29,7 +29,7 @@
 
 - 유형: Team Project / SK Networks AI Camp Final
 - 기간: 2026.02 - 2026.04
-- 팀 규모: 5명
+- 팀 규모: 4명
 - 내 역할: AI Engineer
 - 담당 범위: Judgment Agent, RAG 파이프라인, LoRA 데이터 품질 실험, vLLM 서빙 안정화, 4중 Guardrail, 5-factor Confidence 보정
 - 기술: LangGraph, Kanana-1.5-8B, LoRA, vLLM, FastAPI, Qdrant, BM25, RRF, Reranker, AWS, Docker
@@ -73,7 +73,7 @@
 
 - 유형: Team Project / SKN21 3차 + 4차
 - 기간: 2026.01 - 2026.02
-- 팀 규모: 6명
+- 팀 규모: 5명
 - 내 역할: Backend & Frontend
 - 담당 범위: RAG 품질 개선, Quiz API, 오답 재학습, 에러 미들웨어, Flask → Django 전환, AWS 배포
 - 기술: Django, DRF, Flask, LangChain, LangGraph, Qdrant, RAGAS, PostgreSQL, AWS EC2, Nginx, Gunicorn

@@ -85,7 +85,7 @@ const CONTRIBUTIONS = [
 ];
 
 const CHALLENGES = [
-    { title: '한국어 검색 정확도', problem: '한국어 쿼리의 벡터 검색 정확도 낮음', solution: '이중 쿼리(KO+EN) 동시 검색', result: 'Recall 0.75→0.85', icon: '1' },
+    { title: '한국어 검색 정확도', problem: '한국어 쿼리의 벡터 검색 정확도 낮음', solution: '이중 쿼리(KO+EN) 동시 검색', result: 'Recall 0.70→0.79', icon: '1' },
     { title: 'LLM 할루시네이션', problem: '관련 없는 질문에 환각 응답 생성', solution: '관련도 3단계 라우팅 (>0.5 / 0.3~0.5 / <0.3)', result: '환각 차단 100%', icon: '2' },
     { title: '검색 순위 최적화', problem: '벡터 검색만으로 상위 문서 관련도 낮음', solution: 'cross-encoder 리랭킹 + BM25 하이브리드', result: 'Precision 0.83→0.97', icon: '3' },
     { title: 'Flask→Django 전환', problem: 'ORM·인증·정적파일 모두 수동 구성', solution: 'Django 5.x + DRF 기본 제공 활용', result: 'API 구조화 완료', icon: '4' },

@@ -27,7 +27,7 @@ const WORKFLOW_AGENT_CHARTS = [
     BE --> S3[(AWS S3)]
 
     BE --> Orch[LangGraph Orchestrator]
-    Orch --> Intent[Intent Classifier<br/>roberta-large ONNX]
+    Orch --> Intent[Intent Classifier<br/>KoELECTRA]
 
     Intent -->|conf >= 0.85| Router{Agent Router}
     Intent -->|conf < 0.85| Clarify[Clarification Node]
@@ -382,7 +382,7 @@ export default function WorkFlowAgent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         {[
                             { label: '공통 LLM 모듈 설계', title: 'Provider 전환 비용 최소화', desc: 'GPT, Claude, vLLM 간 전환이 provider 설정만 바꾸면 되도록 공통 인터페이스를 설계. 개발 초기에는 GPT API로 기능 검증, I/O 확정 후 vLLM으로 교체하는 전략으로 전환 리스크를 최소화.' },
-                            { label: 'LoRA 핫스왑', title: '4개 어댑터 동적 관리', desc: '판단 / 문서(요약·생성) / Planner / Intent 4개 LoRA 어댑터를 Kanana-1.5-8B 베이스 위에서 태스크별 핫스왑. RunPod A100(80GB)에서 학습과 서빙을 병행.' },
+                            { label: 'LoRA 핫스왑', title: '4개 어댑터 동적 관리', desc: '판단 / 문서요약 / 문서생성 / Planner 4개 LoRA 어댑터를 Kanana-1.5-8B 베이스 위에서 태스크별 핫스왑(Intent는 KoELECTRA 별도 분류기). RunPod A100(80GB)에서 학습과 서빙을 병행.' },
                             { label: '서빙 안정성', title: 'JSON 유효율 70% → 97%', desc: 'sLLM이 구조화된 JSON을 일관되게 생성하지 못하는 문제를 프롬프트 최적화 + 출력 포맷 단순화 + fallback 파싱 로직으로 해결. 모델 성능이 아닌 서빙 레이어에서 안정성을 확보.' },
                             { label: 'SSE 스트리밍', title: '토큰 단위 실시간 응답', desc: 'sLLM 추론 시간이 수 초 걸리는 문제를 SSE(Server-Sent Events) 스트리밍으로 해결. 토큰 생성 즉시 클라이언트에 전송하여 체감 응답 속도 개선.' },
                         ].map((item, idx) => (
@@ -910,7 +910,7 @@ export default function WorkFlowAgent() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {[
                                 { label: 'Intent 분류', value: 'F1 97.88%', desc: 'KoELECTRA + Label Smoothing' },
-                                { label: '파인튜닝', value: '5개 LoRA', desc: '판단 / 문서요약 / 문서생성 / Planner / Intent' },
+                                { label: '파인튜닝', value: '4개 LoRA', desc: '판단 / 문서요약 / 문서생성 / Planner (+ KoELECTRA Intent)' },
                                 { label: 'RAG', value: 'HyDE+Hybrid', desc: 'HyDE + BM25 + Vector + RRF + Reranker' },
                                 { label: 'Google 연동', value: '4종 API', desc: 'Calendar + Tasks + Gmail + Sheets' },
                                 { label: 'Backend', value: '12 테이블', desc: 'PostgreSQL + JWT + SSE' },
