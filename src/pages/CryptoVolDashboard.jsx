@@ -44,24 +44,26 @@ const CRYPTO_VOL_DASHBOARD_CHARTS = [
         description: '실시간 시세 수집, 변동성 모델 계산, 캐싱, React 대시보드 렌더링의 서비스 구조',
         chart: String.raw`flowchart LR
     subgraph External["Market / External APIs"]
-        Binance["Binance WebSocket\n실시간 가격"]
-        CoinGecko["CoinGecko API\n과거 가격 · 메타데이터"]
+        Binance["Binance WebSocket<br/>실시간 가격"]
+        CoinGecko["CoinGecko API<br/>과거 가격 · 메타데이터"]
         FNG["Fear & Greed API"]
         OpenAI["OpenAI GPT-4o-mini"]
     end
 
     subgraph Backend["FastAPI Backend"]
         WSRelay["WebSocket Relay"]
-        REST["REST API\n13 endpoints"]
-        Scheduler["APScheduler\n주기 갱신"]
+        REST["REST API<br/>13 endpoints"]
+        Limiter["Rate Limiter<br/>IP 슬라이딩 윈도우<br/>5 · 10 req / 60s"]
+        Scheduler["APScheduler<br/>주기 갱신"]
         Cache["5min TTL Cache"]
+        DB[("PostgreSQL<br/>SQLAlchemy + Alembic")]
     end
 
     subgraph Model["Model Layer"]
-        GARCH["5 GARCH Models"]
-        Accuracy["60-day Rolling RMSE"]
-        MonteCarlo["Monte Carlo\n10,000 scenarios"]
-        Signal["FNG + Volatility + Momentum\nTrading Signal"]
+        GARCH["5 GARCH Models<br/>GARCH(1,1) · TGARCH · HAR-GARCH<br/>HAR-TGARCH · HAR-TGARCH-X<br/>모형별 예외 격리"]
+        Accuracy["60일 롤링 윈도우 적합<br/>Rolling RMSE 리더보드"]
+        MonteCarlo["Monte Carlo<br/>10,000 scenarios"]
+        Signal["FNG + Volatility + Momentum<br/>Trading Signal"]
     end
 
     subgraph Frontend["React Dashboard"]
@@ -74,8 +76,12 @@ const CRYPTO_VOL_DASHBOARD_CHARTS = [
     Binance --> WSRelay
     CoinGecko --> REST
     FNG --> REST
-    REST --> Cache
+    REST --> Limiter
+    Limiter --> Cache
     Scheduler --> Cache
+    Scheduler --> DB
+    REST --> DB
+    DB --> GARCH
     Cache --> GARCH
     Cache --> Accuracy
     GARCH --> Signal
@@ -172,14 +178,14 @@ const ORIGIN_COMPARISON = [
     { category: '데이터', team: 'CSV 정적 데이터', personal: 'CoinGecko API 실시간' },
     { category: '모델', team: 'Jupyter 수동 실행', personal: 'API 자동 서빙' },
     { category: '결과물', team: 'matplotlib 정적 차트', personal: 'React 인터랙티브 대시보드' },
-    { category: '배포', team: 'Local 실행', personal: 'Docker Compose + Render + Vercel' },
+    { category: '배포', team: 'Local 실행', personal: 'Docker Compose 실행 환경 구성 (배포 전)' },
 ];
 
 const TECH_STACK = {
     'Backend': ['FastAPI', 'SQLAlchemy', 'SQLite', 'PostgreSQL', 'Alembic', 'websockets', 'APScheduler', 'httpx', 'arch', 'pandas', 'numpy', 'scipy'],
     'Frontend': ['React 19', 'Vite 6', 'Tailwind CSS v4', 'Recharts'],
     'API & Data': ['CoinGecko API', 'Binance WebSocket', 'OpenAI API (GPT-4o-mini)'],
-    'Infra': ['Docker Compose', 'Nginx', 'Render', 'Vercel'],
+    'Infra': ['Docker Compose', 'Nginx'],
 };
 
 const SECTIONS = [
@@ -394,7 +400,7 @@ export default function CryptoVolDashboard() {
                     notes={[
                         { label: 'Bottleneck', value: 'GARCH 적합 수백ms -> 5분 TTL 캐싱' },
                         { label: 'Reliability', value: '모형별 실패 격리로 전체 응답 장애 방지' },
-                        { label: 'Deployment', value: 'Render backend + Vercel frontend' },
+                        { label: 'Status', value: 'Docker Compose 실행 환경까지 구성 (배포 전)' },
                     ]}
                 />
 
@@ -437,7 +443,7 @@ export default function CryptoVolDashboard() {
                             },
                             {
                                 question: 'GARCH 모형을 매 요청마다 적합(fit)하지 않은 이유는?',
-                                answer: 'arch 라이브러리의 적합은 수십~수백ms가 걸립니다. 인메모리 캐싱(5분 TTL)으로 반복 호출을 방지하고, 120일 윈도우로 입력을 제한하여 응답 속도를 확보했습니다. 개별 모형 실패 시 0.0을 반환하여 하나의 모형 실패가 전체 응답을 깨뜨리지 않도록 했습니다.',
+                                answer: 'arch 라이브러리의 적합은 수십~수백ms가 걸립니다. 인메모리 캐싱(5분 TTL)으로 반복 호출을 방지하고, 롤링 적합 윈도우를 60일로 고정한 뒤 조회 구간에도 상한(accuracy 120일 / compare 180일)을 둬 요청당 연산량이 늘어나지 않게 했습니다. 개별 모형 실패 시 0.0을 반환하여 하나의 모형 실패가 전체 응답을 깨뜨리지 않도록 했습니다.',
                                 tag: '성능 + 안정성'
                             },
                             {
@@ -457,7 +463,7 @@ export default function CryptoVolDashboard() {
                             },
                             {
                                 question: 'API Rate Limiting을 왜 직접 구현했는가?',
-                                answer: 'AI 브리핑(GPT-4o-mini)과 Monte Carlo 시뮬레이션은 비용이 높은 연산입니다. IP 기반 슬라이딩 윈도우 방식으로 AI 브리핑 5req/60s, 포트폴리오 시뮬레이션 10req/60s를 제한합니다. X-Forwarded-For 헤더에서 클라이언트 IP를 추출하여 Render 프록시 환경에서도 정확한 IP 식별을 보장합니다.',
+                                answer: 'AI 브리핑(GPT-4o-mini)과 Monte Carlo 시뮬레이션은 비용이 높은 연산입니다. IP 기반 슬라이딩 윈도우 방식으로 AI 브리핑 5req/60s, 포트폴리오 시뮬레이션 10req/60s를 제한합니다. X-Forwarded-For 헤더에서 클라이언트 IP를 추출해, 리버스 프록시 뒤에 놓이더라도 정확한 IP 식별이 되도록 했습니다.',
                                 tag: '비용 최적화'
                             },
                         ].map((item, idx) => (
@@ -572,7 +578,7 @@ export default function CryptoVolDashboard() {
                     <p className="text-gray-500 mb-8">개인 프로젝트에서 직면한 문제와 해결 과정</p>
                     <div className="space-y-4">
                         {[
-                            { title: 'GARCH 적합 비용', problem: 'arch 라이브러리 적합이 수백ms 소요, 동시 요청 시 서버 응답 지연', solution: '5분 TTL 인메모리 캐싱 + 120일 윈도우 입력 제한 + 개별 모형 실패 시 0.0 반환으로 격리', result: '반복 호출 비용 0' },
+                            { title: 'GARCH 적합 비용', problem: 'arch 라이브러리 적합이 수백ms 소요, 동시 요청 시 서버 응답 지연', solution: '5분 TTL 인메모리 캐싱 + 롤링 적합 윈도우 60일 고정 + 조회 구간 상한 + 개별 모형 실패 시 0.0 반환으로 격리', result: '반복 호출 비용 0' },
                             { title: 'WebSocket 보안', problem: '프론트에서 Binance 직접 연결 시 CORS 차단 + API 키 노출 위험', solution: 'FastAPI WebSocket 릴레이 서버 구현, Set 기반 클라이언트 추적으로 브로드캐스트', result: 'API 키 노출 0' },
                             { title: '코인 전환 성능', problem: 'BTC→ETH 전환 시 5개 API(가격/차트/변동성/시그널/리더보드) 순차 호출로 느림', solution: 'Promise.all 병렬 호출 + 5분 TTL 캐시로 GARCH 재계산 방지', result: '체감 전환 즉시' },
                             { title: 'Monte Carlo 정확도', problem: '1,000 시나리오에서 99% VaR 꼬리 분포 불안정', solution: '10,000 시나리오로 확장, 분포 수렴 확인', result: '10x 확장, VaR 안정' },
@@ -744,8 +750,7 @@ export default function CryptoVolDashboard() {
                             {/* Infra */}
                             <div className="flex justify-center gap-3">
                                 <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Docker Compose</div>
-                                <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Render (Backend)</div>
-                                <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Vercel (Frontend)</div>
+                                <div className="px-4 py-2 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-500">Nginx</div>
                             </div>
                         </div>
                     )},

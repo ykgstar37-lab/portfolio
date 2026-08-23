@@ -16,11 +16,21 @@ const fadeInUp = {
 const PYMATE_CHARTS = [
     {
         title: 'RAG Workflow Flowchart',
-        description: '검색, 재정렬, 컨텍스트 구성 후 관련도에 따라 답변 생성/웹검색/무응답으로 라우팅하는 흐름',
+        description: '이중 쿼리로 후보를 넓히고 하이브리드 가중합으로 1차 정렬, cross-encoder로 재정렬한 뒤 관련도에 따라 답변 생성/웹검색/무응답으로 분기하는 흐름',
         chart: String.raw`%%{init: {'theme': 'neutral', 'themeVariables': { 'fontSize': '14px'}}}%%
 graph TD
-    START((Start)) --> Search[Search Node]
-    Search --> Rerank[Rerank Node]
+    START((Start)) --> Router[Search Router<br/>GPT-4o-mini 질문 분석<br/>source · top_k 결정]
+    Router --> Dual[Dual Query<br/>한글 원문 + 영어 번역 동시 검색]
+
+    Dual --> Vec[Vector Search<br/>Qdrant · 3072D]
+    Dual --> Kw[Keyword Match]
+    Dual --> BM[BM25]
+
+    Vec --> Fuse[Hybrid Score 가중합<br/>vector 0.6 · keyword 0.2 · BM25 0.2]
+    Kw --> Fuse
+    BM --> Fuse
+
+    Fuse --> Rerank[Cross-encoder Rerank<br/>ms-marco-MiniLM-L6-v2 · Top-5]
     Rerank --> Context[Build Context]
 
     Context -- High Relevance > 0.5 --> Analyst[Analyst Node]
@@ -75,7 +85,7 @@ const FEATURES = [
 ];
 
 const CONTRIBUTIONS = [
-    { title: '임베딩 검색 품질 개선', desc: '768D→3072D 교체 → Context Precision 0.83→0.97 (+14.4%).', tag: 'Data' },
+    { title: '임베딩 검색 품질 개선', desc: '임베딩 768D→3072D 전환 + 이중 쿼리(KO+EN) → Context Precision 0.83→0.97, Recall 0.70→0.79.', tag: 'Data' },
     { title: 'Quiz API 3종 확장', desc: '단일→객관식/O·X/단답형 3종 + AI 자동 생성 → 퀴즈 유형 1→3개.', tag: 'Backend' },
     { title: '오답 재학습 시스템', desc: 'QuizBookmark + Qdrant 연동 → 마이페이지 즉시 재학습 접근.', tag: 'Backend' },
     { title: '에러 포맷 통일', desc: 'Django 미들웨어로 전역 핸들링 → 에러 처리 단일 핸들러로 통합.', tag: 'Backend' },
@@ -85,7 +95,7 @@ const CONTRIBUTIONS = [
 ];
 
 const CHALLENGES = [
-    { title: '한국어 검색 정확도', problem: '한국어 쿼리의 벡터 검색 정확도 낮음', solution: '이중 쿼리(KO+EN) 동시 검색', result: 'Recall 0.70→0.79', icon: '1' },
+    { title: '한국어 검색 후보 회수', problem: '한국어 쿼리로는 필요한 문서가 후보에 안 올라옴 (Recall 0.70)', solution: '이중 쿼리(KO+EN) 동시 검색 + 임베딩 768D→3072D 전환', result: 'Recall 0.70→0.79', icon: '1' },
     { title: 'LLM 할루시네이션', problem: '관련 없는 질문에 환각 응답 생성', solution: '관련도 3단계 라우팅 (>0.5 / 0.3~0.5 / <0.3)', result: '환각 차단 100%', icon: '2' },
     { title: '검색 순위 최적화', problem: '벡터 검색만으로 상위 문서 관련도 낮음', solution: 'cross-encoder 리랭킹 + BM25 하이브리드', result: 'Precision 0.83→0.97', icon: '3' },
     { title: 'Flask→Django 전환', problem: 'ORM·인증·정적파일 모두 수동 구성', solution: 'Django 5.x + DRF 기본 제공 활용', result: 'API 구조화 완료', icon: '4' },
@@ -95,8 +105,8 @@ const CHALLENGES = [
 
 const SEARCH_STEPS = [
     { step: '1', title: '이중 쿼리 검색', desc: '한국어 + 영어 동시 검색', detail: 'KO + EN' },
-    { step: '2', title: '하이브리드 검색', desc: '벡터 + 키워드 + BM25', detail: 'Multi-signal' },
-    { step: '3', title: '리랭킹', desc: 'cross-encoder/ms-marco-MiniLM-L6-v2', detail: 'Cross-encoder' },
+    { step: '2', title: '하이브리드 검색', desc: '벡터·키워드·BM25 정규화 후 가중합', detail: '0.6 / 0.2 / 0.2' },
+    { step: '3', title: '리랭킹', desc: 'cross-encoder/ms-marco-MiniLM-L6-v2 (BAAI 대비 -1초)', detail: 'Top-5' },
     { step: '4', title: '관련도 라우팅', desc: '점수 기반 3단계 분기', detail: 'Score-based' },
 ];
 
@@ -148,7 +158,7 @@ const DRAWER_TABS = [
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>PyMate</h3>
                 <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
                     부트캠프 학습 데이터를 검색·평가 가능한 구조로 바꾼 RAG 기반 ML 서비스. Flask MVP에서 검색 품질 병목을 발견하고 Django로 전환,
-                    임베딩 3072D 교체로 Context Precision 0.83→0.97을 달성했으며, 3단계 라우팅으로 잘못된 생성 응답을 서빙 레이어에서 차단했습니다.
+                    단순 벡터 검색이던 파이프라인을 이중 쿼리·하이브리드 가중합·cross-encoder 리랭킹으로 재구성해 Context Precision 0.83→0.97, Recall 0.70→0.79을 달성했으며, 3단계 라우팅으로 잘못된 생성 응답을 서빙 레이어에서 차단했습니다.
                 </p>
                 <div className="flex flex-wrap gap-2">
                     {['Django', 'LangGraph', 'Qdrant', 'RAGAS', 'SSE', 'AWS EC2'].map(t => (
@@ -180,11 +190,11 @@ const DRAWER_TABS = [
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">What Makes This Special</p>
                 <div className="space-y-2">
                     {[
-                        '768D→3072D 임베딩 교체만으로 Context Precision +14.4%p — LLM 성능이 아니라 검색 품질이 답변 품질을 결정한다는 것을 RAGAS로 증명',
-                        'Reranker를 BAAI→cross-encoder/MiniLM-L6-v2로 교체 — 정확도 유지하면서 레이턴시 1초 감소',
+                        'RAGAS로 검색 단계와 생성 단계를 분리 측정해 병목이 LLM이 아니라 검색이라는 것을 먼저 특정 — 이후 검색 파이프라인만 손봐 Context Precision 0.83→0.97 (+14.4%p)',
+                        'Reranker를 BAAI/bge-reranker-v2-m3 → cross-encoder/ms-marco-MiniLM-L6-v2로 교체 — 정확도 유지하면서 레이턴시 1초 감소',
                         '관련도 <0.3이면 "모르겠다"고 답하는 정직한 AI — 환각 차단율 100%, 사용자에게 거짓 정보 전달 0건',
                         'Flask의 수동 인프라 한계(ORM, 인증, 정적파일 모두 수동)를 Django 전환으로 해결 → AWS EC2 프로덕션 배포',
-                        '한국어 벡터 검색 한계를 이중 쿼리(KO+EN) 전략으로 돌파 — 동일 질문을 한/영 동시 검색하여 Recall +12.7%p',
+                        '한국어 벡터 검색의 후보 회수 한계를 두 축으로 해결 — 동일 질문을 한/영 이중 쿼리로 동시 검색해 어휘 커버리지를 넓히고, 임베딩을 768D→3072D로 전환해 의미 표현력을 높여 Recall 0.70→0.79 (+12.7%p)',
                         '기본 채팅 → 퀴즈(3종) + 코드 리뷰 + 스튜디오(7가지 학습 도구) → 총 7가지 기능으로 확장',
                     ].map((text, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm text-gray-600">
@@ -363,9 +373,9 @@ const DRAWER_TABS = [
                     <div className="flex items-center justify-center gap-2 text-xs text-white/70 flex-wrap">
                         <span className="px-2 py-1 bg-white/10 rounded">Dual Query (KO+EN)</span>
                         <span className="text-white/30">→</span>
-                        <span className="px-2 py-1 bg-white/10 rounded">Hybrid Search</span>
+                        <span className="px-2 py-1 bg-white/10 rounded">Hybrid 0.6 / 0.2 / 0.2</span>
                         <span className="text-white/30">→</span>
-                        <span className="px-2 py-1 bg-white/10 rounded">BAAI Reranker</span>
+                        <span className="px-2 py-1 bg-white/10 rounded">Cross-encoder MiniLM-L6-v2</span>
                     </div>
                     <div className="flex items-center justify-center gap-3 mt-3 text-[10px]">
                         <span className="px-2 py-1 bg-[#e8609c] text-white rounded font-bold">&gt;0.5 Direct</span>

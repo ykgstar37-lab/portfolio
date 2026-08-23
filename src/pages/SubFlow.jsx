@@ -18,16 +18,23 @@ const INDIGO = '#4f46e5';
 const fadeInUp = { hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } } };
 const sections = ['goal','problem','architecture','decisions','evaluation','contributions','challenges','demo','presentation','retrospective'].map((id) => ({ id, label: id === 'decisions' ? 'Approach' : id[0].toUpperCase() + id.slice(1), highlight: id === 'decisions' || id === 'demo' || id === 'presentation' || id === 'retrospective' }));
 const chart = String.raw`flowchart LR
-  Web["React Web\\nTS + Zustand"] --> API["FastAPI /api/v1\\n7 routers"]
-  Mobile["Expo Mobile\\nReact Native"] --> API
-  API --> Domain["Subscription / Analytics / Notification / News Services"]
-  Domain --> DB[("PostgreSQL 16\\n11 normalized tables")]
-  Domain --> FX["Frankfurter API\\nKRW conversion"]
-  Domain --> AI["OpenAI\\nNews summary"]
+  Web["React Web<br/>TS + Zustand"] --> Auth["JWT + bcrypt · slowapi<br/>인증 · 레이트리밋"]
+  Mobile["Expo Mobile<br/>React Native"] --> Auth
+  Auth --> API["FastAPI /api/v1<br/>7 routers"]
+  API --> Domain["Service Layer<br/>Subscription / Analytics / Notification / News"]
+  Sched["APScheduler · 두 번째 진입점<br/>뉴스 6h · 발송 10m<br/>자동갱신 daily 00:10 · 다이제스트 weekly<br/>잡별 try/except 격리"] --> Domain
+  Domain --> DB[("PostgreSQL 16<br/>11 normalized tables")]
+  Domain --> Hist[("plan_price_history<br/>subscription_history<br/>payment_history")]
+  Domain --> FX["Frankfurter API<br/>1h TTL 캐시 + 폴백 환율"]
+  Domain --> AI["OpenAI<br/>News summary"]
+  Domain --> Notify["Resend SMTP · Expo Push"]
   style Web fill:#ecfeff,stroke:#14b8a6
   style Mobile fill:#eef2ff,stroke:#4f46e5
+  style Auth fill:#fef3c7,stroke:#f59e0b
   style API fill:#dbeafe,stroke:#2563eb
-  style DB fill:#f0fdf4,stroke:#22c55e`;
+  style Sched fill:#fef3c7,stroke:#f59e0b
+  style DB fill:#f0fdf4,stroke:#22c55e
+  style Hist fill:#f0fdf4,stroke:#22c55e`;
 const stats = [['87 / 164','USD 요금제','절반 이상이 환율에 노출'], ['11','DB Tables','normalized schema'], ['7','Routers','/api/v1 core APIs'], ['41','Backend Tests','pytest 커버리지']];
 const chips = ['FastAPI','SQLAlchemy 2.0 async','React 19','TypeScript','React Native','Expo','PostgreSQL 16','Zustand','Recharts','Railway','Cloudflare Pages','JWT'];
 
@@ -118,7 +125,7 @@ const contributions = [
   ['수동 입력을 서비스 카탈로그 선택으로 전환','직접 타이핑으로 오타·표기 불일치가 분석 품질을 떨어뜨리던 문제 -> 기존 구독 데이터를 유지한 채 service_id·plan_id FK를 nullable로 추가하고 service_name을 남겨 두 방식이 공존하도록 설계 -> 입력 마찰과 데이터 오류를 동시에 감소.'],
   ['외화 원화 환산 + 개인화 알림 실발송','외화 결제는 환율에 따라 월 지출이 달라지고 알림은 설정만 있던 문제 -> Frankfurter KRW 변환 + APScheduler 기반 개인화 발송 파이프라인 구현 -> 환율 변동까지 반영해 알림을 먼저 전달.'],
   ['금액 환산 기준을 코드 한 곳으로 모음','결제 주기(주·월·분기·연)와 통화(KRW·USD·EUR·JPY)가 섞여 총액과 개별 카드가 다른 기준으로 계산되면 비중 계산이 조용히 틀어지는 문제 -> utils/cost.py에 "월 단위 KRW" 단일 환산 함수를 두고 총액·비중·예산·분석이 전부 이 진입점을 거치게 하고 전 구간 Decimal로 처리 -> 이후 모든 집계 기능이 같은 기준을 공유.'],
-  ['프로덕션 배포와 출시 준비까지 완주','기능 구현에서 끝내면 실제 사용자가 쓸 수 없는 문제 -> Railway(백엔드+관리형 Postgres, 커스텀 도메인+SSL)·Cloudflare Pages(랜딩·약관)·EAS(Android 빌드) 배포와 Resend 메일 파이프라인(DKIM/SPF) 구성 -> 약 21,800줄 규모 서비스를 실제 접근 가능한 상태로 운영.'],
+  ['프로덕션 배포와 출시 준비까지 완주','기능 구현에서 끝내면 실제 사용자가 쓸 수 없는 문제 -> Railway(백엔드+관리형 Postgres, 커스텀 도메인+SSL)·Cloudflare Pages(랜딩·약관)·EAS(Android 빌드) 배포와 Resend 메일 파이프라인(DKIM/SPF) 구성 -> 약 21,800줄 규모 서비스의 백엔드·랜딩을 배포하고 앱 스토어 출시를 준비 중.'],
 ];
 
 // 핵심 기능 (PORTFOLIO.md · 데모 영상 순서 기준)
