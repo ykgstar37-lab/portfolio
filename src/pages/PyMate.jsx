@@ -576,13 +576,13 @@ export default function PyMate() {
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    RAG 파이프라인 설계(HyDE + BM25 + Reranker), Flask→Django 프로덕션 마이그레이션, RAGAS 기반 정량 평가 체계 구축, 임베딩 모델 교체(768D→3072D), AWS(Nginx+Gunicorn) 배포.
+                                    RAG 파이프라인 설계(이중 쿼리 + BM25 가중합 + Cross-encoder Reranker), Flask→Django 프로덕션 마이그레이션, RAGAS 기반 정량 평가 체계 구축, 임베딩 모델 교체(768D→3072D), AWS(Nginx+Gunicorn) 배포.
                                 </p>
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
                                 <div className="flex flex-wrap gap-1.5">
-                                    {['Django', 'LangChain', 'Qdrant', 'AWS', 'Nginx', 'RAGAS', 'HyDE', 'bge-reranker'].map(t => (
+                                    {['Django', 'LangChain', 'Qdrant', 'AWS', 'Nginx', 'RAGAS', 'Dual Query', 'MiniLM Reranker'].map(t => (
                                         <span key={t} className="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-bold rounded-full">{t}</span>
                                     ))}
                                 </div>
