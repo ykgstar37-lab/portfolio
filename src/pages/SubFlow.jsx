@@ -20,8 +20,8 @@ const sections = ['goal','problem','architecture','decisions','evaluation','cont
 const chart = String.raw`flowchart LR
   Web["React Web<br/>TS + Zustand"] --> Auth["JWT + bcrypt · slowapi<br/>인증 · 레이트리밋"]
   Mobile["Expo Mobile<br/>React Native"] --> Auth
-  Auth --> API["FastAPI /api/v1<br/>7 routers"]
-  API --> Domain["Service Layer<br/>Subscription / Analytics / Notification / News"]
+  Auth --> API["FastAPI /api/v1<br/>8 routers"]
+  API --> Domain["Service Layer<br/>Subscription / Analytics / Renewal<br/>Notification / Digest / News"]
   Sched["APScheduler · 두 번째 진입점<br/>뉴스 6h · 발송 10m<br/>자동갱신 daily 00:10 · 다이제스트 weekly<br/>잡별 try/except 격리"] --> Domain
   Domain --> DB[("PostgreSQL 16<br/>11 normalized tables")]
   Domain --> Hist[("plan_price_history<br/>subscription_history<br/>payment_history")]
@@ -35,7 +35,7 @@ const chart = String.raw`flowchart LR
   style Sched fill:#fef3c7,stroke:#f59e0b
   style DB fill:#f0fdf4,stroke:#22c55e
   style Hist fill:#f0fdf4,stroke:#22c55e`;
-const stats = [['87 / 164','USD 요금제','절반 이상이 환율에 노출'], ['11','DB Tables','normalized schema'], ['7','Routers','/api/v1 core APIs'], ['41','Backend Tests','pytest 커버리지']];
+const stats = [['96 / 196','USD 요금제','요금제의 절반이 환율에 노출'], ['11','DB Tables','normalized schema'], ['8','Routers','/api/v1 core APIs'], ['116','Backend Tests','14개 파일 · pytest']];
 const chips = ['FastAPI','SQLAlchemy 2.0 async','React 19','TypeScript','React Native','Expo','PostgreSQL 16','Zustand','Recharts','Railway','Cloudflare Pages','JWT'];
 
 // 문제 → 의사결정 → 해결·결과 (PORTFOLIO.md 기준, 실제 GitHub 구현 확인)
@@ -43,14 +43,14 @@ const narratives = [
   ['외부 구독 연동의 한계 → 카탈로그 기반 전환',
    '카드·앱스토어 결제 내역을 자동으로 긁어와 구독을 채우는 게 이상이지만, 실제 가능한지 검증이 필요했다.',
    '플랫폼별 API를 직접 조사 → 앱스토어·카드사 모두 제3자에게 구독 목록을 주지 않음(카드는 마이데이터 인가 필요). 자동 수집을 포기하고 카탈로그 선택 방식으로 전환.',
-   '서비스 83종·요금제 164개·카테고리 12개 카탈로그 구축 → 검색·선택만으로 등록. 이 카탈로그가 이후 요금 인상 감지·중복 구독 판정의 전제 조건이 됨.'],
+   '서비스 98종·요금제 196개·카테고리 15개 카탈로그 구축 → 검색·선택만으로 등록. 이 카탈로그가 이후 요금 인상 감지·중복 구독 판정의 전제 조건이 됨.'],
   ['수동 입력 UX → 카탈로그 + 요금제 재설계',
    '서비스명을 직접 타이핑하는 방식이라, 오타·표기 불일치로 중복 감지·분석 품질이 떨어졌다.',
    'services/service_plans를 추가하고 subscriptions에 FK를 nullable로 연결. service_name 컬럼을 남겨 카탈로그 등록 구독과 직접 입력 구독이 한 테이블에 공존하도록 설계.',
    '입력이 "타이핑→선택"으로 바뀌어 데이터 오류 감소. 가격 이력·중복 감지가 정확히 동작.'],
   ['"요금이 올랐다"를 어떻게 아는가 → 카탈로그를 구독과 분리',
    '사용자가 입력한 금액만 저장하면 요금이 인상됐는지 알 방법이 없다. 중복 구독 판정도 기준이 없으면 성립하지 않는다.',
-   '카탈로그(services / service_plans)를 사용자 구독(subscriptions)과 분리하고, plan_price_history가 요금제별 가격 변동을 기록하도록 설계. 12개 카테고리는 단순 분류가 아니라 중복 구독 감지의 판정 기준으로 사용.',
+   '카탈로그(services / service_plans)를 사용자 구독(subscriptions)과 분리하고, plan_price_history가 요금제별 가격 변동을 기록하도록 설계. 15개 카테고리는 단순 분류가 아니라 중복 구독 감지의 판정 기준으로 사용.',
    '"내가 쓰는 서비스의 요금이 인상됐다" 알림과 "같은 카테고리에 겹치는 구독이 있다" 경고가 비로소 성립. 서비스별 cancel_url을 저장해 알림에서 해지 페이지로 바로 연결.'],
   ['웹·모바일 이원화 위험 → API-first 백엔드',
    '웹·모바일 로직을 양쪽에 중복 구현하면 유지보수가 두 배가 된다.',
@@ -61,8 +61,8 @@ const narratives = [
    'Frankfurter로 KRW 변환 + 결제·환율·예산·중복·가격 인상을 설정 기반으로 개인화, APScheduler로 발송.',
    '알림 생성과 발송을 분리해(파생 알림 → DB 인박스 적재 → 10분 스케줄러가 미발송 건만 이메일·푸시로 전송) 발송 실패가 알림 데이터를 잃게 만들지 않도록 구성.'],
   ['금액 기준 통일 → 취향이 아니라 데이터가 강제한 요구사항',
-   '요금제 164개 중 87개가 외화(USD) 기준이다. 카탈로그의 절반 이상이 환율에 노출돼 있어, 주기·통화를 각자 환산하면 총액과 비중이 조용히 어긋난다.',
-   'utils/cost.py에 "월 단위 KRW" 단일 환산 함수를 두고 총액·비중·예산·분석이 전부 이 진입점을 거치게 하고, 전 구간 Decimal로 처리해 부동소수점 오차를 배제.',
+   '요금제 196개 중 96개가 외화(USD) 기준이다. 카탈로그의 절반이 환율에 노출돼 있고 해외 서비스는 표시가에 부가세 10%까지 붙어, 주기·통화·세금을 각자 환산하면 총액과 비중이 조용히 어긋난다.',
+   'utils/cost.py에 "월 단위 KRW" 단일 환산 함수를 두고 총액·비중·예산·분석이 전부 이 진입점을 거치게 하고, 부가세 계산은 utils/vat.py로 분리. 전 구간 Decimal로 처리해 부동소수점 오차를 배제.',
    '"그렇게 하는 게 좋아 보여서"가 아니라 "안 하면 절반이 틀려서" 내린 결정. 이후 모든 집계 기능이 같은 기준을 공유.'],
   ['"실시간"이라고 말하지 않기 → 데이터 정직성 설계',
    '무료 환율 API(Frankfurter)는 ECB 고시 기준이라 영업일 1회만 갱신된다. 실시간처럼 보여주면 사용자가 잘못된 판단을 하게 된다.',
@@ -125,23 +125,23 @@ const contributions = [
   ['수동 입력을 서비스 카탈로그 선택으로 전환','직접 타이핑으로 오타·표기 불일치가 분석 품질을 떨어뜨리던 문제 -> 기존 구독 데이터를 유지한 채 service_id·plan_id FK를 nullable로 추가하고 service_name을 남겨 두 방식이 공존하도록 설계 -> 입력 마찰과 데이터 오류를 동시에 감소.'],
   ['외화 원화 환산 + 개인화 알림 실발송','외화 결제는 환율에 따라 월 지출이 달라지고 알림은 설정만 있던 문제 -> Frankfurter KRW 변환 + APScheduler 기반 개인화 발송 파이프라인 구현 -> 환율 변동까지 반영해 알림을 먼저 전달.'],
   ['금액 환산 기준을 코드 한 곳으로 모음','결제 주기(주·월·분기·연)와 통화(KRW·USD·EUR·JPY)가 섞여 총액과 개별 카드가 다른 기준으로 계산되면 비중 계산이 조용히 틀어지는 문제 -> utils/cost.py에 "월 단위 KRW" 단일 환산 함수를 두고 총액·비중·예산·분석이 전부 이 진입점을 거치게 하고 전 구간 Decimal로 처리 -> 이후 모든 집계 기능이 같은 기준을 공유.'],
-  ['프로덕션 배포와 출시 준비까지 완주','기능 구현에서 끝내면 실제 사용자가 쓸 수 없는 문제 -> Railway(백엔드+관리형 Postgres, 커스텀 도메인+SSL)·Cloudflare Pages(랜딩·약관)·EAS(Android 빌드) 배포와 Resend 메일 파이프라인(DKIM/SPF) 구성 -> 약 21,800줄 규모 서비스의 백엔드·랜딩을 배포하고 앱 스토어 출시를 준비 중.'],
+  ['프로덕션 배포와 출시 준비까지 완주','기능 구현에서 끝내면 실제 사용자가 쓸 수 없는 문제 -> Railway(백엔드+관리형 Postgres)·Cloudflare Pages(웹앱·랜딩·약관)·EAS(iOS/Android 빌드) 배포와 Resend 메일 파이프라인(DKIM/SPF) 구성 -> api / app / 랜딩을 각각 커스텀 도메인+SSL로 분리 배포하고, iOS는 EAS Submit으로 App Store 심사 단계까지 진행.'],
 ];
 
 // 핵심 기능 (PORTFOLIO.md · 데모 영상 순서 기준)
 const demoFeatures = [
   ['01','구독 관리','카탈로그에서 선택 추가 또는 커스텀 직접 입력. 활성·일시정지·해지·체험 상태와 주·월·분기·연 결제 주기 지원. 서비스마다 cancel_url을 저장해 알림에서 해지 페이지로 바로 이동.'],
-  ['02','대시보드','월/연 총 지출·활성 구독 수·다음 결제일을 한 화면에 요약. 7일 내 결제 예정 위젯으로 임박 결제 강조.'],
-  ['03','지출 분석','카테고리별 지출 비중 도넛 + 월별 추이 라인 차트. 다운그레이드·해지·주기 전환 절약 인사이트를 원클릭 적용.'],
+  ['02','대시보드','월/연 총 지출·활성 구독 수·다음 결제일·구독 건강 점수를 한 화면에 요약. 7일 내 결제 예정 위젯으로 임박 결제 강조.'],
+  ['03','지출 분석','카테고리별 지출 비중 도넛 + 3/6/12/24개월 추이 라인 차트. 다운그레이드·해지·주기 전환 절약 인사이트를 원클릭 적용.'],
   ['04','캘린더 · 타임라인','반복 결제를 달력에 자동 전개하고, 구독 생성·플랜 변경·해지 이력을 타임라인으로 추적.'],
   ['05','예산 · 알림','월 예산 초과 알림 + 결제 N일 전 이메일(SMTP)·푸시 실발송. 요금 인상·중복·환율 알림을 인박스로 통합 관리.'],
-  ['06','고급 인사이트','같은 카테고리 중복 구독 감지, 외화 구독 환율 추적(KRW 환산), 요금 인상 이력(plan_price_history) 관리.'],
+  ['06','고급 인사이트','같은 카테고리 중복 구독 감지, 외화 구독 환율 추적(부가세 10% 포함 KRW 환산), 가족·팀 공유 구독의 1인당 분담액, 요금 인상 이력(plan_price_history) 관리.'],
   ['07','뉴스 + AI 요약','내 구독 서비스 기준으로 뉴스 개인화 정렬, 기사 탭 시 OpenAI(gpt-4o-mini) AI 요약 모달 제공.'],
 ];
 
 const challenges = [
   ['카탈로그 마이그레이션 중 데이터 보존','운영 중 subscriptions 테이블에 FK를 추가하면 기존 행 처리와 무결성이 문제','전면 재작성 대신 services/service_plans를 만든 뒤 FK를 nullable로 추가하고 service_name 컬럼을 유지','기존 데이터 유지한 채 카탈로그 도입'],
-  ['외화 환율의 최신성 vs 호출 비용','환율은 계속 바뀌는데 매 요청마다 외부 API 호출은 비효율적','초기 환율을 저장하고 APScheduler로 주기 갱신 + 임계치 초과 시에만 알림 발송','비용 줄이며 최신 환율 유지'],
+  ['외화 환율의 최신성 vs 호출 비용','환율은 계속 바뀌는데 매 요청마다 외부 API를 호출하면 지연과 장애 전파가 그대로 사용자에게 간다','스케줄러 잡으로 미리 당겨오는 대신 exchange_rate.py에서 요청 시점 1시간 TTL 캐시로 조회하고, 응답의 기준일(date)을 보관해 UI가 "언제 기준 환율인지" 밝히게 하고, API 장애 시 폴백 환율로 대체','외부 호출을 통화당 시간당 1회로 줄이면서, 환율 API가 죽어도 화면이 유지되고 표시값이 실시간인 척하지 않는 구조'],
   ['JWT 만료 UX','토큰 만료 후 API 실패가 화면 오류처럼 보이는 문제','Axios 인터셉터에서 401을 캐치해 로그인 화면으로 자동 리다이렉트','인증 실패 흐름 명확화'],
   ['뉴스 AI 요약의 비용·지연','기사마다 OpenAI 요약을 호출하면 비용과 응답 지연이 커짐','news_cache 테이블로 요약 결과를 캐싱해 동일 기사 재요약 제거','중복 호출 없이 즉시 응답'],
   ['Railway가 준 DATABASE_URL을 그대로 못 씀','관리형 Postgres는 postgresql://...?sslmode=require 형식을 주는데, SQLAlchemy async는 postgresql+asyncpg://를 요구하고 sslmode 파라미터를 받지 않아 기동 실패','config.py에서 드라이버 스킴을 자동 정규화하고 sslmode를 제거, Dockerfile CMD가 $PORT를 주입받도록 수정','관리형 DB 연결 정상화 후 프로덕션 기동'],
@@ -152,7 +152,7 @@ const challenges = [
 ];
 
 
-function DrawerTabs(){return [{label:'About',content:<div className="space-y-4"><p className="rounded-2xl p-6 text-sm leading-relaxed text-white" style={{background:'linear-gradient(135deg,#14b8a6,#2563eb)',wordBreak:'keep-all'}}>흩어진 구독 지출을 Web/Mobile에서 한 번에 관리하는 플랫폼. 결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고 카탈로그 선택 방식으로 전환해, 총액·결제일·예산 초과·중복·환율 같은 관리형 인사이트에 집중했습니다. 기획·설계·웹/모바일·백엔드·배포를 풀스택 단독으로 담당.</p><div className="grid grid-cols-2 sm:grid-cols-4 gap-3">{stats.map(([v,l,s])=><div key={l} className="bg-gray-50 p-4 rounded-xl text-center"><p className="text-xl font-black" style={{color:PRIMARY}}>{v}</p><p className="text-[10px] font-bold uppercase text-gray-400">{l}</p><p className="text-[10px] text-gray-500">{s}</p></div>)}</div></div>},{label:'Key Features',content:<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{[['구독 관리','서비스 카탈로그에서 추가 + 커스텀 직접 입력'],['대시보드','월/연 총 지출·활성 구독 수·다음 결제일 요약'],['지출 분석','카테고리별 비중 + 월별 추이 차트'],['캘린더','과거/미래 결제일을 한눈에'],['변경 타임라인','생성·플랜 변경·해지 이력 추적'],['예산 관리','월 예산 설정 및 초과 알림'],['환율 추적','외화 구독 KRW 자동 변환 + 변동 알림'],['중복 감지','같은 카테고리 내 겹치는 서비스 탐지'],['절약 제안','불필요·중복 구독 기반 비용 절감 추천'],['알림 설정','결제 N일 전·이메일/푸시 실제 발송'],['뉴스 + AI 요약','구독 서비스 관련 뉴스 + OpenAI 기사 요약'],['가족·공유 분담','member_count 설정 시 1인당 몫으로 지출 재계산'],['CSV 내보내기','구독 목록을 CSV 파일로 내보내기'],['다크모드 · 한/영','다크모드와 다국어 토글 — 번역이 없으면 한국어 원문으로 폴백'],['온보딩','첫 가입 시 4단계 온보딩으로 초기 설정 안내']].map(([t,d])=><div key={t} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm"><p className="text-sm font-bold text-gray-900 mb-1">{t}</p><p className="text-xs text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p></div>)}</div>},{label:'Tech Stack',content:<div className="flex flex-wrap gap-2">{chips.concat(['SQLAlchemy 2.0(async)','Alembic','Pydantic','Docker','slowapi','APScheduler','OpenAI','Frankfurter API']).map(x=><span key={x} className="px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-sm">{x}</span>)}</div>},{label:'API',content:<div className="space-y-3">{['Auth: POST /auth/register, POST /auth/login','Services: GET /services, GET /services/{id}/plans','Subscriptions: GET /subscriptions, POST /subscriptions/from-catalog','Analytics: GET /analytics/overview, GET /analytics/spending-trend','Categories: GET /categories','Notifications: GET /notifications, PUT /notifications/settings','News: GET /news, POST /news/summary (AI 요약)'].map(x=><div key={x} className="rounded-xl border border-gray-100 bg-white p-4 text-sm text-gray-600"><span className="font-bold" style={{color:PRIMARY}}>{x.split(':')[0]}</span>{':'+x.split(':').slice(1).join(':')}</div>)}</div>},{label:'DB Schema',content:<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{['users','categories','services','service_plans','plan_price_history','subscriptions','subscription_history','payment_history','notification_settings','notifications','news_cache'].map(x=><div key={x} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm"><p className="font-mono text-sm font-bold" style={{color:SECONDARY}}>{x}</p></div>)}</div>},{label:'Testing',content:<div className="space-y-3"><p className="text-sm text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>pytest 41개로 인증·구독 CRUD·분석 집계·카테고리·알림·자동 갱신을 커버합니다. 보안 하드닝(응답 통일·rate limit) 이후에는 변경된 보안 동작에 맞춰 테스트를 갱신했고, rate limiter는 테스트 환경에서 비활성화해 테스트 간 상태 오염을 막았습니다.</p><div className="grid grid-cols-2 sm:grid-cols-3 gap-2">{['test_auth','test_services','test_subscriptions','test_analytics','test_categories','test_notifications'].map(x=><div key={x} className="rounded-lg border border-gray-100 bg-white p-3 text-center"><p className="font-mono text-xs font-bold" style={{color:PRIMARY}}>{x}</p></div>)}</div></div>}];}
+function DrawerTabs(){return [{label:'About',content:<div className="space-y-4"><p className="rounded-2xl p-6 text-sm leading-relaxed text-white" style={{background:'linear-gradient(135deg,#14b8a6,#2563eb)',wordBreak:'keep-all'}}>흩어진 구독 지출을 Web/Mobile에서 한 번에 관리하는 플랫폼. 결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고 카탈로그 선택 방식으로 전환해, 총액·결제일·예산 초과·중복·환율 같은 관리형 인사이트에 집중했습니다. 기획·설계·웹/모바일·백엔드·배포를 풀스택 단독으로 담당.</p><div className="grid grid-cols-2 sm:grid-cols-4 gap-3">{stats.map(([v,l,s])=><div key={l} className="bg-gray-50 p-4 rounded-xl text-center"><p className="text-xl font-black" style={{color:PRIMARY}}>{v}</p><p className="text-[10px] font-bold uppercase text-gray-400">{l}</p><p className="text-[10px] text-gray-500">{s}</p></div>)}</div></div>},{label:'Key Features',content:<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{[['구독 관리','서비스 카탈로그에서 추가 + 커스텀 직접 입력'],['대시보드','월/연 총 지출·활성 구독 수·다음 결제일 요약'],['지출 분석','카테고리별 비중 + 월별 추이 차트'],['캘린더','과거/미래 결제일을 한눈에'],['변경 타임라인','생성·플랜 변경·해지 이력 추적'],['예산 관리','월 예산 설정 및 초과 알림'],['환율 추적','외화 구독 KRW 자동 변환 + 변동 알림'],['중복 감지','같은 카테고리 내 겹치는 서비스 탐지'],['절약 제안','불필요·중복 구독 기반 비용 절감 추천'],['알림 설정','결제 N일 전·이메일/푸시 실제 발송'],['뉴스 + AI 요약','구독 서비스 관련 뉴스 + OpenAI 기사 요약'],['가족·공유 분담','member_count 설정 시 1인당 몫으로 지출 재계산'],['CSV 내보내기','UTF-8 BOM으로 Excel에서 바로 열리는 CSV 내보내기'],['부가세 반영','해외 서비스 표시가에 붙는 부가세 10%를 실부담액에 반영'],['오류 신고','앱 안에서 사진 첨부와 함께 오류를 제보 (/feedback/contact)'],['다크모드 · 한/영','다크모드와 다국어 토글 — 번역이 없으면 한국어 원문으로 폴백'],['온보딩','첫 가입 시 4단계 온보딩으로 초기 설정 안내']].map(([t,d])=><div key={t} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm"><p className="text-sm font-bold text-gray-900 mb-1">{t}</p><p className="text-xs text-gray-500 leading-relaxed" style={{wordBreak:'keep-all'}}>{d}</p></div>)}</div>},{label:'Tech Stack',content:<div className="flex flex-wrap gap-2">{chips.concat(['SQLAlchemy 2.0(async)','Alembic','Pydantic','Docker','slowapi','APScheduler','OpenAI','Frankfurter API']).map(x=><span key={x} className="px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-full border border-gray-200 shadow-sm">{x}</span>)}</div>},{label:'API',content:<div className="space-y-3">{['Auth: POST /auth/register · /login · /refresh · /verify-email · /reset-password','Services: GET /services · /services/popular · /services/{id}/price-history','Subscriptions: GET·POST /subscriptions · /from-catalog · /upcoming · /calendar-events · /timeline · /export','Analytics: GET /analytics/overview · /spending-trend · /category-breakdown · /overlaps · /savings-suggestions · /budget-status · /price-changes','Categories: GET /categories','Notifications: GET·PUT /notifications/settings · /inbox · PUT /push-token · POST /deliver · /digest','News: GET /news, POST /news/summary (AI 요약)','Feedback: POST /feedback/contact (오류 신고 · 사진 첨부)'].map(x=><div key={x} className="rounded-xl border border-gray-100 bg-white p-4 text-sm text-gray-600"><span className="font-bold" style={{color:PRIMARY}}>{x.split(':')[0]}</span>{':'+x.split(':').slice(1).join(':')}</div>)}</div>},{label:'DB Schema',content:<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">{['users','categories','services','service_plans','plan_price_history','subscriptions','subscription_history','payment_history','notification_settings','notifications','news_cache'].map(x=><div key={x} className="rounded-xl border border-gray-100 bg-white p-4 shadow-sm"><p className="font-mono text-sm font-bold" style={{color:SECONDARY}}>{x}</p></div>)}</div>},{label:'Testing',content:<div className="space-y-3"><p className="text-sm text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>pytest 14개 파일 116개 테스트로 인증·구독 CRUD·분석 집계·카탈로그 소유권·월 단위 KRW 환산·부가세·자동 갱신·알림 설정을 커버합니다. 보안 하드닝(응답 통일·rate limit) 이후에는 변경된 보안 동작에 맞춰 테스트를 갱신했고, rate limiter는 테스트 환경에서 비활성화해 테스트 간 상태 오염을 막았습니다.</p><div className="grid grid-cols-2 sm:grid-cols-3 gap-2">{['test_auth','test_subscriptions','test_analytics','test_cost','test_vat','test_renewal','test_renewal_notifications','test_notifications','test_push_settings','test_catalog_ownership','test_custom_plans','test_services','test_categories','test_feedback'].map(x=><div key={x} className="rounded-lg border border-gray-100 bg-white p-3 text-center"><p className="font-mono text-xs font-bold" style={{color:PRIMARY}}>{x}</p></div>)}</div></div>}];}
 
 export default function SubFlow(){
   const navigate=useNavigate();
@@ -166,13 +166,14 @@ export default function SubFlow(){
         <div className="flex items-center gap-3 mb-4 flex-wrap">
           <span className="text-[10px] font-bold px-3 py-1 rounded-full tracking-wider uppercase" style={{backgroundColor:BRAND_SOFT,color:BRAND_INK}}>Full-Stack · Solo</span>
           <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Web + Mobile</span>
-          <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 ~ 진행 중</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 ~</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full tracking-wider uppercase">Web 배포 완료 · iOS 심사중</span>
         </div>
         <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{fontFamily:"'Syne', sans-serif",color:PRIMARY}}>SubFlow</h1>
         <p className="text-xl font-semibold mb-6 tracking-tight" style={{color:SECONDARY}}>구독 지출을 한 화면에서 관리하는 Web + Mobile 풀스택 플랫폼</p>
-        <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고, 방향을 바꿔 서비스 카탈로그(83종·요금제 164개) 기반으로 재설계했습니다. React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하도록 API-first로 설계해, 11개 DB 테이블·7개 라우터 위에서 구독 등록·지출 분석·중복 감지·환율 추적·개인화 알림·뉴스 AI 요약을 하나의 흐름으로 묶었습니다.</p>
+        <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>결제 내역 자동 수집이 현실적으로 불가능함을 사전 조사로 확인하고, 방향을 바꿔 서비스 카탈로그(98종·요금제 196개) 기반으로 재설계했습니다. React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하도록 API-first로 설계해, 11개 DB 테이블·8개 라우터 위에서 구독 등록·지출 분석·중복 감지·환율/부가세 환산·개인화 알림 실발송·뉴스 AI 요약을 하나의 흐름으로 묶었습니다.</p>
         <div className="flex gap-3 flex-wrap">
-          <a href="https://github.com/hyebinhy/SubFlow" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
+          <a href="https://github.com/ykgstar37-lab/SubFlow" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
             GitHub
           </a>
@@ -183,6 +184,14 @@ export default function SubFlow(){
           <a href="https://mysubflow.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition hover:brightness-95" style={{backgroundColor:BRAND_SOFT,color:BRAND_INK}}>
             <img src="/subflow-mark-black.png" alt="" className="w-4 h-4 object-contain" />
             SubFlow
+          </a>
+          <a href="https://app.mysubflow.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-full transition hover:brightness-110" style={{backgroundColor:SECONDARY}}>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0zM3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 010 18 15 15 0 010-18z" /></svg>
+            Web App
+          </a>
+          <a href="https://api.mysubflow.app/docs" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 hover:border-gray-400 text-gray-700 text-sm font-medium rounded-full transition">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+            API Docs
           </a>
         </div>
       </motion.div>
@@ -197,7 +206,7 @@ export default function SubFlow(){
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
-              <p className="text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>기획·설계부터 React 웹 대시보드, Expo 모바일, FastAPI 백엔드(11개 테이블·7개 라우터), 배포까지 풀스택을 단독으로 담당했습니다. 실현 가능성 조사, 점진적 스키마 마이그레이션, API-first 설계, 개인화 알림 파이프라인, 프로덕션 기준 보안 하드닝을 직접 결정하고 구현했습니다.</p>
+              <p className="text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>기획·설계부터 React 웹 대시보드, Expo 모바일, FastAPI 백엔드(11개 테이블·8개 라우터), 배포까지 풀스택을 단독으로 담당했습니다. 실현 가능성 조사, 점진적 스키마 마이그레이션, API-first 설계, 개인화 알림 파이프라인, 프로덕션 기준 보안 하드닝을 직접 결정하고 구현했습니다.</p>
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
@@ -325,8 +334,9 @@ export default function SubFlow(){
               <li className="flex items-start gap-2"><span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span><span className="line-through text-gray-400">알림 발송 로직 부재(TODO) → <strong className="text-gray-600 no-underline">APScheduler 기반 개인화 실발송 구현 완료</strong></span></li>
               <li className="flex items-start gap-2"><span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span><span className="line-through text-gray-400">수동 입력 데이터 품질 저하 → <strong className="text-gray-600 no-underline">서비스 카탈로그 + FK 마이그레이션으로 정규화 완료</strong></span></li>
               <li className="flex items-start gap-2"><span className="text-red-400 text-xs font-bold mt-0.5 w-14 shrink-0">높음</span><span>관측성(Observability) — 배포 후 로그로만 상태를 확인 중. 헬스체크·에러 트래킹·지표 대시보드 도입 필요</span></li>
-              <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">중간</span><span>테스트 커버리지 — 현재 6개 스위트에서 알림·뉴스 등 엣지 케이스까지 확대 필요</span></li>
-              <li className="flex items-start gap-2"><span className="text-gray-400 text-xs font-bold mt-0.5 w-14 shrink-0">낮음</span><span>CI/CD — 현재 수동 배포, GitHub Actions 자동화 파이프라인 미구축</span></li>
+              <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">중간</span><span>테스트 커버리지 — 현재 14개 파일 116개 테스트(인증·구독·분석·갱신·부가세·알림). 뉴스·다이제스트 등 엣지 케이스까지 확대 필요</span></li>
+              <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">진행중</span><span>출시 — 웹앱·API·랜딩은 커스텀 도메인으로 배포 완료, iOS는 App Store 심사중. Android(Play Console)와 소셜 로그인(Google/Kakao)은 다음 단계</span></li>
+              <li className="flex items-start gap-2"><span className="text-gray-400 text-xs font-bold mt-0.5 w-14 shrink-0">낮음</span><span>CI/CD — 현재 수동 배포(railway up), GitHub Actions 자동화 파이프라인 미구축</span></li>
             </ul>
           </div>
           <div className="mt-6 p-6 bg-gray-50 rounded-2xl">

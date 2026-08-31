@@ -165,7 +165,7 @@ const ALL_PROJECTS = [
     { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 —', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, Intent 라우팅으로 AI 호출 비용을 85% 절감.', overview: '서울시 2,500+ 문화시설 데이터를 고객 요구 조건(지역/목적/접근성)에 맞춰 검색·추천하는 데이터 서비스. SQL/벡터 검색/SSE를 조합해 비용과 응답 품질을 제어.', role: 'RESTful API 설계(11개 엔드포인트), Intent 라우팅, SQL+Vector 검색 연계, SSE 스트리밍, 비용 최적화', tech: ['FastAPI', 'React', 'SQLite', 'Vector DB', 'SSE'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
     { id: '03', title: 'WorkFlow Agent (듀드)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.04', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70%→97%, 판단 정확도 37%→85%. 공통 LLM 모듈로 provider 전환 설정 1줄.', overview: '사내 업무 자동화를 위한 LLM 시스템. 고객사 보안 환경을 가정해 프라이빗 sLLM 서빙, 출력 검증, SSE 응답, PostgreSQL/JWT 기반 백엔드 흐름을 설계.', role: 'vLLM 서빙 인프라, 공통 LLM provider 모듈, Guardrail 검증, LoRA 품질 실험, 운영 안정성 지표 관리', tech: ['vLLM', 'FastAPI', 'PostgreSQL', 'Docker', 'SSE'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
     { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. Precision 0.83→0.97(+14.4%) 개선 후 Flask→Django, AWS EC2+Nginx+Gunicorn 배포로 운영 구조 표준화.', overview: '교육 자료 기반 RAG 튜터를 MVP에서 프로덕션 구조로 확장한 팀 프로젝트. 인증/ORM/정적파일/배포 흐름을 Django와 AWS 환경으로 정리.', role: 'Flask→Django 마이그레이션, AWS EC2 배포, Nginx+Gunicorn 502 디버깅, RAGAS 평가, Quiz API', tech: ['Django', 'AWS EC2', 'Nginx', 'Gunicorn', 'Qdrant'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
-    { id: '05', title: 'SubFlow — Subscription Manager', category: 'Team', domain: 'Dev', date: '2026.03 — 2026.04', description: '흩어진 구독 지출 파악 문제 → 자동 수집이 불가능함을 사전 조사로 확인하고 카탈로그 기반 Web/Mobile/FastAPI 공유 구조로 전환. 11개 DB 테이블, 7종 API 라우터, 83종(12카테고리) 서비스 카탈로그로 지출 분석·중복 감지·환율 추적·뉴스 AI 요약까지 통합.', overview: 'React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하는 구독 관리 플랫폼. 총액, 다음 결제일, 예산 초과, 중복 구독처럼 반복 사용자가 바로 행동할 지표를 우선 설계.', role: '기획·설계·웹/모바일 프론트·FastAPI 백엔드·배포를 풀스택 단독 담당, PostgreSQL 11테이블 스키마, JWT 인증, 지출 분석/알림 도메인', tech: ['FastAPI', 'React', 'React Native', 'PostgreSQL', 'Zustand'], github: 'https://github.com/hyebinhy/SubFlow', link: '/projects/subflow', thumbnail: thumbSubFlow, badge: 'Team', demoHash: 'demo' },
+    { id: '05', title: 'SubFlow — Subscription Manager', category: 'Personal', domain: 'Dev', date: '2026.03 — 진행 중', description: '흩어진 구독 지출 파악 문제 → 자동 수집이 불가능함을 사전 조사로 확인하고 카탈로그 기반 Web/Mobile/FastAPI 공유 구조로 전환. 11개 DB 테이블, 8종 API 라우터, 98종(15카테고리)·요금제 196개 서비스 카탈로그로 지출 분석·중복 감지·환율/부가세 환산·알림 실발송·뉴스 AI 요약까지 통합. 웹앱·API 배포 완료, iOS App Store 심사중.', overview: 'React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하는 구독 관리 플랫폼. 총액, 다음 결제일, 예산 초과, 중복 구독처럼 반복 사용자가 바로 행동할 지표를 우선 설계.', role: '기획·설계·웹/모바일 프론트·FastAPI 백엔드·배포를 풀스택 단독 담당, PostgreSQL 11테이블 스키마, JWT 인증, 지출 분석/알림 도메인', tech: ['FastAPI', 'React', 'React Native', 'PostgreSQL', 'Zustand'], github: 'https://github.com/ykgstar37-lab/SubFlow', link: '/projects/subflow', thumbnail: thumbSubFlow, badge: 'Personal', demoHash: 'demo' },
     { id: '06', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF·ARCH-LM 사전 검정으로 GARCH 적용 근거를 확보하고, 5개 모형을 AIC/BIC/R² 기준으로 비교. HAR-TGARCH-X가 R²=0.89로 최적 모형으로 선정.', overview: '암호화폐 시장의 변동성을 GARCH 계열 5개 모형으로 비교 분석한 팀 연구 프로젝트.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, HAR-TGARCH-X 최적 모형 선정, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-dashboard', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
     { id: '07', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', overview: '서울시 25개 자치구 관광시설 데이터를 군집분석하여 외국인 관광객에게 목적에 맞는 지역구를 추천하는 연구 프로젝트.', role: '공공데이터 전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 시각화 및 발표', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
 ];
@@ -232,29 +232,51 @@ function ProjectsPage() {
 
 const PROBLEM_SOLVING_CASES = [
     {
-        id: 'guardrail',
+        id: 'money-normalization',
         num: '01',
+        tag: 'SubFlow',
+        tagColor: '#4A90D9',
+        title: '통화·주기가 섞인 금액을 단일 환산 진입점으로 모아 집계 정합성 확보',
+        problem: '카탈로그 요금제 196개 중 96개(49%)가 외화(USD) 기준이고 결제 주기도 주·월·분기·연이 섞여 있다. 총액·카테고리 비중·예산 초과·기간별 추이가 각자 환산하면 화면마다 다른 숫자가 나오는데, 예외를 던지지 않고 조용히 어긋나 발견이 어렵다. 해외 서비스는 표시가에 부가세 10%까지 붙는다.',
+        solutions: [
+            'utils/cost.py에 "월 단위 KRW" 단일 환산 함수를 두고 총액·비중·예산·추이 집계 경로가 전부 이 진입점을 거치도록 강제. 부가세 규칙은 utils/vat.py로 분리해 환산 로직과 세금 로직이 섞이지 않게 설계',
+            '금액을 float 대신 전 구간 Decimal로 처리해 반올림 오차가 집계에 누적되지 않도록 차단',
+            '환율은 스케줄러로 미리 당겨오지 않고 요청 시점 1시간 TTL 캐시로 조회 — 외부 API(Frankfurter) 호출을 통화당 시간당 1회로 줄이고, 장애 시 폴백 환율로 대체해 환율 API가 죽어도 대시보드가 뜨도록 격리',
+            '"실시간 환율"이라 표기하지 않고 응답의 기준일(date)을 그대로 보관·노출 — ECB 고시가 영업일 1회 갱신이라 실시간처럼 보이면 사용자가 잘못된 판단을 하게 됨',
+            '통화 4종 × 결제주기 4종 조합을 파라미터라이즈 테스트로 고정해, 환산 규칙이 바뀌면 기능보다 테스트가 먼저 깨지도록 구성',
+        ],
+        results: [
+            { label: '환산 지점', value: '집계별 분산 → 1곳' },
+            { label: '외화 노출 요금제', value: '96 / 196 (49%)' },
+            { label: '환율 API 호출', value: '요청마다 → 시간당 1회' },
+        ],
+        insight: '집계 버그는 예외를 던지지 않고 숫자만 조금씩 틀리기 때문에, 사후 검증보다 "틀릴 수 있는 경로를 하나로 줄이는 설계"가 먼저다. 외부 API는 최신성보다 장애 격리와 "정확하지 않은 값을 정확한 척 보여주지 않는 것"이 우선.',
+        keywords: ['#데이터정합성', '#단일진입점설계', '#외부API격리', '#캐싱전략'],
+    },
+    {
+        id: 'guardrail',
+        num: '02',
         tag: 'WorkFlow Agent',
         tagColor: '#e27500',
         title: '프라이빗 sLLM 서빙과 출력 검증 체계로 운영 안정성 확보',
-        problem: 'Base 모델에 "인턴에게 AWS 접근 권한을 줘도 되나요?" 질의 시, "yes"(오답) + confidence 0.92(과신) + "제12조"(미존재 조항 환각) 반환. 기본 정확도 37.2%. LoRA v2에서 98건 추가 시 오히려 -3.2%p 하락 — 라벨 오염.',
+        problem: 'Base 모델에 "인턴에게 AWS 접근 권한을 줘도 되나요?" 질의 시, "yes"(오답) + 높은 confidence(과신) + "제12조"(미존재 조항 환각) 반환. 판단 정확도 37.2%, JSON 유효율 70.4%. LoRA v2에서 98건 추가 시 오히려 -3.2%p 하락 — 라벨 오염.',
         solutions: [
             '공통 LLM provider 모듈 — GPT/Claude/vLLM 전환을 설정값으로 분리해 고객 환경별 배포 리스크 최소화',
             '4중 Guardrail — 키워드 매칭(0~1.0), 조항 존재 검증(환각 플래그), 카테고리 제한, 일관성 모니터링(500건 FIFO 캐싱)',
-            '5-factor Confidence 보정으로 과신 차단 (Hard Cap: RAG 품질 < 0.2 → max 0.4). 동일 쿼리에서 "conditional"(정답) + confidence 0.78(적절) + 실존 조항 2건 + 조건/대안 제시로 개선',
+            '5-factor Confidence 보정으로 과신 차단 — LLM 0.6 + RAG 품질 0.25 + 규정 커버리지 0.15에서 충돌·환각·조항 미존재를 감점(Hard Cap: RAG 품질 < 0.2 → max 0.4). 검증 시나리오에서 과신 케이스(높은 LLM·낮은 RAG) 0.95 → 0.72, 규정 없음 0.80 → 0.30으로 하향',
             'LoRA v3 — 19건만 약점(재량 표현 14 + 경계 케이스 5)을 정밀 타겟팅하여 회복',
         ],
         results: [
-            { label: '판단 정확도', value: '37% → 85%' },
-            { label: '환각 → 실존 근거', value: '미존재 조항 → 실존 2건' },
+            { label: '판단 정확도 (LoRA v3)', value: '37.2% → 85.4%' },
+            { label: 'JSON 유효율', value: '70.4% → 97.6%' },
             { label: 'Provider 전환', value: '설정 1줄' },
         ],
-        insight: '같은 쿼리에서 Base는 오답+환각+과신, LoRA+Guardrail은 정답+실존근거+적절한 confidence. GPT 의존을 vLLM 프라이빗 서빙으로 전환하여 비용 제거 + 데이터 보안 확보',
+        insight: '정확도 37.2→85.4%는 LoRA 파인튜닝이 만든 값이고, Guardrail은 그 위에서 "틀렸을 때 확신하지 않게" 만드는 서빙 게이트다 — 둘을 같은 성과로 묶으면 어느 쪽을 더 투자해야 할지 판단할 수 없다. GPT 의존을 vLLM 프라이빗 서빙으로 전환해 비용 제거 + 데이터 보안 확보.',
         keywords: ['#vLLM서빙', '#AI운영안정성', '#Guardrail', '#Provider전환'],
     },
     {
         id: 'agentic-rag',
-        num: '02',
+        num: '03',
         tag: 'Seoul Culture Map',
         tagColor: '#0ea5e9',
         title: '고객 요구 조건 기반 검색·추천 API로 AI 호출 비용 85% 절감',
@@ -274,14 +296,14 @@ const PROBLEM_SOLVING_CASES = [
     },
     {
         id: 'migration',
-        num: '03',
+        num: '04',
         tag: 'PyMate',
         tagColor: '#16a34a',
         title: 'Flask MVP → Django/AWS 배포 전환과 502 장애 디버깅',
         problem: 'Flask MVP는 기능적으로 동작했지만, ORM 마이그레이션·정적 파일 서빙·관리자 페이지 등 프로덕션 기능을 모두 수동 구성해야 했음. AWS 배포 시 Nginx → Gunicorn → Flask 연결에서 반복적인 502 에러 발생.',
         solutions: [
             'Django 내장 기능(ORM migration, admin, collectstatic)으로 프로덕션 인프라 표준화',
-            'RAG 임베딩 768D → 3072D 교체 + Qdrant 벡터 DB 재설계로 RAG 검색 품질 향상',
+            '검색 파이프라인 번들 교체 — Dual Query(한글 원문 + 영어 번역 동시 검색) + BM25 max 정규화 후 vector 0.6 / keyword 0.2 / BM25 0.2 가중합 + Cross-Encoder Reranker, 임베딩 1536D → 3072D(text-embedding-3-large), Qdrant 재설계',
             'Nginx → Gunicorn → Django 서버 흐름 직접 구성, 소켓 바인딩 설정 문제 해결',
         ],
         results: [
@@ -289,23 +311,23 @@ const PROBLEM_SOLVING_CASES = [
             { label: 'Context Recall', value: '0.70 → 0.79' },
             { label: '배포 장애', value: '502 원인 추적' },
         ],
-        insight: 'RAGAS로 검색·생성을 분리 측정하여 병목이 "LLM 답변 능력"이 아닌 "embedding 검색 품질"임을 특정 — 구조를 바꾸는 것이 기능 추가보다 서비스 품질에 큰 영향',
+        insight: 'RAGAS로 검색·생성을 분리 측정해 병목이 "LLM 답변 능력"이 아닌 "검색 품질"임을 특정 — 개선은 단일 기법이 아니라 Dual Query·가중합·Reranker 번들 전체의 결과였고, 측정을 나누지 않았다면 LLM만 바꾸며 시간을 썼을 것.',
         keywords: ['#AWS배포', '#Nginx', '#Gunicorn', '#DB마이그레이션'],
     },
     {
         id: 'api-serving',
-        num: '04',
+        num: '05',
         tag: 'CryptoVol Dashboard',
         tagColor: '#2b4fcb',
         title: '분석 모형을 실시간 API로 전환하며 서빙·점검 구조 설계',
         problem: 'GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 모델 재계산 비용이 높아 서빙 안정성 확보가 핵심 과제.',
         solutions: [
-            '5분 TTL 인메모리 캐싱 + 120일 윈도우 제한으로 GARCH 재계산 방지. 개별 모형 실패 시 0.0 반환으로 에러 격리',
+            '5분 TTL 인메모리 캐싱 + 60일 롤링 윈도우 적합으로 GARCH 재계산 방지. 모형별 try/except로 개별 실패 시 0.0 반환해 에러 격리',
             'FastAPI WebSocket 릴레이 서버 구현 — Set 기반 클라이언트 추적으로 Binance 스트림을 브라우저에 브로드캐스트',
             'AI 브리핑 5req/60s, 시뮬레이션 10req/60s Rate Limiting으로 고비용 API 보호',
         ],
         results: [
-            { label: 'Endpoints', value: '14 REST + 1 WS' },
+            { label: 'Endpoints', value: '12 REST + 1 WS' },
             { label: '에러 격리', value: '1개 실패 ≠ 전체 장애' },
             { label: '운영 보호', value: 'Rate Limit' },
         ],
@@ -326,7 +348,7 @@ function ProblemSolvingSection() {
                         Problem <span className="text-gray-300">Solving</span>
                     </h2>
                     <p className="text-gray-400 mt-3 sm:mt-4 text-sm sm:text-base max-w-2xl mx-auto" style={{ wordBreak: 'keep-all' }}>
-                        AI 기능을 실제 서비스로 운영하기 위해 배포, 연계, 검증, 장애 대응을 어떻게 설계했는지 정리했습니다.
+                        만든 기능을 실제로 운영되는 서비스로 만들기 위해 데이터 정합성, 배포, 연계, 검증, 장애 격리를 어떻게 설계했는지 정리했습니다.
                     </p>
                 </motion.div>
 
