@@ -223,6 +223,26 @@ const SECTIONS = [
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 
+function HeroTip({ text, align = 'center', children }) {
+    // 가장 왼쪽 버튼은 가운데 정렬하면 툴팁이 화면 밖으로 잘린다.
+    const pos = align === 'left' ? 'left-0' : 'left-1/2 -translate-x-1/2';
+    return (
+        <span className="relative group inline-flex">
+            {children}
+            <span
+                role="tooltip"
+                className={`pointer-events-none absolute ${pos} top-full z-20 mt-2 w-max max-w-xs
+                           rounded-lg bg-gray-900 px-3 py-2 text-xs font-normal leading-relaxed text-white
+                           opacity-0 shadow-lg transition-opacity duration-150 group-hover:opacity-100
+                           group-focus-within:opacity-100`}
+                style={{ wordBreak: 'keep-all' }}
+            >
+                {text}
+            </span>
+        </span>
+    );
+}
+
 const PAPER_TOTAL_PAGES = 12;
 function SourcePaperViewer() {
     const [current, setCurrent] = useState(1);
@@ -394,12 +414,15 @@ export default function CryptoVolDashboard() {
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
                         2023년 학술제 논문은 기간에 쫓겨 GARCH·TGARCH·TGARCH+E.V 3개까지만 실제 적합했고, HAR 계열과 GARCH+E.V는 수식만 남긴 채 마감했습니다. 논문 스스로 한계에 &ldquo;HAR-TGARCH-X의 완전한 구현이 이루어지지 못했다&rdquo;, &ldquo;실시간 예측 시스템으로의 발전을 모색할 필요가 있다&rdquo;고 적었습니다. 이 프로젝트는 그 두 문장에 대한 답입니다. 공란이던 GARCH+E.V와 미구현 HAR 계열 3종을 실제로 적합해 6개 모형을 완성했고, Binance WebSocket 릴레이와 5분 TTL 캐싱으로 수백ms 적합 비용을 제어해 상시 서빙 구조로 전환했습니다. 논문의 미검증 수치를 인용하는 대신 매 요청 재계산하는 검증 엔드포인트를 두었습니다.
                     </p>
-                    <div className="flex gap-3">
+                    <div className="flex flex-wrap gap-3">
+                        <HeroTip align="left" text="FastAPI 백엔드와 React 프론트엔드 전체 코드, 그리고 논문 원문과 2026년 재현 부록(docs/paper)이 함께 있습니다.">
                         <a href="https://github.com/ykgstar37-lab/crypto-volatility-intelligence-system" target="_blank" rel="noopener noreferrer"
+                            title="FastAPI 백엔드와 React 프론트엔드 전체 코드, 논문 원문·재현 부록 포함"
                             className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
                             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
                             GitHub
                         </a>
+                        </HeroTip>
                         <button onClick={() => { const el = document.getElementById('screenshots'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
                             className="inline-flex items-center gap-2 px-4 py-2 bg-[#e27500] hover:bg-[#c96600] text-white text-sm font-medium rounded-full transition">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -411,11 +434,14 @@ export default function CryptoVolDashboard() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                             논문 보기
                         </button>
+                        <HeroTip text="Render 무료 플랜이라 15분 이상 유휴 상태였다면 서버가 깨어나는 데 약 50초가 걸립니다. 차트가 비어 있어도 잠시 기다려 주세요.">
                         <a href="https://crypto-volatility-intelligence-syst.vercel.app/" target="_blank" rel="noopener noreferrer"
+                            title="Render 무료 플랜 — 첫 접속 시 서버 기동에 약 50초 소요"
                             className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-full transition">
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17V7m4 10V11m4 6V9M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                             Live Demo
                         </a>
+                        </HeroTip>
                     </div>
                 </motion.div>
 
