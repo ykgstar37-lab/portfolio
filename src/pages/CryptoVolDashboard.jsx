@@ -223,7 +223,7 @@ const SECTIONS = [
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
 
-const PAPER_TOTAL_PAGES = 10;
+const PAPER_TOTAL_PAGES = 12;
 function SourcePaperViewer() {
     const [current, setCurrent] = useState(1);
     const prev = () => setCurrent(c => Math.max(1, c - 1));
@@ -262,10 +262,15 @@ function SourcePaperViewer() {
                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                             원 논문 (.docx)
                         </a>
-                        <a href="/paper/최종논문_재현부록.docx" download
+                        <a href="/paper/최종논문_재현부록.pdf" target="_blank" rel="noopener noreferrer"
                             className="inline-flex items-center gap-2 text-xs font-semibold hover:underline" style={{ color: PRIMARY }}>
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            재현 부록 포함본 (.pdf)
+                        </a>
+                        <a href="/paper/최종논문_재현부록.docx" download
+                            className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-800 hover:underline">
                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                            재현 부록 포함본 (.docx)
+                            부록 (.docx)
                         </a>
                     </div>
                     <div className="flex items-center gap-3">
@@ -278,7 +283,7 @@ function SourcePaperViewer() {
                 </div>
             </div>
             <p className="mt-3 text-xs text-gray-400">
-                미리보기 이미지는 원 논문 10쪽이다. 재현 부록은 위 &ldquo;재현 부록 포함본&rdquo;에서 확인할 수 있다.
+                미리보기 12쪽 중 11~12쪽이 재현 부록(A.1 환경·데이터 / A.2 결과 / A.3 원문과 어긋나는 점 / A.4 한계)이다.
             </p>
         </motion.div>
     );

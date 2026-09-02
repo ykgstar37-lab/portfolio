@@ -198,7 +198,7 @@ function CryptoSlideViewer() {
     );
 }
 
-const PAPER_TOTAL_PAGES = 10;
+const PAPER_TOTAL_PAGES = 12;
 function PaperViewer() {
     const [current, setCurrent] = useState(1);
     const prev = () => setCurrent(c => Math.max(1, c - 1));
