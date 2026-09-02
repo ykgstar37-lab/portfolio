@@ -19,7 +19,7 @@ import cvDarkAi from '../assets/cryptovol/dark-ai-briefing.gif';
 import cvPortSim from '../assets/cryptovol/portfolio-sim.gif';
 
 const SCREENSHOTS = [
-    { src: cvMain, label: '실시간 멀티코인 변동성 예측', desc: 'CoinGecko API + Binance WebSocket으로 실시간 가격을 수신하고 5개 GARCH 모형으로 변동성을 예측하는 메인 대시보드' },
+    { src: cvMain, label: '실시간 멀티코인 변동성 예측', desc: 'CoinGecko API + Binance WebSocket으로 실시간 가격을 수신하고 6개 GARCH 모형으로 변동성을 예측하는 메인 대시보드' },
     { src: cvCoinEth, label: 'BTC → ETH 코인 전환', desc: '상단 탭 클릭으로 BTC에서 ETH로 실시간 전환. 가격, 거래량, FNG 게이지, 차트가 즉시 갱신되는 멀티코인 대시보드' },
     { src: cvCoinSol, label: 'ETH → SOL 코인 전환', desc: 'ETH에서 SOL로 코인 전환 시 대시보드 전체가 해당 코인 데이터로 실시간 업데이트. 3개 코인 자유 전환 지원' },
     { src: cvDarkmode, label: '다크모드 + 예측 정확도 트래커', desc: 'KO/EN 다국어, 다크/라이트 테마 전환. 모형별 60일 롤링 RMSE를 시계열로 추적하고 최근 30일 기준 가장 정확한 모형을 실시간 랭킹' },
@@ -105,7 +105,7 @@ const CRYPTO_VOL_DASHBOARD_CHARTS = [
 const FEATURES = [
     {
         title: '실시간 멀티코인 변동성 예측',
-        desc: 'Jupyter에서 수동 실행해야 했던 GARCH 적합을 API로 자동화. Binance WebSocket 릴레이로 실시간 시세를 수신하고, 5개 모형의 적합 결과를 5분 TTL 캐싱하여 수백ms 연산 비용 해결.',
+        desc: 'Jupyter에서 수동 실행해야 했던 GARCH 적합을 API로 자동화. Binance WebSocket 릴레이로 실시간 시세를 수신하고, 6개 모형의 적합 결과를 5분 TTL 캐싱하여 수백ms 연산 비용 해결.',
         icon: '01',
     },
     {
@@ -120,7 +120,7 @@ const FEATURES = [
     },
     {
         title: '예측 정확도 리더보드',
-        desc: '시장 구간마다 최적 모형이 달라지는 문제를 해결하기 위해, 60일 롤링 RMSE로 5개 모형을 실시간 랭킹. 모형을 하나로 고정하지 않고 투명하게 비교.',
+        desc: '시장 구간마다 최적 모형이 달라지는 문제를 해결하기 위해, 60일 롤링 RMSE로 6개 모형을 실시간 랭킹. 모형을 하나로 고정하지 않고 투명하게 비교.',
         icon: '04',
     },
     {
@@ -135,7 +135,7 @@ const FEATURES = [
     },
     {
         title: 'FNG 게이지 + Price Alert',
-        desc: '시장 심리(BTC-FNG 상관 r=0.72)를 실시간 게이지로 시각화. 가격 상한/하한 도달 시 WebSocket 기반 Toast 알림으로 즉시 인지.',
+        desc: '시장 심리(FNG)를 실시간 게이지로 시각화. 가격 상한/하한 도달 시 WebSocket 기반 Toast 알림으로 즉시 인지.',
         icon: '07',
     },
     {
@@ -157,6 +157,11 @@ const GARCH_MODELS = [
         desc: 'Threshold GARCH. 조건부 표준편차를 직접 모델링하여 비대칭 충격 반응을 포착.',
     },
     {
+        name: 'GARCH+E.V',
+        formula: 'σ²ₜ = ω + α·ε²ₜ₋₁ + β·σ²ₜ₋₁ + c·xₜ',
+        desc: 'GARCH(1,1)에 외생변수(거래량, FNG)를 추가. 논문 Table 7에서 원자료 유실로 공란이던 행으로, 이번 구현에서 추정치를 산출했다.',
+    },
+    {
         name: 'HAR-GARCH',
         formula: 'σ²ₜ = ω + α·RV₁ + β·RV₇ + γ·RV₃₀ + GARCH(1,1)',
         desc: 'HAR(Heterogeneous Autoregressive) 구조로 1일/7일/30일 Realized Volatility를 다중 시간 스케일로 반영. 단기 트레이더와 장기 투자자의 변동성 인식 차이를 모형에 내재화.',
@@ -168,18 +173,34 @@ const GARCH_MODELS = [
     },
     {
         name: 'HAR-TGARCH-X',
-        formula: 'σₜ = HAR-TGARCH + δ₁·Volume_z + δ₂·FNG',
-        desc: '외생변수(거래량 z-score, FNG 지수)를 mean equation에 주입. BTC-FNG 상관계수 r=0.72를 활용하여 시장 심리를 직접 모형에 반영.',
+        formula: 'σₜ = HAR-TGARCH + δ₁·Volume + δ₂·FNG',
+        desc: '외생변수(거래량, FNG)를 표준화해 mean equation에 주입. 논문이 수식만 남기고 추정치를 내지 못한 모형으로, 이번에 실제 적합에 성공했다. 논문 §3.1은 분산식에 넣도록 정의하지만 arch 패키지가 분산식 외생변수를 지원하지 않아 평균식에 넣었다.',
     },
 ];
 
+
 const ORIGIN_COMPARISON = [
-    { category: '형태', team: 'Python 분석 스크립트', personal: 'Fullstack 웹 서비스' },
-    { category: '데이터', team: 'CSV 정적 데이터', personal: 'CoinGecko API 실시간' },
-    { category: '모델', team: 'Jupyter 수동 실행', personal: 'API 자동 서빙' },
-    { category: '결과물', team: 'matplotlib 정적 차트', personal: 'React 인터랙티브 대시보드' },
-    { category: '배포', team: 'Local 실행', personal: 'Docker Compose 실행 환경 구성 (배포 전)' },
+    { category: '인원', team: '3인 팀 (학술제)', personal: '단독' },
+    { category: '모형', team: '3개 적합 완료 (GARCH, TGARCH, TGARCH+E.V). HAR 계열과 GARCH+E.V는 수식만 서술, Table 7 공란', personal: '6개 전부 적합. 공란이던 GARCH+E.V와 미구현 HAR 계열 3종을 실제 구현' },
+    { category: '데이터', team: 'investing.com CSV 2,129일(2018.02~2023.11), 정적', personal: 'CoinGecko 백필 365일 + 일일 크론 + Binance WebSocket 실시간 틱' },
+    { category: '대상', team: 'BTC 1종', personal: 'BTC / ETH / SOL 3종' },
+    { category: '실행', team: '스크립트 1회 실행 후 표 추출', personal: 'FastAPI 14 REST + 1 WebSocket, 5분 TTL 캐싱으로 상시 서빙' },
+    { category: '검증', team: '본문 서술 수치(R², 상관계수) — 뒷받침 표 유실로 재현 불가', personal: '/api/volatility/factors 에서 매 요청 재계산' },
+    { category: '배포', team: '로컬 실행', personal: 'Render(API) + Vercel(Web) + Neon(PostgreSQL) 운영 중' },
 ];
+
+// 논문의 핵심 주장을 현재 데이터로 다시 계산한 결과.
+// 인용이 아니라 /api/volatility/factors 가 매 요청 산출하는 값이다.
+const PAPER_VERIFICATION = {
+    paperPeriod: '2018.02 ~ 2023.11 (2,129일, investing.com)',
+    livePeriod: '2025.09 ~ 2026.09 (364일, CoinGecko)',
+    rows: [
+        { factor: 'FNG', target: '수익률', paper: '0.72', live: '0.2184', p: '2.6e-05', verdict: 'weaker' },
+        { factor: 'FNG', target: '실현변동성', paper: '—', live: '-0.2868', p: '3.3e-08', verdict: 'new' },
+        { factor: '거래량', target: '절대수익률', paper: '유의한 양(+)', live: '0.5198', p: '1.4e-26', verdict: 'stronger' },
+        { factor: '거래량', target: '실현변동성', paper: '—', live: '0.3514', p: '7.6e-12', verdict: 'new' },
+    ],
+};
 
 const TECH_STACK = {
     'Backend': ['FastAPI', 'SQLAlchemy', 'SQLite', 'PostgreSQL', 'Alembic', 'websockets', 'APScheduler', 'httpx', 'arch', 'pandas', 'numpy', 'scipy'],
@@ -193,6 +214,7 @@ const SECTIONS = [
     { id: 'problem', label: 'Problem' },
     { id: 'architecture', label: 'Architecture' },
     { id: 'origin', label: 'Origin Story' },
+    { id: 'verification', label: 'Paper Verification', highlight: true },
     { id: 'decisions', label: 'Technical Decisions' },
     { id: 'evaluation', label: 'Evaluation' },
     { id: 'challenges', label: 'Challenges' },
@@ -299,7 +321,7 @@ export default function CryptoVolDashboard() {
                         실시간 멀티코인 변동성 서빙 · 모델 비교 · 리스크 해석 대시보드
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        P학기 팀 분석이 Jupyter 안에 갇혀 실시간 의사결정에 활용되지 못하는 문제를 해결하기 위해, Python 분석 코드를 FastAPI + React 서비스로 전환했습니다. 핵심은 단순 시각화가 아니라 5개 GARCH 모형을 실시간 비교·평가·서빙 가능한 구조로 바꾼 점이며, Binance WebSocket 릴레이와 5분 TTL 캐싱으로 수백ms 적합 비용을 제어했습니다. BTC-FNG 상관계수 r=0.72를 근거로 외생변수를 주입한 HAR-TGARCH-X까지 포함해 모델 선택 근거를 투명하게 제공했습니다.
+                        2023년 학술제 논문은 기간에 쫓겨 GARCH·TGARCH·TGARCH+E.V 3개까지만 실제 적합했고, HAR 계열과 GARCH+E.V는 수식만 남긴 채 마감했습니다. 논문 스스로 한계에 &ldquo;HAR-TGARCH-X의 완전한 구현이 이루어지지 못했다&rdquo;, &ldquo;실시간 예측 시스템으로의 발전을 모색할 필요가 있다&rdquo;고 적었습니다. 이 프로젝트는 그 두 문장에 대한 답입니다. 공란이던 GARCH+E.V와 미구현 HAR 계열 3종을 실제로 적합해 6개 모형을 완성했고, Binance WebSocket 릴레이와 5분 TTL 캐싱으로 수백ms 적합 비용을 제어해 상시 서빙 구조로 전환했습니다. 논문의 미검증 수치를 인용하는 대신 매 요청 재계산하는 검증 엔드포인트를 두었습니다.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/ykgstar37-lab/crypto-volatility-dashboard" target="_blank" rel="noopener noreferrer"
@@ -352,7 +374,7 @@ export default function CryptoVolDashboard() {
                             <strong className="text-gray-900">문제:</strong> P학기 팀 분석 결과가 Jupyter 안에 갇혀 실시간 의사결정에 활용 불가. 시장은 24시간 움직이는데 분석은 항상 과거 데이터에 머물러 있음.
                         </p>
                         <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                            <strong className="text-gray-900">목표:</strong> 5개 GARCH 모형을 실시간 자동 서빙하고, WebSocket으로 실시간 시세를 연동하며, 모형 정확도를 투명하게 추적하는 인터랙티브 대시보드.
+                            <strong className="text-gray-900">목표:</strong> 6개 GARCH 모형을 실시간 자동 서빙하고, WebSocket으로 실시간 시세를 연동하며, 모형 정확도를 투명하게 추적하는 인터랙티브 대시보드.
                         </p>
                     </div>
                 </motion.div>
@@ -430,6 +452,68 @@ export default function CryptoVolDashboard() {
                     </div>
                 </motion.div>
 
+                {/* Paper Verification */}
+                <motion.div id="verification" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Paper Verification</h2>
+                    <p className="text-gray-500 mb-8">논문의 핵심 주장은 지금도 유효한가</p>
+
+                    <div className="mb-8 p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                            2023년 논문은 <span className="font-semibold text-gray-800">&ldquo;비트코인 변동성은 전통 금융시장이 아니라 투자자 심리에 붙어 있다&rdquo;</span>고 결론지었다.
+                            근거는 본문에 서술된 FNG-수익률 상관 0.72였지만, 이를 뒷받침하는 표가 유실되어 <span className="font-semibold text-gray-800">인용만으로는 검증할 수 없다.</span>
+                            그래서 인용을 재계산으로 대체했다. 아래 수치는 문서에서 옮겨 적은 값이 아니라
+                            <code className="mx-1 px-1.5 py-0.5 rounded bg-white border border-gray-200 text-[13px]">/api/volatility/factors</code>
+                            가 요청마다 DB의 실제 데이터로 산출하는 값이다.
+                        </p>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                            <thead>
+                                <tr className="border-b border-gray-200">
+                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">요인 → 대상</th>
+                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">논문 (2018–2023)</th>
+                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">재계산 (2025–2026)</th>
+                                    <th className="text-left py-3 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">p-value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {PAPER_VERIFICATION.rows.map((row, idx) => (
+                                    <tr key={idx} className="border-b border-gray-100">
+                                        <td className="py-3 px-4 font-semibold text-gray-700">{row.factor} → {row.target}</td>
+                                        <td className="py-3 px-4 text-gray-500">{row.paper}</td>
+                                        <td className="py-3 px-4 font-bold tabular-nums" style={{ color: row.verdict === 'stronger' ? PRIMARY : '#111' }}>
+                                            {row.live}
+                                            {row.verdict === 'stronger' && <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 align-middle">최강</span>}
+                                        </td>
+                                        <td className="py-3 px-4 text-gray-400 tabular-nums text-xs">{row.p}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-5 rounded-2xl border border-gray-100 bg-white">
+                            <div className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">결과</div>
+                            <p className="text-sm text-gray-600 leading-relaxed">
+                                논문의 0.72는 현재 데이터에서 <span className="font-semibold text-gray-800">0.2184로 재현되지 않았다.</span>
+                                오히려 거래량-절대수익률이 <span className="font-semibold text-gray-800">0.5198</span>로 가장 강했고,
+                                FNG는 실현변동성과 <span className="font-semibold text-gray-800">음의 상관(-0.2868)</span>을 보였다.
+                                심리보다 거래 활동이 변동성을 더 잘 설명한다.
+                            </p>
+                        </div>
+                        <div className="p-5 rounded-2xl border border-gray-100 bg-white">
+                            <div className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">해석의 한계</div>
+                            <p className="text-sm text-gray-600 leading-relaxed">
+                                기간({PAPER_VERIFICATION.paperPeriod.split(' ')[0]} vs {PAPER_VERIFICATION.livePeriod.split(' ')[0]})과 데이터 출처, 표본 크기(2,129일 vs 364일)가 모두 달라
+                                <span className="font-semibold text-gray-800"> 논문이 틀렸다고 단정할 수 없다.</span>
+                                다만 &ldquo;재현되지 않는다&rdquo;는 사실 자체가 결과이며, 정적 결론을 매일 다시 검증하는 구조를 갖춘 것이 이 확장의 목적이다.
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+
                 {/* Technical Decisions */}
                 <motion.div id="decisions" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Technical Decisions</h2>
@@ -452,13 +536,13 @@ export default function CryptoVolDashboard() {
                                 tag: '사용자 경험'
                             },
                             {
-                                question: '5개 모형 중 "최적 모형"을 고정하지 않은 이유는?',
+                                question: '6개 모형 중 "최적 모형"을 고정하지 않은 이유는?',
                                 answer: '시장 구간마다 최적 모형이 달라집니다. 모형을 하나로 고정하는 대신, 60일 롤링 RMSE로 실시간 리더보드를 운영하고 백테스트로 구간별 최적 모형을 탐색할 수 있게 했습니다. 모형의 한계를 투명하게 보여주는 것도 설계라는 판단이었습니다.',
                                 tag: '도메인 설계'
                             },
                             {
                                 question: 'HAR-TGARCH-X에 외생변수(거래량, FNG)를 주입한 근거는?',
-                                answer: 'BTC 가격과 FNG 지수의 상관계수가 r=0.72 (p < 0.001)로, 시장 심리가 변동성에 직접 영향을 미친다는 통계적 근거를 확보했습니다. 거래량은 z-score 정규화하여 mean equation의 외생변수(x=exog)로 주입. reindex + ffill로 비정렬 시계열을 정합하고, 최소 60일 이상의 정합 데이터가 확보된 경우에만 모형을 적합합니다.',
+                                answer: '외생변수 주입 근거를 인용이 아니라 재계산으로 확보했습니다. /api/volatility/factors가 매 요청 피어슨 상관을 산출하며, 현재 데이터 기준 거래량-절대수익률 0.5198(p=1.4e-26)이 FNG-수익률 0.2184(p=2.6e-05)보다 강했습니다. 거래량과 FNG 모두 표준화하여 mean equation의 외생변수(x=exog)로 주입. reindex + ffill로 비정렬 시계열을 정합하고, 최소 60일 이상의 정합 데이터가 확보된 경우에만 모형을 적합합니다.',
                                 tag: '통계적 설계'
                             },
                             {
@@ -520,7 +604,7 @@ export default function CryptoVolDashboard() {
                                     { metric: 'GARCH 적합', before: '수동 (수백ms)', after: '5분 TTL 캐시', improvement: '자동 서빙' },
                                     { metric: '모형 수', before: '1~2개 수동 비교', after: '5개 동시 서빙', improvement: '60일 RMSE 랭킹' },
                                     { metric: 'TGARCH 레버리지', before: '미검증', after: 'γ = 0.0990', improvement: '비대칭 실증' },
-                                    { metric: '외생변수 근거', before: '없음', after: 'r = 0.72 (p<0.001)', improvement: 'BTC-FNG 상관' },
+                                    { metric: '외생변수 근거', before: '논문 본문 서술(표 유실)', after: '요청마다 재계산', improvement: '거래량 0.5198 / FNG 0.2184' },
                                     { metric: '결과 확인', before: '~10분 (Jupyter)', after: '즉시 (대시보드)', improvement: 'WebSocket Alert' },
                                 ].map((row, idx) => (
                                     <tr key={idx} className="border-b border-gray-50 last:border-0">
@@ -536,7 +620,7 @@ export default function CryptoVolDashboard() {
 
                     {/* Model Comparison Framework */}
                     <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">5개 모형 비교 프레임워크</p>
+                        <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">6개 모형 비교 프레임워크</p>
                         <div className="flex flex-wrap gap-2 mb-4">
                             {['GARCH(1,1)', 'TGARCH (GJR)', 'HAR-GARCH', 'HAR-TGARCH', 'HAR-TGARCH-X'].map((name, i) => (
                                 <span key={i} className="text-xs font-bold px-3 py-1.5 rounded-lg" style={{ backgroundColor: `${PRIMARY}10`, color: PRIMARY }}>{name}</span>
@@ -629,9 +713,9 @@ export default function CryptoVolDashboard() {
                             <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
                                 {[
                                     { label: 'Models', value: '5개', sub: 'GARCH 계열 동시 서빙' },
-                                    { label: 'Data', value: '2,129일', sub: '5.7년 시계열' },
+                                    { label: 'Data', value: '365일', sub: '3종 코인 일별' },
                                     { label: 'TGARCH γ', value: '0.0990', sub: '비대칭 레버리지' },
-                                    { label: 'BTC-FNG', value: 'r=0.72', sub: 'p<0.001' },
+                                    { label: '최강 상관', value: '0.5198', sub: '거래량↔절대수익률' },
                                     { label: 'Endpoints', value: '14', sub: '13 REST + 1 WS' },
                                     { label: 'Simulation', value: '10K', sub: 'Monte Carlo' },
                                 ].map((item, idx) => (
@@ -646,9 +730,9 @@ export default function CryptoVolDashboard() {
                                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">What Makes This Special</p>
                                 <div className="space-y-2">
                                     {[
-                                        '5.7년(2,129 거래일) BTC/ETH/SOL 데이터로 5개 GARCH 모형을 체계적 비교 — MSE, RMSE, MAE, MAPE, R² 5개 지표',
+                                        'BTC/ETH/SOL 365일 데이터로 6개 GARCH 모형을 60일 롤링 RMSE 기준으로 실시간 비교',
                                         'TGARCH 레버리지 효과(γ=0.0990) 실증 — 하락 시 변동성이 비대칭적으로 증가하는 현상을 모형에 내재화',
-                                        'BTC-FNG 상관 r=0.72(p<0.001)를 통계적 근거로 HAR-TGARCH-X에 외생변수(Volume+FNG) 주입',
+                                        '논문이 수식만 남긴 HAR-TGARCH-X를 실제 적합. arch의 기본 ConstantMean이 x=를 무시하는 문제를 mean="LS"로 해결',
                                         'GARCH 적합 수백ms를 5분 TTL 인메모리 캐싱으로 해결 — 코인 전환 시 Promise.all 병렬 호출',
                                         'Binance WebSocket 릴레이로 API 키 노출 없이 실시간 시세 브로드캐스트 — CORS/보안 문제 해결',
                                         'Monte Carlo 1,000→10,000 시나리오 확장으로 99% VaR 꼬리 분포 안정화',
