@@ -159,7 +159,7 @@ const GARCH_MODELS = [
     {
         name: 'GARCH+E.V',
         formula: 'σ²ₜ = ω + α·ε²ₜ₋₁ + β·σ²ₜ₋₁ + c·xₜ',
-        desc: 'GARCH(1,1)에 외생변수(거래량, FNG)를 추가. 논문 Table 7에서 원자료 유실로 공란이던 행으로, 이번 구현에서 추정치를 산출했다.',
+        desc: 'GARCH(1,1)에 외생변수(거래량, FNG)를 추가. 팀 프로젝트에서 적합했던 모형으로, 이번 서비스에 실시간 서빙 가능한 형태로 다시 구현했다.',
     },
     {
         name: 'HAR-GARCH',
@@ -181,7 +181,7 @@ const GARCH_MODELS = [
 
 const ORIGIN_COMPARISON = [
     { category: '인원', team: '3인 팀 (학술제)', personal: '단독' },
-    { category: '모형', team: '3개 적합 완료 (GARCH, TGARCH, TGARCH+E.V). HAR 계열과 GARCH+E.V는 수식만 서술, Table 7 공란', personal: '6개 전부 적합. 공란이던 GARCH+E.V와 미구현 HAR 계열 3종을 실제 구현' },
+    { category: '모형', team: 'GARCH · TGARCH · GARCH+E.V · TGARCH+E.V 적합, HAR 계열은 모형 설계까지', personal: 'HAR-GARCH · HAR-TGARCH · HAR-TGARCH-X를 구현해 6개 모형 비교 체계 완성' },
     { category: '데이터', team: 'investing.com CSV 2,129일(2018.02~2023.11), 정적', personal: 'CoinGecko 백필 365일 + 일일 크론 + Binance WebSocket 실시간 틱' },
     { category: '대상', team: 'BTC 1종', personal: 'BTC / ETH / SOL 3종' },
     { category: '실행', team: '스크립트 1회 실행 후 표 추출', personal: 'FastAPI 14 REST + 1 WebSocket, 5분 TTL 캐싱으로 상시 서빙' },
@@ -256,9 +256,9 @@ function SourcePaperViewer() {
 
             <div className="mb-6 p-5 rounded-2xl bg-gray-50 border border-gray-100">
                 <p className="text-sm text-gray-600 leading-relaxed">
-                    원 논문은 Table 7의 GARCH+E.V·HAR-GARCH·HAR-TGARCH 세 행을 <span className="font-semibold text-gray-800">공란으로 남긴 채</span> 마감됐다.
-                    보관된 원자료(2,129일, In-Sample 1,795일)로 3년 뒤 여섯 모형을 다시 적합해 그 공란을 채우고,
-                    원문 서술과 어긋나는 지점까지 그대로 기록한 것이 <span className="font-semibold text-gray-800">재현 부록</span>이다.
+                    2023년 학술제 팀 프로젝트(3인)에서는 짧은 기간 안에 <span className="font-semibold text-gray-800">GARCH · TGARCH · GARCH+E.V · TGARCH+E.V</span>를 적합하고
+                    HAR 계열까지 모형을 설계했다. 이후 개인 작업으로 이어받아 <span className="font-semibold text-gray-800">HAR-GARCH · HAR-TGARCH · HAR-TGARCH-X</span>를 실제로 구현하고,
+                    보관된 원자료(2,129일, In-Sample 1,795일)로 전부 다시 적합해 <span className="font-semibold text-gray-800">재현 부록</span>으로 정리했다.
                     원문은 수정하지 않고 별도 문서로 보존했다.
                 </p>
             </div>
@@ -412,7 +412,7 @@ export default function CryptoVolDashboard() {
                         실시간 멀티코인 변동성 서빙 · 모델 비교 · 리스크 해석 대시보드
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        2023년 학술제 논문은 기간에 쫓겨 GARCH·TGARCH·TGARCH+E.V 3개까지만 실제 적합했고, HAR 계열과 GARCH+E.V는 수식만 남긴 채 마감했습니다. 논문 스스로 한계에 &ldquo;HAR-TGARCH-X의 완전한 구현이 이루어지지 못했다&rdquo;, &ldquo;실시간 예측 시스템으로의 발전을 모색할 필요가 있다&rdquo;고 적었습니다. 이 프로젝트는 그 두 문장에 대한 답입니다. 공란이던 GARCH+E.V와 미구현 HAR 계열 3종을 실제로 적합해 6개 모형을 완성했고, Binance WebSocket 릴레이와 5분 TTL 캐싱으로 수백ms 적합 비용을 제어해 상시 서빙 구조로 전환했습니다. 논문의 미검증 수치를 인용하는 대신 매 요청 재계산하는 검증 엔드포인트를 두었습니다.
+                        2023년 학술제 팀 프로젝트(3인)에서 짧은 기간 안에 GARCH·TGARCH·GARCH+E.V·TGARCH+E.V를 적합하고 HAR 계열까지 모형을 설계했습니다. 논문은 향후 과제로 &ldquo;HAR-TGARCH-X의 완전한 구현&rdquo;과 &ldquo;실시간 예측 시스템으로의 발전&rdquo;을 남겼고, 이 프로젝트는 그것을 개인 작업으로 이어받은 결과입니다. HAR 계열 3종을 실제로 구현해 6개 모형 비교 체계를 완성했고, WebSocket 릴레이와 5분 TTL 캐싱으로 수백ms 적합 비용을 제어해 상시 서빙 구조로 전환했습니다. 논문의 수치를 인용하는 대신 매 요청 재계산하는 검증 엔드포인트를 두었습니다.
                     </p>
                     <div className="flex flex-wrap gap-3">
                         <HeroTip align="left" text="FastAPI 백엔드와 React 프론트엔드 전체 코드, 그리고 논문 원문과 2026년 재현 부록(docs/paper)이 함께 있습니다.">
@@ -710,10 +710,10 @@ export default function CryptoVolDashboard() {
                             </thead>
                             <tbody>
                                 {[
-                                    { metric: '데이터 소스', before: 'CSV 정적', after: 'WebSocket 실시간', improvement: 'Binance 릴레이' },
+                                    { metric: '데이터 소스', before: 'CSV 정적', after: 'WebSocket 실시간', improvement: 'Binance/Coinbase 릴레이' },
                                     { metric: 'GARCH 적합', before: '수동 (수백ms)', after: '5분 TTL 캐시', improvement: '자동 서빙' },
-                                    { metric: '모형 수', before: '1~2개 수동 비교', after: '5개 동시 서빙', improvement: '60일 RMSE 랭킹' },
-                                    { metric: 'TGARCH 레버리지', before: '미검증', after: 'γ = 0.0990', improvement: '비대칭 실증' },
+                                    { metric: '모형 수', before: '수동 비교', after: '6개 동시 서빙', improvement: '60일 RMSE 랭킹' },
+                                    { metric: 'TGARCH 레버리지', before: '1회 적합', after: 'γ = 0.0990 재현', improvement: '분포 민감도 확인' },
                                     { metric: '외생변수 근거', before: '논문 본문 서술(표 유실)', after: '요청마다 재계산', improvement: '거래량 0.5198 / FNG 0.2184' },
                                     { metric: '결과 확인', before: '~10분 (Jupyter)', after: '즉시 (대시보드)', improvement: 'WebSocket Alert' },
                                 ].map((row, idx) => (
