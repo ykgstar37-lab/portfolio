@@ -8,7 +8,8 @@ import SectionDotNav from '../components/SectionDotNav';
 import ProjectFlowSection from '../components/ProjectFlowSection';
 import webDemo from '../assets/subflow/subflow_web.mp4';
 import webPoster from '../assets/subflow/subflow_web.png';
-import mobileDemo from '../assets/subflow/subflow_mobile.gif';
+import mobileDemo from '../assets/subflow/subflow_mobile.mp4';
+import mobilePoster from '../assets/subflow/subflow_mobile.png';
 
 const PRIMARY = '#14b8a6';
 const SECONDARY = '#2563eb';
@@ -282,7 +283,7 @@ export default function SubFlow(){
           {/* Phone */}
           <div className="w-full lg:w-auto flex justify-center shrink-0">
             <div className="rounded-[28px] overflow-hidden border-4 border-slate-900 shadow-xl max-w-[260px] bg-slate-950">
-              <img src={mobileDemo} alt="SubFlow Mobile 시연" className="w-full block" loading="lazy" />
+              <video src={mobileDemo} poster={mobilePoster} autoPlay muted loop playsInline preload="metadata" className="w-full block" />
             </div>
           </div>
           {/* Right: mobile note + feature highlights */}
