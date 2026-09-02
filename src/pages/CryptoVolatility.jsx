@@ -87,30 +87,32 @@ const LOG_RETURNS_DATA = [
 ];
 
 // Correlation data
+// 원자료(2018-02-01~2023-11-30, n=2,129)로 재계산한 값.
+// 논문 본문의 0.72는 뒷받침 표가 유실되어 재현되지 않았다.
 const CORR_DATA = [
-    { name: 'BTC ↔ FNG', value: 0.72, pValue: '2.2e-16', significant: true },
-    { name: 'BTC ↔ KOSPI', value: -0.03, pValue: '0.9816', significant: false },
-    { name: 'BTC ↔ NASDAQ', value: -0.05, pValue: '0.84', significant: false },
-    { name: 'KOSPI ↔ KOSDAQ', value: 0.94, pValue: '<0.001', significant: true },
-    { name: 'NASDAQ ↔ S&P500', value: 0.98, pValue: '<0.001', significant: true },
+    { name: 'BTC ↔ FNG', value: 0.0550, pValue: '1.11e-02', significant: true },
+    { name: 'BTC ↔ S&P500', value: -0.0894, pValue: '3.60e-05', significant: true },
+    { name: 'BTC ↔ NASDAQ', value: -0.0272, pValue: '0.209', significant: false },
+    { name: 'BTC ↔ KOSPI', value: 0.0017, pValue: '0.938', significant: false },
 ];
 
-// Model comparison (GARCH parameters from CODE PDF)
+// 원 분석 코드(CODE(수정).pdf)의 사양 — 로그수익률 ×10, 정규분포 — 으로
+// In-Sample(1,795일) 재적합한 값. R²는 산출 근거가 남아 있지 않아 제외했다.
 const MODEL_PARAMS = [
-    { model: 'GARCH(1,1)', omega: 0.00938, alpha: 0.0538, beta: 0.8351, gamma: '-', r2: 0.78 },
-    { model: 'TGARCH', omega: 0.00938, alpha: 0.0538, beta: 0.8351, gamma: 0.099, r2: 0.72 },
-    { model: 'HAR-GARCH', omega: '-', alpha: '-', beta: '-', gamma: '-', r2: 0.02 },
-    { model: 'HAR-TGARCH', omega: '-', alpha: '-', beta: '-', gamma: '-', r2: 0.89 },
-    { model: 'HAR-TGARCH-X', omega: '-', alpha: '-', beta: '-', gamma: '-', r2: 0.89 },
+    { model: 'GARCH(1,1)', omega: 0.012527, alpha: 0.0834, beta: 0.8384, gamma: '-' },
+    { model: 'GARCH+E.V', omega: 0.012269, alpha: 0.0775, beta: 0.8447, gamma: '-' },
+    { model: 'TGARCH', omega: 0.015504, alpha: 0.0394, beta: 0.8065, gamma: 0.1133 },
+    { model: 'TGARCH+E.V', omega: 0.016113, alpha: 0.0282, beta: 0.8019, gamma: 0.1353 },
 ];
 
 // Radar chart for model comparison
+// 성능 점수가 아니라 각 모형이 '구조적으로 무엇을 담는가'의 비교다.
+// 측정값이 아니므로 R²·Stability 축은 제거했다.
 const RADAR_DATA = [
-    { metric: 'R²', GARCH: 78, TGARCH: 72, HAR_TGARCH_X: 89 },
-    { metric: 'Stability', GARCH: 90, TGARCH: 85, HAR_TGARCH_X: 80 },
-    { metric: 'Asymmetry', GARCH: 40, TGARCH: 85, HAR_TGARCH_X: 90 },
-    { metric: 'Multi-scale', GARCH: 30, TGARCH: 30, HAR_TGARCH_X: 95 },
-    { metric: 'Exogenous', GARCH: 10, TGARCH: 10, HAR_TGARCH_X: 90 },
+    { metric: 'Asymmetry', GARCH: 0, TGARCH: 100, HAR_TGARCH_X: 100 },
+    { metric: 'Multi-scale', GARCH: 0, TGARCH: 0, HAR_TGARCH_X: 100 },
+    { metric: 'Exogenous', GARCH: 0, TGARCH: 0, HAR_TGARCH_X: 100 },
+    { metric: 'Vol. clustering', GARCH: 100, TGARCH: 100, HAR_TGARCH_X: 100 },
 ];
 
 const MODELS = [
@@ -555,7 +557,7 @@ export default function CryptoVolatility() {
                     <h2 className="text-2xl sm:text-3xl font-bold mb-8 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Key Findings</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {[
-                            { title: 'FNG 지수 유의성', desc: '비트코인 수익률과 FNG 지수의 상관계수 0.72, p-value 2.2e-16으로 매우 유의', tag: 'p < 0.001' },
+                            { title: 'FNG 지수 유의성', desc: '재계산 결과 BTC 로그수익률-FNG 상관은 0.0550 (p=1.11e-02). 유의하지만 약하다', tag: 'p = 0.011' },
                             { title: 'TGARCH 레버리지', desc: 'γ=0.099 → 하락 시 변동성이 상승 시보다 약 10% 더 크게 증가', tag: 'γ = 0.099' },
                             { title: 'HAR 다중 스케일', desc: '1일/7일/30일 변동성 구조가 단·중·장기 패턴을 효과적으로 포착', tag: 'Multi-scale' },
                             { title: '외생변수 보완 효과', desc: 'Volume(거래 강도)과 FNG(심리)는 상관 낮아 보완적 정보 제공, 동시 투입 유효', tag: 'Vol+FNG' },
@@ -619,7 +621,7 @@ export default function CryptoVolatility() {
                                     ))}
                                 </tbody>
                             </table>
-                            <p className="text-xs text-gray-400 mt-3">Price와 Volume은 비트코인에 유의한 영향. FNG는 직접적 그레인저 인과관계는 없으나 상관관계(r=0.72)는 강함.</p>
+                            <p className="text-xs text-gray-400 mt-3">Price와 Volume은 비트코인에 유의한 영향. FNG는 그레인저 인과관계가 없고, 상관도 재계산 시 0.0550으로 약했다.</p>
                         </div>
                     </div>
                 </motion.div>
@@ -627,7 +629,21 @@ export default function CryptoVolatility() {
                 {/* ═══ MODEL PERFORMANCE TABLE ═══ */}
                 <motion.div id="performance" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Model Performance</h2>
-                    <p className="text-gray-500 mb-8">Out-of-Sample (2023.01~2023.11) 예측 성능 비교 — 실제 실험 결과</p>
+                    <p className="text-gray-500 mb-4">Out-of-Sample (2023.01~2023.11, 334일) 1-step-ahead 예측 성능 — 원 분석 사양으로 재계산</p>
+                    <div className="mb-6 p-5 rounded-2xl bg-amber-50/60 border border-amber-100">
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                            <span className="font-semibold">R²가 모두 음수인 것은 정상입니다.</span> 예측 대상인 제곱수익률은
+                            실현분산의 대리변수로서 잡음이 극단적으로 커서, 잘 적합된 변동성 모형이라도 R²가 0 근처이거나
+                            음수로 나오는 것이 표준적인 결과입니다(Andersen &amp; Bollerslev, 1998). 같은 이유로 MAPE는
+                            제곱수익률이 0에 가까울 때 발산하여 열에서 제외했습니다.
+                        </p>
+                        <p className="text-sm text-gray-700 leading-relaxed mt-3">
+                            즉 <span className="font-semibold">이 타깃에서는 R²=0.89 같은 값이 나올 수 없습니다.</span>
+                            원 논문 4.2절이 서술한 R²(0.89/0.85/0.82)는 산출 근거가 남아 있지 않아 재현하지 못했고,
+                            여기 실린 값은 원 분석 코드의 사양(로그수익률 ×10, 정규분포)으로 In-Sample 1,795일 적합 후
+                            OOS 334일을 1-step-ahead 예측해 다시 계산한 것입니다.
+                        </p>
+                    </div>
                     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
@@ -636,19 +652,16 @@ export default function CryptoVolatility() {
                                         <th className="text-left px-5 py-3 font-bold text-gray-700">Model</th>
                                         <th className="text-right px-4 py-3 font-semibold text-gray-600">MSE</th>
                                         <th className="text-right px-4 py-3 font-semibold text-gray-600">RMSE</th>
-                                        <th className="text-right px-4 py-3 font-semibold text-gray-600">MAPE</th>
-                                        <th className="text-right px-4 py-3 font-semibold text-gray-600">MAE</th>
+                                                                                <th className="text-right px-4 py-3 font-semibold text-gray-600">MAE</th>
                                         <th className="text-right px-4 py-3 font-semibold text-gray-600">R²</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {[
-                                        { name: 'GARCH(1,1)', mse: '0.000170', rmse: '0.013051', mape: '4.605', mae: '0.005091', r2: '0.7809', best: false },
-                                        { name: 'GARCH + Volume', mse: '0.000217', rmse: '0.014738', mape: '6.406', mae: '0.005766', r2: '0.8991', best: false },
-                                        { name: 'TGARCH', mse: '0.000122', rmse: '0.011029', mape: '4.392', mae: '0.004525', r2: '0.7181', best: false },
-                                        { name: 'TGARCH + Volume', mse: '0.000279', rmse: '0.016712', mape: '6.519', mae: '0.006541', r2: '0.8887', best: true },
-                                        { name: 'TGARCH + Price', mse: '0.000278', rmse: '0.016678', mape: '6.509', mae: '0.006528', r2: '0.8888', best: false },
-                                        { name: 'HAR-GARCH', mse: '0.000001', rmse: '0.000870', mape: '10.513', mae: '0.000235', r2: '0.0232', best: false },
+                                        { name: 'GARCH(1,1)', mse: '0.015319', rmse: '0.123768', mae: '0.095462', r2: '-0.0087', best: true },
+                                        { name: 'GARCH+E.V', mse: '0.015543', rmse: '0.124672', mae: '0.096363', r2: '-0.0235', best: false },
+                                        { name: 'TGARCH', mse: '0.015730', rmse: '0.125419', mae: '0.094250', r2: '-0.0358', best: false },
+                                        { name: 'TGARCH+E.V', mse: '0.016132', rmse: '0.127010', mae: '0.095611', r2: '-0.0623', best: false },
                                     ].map((row, i) => (
                                         <tr key={i} className={`border-b border-gray-50 last:border-0 ${row.best ? 'bg-[#2b4fcb]/5' : ''}`}>
                                             <td className="px-5 py-3">
@@ -659,9 +672,8 @@ export default function CryptoVolatility() {
                                             </td>
                                             <td className="px-4 py-3 text-right font-mono text-xs text-gray-600">{row.mse}</td>
                                             <td className="px-4 py-3 text-right font-mono text-xs text-gray-600">{row.rmse}</td>
-                                            <td className="px-4 py-3 text-right font-mono text-xs text-gray-600">{row.mape}</td>
-                                            <td className="px-4 py-3 text-right font-mono text-xs text-gray-600">{row.mae}</td>
-                                            <td className={`px-4 py-3 text-right font-mono text-xs font-bold ${parseFloat(row.r2) > 0.85 ? 'text-[#2b4fcb]' : 'text-gray-600'}`}>{row.r2}</td>
+                                                                                        <td className="px-4 py-3 text-right font-mono text-xs text-gray-600">{row.mae}</td>
+                                            <td className={`px-4 py-3 text-right font-mono text-xs font-bold ${parseFloat(row.r2) > 0 ? 'text-[#2b4fcb]' : 'text-gray-500'}`}>{row.r2}</td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -748,8 +760,8 @@ export default function CryptoVolatility() {
                             <p className="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-3">핵심 인사이트</p>
                             <ul className="space-y-3 text-sm text-gray-600">
                                 <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">01</span><span><strong className="text-gray-900">모형 복잡도 ≠ 예측력</strong> — HAR-TGARCH-X가 항상 최적은 아니었음. 시장 구간에 따라 GARCH(1,1)이 더 나은 경우도 존재.</span></li>
-                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">FNG 지수의 유의미한 상관</strong> — BTC-FNG 상관 0.72(p &lt; 2.2e-16). 감성 지표의 예측력 통계적 근거 확보.</span></li>
-                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">03</span><span><strong className="text-gray-900">레버리지 효과 실증</strong> — TGARCH γ=0.099, 하락 시 변동성이 상승보다 약 10% 더 큼. CryptoVol Dashboard 모형 선택 근거.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">전통 금융시장과의 독립성</strong> — KOSPI 0.0017(p=0.938), NASDAQ −0.0272(p=0.209)로 무상관. 비트코인이 독자적 가격 동학을 가짐을 확인.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">03</span><span><strong className="text-gray-900">레버리지 효과 실증</strong> — TGARCH γ=0.099(원 사양 재현값 0.0986), 하락 시 변동성이 상승보다 약 10% 더 큼. 단 오차분포를 t분포로 바꾸면 부호가 뒤집혀, 분포 가정에 민감하다.</span></li>
                             </ul>
                         </div>
                         <div className="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
