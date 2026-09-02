@@ -211,11 +211,11 @@ function PaperViewer() {
             <h3 className="text-xl font-bold mb-3">Paper</h3>
             <p className="text-gray-500 text-sm mb-4">완성된 논문 미리보기 — 화살표로 페이지를 넘겨보세요</p>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                <div className="relative">
+                <div className="relative flex items-center justify-center bg-gray-50" style={{ height: 'min(72vh, 760px)' }}>
                     <img
                         src={`/paper-pages/page-${String(current).padStart(2, '0')}.png`}
                         alt={`Page ${current}`}
-                        className="w-full h-auto"
+                        className="max-h-full max-w-full object-contain"
                     />
                     <button onClick={prev} disabled={current === 1}
                         className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">

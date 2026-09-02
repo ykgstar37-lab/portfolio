@@ -244,8 +244,12 @@ function SourcePaperViewer() {
             </div>
 
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                <div className="relative">
-                    <img src={`/paper-pages/page-${String(current).padStart(2, '0')}.png`} alt={`Page ${current}`} className="w-full h-auto" />
+                <div className="relative flex items-center justify-center bg-gray-50" style={{ height: 'min(72vh, 760px)' }}>
+                    <img
+                        src={`/paper-pages/page-${String(current).padStart(2, '0')}.png`}
+                        alt={`Page ${current}`}
+                        className="max-h-full max-w-full object-contain"
+                    />
                     <button onClick={prev} disabled={current === 1} aria-label="이전 페이지"
                         className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
@@ -401,6 +405,12 @@ export default function CryptoVolDashboard() {
                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                             Screenshots
                         </button>
+                        <button onClick={() => { const el = document.getElementById('paper'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                            className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-full transition hover:opacity-90"
+                            style={{ backgroundColor: PRIMARY }}>
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                            논문 보기
+                        </button>
                     </div>
                 </motion.div>
 
@@ -411,7 +421,7 @@ export default function CryptoVolDashboard() {
                             <div>
                                 <p className="text-[10px] font-bold uppercase tracking-widest mb-2" style={{ color: PRIMARY }}>Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 프로젝트입니다. Binance WebSocket으로 실시간 시세를 수신하고, 5개 변동성 예측 모형의 적합 결과를 캐싱해 안정적으로 서빙합니다. 중요한 점은 하나의 모델을 고정 추천하는 대신, 모델 성능 비교와 리스크 지표를 함께 노출해 사용자가 근거 기반으로 판단할 수 있게 만든 것입니다.
+                                    팀 분석 프로젝트의 GARCH 모형을 실시간 서빙 API로 확장한 개인 프로젝트입니다. WebSocket 릴레이(Binance → 차단 시 Coinbase 폴백)로 실시간 시세를 수신하고, 6개 변동성 예측 모형의 적합 결과를 캐싱해 안정적으로 서빙합니다. 중요한 점은 하나의 모델을 고정 추천하는 대신, 모델 성능 비교와 리스크 지표를 함께 노출해 사용자가 근거 기반으로 판단할 수 있게 만든 것입니다.
                                 </p>
                             </div>
                             <div>
@@ -770,7 +780,7 @@ export default function CryptoVolDashboard() {
                             <div className="rounded-2xl p-6 text-white" style={{ backgroundColor: '#2b4fcb' }}>
                                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>CryptoVol Dashboard</h3>
                                 <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
-                                    Jupyter에서 수동 실행하던 GARCH 분석을 실시간 웹 서비스로 전환. 5개 변동성 모형을 자동 서빙하고,
+                                    Jupyter에서 수동 실행하던 GARCH 분석을 실시간 웹 서비스로 전환. 6개 변동성 모형을 자동 서빙하고,
                                     WebSocket 릴레이로 실시간 시세를 수신하며, 60일 롤링 RMSE로 모형 정확도를 투명하게 추적하는 인터랙티브 대시보드.
                                 </p>
                                 <div className="flex flex-wrap gap-2">
