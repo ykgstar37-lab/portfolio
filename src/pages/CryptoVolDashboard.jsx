@@ -215,12 +215,74 @@ const SECTIONS = [
     { id: 'architecture', label: 'Architecture' },
     { id: 'origin', label: 'Origin Story' },
     { id: 'verification', label: 'Paper Verification', highlight: true },
+    { id: 'paper', label: 'Source Paper' },
     { id: 'decisions', label: 'Technical Decisions' },
     { id: 'evaluation', label: 'Evaluation' },
     { id: 'challenges', label: 'Challenges' },
     { id: 'screenshots', label: 'Screenshots', highlight: true },
     { id: 'retrospective', label: 'Retrospective', highlight: true },
 ];
+
+const PAPER_TOTAL_PAGES = 10;
+function SourcePaperViewer() {
+    const [current, setCurrent] = useState(1);
+    const prev = () => setCurrent(c => Math.max(1, c - 1));
+    const next = () => setCurrent(c => Math.min(PAPER_TOTAL_PAGES, c + 1));
+
+    return (
+        <motion.div id="paper" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Source Paper</h2>
+            <p className="text-gray-500 mb-8">이 프로젝트가 출발한 2023년 학술제 논문 — 화살표로 페이지를 넘겨보세요</p>
+
+            <div className="mb-6 p-5 rounded-2xl bg-gray-50 border border-gray-100">
+                <p className="text-sm text-gray-600 leading-relaxed">
+                    원 논문은 Table 7의 GARCH+E.V·HAR-GARCH·HAR-TGARCH 세 행을 <span className="font-semibold text-gray-800">공란으로 남긴 채</span> 마감됐다.
+                    보관된 원자료(2,129일, In-Sample 1,795일)로 3년 뒤 여섯 모형을 다시 적합해 그 공란을 채우고,
+                    원문 서술과 어긋나는 지점까지 그대로 기록한 것이 <span className="font-semibold text-gray-800">재현 부록</span>이다.
+                    원문은 수정하지 않고 별도 문서로 보존했다.
+                </p>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <div className="relative">
+                    <img src={`/paper-pages/page-${String(current).padStart(2, '0')}.png`} alt={`Page ${current}`} className="w-full h-auto" />
+                    <button onClick={prev} disabled={current === 1} aria-label="이전 페이지"
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button onClick={next} disabled={current === PAPER_TOTAL_PAGES} aria-label="다음 페이지"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center transition disabled:opacity-20 backdrop-blur-sm">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                </div>
+                <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t border-gray-50">
+                    <div className="flex flex-wrap items-center gap-4">
+                        <a href="/paper/최종논문_완성본.docx" download
+                            className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-800 hover:underline">
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            원 논문 (.docx)
+                        </a>
+                        <a href="/paper/최종논문_재현부록.docx" download
+                            className="inline-flex items-center gap-2 text-xs font-semibold hover:underline" style={{ color: PRIMARY }}>
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            재현 부록 포함본 (.docx)
+                        </a>
+                    </div>
+                    <div className="flex items-center gap-3">
+                        <span className="text-sm font-bold text-gray-900">{current}</span>
+                        <div className="w-24 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full transition-all duration-300" style={{ width: `${(current / PAPER_TOTAL_PAGES) * 100}%`, backgroundColor: PRIMARY }}></div>
+                        </div>
+                        <span className="text-sm text-gray-400">{PAPER_TOTAL_PAGES}</span>
+                    </div>
+                </div>
+            </div>
+            <p className="mt-3 text-xs text-gray-400">
+                미리보기 이미지는 원 논문 10쪽이다. 재현 부록은 위 &ldquo;재현 부록 포함본&rdquo;에서 확인할 수 있다.
+            </p>
+        </motion.div>
+    );
+}
 
 function ScreenshotGallery() {
     const [selected, setSelected] = useState(null);
@@ -513,6 +575,8 @@ export default function CryptoVolDashboard() {
                         </div>
                     </div>
                 </motion.div>
+
+                <SourcePaperViewer />
 
                 {/* Technical Decisions */}
                 <motion.div id="decisions" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
