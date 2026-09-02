@@ -125,7 +125,7 @@ const contributions = [
   ['수동 입력을 서비스 카탈로그 선택으로 전환','직접 타이핑으로 오타·표기 불일치가 분석 품질을 떨어뜨리던 문제 -> 기존 구독 데이터를 유지한 채 service_id·plan_id FK를 nullable로 추가하고 service_name을 남겨 두 방식이 공존하도록 설계 -> 입력 마찰과 데이터 오류를 동시에 감소.'],
   ['외화 원화 환산 + 개인화 알림 실발송','외화 결제는 환율에 따라 월 지출이 달라지고 알림은 설정만 있던 문제 -> Frankfurter KRW 변환 + APScheduler 기반 개인화 발송 파이프라인 구현 -> 환율 변동까지 반영해 알림을 먼저 전달.'],
   ['금액 환산 기준을 코드 한 곳으로 모음','결제 주기(주·월·분기·연)와 통화(KRW·USD·EUR·JPY)가 섞여 총액과 개별 카드가 다른 기준으로 계산되면 비중 계산이 조용히 틀어지는 문제 -> utils/cost.py에 "월 단위 KRW" 단일 환산 함수를 두고 총액·비중·예산·분석이 전부 이 진입점을 거치게 하고 전 구간 Decimal로 처리 -> 이후 모든 집계 기능이 같은 기준을 공유.'],
-  ['프로덕션 배포와 출시 준비까지 완주','기능 구현에서 끝내면 실제 사용자가 쓸 수 없는 문제 -> Railway(백엔드+관리형 Postgres)·Cloudflare Pages(웹앱·랜딩·약관)·EAS(iOS/Android 빌드) 배포와 Resend 메일 파이프라인(DKIM/SPF) 구성 -> api / app / 랜딩을 각각 커스텀 도메인+SSL로 분리 배포하고, iOS는 EAS Submit으로 App Store 심사 단계까지 진행.'],
+  ['프로덕션 배포와 출시 준비까지 완주','기능 구현에서 끝내면 실제 사용자가 쓸 수 없는 문제 -> Railway(백엔드+관리형 Postgres)·Cloudflare Pages(웹앱·랜딩·약관)·EAS(iOS/Android 빌드) 배포와 Resend 메일 파이프라인(DKIM/SPF) 구성 -> api / app / 랜딩을 각각 커스텀 도메인+SSL로 분리 배포하고, iOS는 EAS Submit으로 App Store 심사 승인까지 완료.'],
 ];
 
 // 핵심 기능 (PORTFOLIO.md · 데모 영상 순서 기준)
@@ -166,8 +166,8 @@ export default function SubFlow(){
         <div className="flex items-center gap-3 mb-4 flex-wrap">
           <span className="text-[10px] font-bold px-3 py-1 rounded-full tracking-wider uppercase" style={{backgroundColor:BRAND_SOFT,color:BRAND_INK}}>Full-Stack · Solo</span>
           <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Web + Mobile</span>
-          <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 ~</span>
-          <span className="text-[10px] font-bold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full tracking-wider uppercase">Web 배포 완료 · iOS 심사중</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 — 2026.09</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full tracking-wider uppercase">Web 배포 완료 · iOS 심사 승인</span>
         </div>
         <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{fontFamily:"'Syne', sans-serif",color:PRIMARY}}>SubFlow</h1>
         <p className="text-xl font-semibold mb-6 tracking-tight" style={{color:SECONDARY}}>구독 지출을 한 화면에서 관리하는 Web + Mobile 풀스택 플랫폼</p>
@@ -335,7 +335,7 @@ export default function SubFlow(){
               <li className="flex items-start gap-2"><span className="text-emerald-500 text-xs font-bold mt-0.5 w-14 shrink-0">해결</span><span className="line-through text-gray-400">수동 입력 데이터 품질 저하 → <strong className="text-gray-600 no-underline">서비스 카탈로그 + FK 마이그레이션으로 정규화 완료</strong></span></li>
               <li className="flex items-start gap-2"><span className="text-red-400 text-xs font-bold mt-0.5 w-14 shrink-0">높음</span><span>관측성(Observability) — 배포 후 로그로만 상태를 확인 중. 헬스체크·에러 트래킹·지표 대시보드 도입 필요</span></li>
               <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">중간</span><span>테스트 커버리지 — 현재 14개 파일 116개 테스트(인증·구독·분석·갱신·부가세·알림). 뉴스·다이제스트 등 엣지 케이스까지 확대 필요</span></li>
-              <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">진행중</span><span>출시 — 웹앱·API·랜딩은 커스텀 도메인으로 배포 완료, iOS는 App Store 심사중. Android(Play Console)와 소셜 로그인(Google/Kakao)은 다음 단계</span></li>
+              <li className="flex items-start gap-2"><span className="text-amber-500 text-xs font-bold mt-0.5 w-14 shrink-0">진행중</span><span>출시 — 웹앱·API·랜딩은 커스텀 도메인으로 배포 완료, iOS는 App Store 심사 승인(출시 대기). Android(Play Console)와 소셜 로그인(Google/Kakao)은 다음 단계</span></li>
               <li className="flex items-start gap-2"><span className="text-gray-400 text-xs font-bold mt-0.5 w-14 shrink-0">낮음</span><span>CI/CD — 현재 수동 배포(railway up), GitHub Actions 자동화 파이프라인 미구축</span></li>
             </ul>
           </div>
