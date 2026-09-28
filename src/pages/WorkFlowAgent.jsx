@@ -27,7 +27,7 @@ const WORKFLOW_AGENT_CHARTS = [
     BE --> S3[(AWS S3)]
 
     BE --> Orch[LangGraph Orchestrator]
-    Orch --> Intent[Intent Classifier<br/>KoELECTRA]
+    Orch --> Intent[Intent Classifier<br/>roberta-large ONNX]
 
     Intent -->|conf >= 0.85| Router{Agent Router}
     Intent -->|conf < 0.85| Clarify[Clarification Node]
@@ -114,7 +114,7 @@ const AGENTS = [
         coreTech: 'Kanana-1.5-8B LoRA + 4중 Guardrail',
         rag: 'O (하이브리드 + HyDE)',
         output: 'JSON (판단/근거/대안/신뢰도)',
-        feature: '5-factor Confidence, 교차 규정 판단',
+        feature: '6-Factor Confidence, 교차 규정 판단',
     },
     {
         name: 'Document Agent',
@@ -157,9 +157,9 @@ const AGENTS = [
 const AGENT_DETAIL_HEADERS = ['입력', '핵심 기술', 'RAG 사용', '출력 포맷', '특징'];
 
 const FINETUNING = [
-    { model: 'KoELECTRA', task: 'Intent 분류', train: '3,954', eval: '610', source: '자체 제작 + Adversarial 463', metric: 'F1 97.88%', detail: 'Label Smoothing 0.1 적용, 과신뢰 오분류 69% 감소' },
+    { model: 'roberta-large (KD)', task: 'Intent 분류', train: '3,954', eval: '610', source: '자체 제작 + Adversarial 463', metric: '91.0%', detail: '5-Seed 앙상블 + ONNX INT8 (팀원 담당)' },
     { model: 'Kanana-1.5-8B (LoRA)', task: 'Planner', train: '1,471', eval: '150', source: '자체 제작 + GPT 증강', metric: '7버전 반복', detail: '멀티스텝 계획 분해 최적화' },
-    { model: 'Kanana-1.5-8B (LoRA)', task: '판단 LoRA', train: '3,468', eval: '328', source: '수동 제작(Excel) + RAG 증강', metric: 'GPT-4o-mini 증강', detail: '다중 규정 교차 판단 + 근거 생성' },
+    { model: 'Kanana-1.5-8B (LoRA)', task: '판단 LoRA', train: '2,949', eval: '328', source: '수동 제작(Excel) + RAG 증강', metric: 'GPT-4o-mini 증강', detail: '다중 규정 교차 판단 + 근거 생성' },
     { model: 'Kanana-1.5-8B (LoRA)', task: '문서 요약', train: '900', eval: '100', source: 'AI Hub SN 582 + GPT 증강', metric: '3개 서브태스크', detail: '요약 특화 LoRA 학습' },
     { model: 'Kanana-1.5-8B (LoRA)', task: '문서 생성', train: '1,350', eval: '150', source: 'AI Hub + 합성', metric: '문서 생성 특화', detail: '회의록/보고서/제안서 생성' },
 ];
@@ -191,17 +191,17 @@ const AS_IS_TO_BE = [
 ];
 
 const CONTRIBUTIONS = [
-    { title: 'Judgment Agent — LLM 과신뢰 방지', desc: '4중 Guardrail + Confidence 보정 → 규정 판단 정확도 37%→85%, JSON 유효율 70%→97%, confidence 0.92→0.78 보정.' },
+    { title: 'Judgment Agent — LLM 과신뢰 방지', desc: '4중 Guardrail + 6-Factor Confidence 보정 → 규정 판단 정확도 37.2%→85.4%, JSON 유효율 70.4%→97.6%. 근거 없는 답 0.80→0.30, 과신 사례 0.95→0.72.' },
     { title: 'RAG — 단일 검색 한계 극복', desc: 'HyDE + BM25/Vector + RRF + Reranker 9단계 파이프라인 → 규정 10개 문서 교차 검색.' },
     { title: 'LoRA — 데이터 양보다 질', desc: 'v2 대량 보강 시 -3.2%p → v3 정밀 타겟팅 +2.0%p 회복. 3,468건 LoRA 학습 완료.' },
-    { title: '쿼리 정제 — 구어 대응', desc: '"연차 쓸 수 있어?" → "연차 사용 가능 여부" 변환 → Intent F1 97.88% 달성.' },
+    { title: '쿼리 정제 — 구어 대응', desc: '"연차 쓸 수 있어?" → "연차 사용 가능 여부" 변환. 동의어 23종 + 구어→문어 15패턴으로 검색 입력을 정규화.' },
 ];
 
 const CHALLENGES = [
     { title: 'sLLM JSON 파싱 실패', problem: 'sLLM이 구조화된 JSON 출력을 일관되게 생성하지 못함 (초기 유효율 70%)', solution: '프롬프트 최적화 + 출력 포맷 단순화 + fallback 파싱 로직', result: '70% → 97%' },
-    { title: 'Intent 과신뢰 오분류', problem: '모델이 confidence 0.95 이상으로 잘못된 Intent를 분류하는 문제 빈발', solution: 'Label Smoothing 0.1 적용 + 7단계 체계적 실험', result: '오분류 69%↓, F1 97.88%' },
-    { title: 'RAG 검색 정밀도', problem: '단일 벡터 검색으로는 "연차"↔"유급휴가" 같은 다양한 표현 커버 불가', solution: 'HyDE + BM25/Vector 하이브리드 + RRF(k=60) + Reranker', result: '다중 규정 교차 검색' },
-    { title: '규정 교차 판단 정확도', problem: '복수 규정 간 상충/보완 관계에서 sLLM이 일방적으로 판단 (초기 정확도 37%)', solution: '4중 Guardrail + 5-factor Confidence 보정', result: '37% → 85% (conditional 78%)' },
+    { title: 'RAG 검색 순위 — Reranker 트레이드오프', problem: 'RRF 합산만으로는 정답 조항이 평균 2.65위에 머물러 상위 K 안에서 밀림', solution: 'bge-reranker-v2-m3 적용 + 점수 임계값·출처당 최대 3건 다양성 필터', result: 'MRR 0.636→0.952, 정답 평균 1.0위 (응답시간 0.22초→5.95초 트레이드오프 수용)' },
+    { title: 'RAG 검색 정밀도', problem: '단일 벡터 검색으로는 "연차"↔"유급휴가" 같은 다양한 표현 커버 불가', solution: 'HyDE + BM25/Vector 하이브리드 + RRF(k=60) + Reranker', result: 'RAGAS 30건 — Context Recall 0.944 / Precision 0.889 / Hit Rate 93.3%' },
+    { title: '규정 교차 판단 정확도', problem: '복수 규정 간 상충/보완 관계에서 sLLM이 일방적으로 판단 (초기 정확도 37%)', solution: '4중 Guardrail + 6-Factor Confidence 보정', result: '37.2% → 85.4% (conditional 78%)' },
     { title: '문서 파싱 다양성', problem: 'PDF, DOCX, 스캔 이미지 등 다양한 형식이 혼재', solution: 'Docling + PaddleOCR + python-docx 라우터', result: '3종 형식 지원' },
     { title: 'LLM → sLLM 전환', problem: 'GPT/Claude API → 온프레미스 sLLM 전환 시 코드 전면 수정 필요', solution: '공통 LLM 모듈 설계 (provider 패턴)', result: '코드 수정 0줄' },
 ];
@@ -214,7 +214,7 @@ const TEAM_MEMBERS = [
 ];
 
 const TECH_STACK = {
-    'AI/ML': ['LangGraph', 'Kanana-1.5-8B', 'LoRA', 'KoELECTRA', 'vLLM'],
+    'AI/ML': ['LangGraph', 'Kanana-1.5-8B', 'LoRA', 'vLLM', 'ONNX'],
     'RAG': ['Qdrant Cloud', 'BM25', 'kiwipiepy', 'RRF', 'bge-reranker-v2-m3', 'HyDE'],
     'Embedding': ['ko-sbert-nli (768D)'],
     'Backend': ['FastAPI', 'PostgreSQL', 'SQLAlchemy', 'JWT', 'SSE', 'Redis'],
@@ -230,7 +230,7 @@ const SECTIONS = [
     { id: 'vllm-serving', label: 'vLLM Serving' },
     { id: 'evaluation', label: 'Evaluation' },
     { id: 'guardrail', label: '4중 보조장치' },
-    { id: 'confidence', label: '5-factor Confidence' },
+    { id: 'confidence', label: '6-Factor Confidence' },
     { id: 'effects', label: '기대 효과' },
     { id: 'contributions', label: 'My Contributions' },
     { id: 'challenges', label: 'Technical Challenges' },
@@ -267,7 +267,7 @@ export default function WorkFlowAgent() {
                         "하나의 채팅으로 업무의 모든 것을"
                     </p>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        수동 규정 검색에 10~15분이 걸리고 GPT API로는 사내 데이터 외부 반출을 피할 수 없는 문제를 해결했습니다. 4개 전문 Agent 구조를 유지하되 핵심은 모델이 아니라 서빙 안정성에 두고, sLLM 파인튜닝·vLLM 서빙·4중 Guardrail을 결합해 규정 판단 정확도 37%→85%, JSON 유효율 70%→97%, 과신뢰 confidence 0.92→0.78 보정, Intent F1 97.88%를 달성했습니다.
+                        수동 규정 검색에 10~15분이 걸리고 GPT API로는 사내 데이터 외부 반출을 피할 수 없는 문제를 해결했습니다. 4개 전문 Agent 구조를 유지하되 핵심은 모델이 아니라 서빙 안정성에 두고, sLLM 파인튜닝·vLLM 서빙·4중 Guardrail을 결합해 규정 판단 정확도 37.2%→85.4%, JSON 유효율 70.4%→97.6%를 달성했고, 근거 없는 답의 confidence를 0.80→0.30으로, 검색 품질이 낮은데 확신만 높던 답을 0.95→0.72로 내렸습니다. 검색은 Reranker 적용으로 MRR 0.636→0.952를 기록했습니다.
                     </p>
                     <div className="flex gap-3">
                         <a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM" target="_blank" rel="noopener noreferrer"
@@ -296,7 +296,7 @@ export default function WorkFlowAgent() {
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 5-factor Confidence 보정 시스템, LoRA 파인튜닝 데이터 품질 실험(v1→v3 반복), 공통 LLM 모듈 설계로 provider 전환 비용 최소화를 담당했습니다. 모델 정확도뿐 아니라 JSON 유효율, 근거 검증, 운영 안정성까지 함께 책임졌습니다.
+                                    vLLM 서빙 인프라 구축, 4중 Guardrail 설계, 6-Factor Confidence 보정 시스템, LoRA 파인튜닝 데이터 품질 실험(v1→v3 반복), 공통 LLM 모듈 설계로 provider 전환 비용 최소화를 담당했습니다. 모델 정확도뿐 아니라 JSON 유효율, 근거 검증, 운영 안정성까지 함께 책임졌습니다.
                                 </p>
                             </div>
                             <div>
@@ -354,7 +354,7 @@ export default function WorkFlowAgent() {
                     charts={WORKFLOW_AGENT_CHARTS}
                     steps={[
                         { title: 'User Request', subtitle: '자연어 업무 요청', items: ['Regulation', 'Document', 'Schedule', 'General'] },
-                        { title: 'Intent Router', subtitle: '요청 유형 분류', items: ['KoELECTRA', 'F1 97.88%', 'Label smoothing'] },
+                        { title: 'Intent Router', subtitle: '요청 유형 분류', items: ['roberta-large', '91.0%', 'ONNX INT8'] },
                         { title: 'LangGraph Agents', subtitle: '업무별 실행 흐름', items: ['Judgment', 'Document', 'Schedule', 'General'] },
                         { title: 'RAG & sLLM', subtitle: '근거 검색과 생성', items: ['HyDE', 'BM25+Vector', 'RRF', 'vLLM+LoRA'] },
                     ]}
@@ -382,7 +382,7 @@ export default function WorkFlowAgent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         {[
                             { label: '공통 LLM 모듈 설계', title: 'Provider 전환 비용 최소화', desc: 'GPT, Claude, vLLM 간 전환이 provider 설정만 바꾸면 되도록 공통 인터페이스를 설계. 개발 초기에는 GPT API로 기능 검증, I/O 확정 후 vLLM으로 교체하는 전략으로 전환 리스크를 최소화.' },
-                            { label: 'LoRA 핫스왑', title: '4개 어댑터 동적 관리', desc: '판단 / 문서요약 / 문서생성 / Planner 4개 LoRA 어댑터를 Kanana-1.5-8B 베이스 위에서 태스크별 핫스왑(Intent는 KoELECTRA 별도 분류기). RunPod A100(80GB)에서 학습과 서빙을 병행.' },
+                            { label: 'LoRA 핫스왑', title: '4개 어댑터 동적 관리', desc: '판단 / 문서요약 / 문서생성 / Planner 4개 LoRA 어댑터를 Kanana-1.5-8B 베이스 위에서 태스크별 핫스왑(Intent는 roberta-large 별도 분류기). RunPod A100(80GB)에서 학습과 서빙을 병행.' },
                             { label: '서빙 안정성', title: 'JSON 유효율 70% → 97%', desc: 'sLLM이 구조화된 JSON을 일관되게 생성하지 못하는 문제를 프롬프트 최적화 + 출력 포맷 단순화 + fallback 파싱 로직으로 해결. 모델 성능이 아닌 서빙 레이어에서 안정성을 확보.' },
                             { label: 'SSE 스트리밍', title: '토큰 단위 실시간 응답', desc: 'sLLM 추론 시간이 수 초 걸리는 문제를 SSE(Server-Sent Events) 스트리밍으로 해결. 토큰 생성 즉시 클라이언트에 전송하여 체감 응답 속도 개선.' },
                         ].map((item, idx) => (
@@ -406,8 +406,8 @@ export default function WorkFlowAgent() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                             {[
                                 { name: 'Kanana-1.5-8B', score: '0.652', selected: true },
-                                { name: 'EXAONE-3.5-7.8B', score: '0.631', selected: false },
-                                { name: 'Qwen3-8B', score: '0.618', selected: false },
+                                { name: 'EXAONE-3.5-7.8B', score: '0.597', selected: false },
+                                { name: 'Qwen3-8B', score: '0.509', selected: false },
                             ].map((model, idx) => (
                                 <div key={idx} className={`p-4 rounded-xl text-center ${model.selected ? 'bg-[#5f7f95] text-white' : 'bg-gray-50 text-gray-700'}`}>
                                     <p className={`text-sm font-bold ${model.selected ? 'text-white' : 'text-gray-900'}`}>{model.name}</p>
@@ -434,7 +434,7 @@ export default function WorkFlowAgent() {
                                     { metric: '규정 판단 정확도', before: '37%', after: '85%', improvement: '+48%p' },
                                     { metric: 'JSON 유효율', before: '70%', after: '97%', improvement: '+27%p' },
                                     { metric: '과신 Confidence 보정', before: '0.92', after: '0.78', improvement: '−0.14' },
-                                    { metric: 'Intent 분류 F1', before: 'Rule 기반', after: '97.88%', improvement: 'KoELECTRA' },
+                                    { metric: '검색 MRR', before: '0.636', after: '0.952', improvement: 'Reranker 적용' },
                                     { metric: 'Adversarial F1', before: '—', after: '87.58%', improvement: '463건 테스트' },
                                     { metric: '과신뢰 오분류', before: '빈발', after: '69% 감소', improvement: 'Label Smoothing' },
                                     { metric: '추론 속도', before: '수백ms (API)', after: '7.9ms', improvement: '~50x 단축' },
@@ -522,9 +522,9 @@ export default function WorkFlowAgent() {
                     </div>
                 </motion.div>
 
-                {/* 5-factor Confidence */}
+                {/* 6-Factor Confidence */}
                 <motion.div id="confidence" className="mb-20" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>5-factor Confidence</h2>
+                    <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>6-Factor Confidence</h2>
                     <p className="text-gray-500 mb-8">Judgment Agent의 다차원 신뢰도 산출 공식</p>
                     <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-200 shadow-sm">
                         <div className="bg-gray-50 rounded-xl p-5 text-gray-900 text-center border border-gray-200">
@@ -674,7 +674,7 @@ export default function WorkFlowAgent() {
                             {/* Highlights */}
                             <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
                                 {[
-                                    { label: 'Intent F1', value: '97.88%', sub: '8개 카테고리' },
+                                    { label: '검색 MRR', value: '0.952', sub: 'Reranker 적용 후' },
                                     { label: 'Adversarial F1', value: '87.58%', sub: '적대적 463건' },
                                     { label: '추론 속도', value: '7.9ms', sub: 'GPU 실시간' },
                                     { label: '학습 데이터', value: '226MB', sub: '4개 LoRA 어댑터' },
@@ -734,7 +734,7 @@ export default function WorkFlowAgent() {
                             <div className="flex justify-center">
                                 <div className="px-6 py-4 bg-[#5f7f95] rounded-xl text-white text-center max-w-md w-full">
                                     <p className="text-sm font-bold">Intent 분류</p>
-                                    <p className="text-xs text-white/70 mt-1">KoELECTRA, F1 97.88%</p>
+                                    <p className="text-xs text-white/70 mt-1">roberta-large ONNX, 91.0%</p>
                                 </div>
                             </div>
                             <div className="flex justify-center"><div className="w-0.5 h-6 bg-gray-300"></div></div>
@@ -909,8 +909,8 @@ export default function WorkFlowAgent() {
                     { label: 'Results', content: (
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {[
-                                { label: 'Intent 분류', value: 'F1 97.88%', desc: 'KoELECTRA + Label Smoothing' },
-                                { label: '파인튜닝', value: '4개 LoRA', desc: '판단 / 문서요약 / 문서생성 / Planner (+ KoELECTRA Intent)' },
+                                { label: '검색 품질', value: 'MRR 0.952', desc: 'HyDE + RRF + Reranker 9단계' },
+                                { label: '파인튜닝', value: '4개 LoRA', desc: '판단 / 문서요약 / 문서생성 / Planner (+ 별도 Intent 분류기)' },
                                 { label: 'RAG', value: 'HyDE+Hybrid', desc: 'HyDE + BM25 + Vector + RRF + Reranker' },
                                 { label: 'Google 연동', value: '4종 API', desc: 'Calendar + Tasks + Gmail + Sheets' },
                                 { label: 'Backend', value: '12 테이블', desc: 'PostgreSQL + JWT + SSE' },

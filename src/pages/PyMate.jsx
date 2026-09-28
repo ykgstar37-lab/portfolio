@@ -85,7 +85,7 @@ const FEATURES = [
 ];
 
 const CONTRIBUTIONS = [
-    { title: '임베딩 검색 품질 개선', desc: '임베딩 768D→3072D 전환 + 이중 쿼리(KO+EN) → Context Precision 0.83→0.97, Recall 0.70→0.79.', tag: 'Data' },
+    { title: '임베딩 검색 품질 개선', desc: '임베딩 1536D→3072D 전환 + 이중 쿼리(KO+EN) → Context Precision 0.51→0.98, Recall 0.63→0.79.', tag: 'Data' },
     { title: 'Quiz API 3종 확장', desc: '단일→객관식/O·X/단답형 3종 + AI 자동 생성 → 퀴즈 유형 1→3개.', tag: 'Backend' },
     { title: '오답 재학습 시스템', desc: 'QuizBookmark + Qdrant 연동 → 마이페이지 즉시 재학습 접근.', tag: 'Backend' },
     { title: '에러 포맷 통일', desc: 'Django 미들웨어로 전역 핸들링 → 에러 처리 단일 핸들러로 통합.', tag: 'Backend' },
@@ -95,9 +95,9 @@ const CONTRIBUTIONS = [
 ];
 
 const CHALLENGES = [
-    { title: '한국어 검색 후보 회수', problem: '한국어 쿼리로는 필요한 문서가 후보에 안 올라옴 (Recall 0.70)', solution: '이중 쿼리(KO+EN) 동시 검색 + 임베딩 768D→3072D 전환', result: 'Recall 0.70→0.79', icon: '1' },
+    { title: '한국어 검색 후보 회수', problem: '한국어 쿼리로는 필요한 문서가 후보에 안 올라옴 (Recall 0.63)', solution: '이중 쿼리(KO+EN) 동시 검색 + 임베딩 1536D→3072D 전환', result: 'Recall 0.63→0.79', icon: '1' },
     { title: 'LLM 할루시네이션', problem: '관련 없는 질문에 환각 응답 생성', solution: '관련도 3단계 라우팅 (>0.5 / 0.3~0.5 / <0.3)', result: '환각 차단 100%', icon: '2' },
-    { title: '검색 순위 최적화', problem: '벡터 검색만으로 상위 문서 관련도 낮음', solution: 'cross-encoder 리랭킹 + BM25 하이브리드', result: 'Precision 0.83→0.97', icon: '3' },
+    { title: '검색 순위 최적화', problem: '벡터 검색만으로 상위 문서 관련도 낮음', solution: 'cross-encoder 리랭킹 + BM25 하이브리드', result: 'Precision 0.51→0.98', icon: '3' },
     { title: 'Flask→Django 전환', problem: 'ORM·인증·정적파일 모두 수동 구성', solution: 'Django 5.x + DRF 기본 제공 활용', result: 'API 구조화 완료', icon: '4' },
     { title: '실시간 UX', problem: 'LLM 응답 수 초 소요, 화면 멈춤 오해', solution: 'SSE 토큰 단위 스트리밍', result: '첫 토큰 ~0.3초', icon: '5' },
     { title: '배포 502 에러', problem: 'AWS EC2에서 502 에러 발생', solution: 'Nginx+Gunicorn 소켓 경로 수정', result: '장애 0건 운영', icon: '6' },
@@ -121,8 +121,8 @@ const IMPROVEMENTS = [
 ];
 
 const RAGAS_METRICS = [
-    { label: 'Context Precision', before: '0.8333', after: '0.9758', improvement: '+14.4%p', desc: '검색 결과 중 관련 문서 비율' },
-    { label: 'Context Recall', before: '0.7044', after: '0.7944', improvement: '+12.7%p', desc: '필요 문서 중 실제 검색된 비율' },
+    { label: 'Context Precision', before: '0.5083', after: '0.9758', improvement: '+46.8%p', desc: '검색 결과 중 관련 문서 비율' },
+    { label: 'Context Recall', before: '0.6250', after: '0.7944', improvement: '+16.9%p', desc: '필요 문서 중 실제 검색된 비율' },
     { label: 'Reranker 경량화', before: 'bge-reranker-v2-m3', after: 'ms-marco-MiniLM-L6-v2', improvement: '-1초', desc: 'cross-encoder로 교체하여 레이턴시 절감' },
 ];
 
@@ -158,7 +158,7 @@ const DRAWER_TABS = [
                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>PyMate</h3>
                 <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
                     부트캠프 학습 데이터를 검색·평가 가능한 구조로 바꾼 RAG 기반 ML 서비스. Flask MVP에서 검색 품질 병목을 발견하고 Django로 전환,
-                    단순 벡터 검색이던 파이프라인을 이중 쿼리·하이브리드 가중합·cross-encoder 리랭킹으로 재구성해 Context Precision 0.83→0.97, Recall 0.70→0.79을 달성했으며, 3단계 라우팅으로 잘못된 생성 응답을 서빙 레이어에서 차단했습니다.
+                    단순 벡터 검색이던 파이프라인을 이중 쿼리·하이브리드 가중합·cross-encoder 리랭킹으로 재구성해 Context Precision 0.51→0.98, Recall 0.63→0.79을 달성했으며, 3단계 라우팅으로 잘못된 생성 응답을 서빙 레이어에서 차단했습니다.
                 </p>
                 <div className="flex flex-wrap gap-2">
                     {['Django', 'LangGraph', 'Qdrant', 'RAGAS', 'SSE', 'AWS EC2'].map(t => (
@@ -170,10 +170,10 @@ const DRAWER_TABS = [
             {/* Highlights */}
             <div className="grid grid-cols-3 lg:grid-cols-6 gap-3">
                 {[
-                    { label: 'Precision', value: '0.9758', sub: '+14.4%p 향상' },
-                    { label: 'Recall', value: '0.7944', sub: '+12.7%p 향상' },
+                    { label: 'Precision', value: '0.9758', sub: '+46.8%p 향상' },
+                    { label: 'Recall', value: '0.7944', sub: '+16.9%p 향상' },
                     { label: '환각 차단', value: '100%', sub: '3단계 라우팅' },
-                    { label: '임베딩', value: '3,072D', sub: '768D에서 4x' },
+                    { label: '임베딩', value: '3,072D', sub: '1536D에서 2x' },
                     { label: 'Reranker', value: '-1초', sub: 'BAAI→MiniLM' },
                     { label: '기능', value: '7가지', sub: '채팅+퀴즈+코드+스튜디오' },
                 ].map((item, idx) => (
@@ -190,11 +190,11 @@ const DRAWER_TABS = [
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">What Makes This Special</p>
                 <div className="space-y-2">
                     {[
-                        'RAGAS로 검색 단계와 생성 단계를 분리 측정해 병목이 LLM이 아니라 검색이라는 것을 먼저 특정 — 이후 검색 파이프라인만 손봐 Context Precision 0.83→0.97 (+14.4%p)',
+                        'RAGAS로 검색 단계와 생성 단계를 분리 측정해 병목이 LLM이 아니라 검색이라는 것을 먼저 특정 — 이후 검색 파이프라인만 손봐 Context Precision 0.51→0.98 (+46.8%p)',
                         'Reranker를 BAAI/bge-reranker-v2-m3 → cross-encoder/ms-marco-MiniLM-L6-v2로 교체 — 정확도 유지하면서 레이턴시 1초 감소',
                         '관련도 <0.3이면 "모르겠다"고 답하는 정직한 AI — 환각 차단율 100%, 사용자에게 거짓 정보 전달 0건',
                         'Flask의 수동 인프라 한계(ORM, 인증, 정적파일 모두 수동)를 Django 전환으로 해결 → AWS EC2 프로덕션 배포',
-                        '한국어 벡터 검색의 후보 회수 한계를 두 축으로 해결 — 동일 질문을 한/영 이중 쿼리로 동시 검색해 어휘 커버리지를 넓히고, 임베딩을 768D→3072D로 전환해 의미 표현력을 높여 Recall 0.70→0.79 (+12.7%p)',
+                        '한국어 벡터 검색의 후보 회수 한계를 두 축으로 해결 — 동일 질문을 한/영 이중 쿼리로 동시 검색해 어휘 커버리지를 넓히고, 임베딩을 1536D→3072D로 전환해 의미 표현력을 높여 Recall 0.63→0.79 (+16.9%p)',
                         '기본 채팅 → 퀴즈(3종) + 코드 리뷰 + 스튜디오(7가지 학습 도구) → 총 7가지 기능으로 확장',
                     ].map((text, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm text-gray-600">
@@ -544,7 +544,7 @@ export default function PyMate() {
                         <span className="text-[#e8609c]">PyMate</span> — Bootcamp AI RAG Tutor
                     </h1>
                     <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{ wordBreak: 'keep-all' }}>
-                        부트캠프 학생들의 강의 이해도 검증 도구가 없는 문제를 해결하기 위해 검색 품질과 응답 신뢰도를 함께 관리하는 RAG 학습 튜터를 개발. Flask MVP에서 병목을 찾은 뒤 Django로 전환하고, 임베딩 3072D 교체로 Context Precision 0.83→0.97을 달성했습니다. 또한 3단계 관련도 라우팅으로 환각 응답을 생성 단계가 아니라 시스템 단계에서 차단했습니다.
+                        부트캠프 학생들의 강의 이해도 검증 도구가 없는 문제를 해결하기 위해 검색 품질과 응답 신뢰도를 함께 관리하는 RAG 학습 튜터를 개발. Flask MVP에서 병목을 찾은 뒤 Django로 전환하고, 검색 파이프라인을 이중 쿼리·가중 하이브리드·리랭커로 재구성해 Context Precision 0.51→0.98을 달성했습니다. 또한 3단계 관련도 라우팅으로 환각 응답을 생성 단계가 아니라 시스템 단계에서 차단했습니다.
                     </p>
                     <div className="flex items-center gap-3 flex-wrap">
                         <a href="https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21_3rd_4Team" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-full hover:bg-gray-800 transition">
@@ -570,13 +570,13 @@ export default function PyMate() {
                             <div>
                                 <p className="text-[10px] font-bold text-[#e8609c] uppercase tracking-widest mb-2">Overview</p>
                                 <p className="text-gray-700 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    AI Camp 교육과정에 특화된 RAG 기반 AI 튜터. 교육 규정과 학습 자료(Python 공식 문서, 강의 자료)를 하이브리드 검색하여 학생 질문에 즉시 답변을 제공합니다. RAGAS로 검색 품질을 정량 평가하고, embedding 교체로 Precision 0.83→0.97 달성.
+                                    AI Camp 교육과정에 특화된 RAG 기반 AI 튜터. 교육 규정과 학습 자료(Python 공식 문서, 강의 자료)를 하이브리드 검색하여 학생 질문에 즉시 답변을 제공합니다. RAGAS로 검색 품질을 정량 평가하고, 검색 파이프라인 재구성으로 Precision 0.51→0.98 달성.
                                 </p>
                             </div>
                             <div>
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
                                 <p className="text-gray-600 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                    RAG 파이프라인 설계(이중 쿼리 + BM25 가중합 + Cross-encoder Reranker), Flask→Django 프로덕션 마이그레이션, RAGAS 기반 정량 평가 체계 구축, 임베딩 모델 교체(768D→3072D), AWS(Nginx+Gunicorn) 배포.
+                                    RAG 파이프라인 설계(이중 쿼리 + BM25 가중합 + Cross-encoder Reranker), Flask→Django 프로덕션 마이그레이션, RAGAS 기반 정량 평가 체계 구축, 임베딩 모델 교체(1536D→3072D), AWS(Nginx+Gunicorn) 배포.
                                 </p>
                             </div>
                             <div>
@@ -620,7 +620,7 @@ export default function PyMate() {
                     ]}
                     notes={[
                         { label: 'Migration', value: 'Flask 수동 구성 -> Django Auth/ORM/DRF 활용' },
-                        { label: 'Retrieval', value: 'Context Precision 0.8333 -> 0.9758' },
+                        { label: 'Retrieval', value: 'Context Precision 0.5083 -> 0.9758' },
                         { label: 'Deployment', value: 'AWS EC2 + Nginx + Gunicorn 502 해결' },
                     ]}
                 />
@@ -640,7 +640,7 @@ export default function PyMate() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {[
-                            { label: 'Embedding 차원 교체', title: '768D → 3,072D', desc: 'text-embedding-3-large로 교체. Qdrant 벡터 DB 전체 재설계 필요했지만, 이것만으로 Context Precision이 0.83→0.97 (+14.4%) 향상. 서빙할 모형 선택이 곧 성능.', color: 'border-[#e8609c]' },
+                            { label: 'Embedding 차원 교체', title: '1536D → 3,072D', desc: 'text-embedding-3-large로 교체. Qdrant 벡터 DB 전체 재설계가 필요했다. 이중 쿼리·가중 하이브리드·리랭커와 함께 적용해 Context Precision 0.51→0.98 (+46.8%p) — 단일 기법이 아니라 검색 파이프라인 번들 전체의 결과.', color: 'border-[#e8609c]' },
                             { label: 'Reranker 경량화', title: 'BAAI → cross-encoder (-1초)', desc: 'bge-reranker-v2-m3에서 cross-encoder/ms-marco-MiniLM-L6-v2로 교체. 정확도를 유지하면서 레이턴시 1초 감소. 서빙 성능 트레이드오프 판단.', color: 'border-[#d4578e]' },
                             { label: '이중 쿼리 전략', title: 'KO + EN 동시 검색', desc: '한국어 embedding의 검색 정확도 한계를 영어 번역 쿼리로 보완. 동일 질문을 한국어+영어로 동시에 검색하여 recall 향상.', color: 'border-[#c74b82]' },
                             { label: 'Relevance 3단계 라우팅', title: '환각 방지 서빙 설계', desc: 'score >0.5 → 직접 답변, 0.3~0.5 → 웹 검색 보강, <0.3 → "데이터 없음" 응답. LLM이 부정확한 컨텍스트로 답변하는 것을 서버에서 차단.', color: 'border-[#b84178]' },
@@ -695,9 +695,9 @@ export default function PyMate() {
                             </thead>
                             <tbody>
                                 {[
-                                    { metric: 'Context Precision', before: '0.8333', after: '0.9758', improvement: '+14.4%p' },
-                                    { metric: 'Context Recall', before: '0.7044', after: '0.7944', improvement: '+12.7%p' },
-                                    { metric: '임베딩 차원', before: '768D', after: '3,072D', improvement: '4x 확장' },
+                                    { metric: 'Context Precision', before: '0.5083', after: '0.9758', improvement: '+46.8%p' },
+                                    { metric: 'Context Recall', before: '0.6250', after: '0.7944', improvement: '+16.9%p' },
+                                    { metric: '임베딩 차원', before: '1,536D', after: '3,072D', improvement: '2x 확장' },
                                     { metric: 'Reranker 레이턴시', before: 'BAAI (느림)', after: 'MiniLM-L6-v2', improvement: '-1초' },
                                     { metric: '환각 응답', before: '발생', after: '3단계 라우팅', improvement: '차단 100%' },
                                     { metric: '프레임워크', before: 'Flask (수동)', after: 'Django + DRF', improvement: '인프라 자동화' },
@@ -713,13 +713,13 @@ export default function PyMate() {
                         </table>
                     </div>
 
-                    {/* 768D vs 3072D 검색 결과 비교 */}
+                    {/* 1536D vs 3072D 검색 결과 비교 */}
                     <div className="mt-8">
-                        <p className="text-xs font-bold text-[#e8609c] uppercase tracking-wider mb-2">768D vs 3072D 검색 결과 비교</p>
+                        <p className="text-xs font-bold text-[#e8609c] uppercase tracking-wider mb-2">1536D vs 3072D 검색 결과 비교</p>
                         <p className="text-sm text-gray-500 mb-4" style={{ wordBreak: 'keep-all' }}>질문: <span className="font-medium text-gray-700">"Python 리스트 컴프리헨션에서 조건문은 어떻게 쓰나요?"</span></p>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div className="bg-red-50/50 border border-red-100 rounded-2xl p-5">
-                                <p className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">768D (Before) — Context Precision 0.83</p>
+                                <p className="text-xs font-bold text-red-400 uppercase tracking-wider mb-3">단순 벡터 검색 (Before) — Context Precision 0.51</p>
                                 <div className="space-y-2 text-sm">
                                     <div className="flex items-center gap-2"><span className="text-red-400 font-bold w-8">1위</span><span className="text-gray-600">"파일 입출력 기초"</span><span className="text-red-400 text-xs">관련 없음</span></div>
                                     <div className="flex items-center gap-2"><span className="text-red-400 font-bold w-8">2위</span><span className="text-gray-600">"변수와 자료형"</span><span className="text-red-400 text-xs">관련 없음</span></div>
@@ -831,7 +831,7 @@ export default function PyMate() {
                             <p className="text-xs font-bold text-blue-600 uppercase tracking-wider mb-3">핵심 인사이트</p>
                             <ul className="space-y-3 text-sm text-gray-600">
                                 <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">01</span><span><strong className="text-gray-900">프레임워크 전환의 판단 기준</strong> — Flask MVP에서 Django로 전환한 건 "기능이 부족해서"가 아니라, ORM 마이그레이션, 관리자 페이지, 정적 파일 서빙 등 프로덕션에 필요한 인프라가 Flask에서는 모두 수동 구성이었기 때문.</span></li>
-                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">RAG 품질은 임베딩 차원이 결정</strong> — 768D에서 3072D로 교체한 것만으로 Context Precision이 0.8333 → 0.9758로 향상. 모델 자체보다 검색 품질이 답변 품질을 좌우.</span></li>
+                                <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">02</span><span><strong className="text-gray-900">병목은 모델이 아니라 검색이었다</strong> — 이중 쿼리·가중 하이브리드·리랭커에 임베딩 1536D→3072D 교체를 더해 Context Precision 0.5083 → 0.9758. 상위 LLM으로 바꾸기 전에 검색부터 measure하고 손대는 순서가 맞았다.</span></li>
                                 <li className="flex gap-3"><span className="font-bold text-gray-900 shrink-0">03</span><span><strong className="text-gray-900">Nginx → Gunicorn → Django 서버 흐름</strong> — 로컬에서 잘 동작하던 코드가 AWS에서 502를 반환하는 경험을 통해, 요청이 처리되는 전체 흐름을 이해하는 것이 배포의 핵심.</span></li>
                             </ul>
                         </div>

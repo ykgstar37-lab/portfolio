@@ -403,7 +403,7 @@ export default function CryptoVolDashboard() {
                     <div className="flex items-center gap-3 mb-4 flex-wrap">
                         <span className="text-[10px] font-bold px-3 py-1 bg-blue-50 text-blue-800 rounded-full tracking-wider uppercase">Personal</span>
                         <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">Extended from Team Project</span>
-                        <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 —</span>
+                        <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.03 — 2026.09</span>
                     </div>
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
                         <span style={{ color: PRIMARY }}>CryptoVol</span> Dashboard
