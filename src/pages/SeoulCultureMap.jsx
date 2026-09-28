@@ -176,7 +176,7 @@ const FEATURES = [
     },
     {
         title: 'AI Chatbot — LangGraph Agent + RAG',
-        desc: '키워드 검색만으로는 "종로 근처 조용한 박물관" 같은 자연어 질문을 처리할 수 없는 문제 → LangGraph 3-node Agent(Intent→Retrieve→Generate) + ChromaDB RAG + SSE 스트리밍 → 요청당 ~$0.003(85% 비용 절감).',
+        desc: '키워드 검색만으로는 "종로 근처 조용한 박물관" 같은 자연어 질문을 처리할 수 없는 문제 → LangGraph 3-node Agent(Intent→Retrieve→Generate) + ChromaDB RAG + SSE 스트리밍 → 검색 단계 LLM 호출 없음, 요청당 ~$0.003.',
         icon: '03',
     },
     {
@@ -498,7 +498,7 @@ export default function SeoulCultureMap() {
                     ]}
                     notes={[
                         { label: 'Data Merge', value: '2개 공공 API 좌표/카테고리 정규화' },
-                        { label: 'Cost', value: 'Intent 라우팅으로 AI 호출 비용 85% 절감' },
+                        { label: 'Cost', value: '검색 단계 LLM 호출 없음 — 요청당 ~$0.003' },
                         { label: 'Embedding', value: '로컬 MiniLM 임베딩으로 월 비용 $0' },
                     ]}
                 />
@@ -552,7 +552,7 @@ export default function SeoulCultureMap() {
                             },
                             {
                                 question: 'AI 추천을 단일 LLM 호출 대신 LangGraph 3-node 파이프라인으로 설계한 이유는?',
-                                answer: '단일 LLM 호출은 의도 분류·데이터 검색·응답 생성을 한 번에 처리하여 비용이 높고 제어가 어렵습니다. Intent → Retrieve → Generate 3단계로 분리하면, 일상 대화(chitchat)는 검색을 건너뛰어 비용을 절감하고, 검색 단계는 LLM 없이 SQL + ChromaDB만 사용합니다. 요청당 ~$0.003으로 엔터프라이즈 대비 85% 비용 절감.',
+                                answer: '단일 LLM 호출은 의도 분류·데이터 검색·응답 생성을 한 번에 처리하여 비용이 높고 제어가 어렵습니다. Intent → Retrieve → Generate 3단계로 분리하면, 일상 대화(chitchat)는 검색을 건너뛰어 비용을 절감하고, 검색 단계는 LLM 없이 SQL + ChromaDB만 사용합니다. LLM은 의도 분류(~$0.001)와 응답 생성(~$0.002) 두 번만 호출해 요청당 ~$0.003.',
                                 tag: 'Intent 라우팅 RAG'
                             },
                             {
@@ -599,7 +599,7 @@ export default function SeoulCultureMap() {
                                     { metric: '이미지', before: '없음', after: '1,177장', improvement: 'Tour API 연동' },
                                     { metric: '시설 탐색', before: 'PDF 보고서', after: 'Leaflet 인터랙티브 맵', improvement: '즉시 탐색' },
                                     { metric: 'AI 추천', before: '없음', after: 'LangGraph 3-node Agent', improvement: '~$0.003/req' },
-                                    { metric: 'AI 비용', before: '—', after: '엔터프라이즈 대비 85%↓', improvement: '85% 절감' },
+                                    { metric: '검색 단계 LLM 호출', before: '매 요청 호출', after: '0회 (SQL+ChromaDB)', improvement: '요청당 ~$0.003' },
                                     { metric: '임베딩 비용', before: '—', after: '로컬 MiniLM-L6-v2', improvement: '$0/월' },
                                 ].map((row, idx) => (
                                     <tr key={idx} className="border-b border-gray-50 last:border-0">
@@ -648,7 +648,7 @@ export default function SeoulCultureMap() {
                                     </div>
                                 ))}
                             </div>
-                            <p className="text-xs text-gray-400 mt-3">단일 LLM 호출 대비 <strong className="text-gray-700">85% 비용 절감</strong> (요청당 ~$0.003)</p>
+                            <p className="text-xs text-gray-400 mt-3">검색 단계는 <strong className="text-gray-700">LLM 호출 없이 SQL+ChromaDB만</strong> 사용 (요청당 ~$0.003 · LLM 2회)</p>
                         </div>
                     </div>
 
@@ -683,7 +683,7 @@ export default function SeoulCultureMap() {
                         {[
                             { title: '공공API 데이터 통합', problem: '서울 열린데이터광장과 한국관광공사 API의 좌표 필드명·카테고리 코드가 완전히 다름', solution: '좌표 필드 정규화 + 카테고리 코드 매핑 테이블 설계 + 중복 제거 파이프라인', result: '2,500+ 시설 통합' },
                             { title: 'Leaflet + React 충돌', problem: 'Leaflet은 DOM 직접 조작, React는 Virtual DOM — 마커/팝업 렌더링에서 반복 오류', solution: 'react-leaflet 선언적 API로 제어 일원화 + useEffect cleanup에서 레이어 명시적 제거', result: '렌더링 안정화' },
-                            { title: 'AI 추천 비용', problem: '단일 LLM 호출로 의도 분류·검색·응답을 한 번에 처리하면 비용이 높고 제어 어려움', solution: 'LangGraph 3-node(Intent→Retrieve→Generate) 분리, chitchat은 검색 스킵, 검색은 LLM 없이 SQL만', result: '85% 비용 절감' },
+                            { title: 'AI 추천 비용', problem: '단일 LLM 호출로 의도 분류·검색·응답을 한 번에 처리하면 비용이 높고 제어 어려움', solution: 'LangGraph 3-node(Intent→Retrieve→Generate) 분리, chitchat은 검색 스킵, 검색은 LLM 없이 SQL만', result: '검색 단계 LLM 호출 0회 · 요청당 ~$0.003' },
                             { title: '임베딩 API 비용', problem: '2,500+ 시설을 OpenAI embedding으로 처리하면 월 비용 발생', solution: 'all-MiniLM-L6-v2(384D, 33MB) 로컬 임베딩 + 200건 배치 + 10% 이내 차이 시 재임베딩 스킵', result: '$0/월' },
                             { title: '연산 위치 판단', problem: 'K-means 군집분석과 Haversine 거리 계산을 어디서 처리할지 결정 필요', solution: 'K-means는 scikit-learn 필요하므로 서버, 거리 계산은 뷰포트 내 데이터만 필요하므로 프론트', result: 'API 호출 최소화' },
                         ].map((item, idx) => (
@@ -721,7 +721,7 @@ export default function SeoulCultureMap() {
                                 <h3 className="text-xl font-bold mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Seoul Culture Map</h3>
                                 <p className="text-white/80 text-sm leading-relaxed mb-4" style={{ wordBreak: 'keep-all' }}>
                                     학술제 R 분석 결과가 PDF 보고서에 갇혀있던 문제를 해결. 2개 공공API를 통합하여 2,500+ 시설을 인터랙티브 지도로 시각화하고,
-                                    LangGraph 3-node AI Agent로 자연어 문화시설 추천을 요청당 $0.003(85% 절감)에 제공.
+                                    LangGraph 3-node AI Agent로 자연어 문화시설 추천을 제공. 검색 단계는 LLM 호출 없이 요청당 $0.003.
                                 </p>
                                 <div className="flex flex-wrap gap-2">
                                     {['FastAPI', 'React', 'Leaflet', 'LangGraph', 'ChromaDB', 'K-means', 'SSE'].map(t => (
@@ -735,7 +735,7 @@ export default function SeoulCultureMap() {
                                     { label: '이미지', value: '1,177장', sub: 'Tour API' },
                                     { label: '자치구', value: '25개', sub: '서울 전역' },
                                     { label: 'Endpoints', value: '15', sub: 'REST+SSE' },
-                                    { label: 'AI 비용', value: '$0.003', sub: '85% 절감' },
+                                    { label: 'AI 비용', value: '$0.003', sub: '요청당 · LLM 2회' },
                                     { label: '임베딩', value: '$0/월', sub: '로컬 임베딩' },
                                 ].map((item, idx) => (
                                     <div key={idx} className="bg-gray-50 p-3 rounded-xl text-center">
@@ -749,7 +749,7 @@ export default function SeoulCultureMap() {
                                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">What Makes This Special</p>
                                 <div className="space-y-2">
                                     {[
-                                        'LangGraph 3-node Agent로 AI 추천 비용 85% 절감 — 요청당 $0.003, chitchat은 검색 스킵',
+                                        'LangGraph 3-node Agent로 검색 단계 LLM 호출 제거 — 요청당 $0.003, chitchat은 검색 스킵',
                                         '로컬 임베딩(MiniLM-L6-v2)으로 월 API 비용 $0 달성 — 200건 배치, 변화 10% 이내 시 재임베딩 스킵',
                                         'R 정적 분석 → React+Leaflet 인터랙티브 맵 + SSE AI 챗봇으로 완전 전환',
                                         '2개 공공API 통합 — 좌표 필드·카테고리 코드 정규화로 2,500+ 시설 + 1,177장 이미지 확보',
@@ -986,7 +986,7 @@ export default function SeoulCultureMap() {
                                 </li>
                                 <li className="flex gap-3">
                                     <span className="font-bold text-gray-900 shrink-0">03</span>
-                                    <span><strong className="text-gray-900">Intent 라우팅 RAG 비용 최적화</strong> — Intent→Retrieve→Generate 분리로 chitchat은 검색 스킵, 검색은 LLM 없이 SQL+ChromaDB만 사용 → 요청당 $0.003(85% 절감). API 실패 시 SQL만으로 fallback</span>
+                                    <span><strong className="text-gray-900">Intent 라우팅 RAG 비용 최적화</strong> — Intent→Retrieve→Generate 분리로 chitchat은 검색 스킵, 검색은 LLM 없이 SQL+ChromaDB만 사용 → 요청당 $0.003(LLM 2회 호출). API 실패 시 SQL만으로 fallback</span>
                                 </li>
                             </ul>
                         </div>
