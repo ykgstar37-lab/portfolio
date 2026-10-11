@@ -483,13 +483,13 @@ function HomePage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-8 flex justify-between items-center h-14 sm:h-16">
                     <div className="text-lg font-bold tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>YGE.</div>
                     <nav className="hidden md:flex gap-10 text-[13px] font-semibold text-gray-500 uppercase tracking-widest">
-                        {['about', 'projects', 'experience', 'contact'].map(s => (
+                        {['about', 'experience', 'projects', 'contact'].map(s => (
                             <a key={s} href={`#${s}`} className="hover:text-black transition-colors duration-300">{s}</a>
                         ))}
                     </nav>
                     {/* Mobile nav */}
                     <nav className="flex md:hidden gap-4 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
-                        {['about', 'projects', 'experience', 'contact'].map(s => (
+                        {['about', 'experience', 'projects', 'contact'].map(s => (
                             <a key={s} href={`#${s}`} className="hover:text-black transition-colors duration-300">{s}</a>
                         ))}
                     </nav>
@@ -497,7 +497,7 @@ function HomePage() {
             </motion.header>
 
             {/* ═══ HERO ═══ */}
-            <section ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-14 sm:pt-16 bg-white">
+            <section id="about" ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden pt-14 sm:pt-16 bg-white">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(0,0,0,0.02)_0%,transparent_60%)] pointer-events-none"></div>
                 <motion.div style={{ y: heroY, opacity: heroOpacity }} className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
                     <div className="flex flex-col lg:flex-row items-center justify-center gap-10 sm:gap-16 lg:gap-24">
@@ -521,9 +521,9 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                — 안녕하세요, <span className="text-black font-bold">윤경은</span>입니다.<br />
-                                AI 모델을 안정적인 서비스로 연결하는<br />
-                                <span className="text-black font-bold">AI DevOps / ML Systems 엔지니어</span>입니다.
+                                — <span className="text-black font-bold">윤경은</span>입니다.<br />
+                                외부가 끊겼을 때를 먼저 설계하는<br />
+                                <span className="text-black font-bold">서버 개발자</span>입니다.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
@@ -597,7 +597,7 @@ function HomePage() {
                                                 <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-3 mb-2" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
                                                 <p className="text-gray-500 text-sm leading-relaxed mb-4">AI 서빙 안정화 · 배포 자동화 · B2B API 연계 설계</p>
                                                 <div className="flex flex-wrap gap-1.5">
-                                                    {['vLLM', 'FastAPI', 'Docker', 'AWS'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+                                                    {['FastAPI', 'PostgreSQL', 'Docker', 'AWS'].map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
                                                 </div>
                                             </div>
                                         </div>
@@ -605,7 +605,7 @@ function HomePage() {
                                     {/* Name plate */}
                                     <div className="relative mt-4 text-center">
                                         <h3 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>Gyeongeun Yoon</h3>
-                                        <p className="text-[11px] sm:text-xs text-slate-400 font-semibold tracking-wide mt-1">AI DevOps / ML Systems Engineer</p>
+                                        <p className="text-[11px] sm:text-xs text-slate-400 font-semibold tracking-wide mt-1">Server / Backend Developer</p>
                                     </div>
                                 </div>
                             </motion.div>
