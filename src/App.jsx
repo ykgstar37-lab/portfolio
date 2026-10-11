@@ -5,6 +5,7 @@ import { HiAcademicCap, HiDesktopComputer } from 'react-icons/hi';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import profileImg from './assets/profile.jpg';
 import ScrollToTop from './components/ScrollToTop';
+import HashScroll from './components/HashScroll';
 import thumbCrypto from './assets/thumb_crypto.png';
 import thumbSeoul from './assets/thumb_seoul.png';
 import thumbCryptoVol from './assets/cryptovol.gif';
@@ -161,10 +162,10 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 
 /* ── Shared project data (single source of truth) ── */
 const ALL_PROJECTS = [
-    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 — 2026.09', description: 'GARCH 적합 연산(수백ms) 지연 → 5분 TTL 캐싱 + 에러 격리로 6개 모형 안정 서빙(14 REST + 1 WS). WebSocket 릴레이로 API 키 노출 차단, 1개 모형 실패가 전체 장애로 번지지 않는 운영 구조.', overview: '2023년 논문이 기간에 쫓겨 남긴 미구현 모형과 미검증 수치를, 3년 뒤 단독으로 구현·재계산한 개인 풀스택 프로젝트. 캐싱, Rate Limiting, WebSocket 릴레이, pytest 32개 + GitHub Actions로 운영 가능한 모델 서빙 흐름을 설계하고 Render+Vercel+Neon으로 배포.', role: 'AI 모델 API 서빙, WebSocket 릴레이, 캐싱/Rate Limiting, Docker 기반 배포 구조, 에러 격리 설계', tech: ['FastAPI', 'Docker', 'GitHub Actions', 'WebSocket', 'Render/Vercel'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-intelligence-system', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
+    { id: '01', title: 'CryptoVol Dashboard', category: 'Personal', domain: 'Dev', date: '2026.03 — 2026.09', description: 'GARCH 적합 연산(수백ms) 지연 → 5분 TTL 캐싱 + 에러 격리로 6개 모형 안정 서빙(13 REST + 1 WS). WebSocket 릴레이로 API 키 노출 차단, 1개 모형 실패가 전체 장애로 번지지 않는 운영 구조.', overview: '2023년 논문이 기간에 쫓겨 남긴 미구현 모형과 미검증 수치를, 3년 뒤 단독으로 구현·재계산한 개인 풀스택 프로젝트. 캐싱, Rate Limiting, WebSocket 릴레이, pytest 32개 + GitHub Actions로 운영 가능한 모델 서빙 흐름을 설계하고 Render+Vercel+Neon으로 배포.', role: 'AI 모델 API 서빙, WebSocket 릴레이, 캐싱/Rate Limiting, Docker 기반 배포 구조, 에러 격리 설계', tech: ['FastAPI', 'Docker', 'GitHub Actions', 'WebSocket', 'Render/Vercel'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-intelligence-system', link: '/projects/crypto-vol-dashboard', thumbnail: thumbCryptoVol, badge: 'Personal', demoHash: 'screenshots' },
     { id: '02', title: 'Seoul Culture Map', category: 'Personal', domain: 'Dev', date: '2026.03 — 2026.04', description: '정적 분석 결과를 11개 API 엔드포인트로 서빙. 2,500+ 시설 데이터를 K-means 군집분석 + Leaflet 지도로 시각화하고, 검색 단계는 LLM 호출 없이 SQL+ChromaDB만 사용해 요청당 ~$0.003.', overview: '서울시 2,500+ 문화시설 데이터를 고객 요구 조건(지역/목적/접근성)에 맞춰 검색·추천하는 데이터 서비스. SQL/벡터 검색/SSE를 조합해 비용과 응답 품질을 제어.', role: 'RESTful API 설계(11개 엔드포인트), Intent 라우팅, SQL+Vector 검색 연계, SSE 스트리밍, 비용 최적화', tech: ['FastAPI', 'React', 'SQLite', 'Vector DB', 'SSE'], github: 'https://github.com/ykgstar37-lab/seoul-culture-map', link: '/projects/seoul-culture-map', thumbnail: thumbSeoulCulture, badge: 'Personal', demoHash: 'screenshots' },
-    { id: '03', title: 'WorkFlow Agent (듀드)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.04', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70.4%→97.6%, 판단 정확도 37.2%→85.4%. 공통 LLM 모듈로 provider 전환 설정 1줄.', overview: '사내 업무 자동화를 위한 LLM 시스템. 고객사 보안 환경을 가정해 프라이빗 sLLM 서빙, 출력 검증, SSE 응답, PostgreSQL/JWT 기반 백엔드 흐름을 설계.', role: 'vLLM 서빙 인프라, 공통 LLM provider 모듈, Guardrail 검증, LoRA 품질 실험, 운영 안정성 지표 관리', tech: ['vLLM', 'FastAPI', 'PostgreSQL', 'Docker', 'SSE'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
-    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. Precision 0.83→0.97(+14.4%) 개선 후 Flask→Django, AWS EC2+Nginx+Gunicorn 배포로 운영 구조 표준화.', overview: '교육 자료 기반 RAG 튜터를 MVP에서 프로덕션 구조로 확장한 팀 프로젝트. 인증/ORM/정적파일/배포 흐름을 Django와 AWS 환경으로 정리.', role: 'Flask→Django 마이그레이션, AWS EC2 배포, Nginx+Gunicorn 502 디버깅, RAGAS 평가, Quiz API', tech: ['Django', 'AWS EC2', 'Nginx', 'Gunicorn', 'Qdrant'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
+    { id: '03', title: 'WorkFlow Agent (듀드)', category: 'Team', domain: 'Dev', date: '2026.02 — 2026.03', description: 'GPT API 의존 → vLLM 프라이빗 서빙 전환으로 비용 제거 + 데이터 보안 확보. JSON 유효율 70.4%→97.6%, 판단 정확도 37.2%→85.4%. 공통 LLM 모듈로 provider 전환 설정 1줄.', overview: '사내 업무 자동화를 위한 LLM 시스템. 고객사 보안 환경을 가정해 프라이빗 sLLM 서빙, 출력 검증, SSE 응답, PostgreSQL/JWT 기반 백엔드 흐름을 설계.', role: 'vLLM 서빙 인프라, 공통 LLM provider 모듈, Guardrail 검증, LoRA 품질 실험, 운영 안정성 지표 관리', tech: ['vLLM', 'FastAPI', 'PostgreSQL', 'Docker', 'SSE'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-FINAL-3TEAM', link: '/projects/workflow-agent', thumbnail: thumbWorkflow, badge: 'Team' },
+    { id: '04', title: 'PyMate — Bootcamp AI RAG Tutor', category: 'Team', domain: 'Dev', date: '2026.01 — 2026.02', description: 'RAGAS로 병목을 "LLM"이 아닌 "embedding 품질"로 재정의. Precision 0.51→0.98 개선 후 Flask→Django, AWS EC2+Nginx+Gunicorn 배포로 운영 구조 표준화.', overview: '교육 자료 기반 RAG 튜터를 MVP에서 프로덕션 구조로 확장한 팀 프로젝트. 인증/ORM/정적파일/배포 흐름을 Django와 AWS 환경으로 정리.', role: 'Flask→Django 마이그레이션, AWS EC2 배포, Nginx+Gunicorn 502 디버깅, RAGAS 평가, Quiz API', tech: ['Django', 'AWS EC2', 'Nginx', 'Gunicorn', 'Qdrant'], github: 'https://github.com/SKNETWORKS-FAMILY-AICAMP/SKN21-4th-4Team', link: '/projects/pymate', thumbnail: thumbPymate, badge: 'Team' },
     { id: '05', title: 'SubFlow — Subscription Manager', category: 'Personal', domain: 'Dev', date: '2026.03 — 2026.09', description: '흩어진 구독 지출 파악 문제 → 자동 수집이 불가능함을 사전 조사로 확인하고 카탈로그 기반 Web/Mobile/FastAPI 공유 구조로 전환. 11개 DB 테이블, 8종 API 라우터, 99종(15카테고리)·요금제 198개 서비스 카탈로그로 지출 분석·중복 감지·환율/부가세 환산·알림 실발송·뉴스 AI 요약까지 통합. 웹앱·API 배포 완료, iOS App Store 출시.', overview: 'React Web과 Expo Mobile이 단일 FastAPI 백엔드를 공유하는 구독 관리 플랫폼. 총액, 다음 결제일, 예산 초과, 중복 구독처럼 반복 사용자가 바로 행동할 지표를 우선 설계.', role: '기획·설계·웹/모바일 프론트·FastAPI 백엔드·배포를 풀스택 단독 담당, PostgreSQL 11테이블 스키마, JWT 인증, 지출 분석/알림 도메인', tech: ['FastAPI', 'React', 'React Native', 'PostgreSQL', 'Zustand'], github: 'https://github.com/ykgstar37-lab/SubFlow', link: '/projects/subflow', thumbnail: thumbSubFlow, badge: 'Personal', demoHash: 'demo' },
     { id: '06', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF 단위근 검정으로 로그수익률 변환 근거를, ARCH-LM 검정으로 GARCH 적용 근거를 확보. GARCH→TGARCH→외생변수 순으로 모형을 확장해 비대칭 레버리지 효과를 확인하고, 거래량·FNG가 설명력을 높인다는 결론을 도출.', overview: '암호화폐 변동성을 GARCH 계열 모형으로 비교 분석한 3인 팀 연구 프로젝트. 기간 제약으로 GARCH·TGARCH·TGARCH+E.V까지 적합했고, HAR 계열은 수식 서술에 그쳤다.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, 외생변수 효과 분석, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-intelligence-system', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
     { id: '07', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', overview: '서울시 25개 자치구 관광시설 데이터를 군집분석하여 외국인 관광객에게 목적에 맞는 지역구를 추천하는 연구 프로젝트.', role: '공공데이터 전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 시각화 및 발표', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
@@ -243,7 +244,7 @@ const PROBLEM_SOLVING_CASES = [
             '금액을 float 대신 전 구간 Decimal로 처리해 반올림 오차가 집계에 누적되지 않도록 차단',
             '환율은 스케줄러로 미리 당겨오지 않고 요청 시점 1시간 TTL 캐시로 조회 — 외부 API(Frankfurter) 호출을 통화당 시간당 1회로 줄이고, 장애 시 폴백 환율로 대체해 환율 API가 죽어도 대시보드가 뜨도록 격리',
             '"실시간 환율"이라 표기하지 않고 응답의 기준일(date)을 그대로 보관·노출 — ECB 고시가 영업일 1회 갱신이라 실시간처럼 보이면 사용자가 잘못된 판단을 하게 됨',
-            '통화 4종 × 결제주기 4종 조합을 파라미터라이즈 테스트로 고정해, 환산 규칙이 바뀌면 기능보다 테스트가 먼저 깨지도록 구성',
+            '통화 2종 × 결제주기 4종, 8개 조합을 파라미터라이즈 테스트로 고정해, 환산 규칙이 바뀌면 기능보다 테스트가 먼저 깨지도록 구성',
         ],
         results: [
             { label: '환산 지점', value: '집계별 분산 → 1곳' },
@@ -263,7 +264,7 @@ const PROBLEM_SOLVING_CASES = [
         solutions: [
             '공통 LLM provider 모듈 — GPT/Claude/vLLM 전환을 설정값으로 분리해 고객 환경별 배포 리스크 최소화',
             '4중 Guardrail — 키워드 매칭(0~1.0), 조항 존재 검증(환각 플래그), 카테고리 제한, 일관성 모니터링(500건 FIFO 캐싱)',
-            '5-factor Confidence 보정으로 과신 차단 — LLM 0.6 + RAG 품질 0.25 + 규정 커버리지 0.15에서 충돌·환각·조항 미존재를 감점(Hard Cap: RAG 품질 < 0.2 → max 0.4). 검증 시나리오에서 과신 케이스(높은 LLM·낮은 RAG) 0.95 → 0.72, 규정 없음 0.80 → 0.30으로 하향',
+            '6-Factor Confidence 보정으로 과신 차단 — LLM 0.6 + RAG 품질 0.25 + 규정 커버리지 0.15에서 충돌·환각·조항 미존재를 감점(Hard Cap: RAG 품질 < 0.2 → max 0.4). 검증 시나리오에서 과신 케이스(높은 LLM·낮은 RAG) 0.95 → 0.72, 규정 없음 0.80 → 0.30으로 하향',
             'LoRA v3 — 19건만 약점(재량 표현 14 + 경계 케이스 5)을 정밀 타겟팅하여 회복',
         ],
         results: [
@@ -307,8 +308,8 @@ const PROBLEM_SOLVING_CASES = [
             'Nginx → Gunicorn → Django 서버 흐름 직접 구성, 소켓 바인딩 설정 문제 해결',
         ],
         results: [
-            { label: 'Context Precision', value: '0.83 → 0.97' },
-            { label: 'Context Recall', value: '0.70 → 0.79' },
+            { label: 'Context Precision', value: '0.51 → 0.98' },
+            { label: 'Context Recall', value: '0.63 → 0.79' },
             { label: '배포 장애', value: '502 원인 추적' },
         ],
         insight: 'RAGAS로 검색·생성을 분리 측정해 병목이 "LLM 답변 능력"이 아닌 "검색 품질"임을 특정 — 개선은 단일 기법이 아니라 Dual Query·가중합·Reranker 번들 전체의 결과였고, 측정을 나누지 않았다면 LLM만 바꾸며 시간을 썼을 것.',
@@ -319,20 +320,22 @@ const PROBLEM_SOLVING_CASES = [
         num: '05',
         tag: 'CryptoVol Dashboard',
         tagColor: '#2b4fcb',
-        title: '분석 모형을 실시간 API로 전환하며 서빙·점검 구조 설계',
-        problem: 'GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 모델 재계산 비용이 높아 서빙 안정성 확보가 핵심 과제.',
+        title: '분석 모형을 실시간 API로 전환하고, 거래소 지역 차단까지 견디는 수집 구조로 교체',
+        problem: 'GARCH 변동성 예측 모형을 실시간 API로 서빙하려니, 모형 적합(fit) 연산이 수백ms — 동시 요청 시 추론 지연 발생. 배포 후에는 다른 종류의 장애가 났다. Render 기본 리전이 미국(오레곤)이라 Binance가 HTTP 451(지역 차단)로 WebSocket을 거부했는데, 재시도 로직이 "기다리면 돌아온다"는 가정 위에 있어 지수 백오프가 영원히 끝나지 않았다.',
         solutions: [
             '5분 TTL 인메모리 캐싱 + 60일 롤링 윈도우 적합으로 GARCH 재계산 방지. 모형별 try/except로 개별 실패 시 0.0 반환해 에러 격리',
             'FastAPI WebSocket 릴레이 서버 구현 — Set 기반 클라이언트 추적으로 Binance 스트림을 브라우저에 브로드캐스트',
+            '외부 오류를 재시도로 복구되는 것과 되지 않는 것으로 분류 — 401·403·451은 백오프 대상에서 빼고 다음 공급자(Binance → Coinbase)로 전환, 일시적 오류에만 기존 지수 백오프 유지',
             'AI 브리핑 5req/60s, 시뮬레이션 10req/60s Rate Limiting으로 고비용 API 보호',
         ],
         results: [
-            { label: 'Endpoints', value: '12 REST + 1 WS' },
+            { label: 'Endpoints', value: '13 REST + 1 WS' },
+            { label: '지역 차단 복구', value: 'Binance → Coinbase 폴백' },
             { label: '에러 격리', value: '1개 실패 ≠ 전체 장애' },
             { label: '운영 보호', value: 'Rate Limit' },
         ],
-        insight: '"모델을 만드는 것"과 "모델을 안정적으로 서빙하는 것"은 완전히 다른 설계 관점 — 캐싱, 에러 격리, 보안 아키텍처가 서빙 안정성의 핵심',
-        keywords: ['#모델서빙', '#캐싱전략', '#RateLimiting', '#에러격리'],
+        insight: '재시도는 만능 복구 수단이 아니다 — 돌아올 장애와 돌아오지 않을 장애를 먼저 "분류"해야 백오프할지 공급자를 바꿀지 정할 수 있다. 로컬에서는 보이지 않고 배포 환경(리전)에서만 드러나는 실패가 있다는 것도 이때 알았다.',
+        keywords: ['#모델서빙', '#공급자폴백', '#에러분류', '#캐싱전략', '#에러격리'],
     },
 ];
 
@@ -632,7 +635,7 @@ function HomePage() {
                                 </p>
                                 <p className="text-gray-500 leading-relaxed" style={{ wordBreak: 'keep-all' }}>
                                     <span className="font-bold text-gray-800">운영 중 발생할 수 있는 장애를 먼저 가정하고, 지표와 자동화로 줄입니다.</span>{' '}
-                                    Docker, Nginx, Gunicorn, AWS 배포 과정에서 502 장애를 디버깅했고, 캐싱·에러 격리·Rate Limiting으로 모델 API를 보호했습니다. RAGAS 평가로 검색·생성 병목을 분리 측정해 Precision을 0.83→0.97로 개선했습니다.
+                                    Docker, Nginx, Gunicorn, AWS 배포 과정에서 502 장애를 디버깅했고, 캐싱·에러 격리·Rate Limiting으로 모델 API를 보호했습니다. RAGAS 평가로 검색·생성 병목을 분리 측정해 Precision을 0.51→0.98로 개선했습니다.
                                 </p>
                             </div>
 
@@ -874,7 +877,7 @@ export default function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<><HashScroll /><HomePage /></>} />
                 <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/projects/crypto-volatility" element={<CryptoVolatility />} />
                 <Route path="/projects/seoul-culture" element={<SeoulCulture />} />

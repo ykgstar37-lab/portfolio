@@ -3,8 +3,9 @@ import './Navbar.css'
 
 const NAV_ITEMS = [
     { id: 'hero', label: 'Home' },
+    { id: 'experience', label: 'Problem Solving' },
     { id: 'projects', label: 'Projects' },
-    { id: 'research', label: 'Research & More' },
+    { id: 'contact', label: 'Contact' },
 ]
 
 export default function Navbar() {

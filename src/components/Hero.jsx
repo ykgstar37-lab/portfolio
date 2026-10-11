@@ -17,18 +17,18 @@ export default function Hero() {
                     <div className="hero__text-wrap">
                         <div className="hero__top-stats reveal">
                             <div className="hero__stat">
-                                <h2 className="hero__stat-number">+8</h2>
-                                <p className="hero__stat-text">TECH STACKS</p>
+                                <h2 className="hero__stat-number">2</h2>
+                                <p className="hero__stat-text">SERVICES DEPLOYED</p>
                             </div>
                             <div className="hero__stat">
-                                <h2 className="hero__stat-number">100%</h2>
-                                <p className="hero__stat-text">COMMITMENT</p>
+                                <h2 className="hero__stat-number">5</h2>
+                                <p className="hero__stat-text">PROJECTS BUILT</p>
                             </div>
                         </div>
 
                         <h1 className="hero__title-huge reveal reveal-delay-1">Hello</h1>
                         <p className="hero__subtitle reveal reveal-delay-2">
-                            — 안녕하세요, <strong>윤경은</strong>입니다. AI 모델을 안정적인 서비스로 연결하는 AI DevOps / ML Systems 엔지니어입니다.
+                            — 외부가 끊겼을 때를 먼저 설계하는 <strong>서버 개발자 윤경은</strong>입니다. 개인 서비스 2개를 직접 배포·운영하며, 장애를 ‘복구되는 것’과 ‘아닌 것’으로 나눠 구조를 고쳐왔습니다.
                         </p>
 
                         <div className="hero__social reveal reveal-delay-3">
@@ -60,15 +60,15 @@ export default function Hero() {
                         <div className="hero__portrait-card">
                             <img src={profileImg} alt="윤경은 프로필" className="hero__portrait-img" />
                             <div className="hero__portrait-overlay">
-                                <span className="hero__portrait-badge">AI DevOps Engineer</span>
+                                <span className="hero__portrait-badge">Server / Backend Developer</span>
                                 <h3 className="hero__portrait-name">Gyeongeun Yoon</h3>
                                 <p className="hero__portrait-desc">
-                                    Delivering reliable AI services with serving, API, and deployment systems
+                                    Designing backends that stay correct when the outside breaks
                                 </p>
                                 <div className="hero__portrait-tags">
                                     <span>Python</span>
-                                    <span>vLLM</span>
                                     <span>FastAPI</span>
+                                    <span>PostgreSQL</span>
                                     <span>Docker</span>
                                 </div>
                             </div>
