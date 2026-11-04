@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import LazyVideo from './LazyVideo';
 
 // 아이폰 모양 틀 안에서 화면 녹화 영상을 돌린다.
 // 틀 그림은 RECoco 스토어 스크린샷(marketing/store/make-svg.mjs) 의 기기 SVG 를 그대로 옮긴 것 — 좌표도 그 파일 기준.
@@ -14,12 +15,14 @@ const SCREEN_MASK = `url("data:image/svg+xml,${encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${SCREEN_BOX.w} ${SCREEN_BOX.h}' preserveAspectRatio='none'><path transform='translate(${-SCREEN_BOX.x} ${-SCREEN_BOX.y})' d='${SCREEN}'/></svg>`,
 )}")`;
 
-export default function PhoneFrame({ src, poster, className = '', preload = 'metadata' }) {
+export default function PhoneFrame({ src, poster, className = '' }) {
     const id = useId().replace(/:/g, '');
     const g = (name) => `${name}-${id}`;
     return (
-        <div className={`relative ${className}`} style={{ aspectRatio: `${VB.w} / ${VB.h}`, filter: 'drop-shadow(0 18px 22px rgba(60,40,20,0.22)) drop-shadow(0 3px 5px rgba(60,40,20,0.14))' }}>
-            <video src={src} poster={poster} autoPlay muted loop playsInline preload={preload}
+        <div className={`relative ${className}`} style={{ aspectRatio: `${VB.w} / ${VB.h}` }}>
+            {/* 그림자는 영상과 떨어진 판에 — 영상을 감싼 filter 는 매 프레임 다시 그려 스크롤이 버벅인다 */}
+            <div className="absolute pointer-events-none" style={{ left: '1%', right: '1%', top: '0.5%', bottom: '0.5%', borderRadius: '17% / 8%', boxShadow: '0 18px 36px rgba(60,40,20,0.22), 0 3px 8px rgba(60,40,20,0.14)' }} />
+            <LazyVideo src={src} poster={poster}
                 className="absolute object-cover block bg-slate-950"
                 style={{
                     left: pct(SCREEN_BOX.x - VB.x, VB.w), top: pct(SCREEN_BOX.y - VB.y, VB.h),
