@@ -6,6 +6,7 @@ import ScrollToTop from '../components/ScrollToTop';
 import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
 import ProjectFlowSection from '../components/ProjectFlowSection';
+import PhoneFrame from '../components/PhoneFrame';
 import webDemo from '../assets/subflow/subflow_web.mp4';
 import webPoster from '../assets/subflow/subflow_web.png';
 import mobileDemo from '../assets/subflow/subflow_mobile.mp4';
@@ -283,9 +284,7 @@ export default function SubFlow(){
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
           {/* Phone */}
           <div className="w-full lg:w-auto flex justify-center shrink-0">
-            <div className="rounded-[28px] overflow-hidden border-4 border-slate-900 shadow-xl max-w-[260px] bg-slate-950">
-              <video src={mobileDemo} poster={mobilePoster} autoPlay muted loop playsInline preload="metadata" className="w-full block" />
-            </div>
+            <PhoneFrame src={mobileDemo} poster={mobilePoster} className="w-[260px] max-w-full" />
           </div>
           {/* Right: mobile note + feature highlights */}
           <div className="flex-1 w-full">
