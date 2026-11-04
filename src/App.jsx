@@ -621,7 +621,7 @@ function HomePage() {
                             </motion.h1>
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium leading-relaxed" style={{ wordBreak: 'keep-all' }}>
-                                — <span className="text-black font-bold">윤경은</span>입니다.<br />
+                                <span className="text-black font-bold">윤경은</span>입니다.<br />
                                 외부가 끊겼을 때를 먼저 설계하는<br />
                                 <span className="text-black font-bold">서버 개발자</span>입니다.
                             </motion.p>
