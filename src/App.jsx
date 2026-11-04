@@ -604,7 +604,7 @@ function HomePage() {
                         {/* Left */}
                         <div className="lg:w-1/2 space-y-6 sm:space-y-8">
                             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex gap-8 sm:gap-12">
-                                {[{ v: '70.4→97.6%', l: 'JSON Reliability' }, { v: '37.2→85.4%', l: 'Agent Accuracy' }].map((s, i) => (
+                                {[{ v: '451→200', l: 'Region Block · Provider Fallback' }, { v: '2 Apps', l: 'Shipped to App Store' }].map((s, i) => (
                                     <div key={i}>
                                         <p className="text-2xl sm:text-4xl font-light text-gray-300">{s.v}</p>
                                         <p className="text-[10px] sm:text-xs font-semibold text-gray-400 mt-1 tracking-wider uppercase">{s.l}</p>
