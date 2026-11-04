@@ -67,7 +67,7 @@ function TiltCard({ children, className = '', ...props }) {
 /* ── 카드 hover 때 나오는 설명 (일반 카드 · 앱 폰 카드 공용, compact 는 좁은 폰 화면용) ── */
 function CardInfo({ project, navigate, compact = false }) {
     return (
-        <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
+        <div className={compact ? 'h-full flex flex-col' : 'translate-y-6 group-hover:translate-y-0 transition-transform duration-500'}>
             <div className="flex items-center gap-2 mb-3">
                 <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">{project.badge || project.category}</span>
                 {project.date && <span className="text-[10px] text-gray-500 font-semibold">{project.date}</span>}
@@ -98,7 +98,7 @@ function CardInfo({ project, navigate, compact = false }) {
             <div className="flex flex-wrap gap-1.5 mb-4">
                 {project.tech.map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
             </div>
-            <div className="flex gap-3">
+            <div className={`flex gap-3 ${compact ? 'mt-auto' : ''}`}>
                 {project.github && (
                     <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
                         className="flex items-center gap-1.5 px-3 py-2 rounded-full border border-gray-300 text-gray-500 hover:bg-[#e27500] hover:text-white hover:border-[#e27500] transition-all">
@@ -108,14 +108,14 @@ function CardInfo({ project, navigate, compact = false }) {
                 )}
                 {project.demo && (
                     <a href={project.demo} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all">
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-gray-900 transition-all">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
                         <span className="text-[10px] font-bold">Live Demo</span>
                     </a>
                 )}
                 {!project.demo && project.link && (
                     <span onClick={(e) => { e.stopPropagation(); navigate(project.link + '#' + (project.demoHash || 'demo')); }}
-                        className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all cursor-pointer">
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-gray-900 transition-all cursor-pointer">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
                         <span className="text-[10px] font-bold">{project.demoHash === 'screenshots' ? 'Screenshots' : project.demoHash === 'presentation' ? 'Research' : 'Demo'}</span>
                     </span>
@@ -192,7 +192,7 @@ const AppCard = React.memo(function AppCard({ project, navigate }) {
             <div className="transition-transform duration-500 group-hover:-translate-y-1">
                 <PhoneFrame src={project.phoneDemo} poster={project.phonePoster} className="w-full" />
                 {/* 폰 화면 자리에만 덮는다 (틀 SVG 의 화면 칸 비율) */}
-                <div className="absolute hidden sm:flex flex-col justify-end p-5 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden"
+                <div className="absolute hidden sm:flex flex-col px-5 pb-5 pt-[16%] bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden"
                     style={{ left: '2.25%', right: '2.25%', top: '0.76%', bottom: '0.76%', borderRadius: '15% / 7%' }}>
                     <CardInfo project={project} navigate={navigate} compact />
                 </div>
