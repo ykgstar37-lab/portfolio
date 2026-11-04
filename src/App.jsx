@@ -64,6 +64,67 @@ function TiltCard({ children, className = '', ...props }) {
     );
 }
 
+/* ── 카드 hover 때 나오는 설명 (일반 카드 · 앱 폰 카드 공용, compact 는 좁은 폰 화면용) ── */
+function CardInfo({ project, navigate, compact = false }) {
+    return (
+        <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
+            <div className="flex items-center gap-2 mb-3">
+                <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">{project.badge || project.category}</span>
+                {project.date && <span className="text-[10px] text-gray-500 font-semibold">{project.date}</span>}
+                {project.award && (
+                    <span className="text-[9px] font-bold px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded-full flex items-center gap-1">
+                        <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                        {project.award}
+                    </span>
+                )}
+            </div>
+            <h3 className={`${compact ? 'text-base' : 'text-xl'} font-bold text-gray-900 mb-2 leading-snug`}>{project.title}</h3>
+            {project.overview ? (
+                <div className="mb-3 space-y-2">
+                    <div>
+                        <span className="text-[9px] font-bold text-[#e27500] uppercase tracking-widest">Overview</span>
+                        <p className={`text-gray-600 text-xs leading-relaxed mt-0.5 ${compact ? 'line-clamp-5' : 'line-clamp-2'}`}>{project.overview}</p>
+                    </div>
+                    {project.role && (
+                        <div>
+                            <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Role</span>
+                            <p className={`text-gray-500 text-xs leading-relaxed mt-0.5 ${compact ? 'line-clamp-3' : 'line-clamp-1'}`}>{project.role}</p>
+                        </div>
+                    )}
+                </div>
+            ) : (
+                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">{project.description}</p>
+            )}
+            <div className="flex flex-wrap gap-1.5 mb-4">
+                {project.tech.map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
+            </div>
+            <div className="flex gap-3">
+                {project.github && (
+                    <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-full border border-gray-300 text-gray-500 hover:bg-[#e27500] hover:text-white hover:border-[#e27500] transition-all">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
+                        <span className="text-[10px] font-bold">GitHub</span>
+                    </a>
+                )}
+                {project.demo && (
+                    <a href={project.demo} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
+                        <span className="text-[10px] font-bold">Live Demo</span>
+                    </a>
+                )}
+                {!project.demo && project.link && (
+                    <span onClick={(e) => { e.stopPropagation(); navigate(project.link + '#' + (project.demoHash || 'demo')); }}
+                        className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all cursor-pointer">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
+                        <span className="text-[10px] font-bold">{project.demoHash === 'screenshots' ? 'Screenshots' : project.demoHash === 'presentation' ? 'Research' : 'Demo'}</span>
+                    </span>
+                )}
+            </div>
+        </div>
+    );
+}
+
 /* ── Project Card with hover overlay ── */
 const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
     return (
@@ -118,65 +179,82 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
 
             {/* Desktop hover overlay */}
             <div className="absolute inset-0 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 hidden sm:flex flex-col justify-end p-8">
-                <div className="translate-y-6 group-hover:translate-y-0 transition-transform duration-500">
-                    <div className="flex items-center gap-2 mb-3">
-                        <span className="text-[10px] font-bold px-2.5 py-1 bg-gray-900/10 text-gray-700 rounded-full uppercase tracking-widest">{project.badge || project.category}</span>
-                        {project.date && <span className="text-[10px] text-gray-500 font-semibold">{project.date}</span>}
-                        {project.award && (
-                            <span className="text-[9px] font-bold px-2 py-0.5 bg-yellow-400 text-yellow-900 rounded-full flex items-center gap-1">
-                                <svg className="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
-                                {project.award}
-                            </span>
-                        )}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 leading-snug">{project.title}</h3>
-                    {project.overview ? (
-                        <div className="mb-3 space-y-2">
-                            <div>
-                                <span className="text-[9px] font-bold text-[#e27500] uppercase tracking-widest">Overview</span>
-                                <p className="text-gray-600 text-xs leading-relaxed mt-0.5 line-clamp-2">{project.overview}</p>
-                            </div>
-                            {project.role && (
-                                <div>
-                                    <span className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">Role</span>
-                                    <p className="text-gray-500 text-xs leading-relaxed mt-0.5 line-clamp-1">{project.role}</p>
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">{project.description}</p>
-                    )}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
-                        {project.tech.map(t => <span key={t} className="px-2.5 py-1 bg-gray-900/10 text-gray-600 text-[10px] font-bold rounded-md">{t}</span>)}
-                    </div>
-                    <div className="flex gap-3">
-                        {project.github && (
-                            <a href={project.github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-full border border-gray-300 text-gray-500 hover:bg-[#e27500] hover:text-white hover:border-[#e27500] transition-all">
-                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" /></svg>
-                                <span className="text-[10px] font-bold">GitHub</span>
-                            </a>
-                        )}
-                        {project.demo && (
-                            <a href={project.demo} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
-                                <span className="text-[10px] font-bold">Live Demo</span>
-                            </a>
-                        )}
-                        {!project.demo && project.link && (
-                            <span onClick={(e) => { e.stopPropagation(); navigate(project.link + '#' + (project.demoHash || 'demo')); }}
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[#e27500] text-white hover:bg-[#c96600] transition-all cursor-pointer">
-                                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M7 17L17 7M17 7H9M17 7v8" /></svg>
-                                <span className="text-[10px] font-bold">{project.demoHash === 'screenshots' ? 'Screenshots' : project.demoHash === 'presentation' ? 'Research' : 'Demo'}</span>
-                            </span>
-                        )}
-                    </div>
-                </div>
+                <CardInfo project={project} navigate={navigate} />
             </div>
         </div>
     );
 });
+
+/* ── Mobile Apps: 배경 없이 폰만, hover 하면 화면이 불투명해지며 설명 ── */
+const AppCard = React.memo(function AppCard({ project, navigate }) {
+    return (
+        <div className="group relative shrink-0 w-[220px] sm:w-[260px] cursor-pointer snap-center" onClick={() => navigate(project.link)}>
+            <div className="transition-transform duration-500 group-hover:-translate-y-1">
+                <PhoneFrame src={project.phoneDemo} poster={project.phonePoster} className="w-full" />
+                {/* 폰 화면 자리에만 덮는다 (틀 SVG 의 화면 칸 비율) */}
+                <div className="absolute hidden sm:flex flex-col justify-end p-5 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden"
+                    style={{ left: '2.25%', right: '2.25%', top: '0.76%', bottom: '0.76%', borderRadius: '15% / 7%' }}>
+                    <CardInfo project={project} navigate={navigate} compact />
+                </div>
+            </div>
+            <h3 className="sm:hidden mt-3 text-sm font-bold text-gray-900 text-center">{project.title}</h3>
+        </div>
+    );
+});
+
+function AppCarousel({ projects, navigate }) {
+    const ref = React.useRef(null);
+    const hold = React.useRef(0);
+    const [edge, setEdge] = React.useState({ left: true, right: true });
+    const update = React.useCallback(() => {
+        const el = ref.current;
+        if (!el) return;
+        const left = el.scrollLeft <= 2;
+        const right = el.scrollLeft + el.clientWidth >= el.scrollWidth - 2;
+        setEdge((e) => (e.left === left && e.right === right ? e : { left, right }));
+    }, []);
+    React.useEffect(() => {
+        update();
+        window.addEventListener('resize', update);
+        return () => { window.removeEventListener('resize', update); cancelAnimationFrame(hold.current); };
+    }, [update]);
+    // 화살표에 마우스를 올리고 있는 동안 그쪽으로 계속 흘러간다 (누르면 한 칸)
+    const startHold = (dir) => {
+        cancelAnimationFrame(hold.current);
+        const step = () => {
+            const el = ref.current;
+            if (!el) return;
+            el.scrollLeft += dir * 6;
+            update();
+            hold.current = requestAnimationFrame(step);
+        };
+        hold.current = requestAnimationFrame(step);
+    };
+    const stopHold = () => cancelAnimationFrame(hold.current);
+    const page = (dir) => ref.current?.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    const arrow = (dir) => {
+        const off = dir < 0 ? edge.left : edge.right;
+        return (
+            <button aria-label={dir < 0 ? '이전 앱' : '다음 앱'} disabled={off}
+                onMouseEnter={() => !off && startHold(dir)} onMouseLeave={stopHold} onClick={() => page(dir)}
+                className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm transition-all hover:bg-[#e27500] hover:text-white hover:border-[#e27500] disabled:opacity-25 disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200 disabled:cursor-default">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={dir < 0 ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'} /></svg>
+            </button>
+        );
+    };
+    return (
+        <div className="flex items-center gap-2 sm:gap-6">
+            {arrow(-1)}
+            <div ref={ref} onScroll={update} className="flex-1 min-w-0 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {/* 몇 개 안 될 땐 가운데 모으고, 넘치면 가로로 흐른다 */}
+                <div className="flex gap-8 sm:gap-14 w-max mx-auto px-2 py-6">
+                    {projects.map((p) => <AppCard key={p.id} project={p} navigate={navigate} />)}
+                </div>
+            </div>
+            {arrow(1)}
+        </div>
+    );
+}
 
 /* ── Shared project data (single source of truth) ── */
 const ALL_PROJECTS = [
@@ -189,7 +267,7 @@ const ALL_PROJECTS = [
     { id: '07', title: '암호화폐 변동성 비교 및 분석: GARCH 모델 기반 예측', category: 'Team', domain: 'Data', date: '2023.12 — 2024.01', description: 'ADF 단위근 검정으로 로그수익률 변환 근거를, ARCH-LM 검정으로 GARCH 적용 근거를 확보. GARCH→TGARCH→외생변수 순으로 모형을 확장해 비대칭 레버리지 효과를 확인하고, 거래량·FNG가 설명력을 높인다는 결론을 도출.', overview: '암호화폐 변동성을 GARCH 계열 모형으로 비교 분석한 3인 팀 연구 프로젝트. 기간 제약으로 GARCH·TGARCH·TGARCH+E.V까지 적합했고, HAR 계열은 수식 서술에 그쳤다.', role: 'GARCH 모형 비교 분석, ADF·ARCH-LM 사전 검정, 외생변수 효과 분석, 발표', tech: ['Python', 'GARCH', 'HAR'], github: 'https://github.com/ykgstar37-lab/crypto-volatility-intelligence-system', link: '/projects/crypto-volatility', thumbnail: thumbCrypto, badge: 'Team', demoHash: 'presentation' },
     { id: '08', title: '외국인에게 관광목적에 맞는 지역구 제안', category: 'Team', domain: 'Data', date: '2023.09 — 2023.11', award: '2nd Place', description: '25개 자치구 관광시설 데이터를 NbClust+Silhouette로 최적 k=3 결정, PCA 설명력 91.3% 달성. 군집별 관광 목적 매칭으로 학술제 2등상 수상.', overview: '서울시 25개 자치구 관광시설 데이터를 군집분석하여 외국인 관광객에게 목적에 맞는 지역구를 추천하는 연구 프로젝트.', role: '공공데이터 전처리, NbClust+Silhouette 군집분석, PCA 차원축소, 시각화 및 발표', tech: ['R', 'dplyr', '공공데이터'], github: 'https://github.com/ykgstar37-lab', link: '/projects/seoul-culture', thumbnail: thumbSeoul, badge: 'Team', demoHash: 'presentation' },
 ];
-const DEV_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Dev');
+const DEV_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Dev' && !p.mobile);
 const STAT_PROJECTS = ALL_PROJECTS.filter(p => p.domain === 'Data');
 // 스토어에 올린 iOS·Android 앱 (메인의 Mobile Apps 칸)
 const APP_PROJECTS = ALL_PROJECTS.filter(p => p.mobile);
@@ -201,7 +279,8 @@ function ProjectsPage() {
     const [activeTab, setActiveTab] = React.useState('All');
 
     const filteredProjects = ALL_PROJECTS
-        .filter(p => activeDomain === 'All' || p.domain === activeDomain)
+        // Dev · App · Data 는 메인 화면 칸과 같다 (스토어 앱은 Dev 에서 빼 App 으로)
+        .filter(p => activeDomain === 'All' || (activeDomain === 'App' ? p.mobile : p.domain === activeDomain && !p.mobile))
         .filter(p => activeTab === 'All' || p.category === activeTab);
 
     React.useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, []);
@@ -224,7 +303,7 @@ function ProjectsPage() {
 
                 {/* Domain Filter */}
                 <div className="flex gap-2 mb-3 sm:mb-4">
-                    {['All', 'Dev', 'Data'].map(tab => (
+                    {['All', 'Dev', 'App', 'Data'].map(tab => (
                         <button key={tab} onClick={() => { setActiveDomain(tab); setActiveTab('All'); }}
                             className={`px-4 sm:px-6 py-2 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase transition-all duration-300 ${activeDomain === tab ? 'bg-gray-900 text-white shadow-lg' : 'bg-white text-gray-400 border border-gray-200 hover:border-gray-400'}`}
                         >{tab}</button>
@@ -505,13 +584,13 @@ function HomePage() {
                     <div className="text-lg font-bold tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>YGE.</div>
                     <nav className="hidden md:flex gap-10 text-[13px] font-semibold text-gray-500 uppercase tracking-widest">
                         {['about', 'experience', 'projects', 'contact'].map(s => (
-                            <a key={s} href={`#${s}`} className="hover:text-black transition-colors duration-300">{s}</a>
+                            <a key={s} href={s === 'projects' ? '/projects' : `#${s}`} onClick={s === 'projects' ? (e) => { e.preventDefault(); navigate('/projects'); } : undefined} className="hover:text-black transition-colors duration-300">{s}</a>
                         ))}
                     </nav>
                     {/* Mobile nav */}
                     <nav className="flex md:hidden gap-4 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">
                         {['about', 'experience', 'projects', 'contact'].map(s => (
-                            <a key={s} href={`#${s}`} className="hover:text-black transition-colors duration-300">{s}</a>
+                            <a key={s} href={s === 'projects' ? '/projects' : `#${s}`} onClick={s === 'projects' ? (e) => { e.preventDefault(); navigate('/projects'); } : undefined} className="hover:text-black transition-colors duration-300">{s}</a>
                         ))}
                     </nav>
                 </div>
@@ -784,12 +863,8 @@ function HomePage() {
                         </h2>
                     </motion.div>
 
-                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                        {APP_PROJECTS.map((project, index) => (
-                            <motion.div key={project.id} variants={fadeUp} custom={index}>
-                                <ProjectCard project={project} navigate={navigate} />
-                            </motion.div>
-                        ))}
+                    <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+                        <AppCarousel projects={APP_PROJECTS} navigate={navigate} />
                     </motion.div>
                 </div>
             </section>
