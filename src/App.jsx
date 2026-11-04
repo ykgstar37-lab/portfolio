@@ -186,7 +186,7 @@ function ProjectsPage() {
         .filter(p => activeDomain === 'All' || p.domain === activeDomain)
         .filter(p => activeTab === 'All' || p.category === activeTab);
 
-    React.useEffect(() => { window.scrollTo(0, 0); }, []);
+    React.useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); }, []);
 
     return (
         <div className="bg-[#fafafa] min-h-screen text-gray-900" style={{ fontFamily: "'Inter', sans-serif" }}>

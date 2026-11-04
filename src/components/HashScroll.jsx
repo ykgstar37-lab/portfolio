@@ -7,7 +7,12 @@ import { useEffect } from 'react';
 export default function HashScroll() {
     useEffect(() => {
         const id = window.location.hash.replace('#', '');
-        if (!id) return;
+        // 해시 없이 들어오면 맨 위에서 시작 (상세 페이지에서 내려온 스크롤 위치가 남지 않게)
+        if (!id) {
+            // html 에 scroll-behavior: smooth 가 걸려 있어 instant 를 줘야 바로 올라간다
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            return;
+        }
 
         let tries = 0;
         const timer = setInterval(() => {

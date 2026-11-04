@@ -158,7 +158,7 @@ function DrawerTabs(){return [{label:'About',content:<div className="space-y-4">
 
 export default function SubFlow(){
   const navigate=useNavigate();
-  useEffect(()=>{const h=window.location.hash;if(h)setTimeout(()=>document.querySelector(h)?.scrollIntoView({behavior:'smooth'}),500);else window.scrollTo(0,0)},[]);
+  useEffect(()=>{const h=window.location.hash;if(h)setTimeout(()=>document.querySelector(h)?.scrollIntoView({behavior:'smooth'}),500);else window.scrollTo({ top: 0, left: 0, behavior: 'instant' })},[]);
   return <div className="bg-gradient-to-b from-white to-[#f8fbfd] min-h-screen text-gray-900" style={{fontFamily:"'Inter', sans-serif"}}>
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <motion.button onClick={()=>navigate('/projects')} className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition mb-12 group" initial={{opacity:0}} animate={{opacity:1}}>← All Projects</motion.button>

@@ -30,7 +30,7 @@ export default function FloatingNav() {
             >
                 {/* Home */}
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => (location.pathname === '/' ? window.scrollTo({ top: 0, behavior: 'smooth' }) : navigate('/'))}
                     className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-full text-gray-400 hover:text-white hover:bg-white/10 transition-all"
                     title="Home"
                 >
