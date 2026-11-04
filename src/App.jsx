@@ -622,8 +622,8 @@ function HomePage() {
 
                             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-base sm:text-xl text-gray-600 font-medium leading-relaxed" style={{ wordBreak: 'keep-all' }}>
                                 <span className="text-black font-bold">윤경은</span>입니다.<br />
-                                외부가 끊겼을 때를 먼저 설계하는<br />
-                                <span className="text-black font-bold">서버 개발자</span>입니다.
+                                외부가 끊겨도 흔들리지 않게 설계하고,<br />
+                                출시와 운영까지 책임지는 <span className="text-black font-bold">서버 개발자</span>입니다.
                             </motion.p>
 
                             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.9 }} className="flex gap-2.5 sm:gap-3">
