@@ -71,8 +71,8 @@ const ProjectCard = React.memo(function ProjectCard({ project, navigate }) {
                 {project.phoneDemo ? (
                     // 흰 바탕 가운데 폰 틀 안에서 시연 영상이 돈다 (상세 페이지 Demo 와 같은 틀)
                     <div className="w-full h-full bg-white flex items-center justify-center">
-                        <PhoneFrame src={project.phoneDemo} poster={project.phonePoster} radius="rounded-[18px] sm:rounded-[22px]" border="border-[3px] sm:border-4"
-                            className="h-[88%] aspect-[37/80] transition-transform duration-500 group-hover:scale-[1.03]" />
+                        <PhoneFrame src={project.phoneDemo} poster={project.phonePoster}
+                            className="h-[90%] transition-transform duration-500 group-hover:scale-[1.03]" />
                     </div>
                 ) : project.thumbnail ? (
                     <img src={project.thumbnail} alt={project.title}

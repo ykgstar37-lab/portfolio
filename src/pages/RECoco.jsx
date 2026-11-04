@@ -174,11 +174,10 @@ export default function RECoco(){
       </motion.div>
 
       {/* 앱스토어 헤더 동영상 */}
-      <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mb-20">
+      <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="mb-6">
         <div className="rounded-2xl overflow-hidden shadow-lg" style={{backgroundColor:PRIMARY}}>
           <video src={headerVideo} poster={headerPoster} autoPlay muted loop playsInline className="w-full block" />
         </div>
-        <p className="text-xs text-gray-400 mt-2 text-right">App Store 헤더 동영상 — 앱의 코코 SVG 로 프레임을 그려 만든 11초 반복 영상</p>
       </motion.div>
 
       {/* README-style Overview / Role / Skills */}
