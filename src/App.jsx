@@ -197,7 +197,7 @@ const AppCard = React.memo(function AppCard({ project, navigate }) {
                     <CardInfo project={project} navigate={navigate} compact />
                 </div>
             </div>
-            <h3 className="sm:hidden mt-3 text-sm font-bold text-gray-900 text-center">{project.title}</h3>
+            <h3 className="sm:hidden mt-3 text-sm font-bold text-gray-900 text-center">{project.title.split(' — ')[0]}</h3>
         </div>
     );
 });
@@ -237,17 +237,18 @@ function AppCarousel({ projects, navigate }) {
         return (
             <button aria-label={dir < 0 ? '이전 앱' : '다음 앱'} disabled={off}
                 onMouseEnter={() => !off && startHold(dir)} onMouseLeave={stopHold} onClick={() => page(dir)}
-                className="shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gray-200 bg-white text-gray-500 flex items-center justify-center shadow-sm transition-all hover:bg-[#e27500] hover:text-white hover:border-[#e27500] disabled:opacity-25 disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200 disabled:cursor-default">
+                className={`${dir < 0 ? 'left-2' : 'right-2'} absolute top-1/2 -translate-y-1/2 z-10 sm:static sm:translate-y-0 shrink-0 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-gray-200 bg-white/90 sm:bg-white backdrop-blur-sm text-gray-500 flex items-center justify-center shadow-sm transition-all hover:bg-[#e27500] hover:text-white hover:border-[#e27500] disabled:opacity-25 disabled:hover:bg-white disabled:hover:text-gray-500 disabled:hover:border-gray-200 disabled:cursor-default`}>
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={dir < 0 ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7'} /></svg>
             </button>
         );
     };
     return (
-        <div className="flex items-center gap-2 sm:gap-6">
+        // 폰 화면에선 줄을 화면 끝까지 넓히고 화살표는 위에 띄운다 (옆에 두면 줄이 좁아져 폰이 잘려 보인다)
+        <div className="relative -mx-4 sm:mx-0 sm:flex sm:items-center sm:gap-6">
             {arrow(-1)}
-            <div ref={ref} onScroll={update} className="flex-1 min-w-0 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {/* 몇 개 안 될 땐 가운데 모으고, 넘치면 가로로 흐른다 */}
-                <div className="flex gap-8 sm:gap-14 w-max mx-auto px-2 py-6">
+            <div ref={ref} onScroll={update} className="sm:flex-1 min-w-0 overflow-x-auto snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {/* 몇 개 안 될 땐 가운데 모으고, 넘치면 가로로 흐른다. 폰 화면에선 첫·끝 폰도 가운데 올 수 있게 양옆 여백 */}
+                <div className="flex gap-8 sm:gap-14 w-max mx-auto px-[calc(50%-110px)] sm:px-2 py-6">
                     {projects.map((p) => <AppCard key={p.id} project={p} navigate={navigate} />)}
                 </div>
             </div>
