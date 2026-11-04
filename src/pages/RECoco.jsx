@@ -8,6 +8,8 @@ import SectionDotNav from '../components/SectionDotNav';
 import ProjectFlowSection from '../components/ProjectFlowSection';
 import headerVideo from '../assets/recoco/recoco_header.mp4';
 import headerPoster from '../assets/recoco/recoco_header.jpg';
+import mobileDemo from '../assets/recoco/recoco_mobile.mp4';
+import mobilePoster from '../assets/recoco/recoco_mobile.jpg';
 
 const PRIMARY = '#FF7A2F';     // 레코코 주황
 const SECONDARY = '#3a2a22';   // 코코 눈 색 (먹색 갈색)
@@ -254,11 +256,10 @@ export default function RECoco(){
         <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Demo</h2>
         <p className="text-gray-500 mb-8">실제 화면 시연 — iOS</p>
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
-          {/* Phone — 시연 영상 촬영 후 교체 */}
+          {/* Phone */}
           <div className="w-full lg:w-auto flex justify-center shrink-0">
-            <div className="rounded-[28px] overflow-hidden border-4 border-slate-900 shadow-xl w-[260px] aspect-[9/19.5] flex flex-col items-center justify-center gap-3 text-center px-6" style={{backgroundColor:PRIMARY}}>
-              <p className="text-white font-bold text-lg" style={{fontFamily:"'Syne', sans-serif"}}>Coming soon</p>
-              <p className="text-white/80 text-xs leading-relaxed" style={{wordBreak:'keep-all'}}>시연 영상을 준비하고 있어요</p>
+            <div className="rounded-[28px] overflow-hidden border-4 border-slate-900 shadow-xl max-w-[260px] bg-slate-950">
+              <video src={mobileDemo} poster={mobilePoster} autoPlay muted loop playsInline preload="metadata" className="w-full block" />
             </div>
           </div>
           <div className="flex-1 w-full">
