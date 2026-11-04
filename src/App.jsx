@@ -78,7 +78,7 @@ function CardInfo({ project, navigate, compact = false }) {
                     </span>
                 )}
             </div>
-            <h3 className={`${compact ? 'text-base' : 'text-xl'} font-bold text-gray-900 mb-2 leading-snug`}>{project.title}</h3>
+            <h3 className={`${compact ? 'text-base' : 'text-xl'} font-bold text-gray-900 mb-2 leading-snug`}>{compact ? project.title.split(' — ')[0] : project.title}</h3>
             {project.overview ? (
                 <div className="mb-3 space-y-2">
                     <div>
