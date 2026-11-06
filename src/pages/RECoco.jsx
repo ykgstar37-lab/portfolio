@@ -108,7 +108,7 @@ const contributions = [
   ['입력 마찰을 카테고리별로 제거','칸을 손으로 채우면 기록이 끊기는 문제 -> ISBN·탑승권 바코드 파싱, 카드 결제·예매 문자 정규식 파서, ML Kit 한국어 OCR, 포토부스 QR 원본 추출, 공유 확장까지 7가지 빠르게 채우기 구현 -> 기록 1건을 "확인" 작업으로 단축.'],
   ['서버 없는 데이터 안정성','폰 안이 유일한 원본인데 저장 실패를 .catch(() => {}) 로 버리고 있던 문제 -> retryOnce(테스트 포함) 후에도 실패하면 홈에 "다시 저장" 띠를 띄우고, 백업 파일 + 10장부터 백업 권유를 추가 -> 기록이 조용히 사라지는 경로를 차단.'],
   ['수익화 구조를 출시 일정과 분리','유료 계약에 사업자등록이 필요해 출시가 묶이는 문제 -> 상품 26개 ID·expo-iap 결제를 붙인 채 FREE_FOR_ALL 스위치로 무료 출시, 첫 실행 날짜·첫 빌드 번호로 초기 사용자 보호 -> 스위치 한 줄로 유료 전환 가능.'],
-  ['배포 파이프라인과 스토어 제출까지 단독 완주','기능만 만들고 끝나면 실제 사용자가 못 쓰는 문제 -> EAS Build·Submit, expo-updates OTA 채널, Cloudflare Pages 지원·개인정보 페이지(한/영), 스크린샷·헤더 동영상까지 직접 제작 -> iOS 1.0.1 심사 제출, Android 빌드 진행.'],
+  ['배포 파이프라인과 스토어 제출까지 단독 완주','기능만 만들고 끝나면 실제 사용자가 못 쓰는 문제 -> EAS Build·Submit, expo-updates OTA 채널, Cloudflare Pages 지원·개인정보 페이지(한/영), 스크린샷·헤더 동영상까지 직접 제작 -> iOS 1.0.1 App Store 출시, Android 는 Play Console 비공개 테스트 준비.'],
   ['마케팅 소재도 코드로 생성','디자인 툴로 만들면 수정할 때마다 처음부터 다시 그려야 하는 문제 -> 앱의 코코 SVG를 그대로 가져와 resvg로 프레임을 그리고 ffmpeg로 묶는 스크립트 작성 -> 앱스토어 헤더(3840×1646)와 인스타 스토리(1080×1920)를 같은 움직임으로 한 번에 생성.'],
 ];
 
@@ -148,15 +148,19 @@ export default function RECoco(){
           <span className="text-[10px] font-bold px-3 py-1 rounded-full tracking-wider uppercase" style={{backgroundColor:BRAND_SOFT,color:BRAND_INK}}>Mobile · Solo</span>
           <span className="text-[10px] font-bold px-3 py-1 bg-gray-900 text-white rounded-full tracking-wider uppercase">iOS + Android</span>
           <span className="text-[10px] font-bold px-3 py-1 bg-gray-100 text-gray-600 rounded-full tracking-wider uppercase">2026.09 — 2026.11</span>
-          <span className="text-[10px] font-bold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full tracking-wider uppercase">iOS App Store 심사 · Android 준비 중</span>
+          <span className="text-[10px] font-bold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full tracking-wider uppercase">iOS App Store 출시 · Android 준비 중</span>
         </div>
         <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-3 leading-tight" style={{fontFamily:"'Syne', sans-serif",color:PRIMARY}}>RECoco <span className="text-gray-300 font-semibold">레코코</span></h1>
         <p className="text-xl font-semibold mb-6 tracking-tight" style={{color:SECONDARY}}>오늘 하루를 영수증으로 뽑아 모으는 기록 앱</p>
-        <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>기록 앱이 사흘을 못 가는 이유를 "칸 채우기가 귀찮아서"와 "쌓여도 다시 안 봐서"로 보고, 입력은 바코드·결제 문자·캡처 OCR·포토부스 QR로 줄이고 결과물은 마스코트 코코가 뱉어 주는 영수증·티켓·카드로 바꿨습니다. 로그인·서버 없이 폰 안에서만 동작하는 Expo 앱으로, 12개 카테고리·25종 양식·상품 26개를 7주(커밋 265개) 동안 단독으로 만들어 App Store 에 제출했습니다.</p>
+        <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6" style={{wordBreak:'keep-all'}}>기록 앱이 사흘을 못 가는 이유를 "칸 채우기가 귀찮아서"와 "쌓여도 다시 안 봐서"로 보고, 입력은 바코드·결제 문자·캡처 OCR·포토부스 QR로 줄이고 결과물은 마스코트 코코가 뱉어 주는 영수증·티켓·카드로 바꿨습니다. 로그인·서버 없이 폰 안에서만 동작하는 Expo 앱으로, 12개 카테고리·25종 양식·상품 26개를 7주(커밋 265개) 동안 단독으로 만들어 App Store 에 출시했습니다.</p>
         <div className="flex gap-3 flex-wrap">
           <a href="https://github.com/ykgstar37-lab/RECoco" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" /></svg>
             GitHub
+          </a>
+          <a href="https://apps.apple.com/app/recoco/id6821948676" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-black hover:bg-gray-700 text-white text-sm font-medium rounded-full transition">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.96-3.46-1.07-1.56-2.73-1.78-3.32-1.8-1.41-.14-2.76.83-3.48.83-.72 0-1.82-.81-3-.79-1.54.02-2.96.9-3.76 2.28-1.6 2.78-.41 6.9 1.15 9.16.76 1.1 1.67 2.34 2.86 2.3 1.15-.05 1.58-.74 2.97-.74 1.38 0 1.77.74 2.98.72 1.23-.02 2.01-1.12 2.76-2.23.87-1.28 1.23-2.52 1.25-2.58-.03-.01-2.4-.92-2.42-3.65zM14.1 5.86c.63-.77 1.06-1.83.94-2.89-.91.04-2.01.61-2.66 1.37-.58.67-1.09 1.75-.96 2.79 1.02.08 2.05-.52 2.68-1.27z"/></svg>
+            App Store
           </a>
           <button onClick={()=>document.getElementById('demo')?.scrollIntoView({behavior:'smooth'})} className="inline-flex items-center gap-2 px-4 py-2 bg-[#e27500] hover:bg-gray-900 text-white text-sm font-medium rounded-full transition">
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
@@ -190,7 +194,7 @@ export default function RECoco(){
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Role</p>
-              <p className="text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>기획·캐릭터·UI 부터 Expo 앱 구현, 문자·바코드·OCR 파서, 인앱 결제 구조, EAS 빌드·OTA·App Store 제출, 지원 페이지와 스토어·인스타 소재 제작까지 단독으로 진행했습니다. 코코몬 카드 틀 그림은 직접 그린 원본을 스크립트로 다듬어 앱 에셋으로 만들었습니다.</p>
+              <p className="text-gray-600 leading-relaxed" style={{wordBreak:'keep-all'}}>기획·캐릭터·UI 부터 Expo 앱 구현, 문자·바코드·OCR 파서, 인앱 결제 구조, EAS 빌드·OTA·App Store 출시, 지원 페이지와 스토어·인스타 소재 제작까지 단독으로 진행했습니다. 코코몬 카드 틀 그림은 직접 그린 원본을 스크립트로 다듬어 앱 에셋으로 만들었습니다.</p>
             </div>
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Skills</p>
@@ -238,7 +242,7 @@ export default function RECoco(){
         <h2 className="text-2xl sm:text-3xl font-bold mb-3 tracking-tight" style={{fontFamily:"'Syne', sans-serif"}}>Results</h2>
         <p className="text-gray-500 mb-8">구현 범위와 검증 가능한 산출물 (실제 레포 기준)</p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">{stats.map(([v,l,s])=><div key={l} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"><p className="text-3xl font-black" style={{color:PRIMARY}}>{v}</p><p className="text-xs font-bold uppercase text-gray-400 mt-1">{l}</p><p className="text-xs text-gray-500 mt-2">{s}</p></div>)}</div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-3">{[['265','Commits','2026.09.17 — 11.04 · 7주'],['26','Store Products','카테고리 7 · 테마 10 · 옷 9'],['~20k','Lines of TS','app/src'],['1.0.1','iOS Version','빌드 13 App Store 심사 제출']].map(([v,l,s])=><div key={l} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"><p className="text-3xl font-black" style={{color:SECONDARY}}>{v}</p><p className="text-xs font-bold uppercase text-gray-400 mt-1">{l}</p><p className="text-xs text-gray-500 mt-2">{s}</p></div>)}</div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-3">{[['265','Commits','2026.09.17 — 11.04 · 7주'],['26','Store Products','카테고리 7 · 테마 10 · 옷 9'],['~20k','Lines of TS','app/src'],['1.0.1','iOS Version','빌드 13 App Store 출시']].map(([v,l,s])=><div key={l} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"><p className="text-3xl font-black" style={{color:SECONDARY}}>{v}</p><p className="text-xs font-bold uppercase text-gray-400 mt-1">{l}</p><p className="text-xs text-gray-500 mt-2">{s}</p></div>)}</div>
       </motion.div>
 
       <motion.div id="contributions" className="mb-20" initial="hidden" whileInView="visible" viewport={{once:true}} variants={fadeInUp}>
