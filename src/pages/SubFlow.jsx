@@ -7,6 +7,7 @@ import TechnicalDrawer from '../components/TechnicalDrawer';
 import SectionDotNav from '../components/SectionDotNav';
 import ProjectFlowSection from '../components/ProjectFlowSection';
 import PhoneFrame from '../components/PhoneFrame';
+import LinksMenu from '../components/LinksMenu';
 import webDemo from '../assets/subflow/subflow_web.mp4';
 import webPoster from '../assets/subflow/subflow_web.png';
 import mobileDemo from '../assets/subflow/subflow_mobile.mp4';
@@ -188,18 +189,12 @@ export default function SubFlow(){
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             Demo
           </button>
-          <a href="https://mysubflow.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full transition hover:brightness-95" style={{backgroundColor:BRAND_SOFT,color:BRAND_INK}}>
-            <img src="/subflow-mark-black.png" alt="" className="w-4 h-4 object-contain" />
-            SubFlow
-          </a>
-          <a href="https://app.mysubflow.app" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 text-white text-sm font-medium rounded-full transition hover:brightness-110" style={{backgroundColor:SECONDARY}}>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0zM3.6 9h16.8M3.6 15h16.8M12 3a15 15 0 010 18 15 15 0 010-18z" /></svg>
-            Web App
-          </a>
-          <a href="https://api.mysubflow.app/docs" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 hover:border-gray-400 text-gray-700 text-sm font-medium rounded-full transition">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-            API Docs
-          </a>
+          <LinksMenu label="SubFlow" soft={BRAND_SOFT} ink={BRAND_INK} icon={<img src="/subflow-mark-black.png" alt="" className="w-4 h-4 object-contain" />} items={[
+            { label: '공식 홈페이지', sub: 'mysubflow.app', href: 'https://mysubflow.app' },
+            { label: 'Web App', sub: 'app.mysubflow.app', href: 'https://app.mysubflow.app' },
+            { label: 'API Docs', sub: 'FastAPI · Swagger', href: 'https://api.mysubflow.app/docs' },
+            { label: '개인정보 처리방침', href: 'https://mysubflow.app/privacy' },
+          ]} />
         </div>
       </motion.div>
 
