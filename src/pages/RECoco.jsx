@@ -167,7 +167,7 @@ export default function RECoco(){
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
             Demo
           </button>
-          <LinksMenu label="RECoco" soft={BRAND_SOFT} ink={BRAND_INK} icon={<img src="/recoco-icon.png" alt="" className="w-4 h-4 rounded-[4px]" />} items={[
+          <LinksMenu label="RECoco" soft="#FF7A2F" ink="#FFFFFF" icon={<img src="/recoco-mark-white.png" alt="" className="h-4 w-auto" />} items={[
             { label: '지원 페이지', sub: 'recoco.pages.dev', href: 'https://recoco.pages.dev' },
             { label: '개인정보 처리방침', href: 'https://recoco.pages.dev/privacy' },
           ]} />
